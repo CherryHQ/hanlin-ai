@@ -39,6 +39,7 @@ class AppDataManager: ObservableObject {
     // 异步预加载所有数据
     @MainActor func preloadDataIfNeeded() {
         let context = modelContainer.mainContext
+        // 确保模型数据优先加载完成
         preloadModelDataIfNeeded(context: context)
         preloadAPIKeysIfNeeded(context: context)
         preloadSearchKeysIfNeeded(context: context)

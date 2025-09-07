@@ -1,0 +1,6 @@
+// Configuration Template for API Keys
+// Copy this file to Config.xcconfig and fill in your actual API keys
+// This template file can be safely committed to git
+
+HANLIN_API_KEY = YOUR_HANLIN_API_KEY_HERE
+HANLIN_OPEN_API_KEY = YOUR_HANLIN_OPEN_API_KEY_HERE

@@ -23,7 +23,7 @@ class SystemOptimizer {
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
         let user = try context.fetch(userFetchDescriptor).first
         
-        let defaultModel = isVisual ? "glm-4v-flash_hanlin" : "glm-4-flash_hanlin"
+        let defaultModel = isVisual ? "glm-4v-flash_hanlin" : "glm-4.5-flash_hanlin"
         let optimizationModelName: String = isVisual ? (user?.optimizationVisualModel ?? defaultModel)
         : (user?.optimizationTextModel ?? defaultModel)
         

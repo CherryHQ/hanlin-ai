@@ -26,7 +26,7 @@ class UserInfo {
     var useHealth: Bool = true                                     // 使用健康信息
     var useWeather: Bool = true                                    // 使用天气查询
     var useCanvas: Bool = true                                     // 使用画布功能
-    var optimizationTextModel: String = "glm-4-flash_hanlin"       // 文本优化模型
+    var optimizationTextModel: String = "glm-4.5-flash_hanlin"     // 文本优化模型
     var optimizationVisualModel: String = "glm-4v-flash_hanlin"    // 视觉优化模型
     var textToSpeechModel: String = "Siri"                         // 语音生成模型
     var searchCount: Int = 10                                      // 默认搜索结果数量
@@ -50,7 +50,7 @@ class UserInfo {
         useHealth: Bool = true,
         useWeather: Bool = true,
         useCanvas: Bool = true,
-        optimizationTextModel: String = "glm-4-flash_hanlin",
+        optimizationTextModel: String = "glm-4.5-flash_hanlin",
         optimizationVisualModel: String = "glm-4v-flash_hanlin",
         textToSpeechModel: String = "Siri",
         searchCount: Int = 10,

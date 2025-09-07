@@ -156,9 +156,19 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // 第三阶段：更新已存在记录的 requestURL
+        // 第三阶段：更新已存在记录的 requestURL 和 key
         for (name, existingKey) in retainedMap {
             if let predefinedKey = predefinedAPIKeys.first(where: { $0.name == name }) {
+                // 对于 HANLIN_API_KEY 和 HANLIN_OPEN_API_KEY，始终更新密钥
+                if name == "HANLIN_API_KEY" || name == "HANLIN_OPEN_API_KEY" {
+                    if let newKey = predefinedKey.key, !newKey.isEmpty {
+                        if existingKey.key != newKey {
+                            existingKey.key = newKey
+                            print("强制更新 API Key \(name) 的密钥")
+                        }
+                    }
+                }
+                
                 // 对于 company 不为 "LAN" 或 "LOCAL" 的记录，若 requestURL 不同且预定义数据中有有效 URL，则更新 requestURL
                 if let company = existingKey.company?.uppercased(), company != "LAN", company != "LOCAL" {
                     if existingKey.requestURL != predefinedKey.requestURL,
@@ -168,7 +178,7 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
                     }
                     if existingKey.help != predefinedKey.help {
                         existingKey.help = predefinedKey.help
-                        print("更新 API Key \(name) 的 requestURL 为：\(predefinedKey.help)")
+                        print("更新 API Key \(name) 的 help 为：\(predefinedKey.help)")
                     }
                 }
             }

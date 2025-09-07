@@ -1,8 +1,8 @@
 <h1 align="center">
-  <a href="https://github.com/zhiyuan20002/AI_HLY">
-    <img src="cherry_icon.png" width="120" height="120" alt="Cherry" style="margin-right: 20px;" />
-    <img src="logo_3_0.png" width="120" height="120" alt="AI翰林院" /><br>
-    AI翰林院
+  <a href="https://github.com/CherryHQ/AI_Hanlin">
+    <img src="cherry_icon.png" width="90" height="90" alt="Cherry" style="margin-right: 25px; vertical-align: middle;" />
+    <img src="logo_3_0.png" width="120" height="120" alt="AI翰林院" style="vertical-align: middle;" /><br>
+    <span style="color: #FF6B6B;">Cherry Studio</span> · <span style="color: #4A90E2;">AI翰林院</span>
   </a>
 </h1>
 

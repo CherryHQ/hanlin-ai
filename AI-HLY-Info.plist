@@ -15,6 +15,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>HANLIN_API_KEY</key>
+	<string>$(HANLIN_API_KEY)</string>
+	<key>HANLIN_OPEN_API_KEY</key>
+	<string>$(HANLIN_OPEN_API_KEY)</string>
 	<key>INIntentsSupported</key>
 	<array/>
 	<key>MKDirectionsApplicationSupportedModes</key>
@@ -32,16 +36,10 @@
 		<string>MKDirectionsModeTaxi</string>
 		<string>MKDirectionsModeTrain</string>
 	</array>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>需要访问您的日历以读取和添加事件。</string>
-	<key>NSRemindersFullAccessUsageDescription</key>
-	<string>需要访问您的提醒事项以读取和添加任务。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>Launch Screen</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict/>

@@ -9,6 +9,13 @@ import Foundation
 import SwiftUI
 import SwiftData
 
+// 从Bundle获取API密钥配置
+func getEnvironmentVariable(_ name: String) -> String {
+    // 从Info.plist中读取配置的值
+    let value = Bundle.main.object(forInfoDictionaryKey: name) as? String ?? ""
+    return value
+}
+
 // 获得模型列表
 func getModelList() -> [AllModels] {
     
@@ -352,6 +359,14 @@ func getModelList() -> [AllModels] {
         AllModels(name: "deepseek/deepseek-r1:free", displayName: "DeepSeek-R1(OpenRouter)", identity: "model", position: 107, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
         // 0
         AllModels(name: "qwen/qwq-32b:free", displayName: "Qwen-QWQ-32B(OpenRouter)", identity: "model", position: 108, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
+
+        // MARK: 翰林内置
+        // 免费
+        AllModels(name: "glm-4.5-flash_hanlin", displayName: "Hanlin-GLM4.5-Flash", identity: "model", position: 11, company: "HANLIN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // 免费
+        AllModels(name: "glm-4v-flash_hanlin", displayName: "Hanlin-GLM4V-Flash", identity: "model", position: 11, company: "HANLIN", price: 0, isHidden: false, supportsSearch: true, supportsMultimodal: true),
+        // 免费
+        AllModels(name: "Qwen/Qwen3-8B_hanlin", displayName: "Hanlin-Qwen3-8B", identity: "model", position: 110, company: "HANLIN_OPEN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
         // MARK: 智能体
         // MARK: 基于翰林模型的智能体
@@ -694,14 +709,14 @@ func getKeyList() -> [APIKeys] {
         APIKeys(
             name: "HANLIN_API_KEY",
             company: "HANLIN",
-            key: "",
+            key: getEnvironmentVariable("HANLIN_API_KEY"),
             requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
             isHidden: false
         ),
         APIKeys(
             name: "HANLIN_OPEN_API_KEY",
             company: "HANLIN_OPEN",
-            key: "",
+            key: getEnvironmentVariable("HANLIN_OPEN_API_KEY"),
             requestURL: "https://api.siliconflow.cn/v1/chat/completions",
             isHidden: false
         ),
