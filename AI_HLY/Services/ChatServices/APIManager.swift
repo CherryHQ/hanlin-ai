@@ -3250,7 +3250,7 @@ class APIManager {
                                                     let locationValue = extractValue(from: functionArguments, forKey: "location") ?? ""
                                                     let notesValue = extractValue(from: functionArguments, forKey: "notes") ?? ""
                                                     let priorityStr = extractValue(from: functionArguments, forKey: "priority")
-                                                    let completedStr = extractValue(from: functionArguments, forKey: "completed")
+                                                    let reminderMinutesStr = extractValue(from: functionArguments, forKey: "reminder_minutes")
                                                     
                                                     // 使用 ISO8601 格式转换日期字符串（格式示例：2025-04-16T12:34:56Z）
                                                     print("时间：", startDateStr, endDateStr, dueDateStr)
@@ -3275,14 +3275,10 @@ class APIManager {
                                                         priorityValue = pInt
                                                     }
                                                     
-                                                    // 将 completed 转换为 Bool（支持 "true"/"false" 字符串）
-                                                    var completedValue: Bool? = nil
-                                                    if let cStr = completedStr {
-                                                        if cStr.lowercased() == "true" {
-                                                            completedValue = true
-                                                        } else if cStr.lowercased() == "false" {
-                                                            completedValue = false
-                                                        }
+                                                    // 将 reminder_minutes 转换为 Int（若传入值非空）
+                                                    var reminderMinutesValue: Int? = nil
+                                                    if let rmStr = reminderMinutesStr, let rmInt = Int(rmStr) {
+                                                        reminderMinutesValue = rmInt
                                                     }
                                                     
                                                     // 调用写入系统事件的函数
@@ -3294,7 +3290,7 @@ class APIManager {
                                                                                                          location: locationValue,
                                                                                                          notes: notesValue,
                                                                                                          priority: priorityValue,
-                                                                                                         completed: completedValue)
+                                                                                                         reminderMinutes: reminderMinutesValue)
                                                     
                                                     if success, let event = writtenEvent {
                                                         // 使用 DateFormatter 格式化时间输出

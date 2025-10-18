@@ -20,6 +20,9 @@ func getEnvironmentVariable(_ name: String) -> String {
 func getModelList() -> [AllModels] {
     
     let rawModels: [AllModels] = [
+        // MARK: Cherry_IN
+        
+        
         // MARK: 通义
         // 0.00015
         AllModels(name: "qwen-flash", displayName: "Qwen-Flash", identity: "model", position: 0, company: "QWEN", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
@@ -693,7 +696,7 @@ func getTestModel(for company: String) -> String {
     case "PERPLEXITY":
         return "sonar"
     case "OPENROUTER":
-        return "google/gemma-3-1b-it:free"
+        return "qwen/qwen3-30b-a3b-instruct-2507"
     case "MODELSCOPE":
         return "Qwen/Qwen2.5-32B-Instruct"
     case "GITEE":
@@ -711,163 +714,188 @@ func getKeyList() -> [APIKeys] {
             company: "HANLIN",
             key: getEnvironmentVariable("HANLIN_API_KEY"),
             requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-            isHidden: false
+            isHidden: false,
+            from: .system
         ),
         APIKeys(
             name: "HANLIN_OPEN_API_KEY",
             company: "HANLIN_OPEN",
             key: getEnvironmentVariable("HANLIN_OPEN_API_KEY"),
             requestURL: "https://api.siliconflow.cn/v1/chat/completions",
-            isHidden: false
+            isHidden: false,
+            from: .system
+        ),
+        APIKeys(
+            name: "CHERRY_IN_API_KEY",
+            company: "CHERRY_IN",
+            key: "",
+            requestURL: "https://open.cherryin.ai/v1/chat/completions",
+            help: "https://open.cherryin.ai/console/token",
+            from: .system
         ),
         APIKeys(
             name: "ZHIPUAI_API_KEY",
             company: "ZHIPUAI",
             key: "",
             requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-            help: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys"
+            help: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
+            from: .system
         ),
         APIKeys(
             name: "DASHSCOPE_API_KEY",
             company: "QWEN",
             key: "",
             requestURL: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-            help: "https://bailian.console.aliyun.com/?tab=model#/api-key"
+            help: "https://bailian.console.aliyun.com/?tab=model#/api-key",
+            from: .system
         ),
         APIKeys(
             name: "DEEPSEEK_API_KEY",
             company: "DEEPSEEK",
             key: "",
             requestURL: "https://api.deepseek.com/v1/chat/completions",
-            help: "https://platform.deepseek.com/api_keys"
+            help: "https://platform.deepseek.com/api_keys",
+            from: .system
         ),
         APIKeys(
             name: "SILICONCLOUD_API_KEY",
             company: "SILICONCLOUD",
             key: "",
             requestURL: "https://api.siliconflow.cn/v1/chat/completions",
-            help: "https://cloud.siliconflow.cn/account/ak"
+            help: "https://cloud.siliconflow.cn/account/ak",
+            from: .system
         ),
         APIKeys(
             name: "ARK_API_KEY",
             company: "DOUBAO",
             key: "",
             requestURL: "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-            help: "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D"
+            help: "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D",
+            from: .system
         ),
         APIKeys(
             name: "KIMI_API_KEY",
             company: "KIMI",
             key: "",
             requestURL: "https://api.moonshot.cn/v1/chat/completions",
-            help: "https://platform.moonshot.cn/console/api-keys"
+            help: "https://platform.moonshot.cn/console/api-keys",
+            from: .system
         ),
         APIKeys(
             name: "OPENAI_API_KEY",
             company: "OPENAI",
             key: "",
             requestURL: "https://api.openai.com/v1/chat/completions",
-            help: "https://platform.openai.com/api-keys"
+            help: "https://platform.openai.com/api-keys",
+            from: .system
         ),
         APIKeys(
             name: "GEMINI_API_KEY",
             company: "GOOGLE",
             key: "",
             requestURL: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-            help: "https://aistudio.google.com/apikey"
+            help: "https://aistudio.google.com/apikey",
+            from: .system
         ),
         APIKeys(
             name: "XAI_API_KEY",
             company: "XAI",
             key: "",
             requestURL: "https://api.x.ai/v1/chat/completions",
-            help: "https://console.x.ai/team/c4aa1fe8-2617-4255-a78f-03d9572d1110/api-keys"
+            help: "https://console.x.ai/team/c4aa1fe8-2617-4255-a78f-03d9572d1110/api-keys",
+            from: .system
         ),
         APIKeys(
             name: "ANTHROPIC_API_KEY",
             company: "ANTHROPIC",
             key: "",
             requestURL: "https://api.anthropic.com/v1/chat/completions",
+            from: .system
         ),
         APIKeys(
             name: "YI_API_KEY",
             company: "YI",
             key: "",
             requestURL: "https://api.lingyiwanwu.com/v1/chat/completions",
-            help: "https://platform.lingyiwanwu.com/apikeys"
+            help: "https://platform.lingyiwanwu.com/apikeys",
+            from: .system
         ),
         APIKeys(
             name: "HUNYUAN_API_KEY",
             company: "HUNYUAN",
             key: "",
             requestURL: "https://api.hunyuan.cloud.tencent.com/v1/chat/completions",
-            help: "https://cloud.tencent.com/document/product/1729/111008"
+            help: "https://cloud.tencent.com/document/product/1729/111008",
+            from: .system
         ),
         APIKeys(
             name: "STEP_API_KEY",
             company: "STEP",
             key: "",
             requestURL: "https://api.stepfun.com/v1/chat/completions",
-            help: "https://platform.stepfun.com/interface-key"
+            help: "https://platform.stepfun.com/interface-key",
+            from: .system
         ),
         APIKeys(
             name: "WENXIN_API_KEY",
             company: "WENXIN",
             key: "",
             requestURL: "https://qianfan.baidubce.com/v2/chat/completions",
-            help: "https://console.bce.baidu.com/iam/#/iam/accesslist"
-        ),
-        APIKeys(
-            name: "SPARK_API_KEY",
-            company: "SPARK",
-            key: "",
-            requestURL: "https://spark-api-open.xf-yun.com/v1/chat/completions"
+            help: "https://console.bce.baidu.com/iam/#/iam/accesslist",
+            from: .system
         ),
         APIKeys(
             name: "PERPLEXITY_API_KEY",
             company: "PERPLEXITY",
             key: "",
             requestURL: "https://api.perplexity.ai/chat/completions",
-            help: "https://www.perplexity.ai/pplx-api"
+            help: "https://www.perplexity.ai/pplx-api",
+            from: .system
         ),
         APIKeys(
             name: "OPENROUTER_API_KEY",
             company: "OPENROUTER",
             key: "",
             requestURL: "https://openrouter.ai/api/v1/chat/completions",
-            help: "https://openrouter.ai/settings/keys"
+            help: "https://openrouter.ai/settings/keys",
+            from: .system
         ),
         APIKeys(
             name: "MODELSCOPE_API_KEY",
             company: "MODELSCOPE",
             key: "",
             requestURL: "https://api-inference.modelscope.cn/v1/chat/completions",
-            help: "https://modelscope.cn/my/myaccesstoken"
+            help: "https://modelscope.cn/my/myaccesstoken",
+            from: .system
         ),
         APIKeys(
             name: "GITEE_API_KEY",
             company: "GITEE",
             key: "",
-            requestURL: "https://ai.gitee.com/v1/chat/completions"
+            requestURL: "https://ai.gitee.com/v1/chat/completions",
+            from: .system
         ),
         APIKeys(
             name: "MINIMAX_API_KEY",
             company: "MINIMAX",
             key: "",
             requestURL: "https://api.minimax.chat/v1/text/chatcompletion_v2",
-            help: "https://platform.minimaxi.com/user-center/basic-information/interface-key"
+            help: "https://platform.minimaxi.com/user-center/basic-information/interface-key",
+            from: .system
         ),
         APIKeys(
             name: "LAN",
             company: "LAN",
             key: "",
-            requestURL: "http://127.0.0.1:1234/v1/chat/completions"
+            requestURL: "http://127.0.0.1:1234/v1/chat/completions",
+            from: .system
         ),
         APIKeys(
             name: "LOCAL",
             company: "LOCAL",
             key: "LOCAL",
-            requestURL: "LOCAL"
+            requestURL: "LOCAL",
+            from: .system
         )
     ]
     return keys
@@ -1314,6 +1342,8 @@ func getCompanyIcon(for companyName: String) -> String {
         return "openweather"
     case "MINIMAX":
         return "minimax"
+    case "CHERRY_IN":
+        return "cherry"
     default:
         return "defaultIcon" // 默认图标名称
     }

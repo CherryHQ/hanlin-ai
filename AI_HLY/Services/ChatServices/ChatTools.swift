@@ -88,7 +88,7 @@ func buildMemoryTools(
                 "location":   ["type": "string", "description": zh ? "地点(仅 calendar 类型适用)" : "Location (calendar only)"],
                 "notes":      ["type": "string", "description": zh ? "备注，可包含提醒的地点信息" : "Notes; include location for reminders"],
                 "priority":   ["type": "integer", "description": zh ? "提醒优先级 1‑9，0 表示未设置" : "Reminder priority 1‑9, 0 means unset"],
-                "completed":  ["type": "boolean", "description": zh ? "提醒是否已完成" : "Whether reminder is completed"]
+                "reminder_minutes": ["type": "integer", "description": zh ? "提醒事项的提前提醒时间(分钟)，默认5分钟，仅 reminder 类型适用" : "Advance reminder time in minutes for reminders, default 5 minutes, reminder type only"]
             ], "required": ["type", "title"]]
         ]])
     }

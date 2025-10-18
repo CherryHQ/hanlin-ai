@@ -526,6 +526,17 @@
         }
       }
     },
+    "company_CHERRY_IN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CherryIN"
+          }
+        }
+      }
+    },
     "company_DEEPSEEK" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -2784,6 +2784,11 @@ struct ImageViewer: View {
     
     // 根据当前容器尺寸与缩放比例，计算允许的平移边界，并返回经过限制后的 offset
     private func clampedOffset(proposed: CGSize, in containerSize: CGSize, scale: CGFloat) -> CGSize {
+        // 检查图片尺寸是否有效，防止除零错误和 IOSurface 错误
+        guard image.size.width > 0 && image.size.height > 0 else {
+            return CGSize.zero
+        }
+
         // 计算图片的宽高比
         let imageAspect = image.size.width / image.size.height
         let containerAspect = containerSize.width / containerSize.height

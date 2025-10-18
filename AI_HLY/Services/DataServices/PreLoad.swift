@@ -119,18 +119,34 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             
             if let oldRecord = retainedMap[name] {
                 // 已存在该 name 的较早记录，则判断保留哪一条
-                if let oldKey = oldRecord.key, !oldKey.isEmpty {
-                    // 老记录非空，则无论当前记录如何，都保留老记录，删除新记录
-                    keysToDelete.append(key)
-                } else {
-                    // 老记录为空
-                    if let newKey = key.key, !newKey.isEmpty {
-                        // 当前记录非空，则删除老记录，保留新记录
+                // 优先保护 custom 类型的记录
+                if oldRecord.from == .custom {
+                    // 如果老记录是 custom 类型，保留老记录，删除新记录（除非新记录也是 custom 且非空）
+                    if key.from == .custom, let newKey = key.key, !newKey.isEmpty, oldRecord.key?.isEmpty != false {
                         keysToDelete.append(oldRecord)
                         retainedMap[name] = key
                     } else {
-                        // 两者均为空，则保留老记录，删除新记录
                         keysToDelete.append(key)
+                    }
+                } else if key.from == .custom {
+                    // 如果新记录是 custom 类型，保留新记录，删除老记录
+                    keysToDelete.append(oldRecord)
+                    retainedMap[name] = key
+                } else {
+                    // 两者都是 system 类型，按原逻辑处理
+                    if let oldKey = oldRecord.key, !oldKey.isEmpty {
+                        // 老记录非空，则无论当前记录如何，都保留老记录，删除新记录
+                        keysToDelete.append(key)
+                    } else {
+                        // 老记录为空
+                        if let newKey = key.key, !newKey.isEmpty {
+                            // 当前记录非空，则删除老记录，保留新记录
+                            keysToDelete.append(oldRecord)
+                            retainedMap[name] = key
+                        } else {
+                            // 两者均为空，则保留老记录，删除新记录
+                            keysToDelete.append(key)
+                        }
                     }
                 }
             } else {
@@ -156,15 +172,17 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // 第三阶段：更新已存在记录的 requestURL 和 key
+        // 第三阶段：更新已存在记录的 requestURL 和 key（仅更新 system 类型）
         for (name, existingKey) in retainedMap {
-            if let predefinedKey = predefinedAPIKeys.first(where: { $0.name == name }) {
+            if let predefinedKey = predefinedAPIKeys.first(where: { $0.name == name }),
+               existingKey.from == .system,
+               predefinedKey.from == .system {
                 // 对于 HANLIN_API_KEY 和 HANLIN_OPEN_API_KEY，始终更新密钥
                 if name == "HANLIN_API_KEY" || name == "HANLIN_OPEN_API_KEY" {
                     if let newKey = predefinedKey.key, !newKey.isEmpty {
                         if existingKey.key != newKey {
                             existingKey.key = newKey
-                            print("强制更新 API Key \(name) 的密钥")
+                            print("强制更新 API Key \(name) 的密钥为：\(newKey)")
                         }
                     }
                 }
@@ -179,6 +197,14 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
                     if existingKey.help != predefinedKey.help {
                         existingKey.help = predefinedKey.help
                         print("更新 API Key \(name) 的 help 为：\(predefinedKey.help)")
+                    }
+                    if existingKey.apiType != predefinedKey.apiType {
+                        existingKey.apiType = predefinedKey.apiType
+                        print("更新 API Key \(name) 的 apiType 为：\(predefinedKey.apiType.rawValue)")
+                    }
+                    if existingKey.from != predefinedKey.from {
+                        existingKey.from = predefinedKey.from
+                        print("更新 API Key \(name) 的 from 为：\(predefinedKey.from.rawValue)")
                     }
                 }
             }

@@ -620,8 +620,8 @@ private func getRouteFromAppleMap(from start: CLLocationCoordinate2D,
         return instr.isEmpty ? nil : instr
     }
     
-    // 通过 MKPolyline 的扩展方法获取所有路线折线坐标（要求项目中已实现 MKPolyline 的 coordinates 属性扩展，其返回 [Coordinate]）
-    let polyCoordinates = route.polyline.coordinates
+    // 通过 MKPolyline 的扩展方法获取所有路线折线坐标
+    let polyCoordinates = route.polyline.customCoordinates
     let routeInfo = RouteInfo(distance: distanceMeters,
                               expectedTravelTime: expectedTravelTime,
                               instructions: instructions,
@@ -1326,4 +1326,25 @@ private func decodeGooglePolyline(_ encoded: String) -> [Coordinate] {
         coords.append(coordinate)
     }
     return coords
+}
+
+// MARK: - MKPolyline Extension
+extension MKPolyline {
+    var customCoordinates: [Coordinate] {
+        var coords: [Coordinate] = []
+
+        // 获取 MKPolyline 中的坐标点
+        let coordPointer = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: pointCount)
+        defer { coordPointer.deallocate() }
+
+        getCoordinates(coordPointer, range: NSRange(location: 0, length: pointCount))
+
+        // 转换为自定义的 Coordinate 结构体
+        for i in 0..<pointCount {
+            let coord = coordPointer[i]
+            coords.append(Coordinate(latitude: coord.latitude, longitude: coord.longitude))
+        }
+
+        return coords
+    }
 }

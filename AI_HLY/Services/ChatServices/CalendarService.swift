@@ -217,7 +217,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
 ///   - location: 日历事件使用的地点；提醒事项没有专门地点字段，可忽略或放在备注中
 ///   - notes: 事件备注
 ///   - priority: 提醒事项的优先级（1～9），0 或 nil 表示未设置；日历事件可忽略
-///   - completed: 提醒事项是否已完成；日历事件可忽略
+///   - reminderMinutes: 提醒时间（分钟）。对于有截止日期的提醒事项，表示提前多少分钟提醒；对于无截止日期的提醒事项，表示多少分钟后提醒（默认为5分钟）
 /// - Returns: (写入成功后的 EventItem 对象, Bool)，成功则返回更新后的 EventItem（包含系统生成的标识符），否则返回 nil 和 false
 func writeSystemEvent(type: String,
                       title: String,
@@ -227,7 +227,7 @@ func writeSystemEvent(type: String,
                       location: String?,
                       notes: String?,
                       priority: Int?,
-                      completed: Bool?) async -> (EventItem?, Bool) {
+                      reminderMinutes: Int? = 5) async -> (EventItem?, Bool) {
     
     let store = EKEventStore()
     
@@ -285,17 +285,51 @@ func writeSystemEvent(type: String,
         ekReminder.title = title
         ekReminder.notes = notes
         ekReminder.calendar = store.defaultCalendarForNewReminders()
-        if let dueDate = dueDate {
-            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dueDate)
-            ekReminder.dueDateComponents = components
-        }
+        
+        // 设置优先级
         if let priority = priority, priority > 0 {
             ekReminder.priority = priority
         }
-        ekReminder.isCompleted = completed ?? false
+        ekReminder.isCompleted = false  // 新创建的提醒事项始终为未完成状态
         
+        // 设置截止日期（如果提供）
+        if let dueDate = dueDate {
+            // 使用当前时区保存完整的时间信息，包括时区和秒
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone], from: dueDate)
+            ekReminder.dueDateComponents = components
+
+            print("设置截止日期：\(dueDate) -> 组件：\(components)")
+        } else {
+            print("没有设置截止日期")
+        }
+        
+        // 在保存前添加闹钟
+        if dueDate != nil {
+            // 添加提前提醒闹钟（必须在设置截止日期后添加）
+            if let reminderMinutes = reminderMinutes, reminderMinutes > 0 {
+                let alarm = EKAlarm(relativeOffset: -TimeInterval(reminderMinutes * 60))
+                ekReminder.addAlarm(alarm)
+                print("添加相对时间提醒：提前 \(reminderMinutes) 分钟")
+            }
+        } else {
+            // 没有截止日期的情况下，添加绝对时间提醒
+            if let reminderMinutes = reminderMinutes, reminderMinutes > 0 {
+                let alertDate = Date().addingTimeInterval(TimeInterval(reminderMinutes * 60))
+                let alarm = EKAlarm(absoluteDate: alertDate)
+                ekReminder.addAlarm(alarm)
+                print("添加绝对时间提醒：\(alertDate)")
+            }
+        }
+
+        // 保存提醒事项（包含所有属性和闹钟）
         do {
             try store.save(ekReminder, commit: true)
+            print("提醒事项保存成功")
+        } catch {
+            print("Failed to save reminder: \(error)")
+            return (nil, false)
+        }
+            
             var savedReminder = EventItem(
                 type: type,
                 title: title,
@@ -305,14 +339,11 @@ func writeSystemEvent(type: String,
                 location: nil,
                 notes: notes,
                 priority: priority,
-                completed: completed,
+                completed: false,  // 新创建的提醒事项始终为未完成状态
                 calendarIdentifier: nil
             )
             savedReminder.calendarIdentifier = ekReminder.calendarItemIdentifier
             return (savedReminder, true)
-        } catch {
-            return (nil, false)
-        }
     } else {
         return (nil, false)
     }

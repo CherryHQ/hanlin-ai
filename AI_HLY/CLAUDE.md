@@ -4,20 +4,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Swift-based iOS application called "AI翰林院" (AI Hanlin Academy). The app is a comprehensive AI assistant tool that integrates multiple AI models and services, including chat, vision analysis, knowledge management, and various specialized tools.
+AI翰林院 (AI Hanlin Academy) is a Swift-based iOS application that serves as a comprehensive AI workstation. The app integrates 20+ AI providers including OpenAI, Claude, Qwen, DeepSeek, GLM, and others, providing chat, vision analysis, knowledge management, and specialized tool integration.
+
+**Key Features:**
+- Multi-provider AI chat with streaming responses and tool calling
+- Vision analysis with camera integration and multi-modal AI models
+- RAG-based knowledge management with document parsing
+- Integrated tools: web search, maps, weather, calendar, health data, code execution
+- Local AI model support via LLM.swift
+- SwiftData + CloudKit for data persistence and sync
 
 ## Build and Development Commands
 
 ### Opening the Project
 ```bash
-# Open the Xcode project (located in parent directory)
-open ../AI_HLY.xcodeproj
+# Open the Xcode project from the repository root
+open AI_HLY.xcodeproj
 ```
 
 ### Build Commands
 - Build using Xcode's standard build system (⌘+B)
 - Run on simulator or device (⌘+R)
 - Clean build folder: Product → Clean Build Folder (⌘+Shift+K)
+
+### Testing
+- No unit tests are currently configured in the project
+- Testing is done through manual UI testing on device/simulator
+
+### Common Development Commands
+```bash
+# Clone the repository
+git clone https://github.com/CherryHQ/AI_Hanlin.git
+cd AI_HLY
+
+# Open in Xcode
+open AI_HLY.xcodeproj
+```
 
 ### Key Dependencies (Swift Package Manager)
 The project uses several external dependencies managed through SPM:
@@ -126,6 +148,11 @@ Services are organized by functionality in `/Services`:
    - Unified API abstraction in `APIManager`
    - Provider-specific icon and branding support
 
+5. **Data Persistence**:
+   - All models use SwiftData with CloudKit sync
+   - App data manager handles preloading and initialization
+   - Data preloading occurs in `AppDataManager.preloadDataIfNeeded()`
+
 ## Development Workflow
 
 ### Adding New AI Models
@@ -158,3 +185,27 @@ Services are organized by functionality in `/Services`:
 - **Localization**: Multi-language support via Localizable.xcstrings
 - **Configuration Files**: JSON configs for memory system and refinement prompts
 - **Launch Screen**: Storyboard-based launch screen with localization
+
+## Important Notes for Development
+
+### Requirements
+- iOS 18.0+
+- Xcode 15.0+
+- Swift 5.9+
+- macOS 14.0+ for development
+
+### Deep Linking
+- App supports `AI-Hanlin://` URL scheme for external integrations
+- Configured in `AI-HLY-Info.plist`
+- Handles deep links to VisionView for OCR functionality
+
+### API Key Management
+- API keys are stored encrypted using SwiftData
+- Multiple provider support requires proper key configuration
+- Keys are managed through `APIKeys.swift` model and `SettingsView.swift` UI
+
+### Performance Considerations
+- Heavy use of async/await for API calls
+- Streaming responses for real-time chat experience
+- Local model inference available via LLM.swift for offline usage
+- SwiftData with CloudKit for cross-device sync

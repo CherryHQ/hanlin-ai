@@ -20,33 +20,49 @@ class SystemOptimizer {
     /// - Parameter isVisual: 是否为视觉（多模态）模型
     /// - Returns: (模型名称, 模型所属厂商, API Key, 请求 URL)
     private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URL) {
+        print("[SystemOptimizer] 开始获取API配置，isVisual: \(isVisual)")
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
         let user = try context.fetch(userFetchDescriptor).first
         
         let defaultModel = isVisual ? "glm-4v-flash_hanlin" : "glm-4.5-flash_hanlin"
         let optimizationModelName: String = isVisual ? (user?.optimizationVisualModel ?? defaultModel)
         : (user?.optimizationTextModel ?? defaultModel)
-        
+        print("[SystemOptimizer] 使用模型：\(optimizationModelName)")
+
         // 查询模型信息，获取厂商
         let modelPredicate = #Predicate<AllModels> { $0.name == optimizationModelName }
         let modelFetch = FetchDescriptor<AllModels>(predicate: modelPredicate)
         guard let modelEntry = try context.fetch(modelFetch).first,
               let modelCompany = modelEntry.company else {
+            print("[SystemOptimizer] 错误：未能找到模型 \(optimizationModelName)")
             throw NSError(domain: "ModelNotFound", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取模型信息"])
+                          userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取模型信息: \(optimizationModelName)"])
         }
+        print("[SystemOptimizer] 模型厂商：\(modelCompany)")
         
         // 查询 API 配置
         let apiKeyPredicate = #Predicate<APIKeys> { ($0.company ?? "") == modelCompany }
         let apiKeyFetch = FetchDescriptor<APIKeys>(predicate: apiKeyPredicate)
-        guard let apiKeyObj = try context.fetch(apiKeyFetch).first,
-              let apiKey = apiKeyObj.key,
-              let requestURLString = apiKeyObj.requestURL,
-              let url = URL(string: requestURLString) else {
+        guard let apiKeyObj = try context.fetch(apiKeyFetch).first else {
+            print("[SystemOptimizer] 错误：未能找到厂商 \(modelCompany) 的API密钥配置")
             throw NSError(domain: "APIConfigError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取 API 配置"])
+                          userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取厂商 \(modelCompany) 的API配置"])
         }
-        
+
+        guard let apiKey = apiKeyObj.key, !apiKey.isEmpty else {
+            print("[SystemOptimizer] 错误：厂商 \(modelCompany) 的API密钥为空")
+            throw NSError(domain: "APIConfigError", code: -1,
+                          userInfo: [NSLocalizedDescriptionKey: "厂商 \(modelCompany) 的API密钥未配置或为空"])
+        }
+
+        guard let requestURLString = apiKeyObj.requestURL,
+              let url = URL(string: requestURLString) else {
+            print("[SystemOptimizer] 错误：厂商 \(modelCompany) 的请求URL无效: \(apiKeyObj.requestURL ?? "nil")")
+            throw NSError(domain: "APIConfigError", code: -1,
+                          userInfo: [NSLocalizedDescriptionKey: "厂商 \(modelCompany) 的请求URL无效"])
+        }
+
+        print("[SystemOptimizer] API配置获取成功 - URL: \(requestURLString)")
         return (optimizationModelName, modelCompany, apiKey, url)
     }
     
@@ -179,10 +195,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -269,10 +301,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -400,10 +448,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -529,10 +593,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -629,10 +709,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -770,10 +866,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -822,10 +934,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -870,10 +998,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -919,10 +1063,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -987,10 +1147,26 @@ class SystemOptimizer {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              200...299 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误"])
+                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+        }
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            // 尝试获取详细错误信息
+            var errorDetail = ""
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let error = errorData["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    errorDetail = message
+                } else if let message = errorData["message"] as? String {
+                    errorDetail = message
+                } else if let errorString = String(data: data, encoding: .utf8) {
+                    errorDetail = errorString
+                }
+            }
+            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
+                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
