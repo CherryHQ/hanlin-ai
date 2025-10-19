@@ -54,10 +54,11 @@ struct AddOnlineModelView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        
+
                         Picker("模型厂商", selection: $selectedCompany) {
-                            ForEach(apiKeys.map { $0.company ?? "Unknown" }, id: \.self) { company in
-                                Text(getCompanyName(for: company))
+                            ForEach(apiKeys, id: \.company) { apiKey in
+                                Text(getCompanyName(for: apiKey))
+                                    .tag(apiKey.company ?? "Unknown")
                             }
                         }
                         .pickerStyle(.menu)

@@ -15,6 +15,7 @@ enum SearchEngine: String {
     case TAVILY
     case LANGSEARCH
     case BRAVE
+    case PERPLEXITY
 }
 
 /// 搜索结果解析结构体
@@ -42,6 +43,8 @@ func searchTool(query: String, engine: SearchEngine, apiKey: String?, requestURL
         return try await searchTavily(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
     case .BRAVE:
         return try await searchBrave(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
+    case .PERPLEXITY:
+        return try await searchPerplexity(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
     }
 }
 
@@ -450,6 +453,76 @@ func searchTavily(query: String, apiKey: String?, requestURL: String, searchCoun
     return (parsedResult, "TAVILY")
 }
 
+// MARK: Perplexity 搜索实现
+func searchPerplexity(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    guard let apiKey = apiKey, let url = URL(string: requestURL) else {
+        throw URLError(.badURL)
+    }
+
+    let resultCount = max(1, searchCount)
+
+    let requestBody: [String: Any] = [
+        "query": query,
+        "max_results": resultCount,
+        "max_tokens_per_page": 1024
+    ]
+
+    let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = jsonData
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+    request.timeoutInterval = 300
+
+    let (data, response) = try await URLSession.shared.data(for: request)
+
+    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Perplexity 搜索请求失败，状态码: \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    }
+
+    struct PerplexitySearchResponse: Decodable {
+        let results: [PerplexitySearchResultItem]?
+        let id: String?
+    }
+
+    struct PerplexitySearchResultItem: Decodable {
+        let title: String?
+        let url: String?
+        let snippet: String?
+        let date: String?
+        let lastUpdated: String?
+
+        enum CodingKeys: String, CodingKey {
+            case title
+            case url
+            case snippet
+            case date
+            case lastUpdated = "last_updated"
+        }
+    }
+
+    let decoder = JSONDecoder()
+    let perplexityResponse = try decoder.decode(PerplexitySearchResponse.self, from: data)
+    let results = perplexityResponse.results ?? []
+
+    let titles = results.compactMap { $0.title }
+    let links = results.compactMap { $0.url }
+    let contents = results.compactMap { $0.snippet }
+    let icons = Array(repeating: "https://www.perplexity.ai/favicon.ico", count: titles.count)
+
+    let parsedResult = ParsedSearchResult(
+        titles: titles,
+        links: links,
+        contents: contents,
+        icons: icons,
+        totalTokens: results.count
+    )
+
+    return (parsedResult, "PERPLEXITY")
+}
+
 // MARK: Brave 搜索实现
 func searchBrave(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
     guard let apiKey = apiKey, let url = URL(string: requestURL), var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -614,6 +687,10 @@ func testSearchAPI(apiKey: String, requestURL: String, engine: SearchEngine) asy
             return true
         case .BRAVE:
             let (_, engineName) = try await searchBrave(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
+            print("\(engineName) 搜索测试通过")
+            return true
+        case .PERPLEXITY:
+            let (_, engineName) = try await searchPerplexity(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
             print("\(engineName) 搜索测试通过")
             return true
         }

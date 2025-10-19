@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-// MARK: 大模型 API 编辑与厂商设置合并界面
+// MARK: 大模型 API 与厂商设置界面
 struct APIKeysView: View {
     // 查询所有 APIKeys、所有模型与模型信息
     @Query var apiKeys: [APIKeys]
@@ -23,11 +23,14 @@ struct APIKeysView: View {
     @State private var isTesting = false
     @State private var isInquiring = false
     @State private var inquiryResult: Double? = nil
-    
+
     // 错误提示及加载状态
     @State private var errorMessage: String = ""
     @State private var showAPIKeyError: Bool = false
     @State private var loadingCompany: String? = nil
+
+    // 新增自定义供应商状态
+    @State private var showAddCustomProvider = false
     
     // 按完整拼音排序 APIKeys（过滤掉 LOCAL、HANLIN、HANLIN_OPEN 类型）
     private var sortedApiKeys: [APIKeys] {
@@ -37,19 +40,19 @@ struct APIKeysView: View {
                 return company != "LOCAL" && company != "HANLIN" && company != "HANLIN_OPEN"
             }
             .sorted { key1, key2 in
-                let pinyin1 = getPinyin(for: getCompanyName(for: key1.company ?? "Unknown"))
-                let pinyin2 = getPinyin(for: getCompanyName(for: key2.company ?? "Unknown"))
+                let pinyin1 = getPinyin(for: getCompanyName(for: key1))
+                let pinyin2 = getPinyin(for: getCompanyName(for: key2))
                 return pinyin1 < pinyin2
             }
     }
-    
+
     // 获取唯一厂商，并按完整拼音排序
     private var sortedCompanies: [(company: String, key: APIKeys)] {
         let uniqueCompanies = Dictionary(grouping: apiKeys, by: { $0.company })
             .compactMapValues { $0.first } // 每个厂商只取一条数据
         return uniqueCompanies.values.sorted { key1, key2 in
-            let pinyin1 = getPinyin(for: getCompanyName(for: key1.company ?? "Unknown"))
-            let pinyin2 = getPinyin(for: getCompanyName(for: key2.company ?? "Unknown"))
+            let pinyin1 = getPinyin(for: getCompanyName(for: key1))
+            let pinyin2 = getPinyin(for: getCompanyName(for: key2))
             return pinyin1 < pinyin2
         }.map { ( ($0.company ?? "Unknown"), $0) }
     }
@@ -86,10 +89,20 @@ struct APIKeysView: View {
                         }
                     } label: {
                         HStack {
-                            Image(getCompanyIcon(for: company))
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                            Text(getCompanyName(for: company))
+                            // 自定义供应商使用 defaultIcon，系统供应商使用资源图片
+                            if key.from == .custom {
+                                Image("defaultIcon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                            } else {
+                                Image(getCompanyIcon(for: company))
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+
+                            // 使用重载函数自动处理自定义供应商名称
+                            Text(getCompanyName(for: key))
                             Spacer()
                             if isAPISettingAllowed(for: key) {
                                 Image(systemName: "key")
@@ -118,8 +131,21 @@ struct APIKeysView: View {
             }
         }
         .navigationTitle("密钥设置")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showAddCustomProvider = true
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundColor(.hlBluefont)
+                }
+            }
+        }
         .sheet(item: $selectedKey) { key in
             editKeyView(for: key)
+        }
+        .sheet(isPresented: $showAddCustomProvider) {
+            addCustomProviderView()
         }
         .alert("无法开启厂商", isPresented: $showAPIKeyError) {
             Button("确定", role: .cancel) {}
@@ -135,27 +161,39 @@ struct APIKeysView: View {
             Form {
                 Section {
                     VStack(alignment: .center) {
-                        Image(getCompanyIcon(for: key.company ?? "Unknown"))
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .padding()
-                        
-                        Text("设置 \(getCompanyName(for: key.company ?? "Unknown")) API密钥，以启用该厂商的模型")
+                        // 自定义供应商使用 defaultIcon
+                        if key.from == .custom {
+                            Image("defaultIcon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .padding()
+                        } else {
+                            Image(getCompanyIcon(for: key.company ?? "Unknown"))
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .padding()
+                        }
+
+                        Text("设置 \(getCompanyName(for: key)) API密钥，以启用该厂商的模型")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
-                        
-                        if let url = URL(string: key.help) {
-                            Link("🔗 点此获取 \(getCompanyName(for: key.company ?? "Unknown")) API密钥", destination: url)
-                                .font(.footnote)
-                                .multilineTextAlignment(.center)
-                                .padding(.bottom)
-                        } else {
-                            // 当 URL 无效时可以提供一个备用视图
-                            Text("建议进入其开放平台获取API密钥")
-                                .font(.footnote)
-                                .multilineTextAlignment(.center)
-                                .padding(.bottom)
+
+                        // 自定义供应商不显示获取API密钥的链接
+                        if key.from != .custom {
+                            if let url = URL(string: key.help) {
+                                Link("🔗 点此获取 \(getCompanyName(for: key)) API密钥", destination: url)
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                            } else {
+                                // 当 URL 无效时可以提供一个备用视图
+                                Text("建议进入其开放平台获取API密钥")
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -166,7 +204,8 @@ struct APIKeysView: View {
                         set: { key.key = $0 }
                     ))
                 }
-                if key.company == "LAN" {
+                // 自定义供应商或LAN供应商显示请求地址设置
+                if key.company == "LAN" || key.from == .custom {
                     Section(header: Text("请求地址（URL）")) {
                         Text(verbatim: "例如：http://127.0.0.1:1234/v1/chat/completions")
                             .font(.caption)
@@ -175,21 +214,25 @@ struct APIKeysView: View {
                             set: { key.requestURL = $0 }
                         ))
                         .keyboardType(.URL)
+                        .autocapitalization(.none)
+                        .autocorrectionDisabled()
                     }
                 }
-                // 测试 API 按钮及状态显示
-                Section {
-                    HStack {
-                        Button("测试 API") {
-                            testAPI(for: key)
-                        }
-                        .disabled(isTesting)
-                        Spacer()
-                        if isTesting {
-                            ProgressView()
-                        } else if let result = testResult {
-                            Text(result ? "测试通过" : "测试失败")
-                                .foregroundColor(result ? .green : .red)
+                // 测试 API 按钮及状态显示（局域网模型和自定义供应商不显示）
+                if key.company != "LAN" && key.from != .custom {
+                    Section {
+                        HStack {
+                            Button("测试 API") {
+                                testAPI(for: key)
+                            }
+                            .disabled(isTesting)
+                            Spacer()
+                            if isTesting {
+                                ProgressView()
+                            } else if let result = testResult {
+                                Text(result ? "测试通过" : "测试失败")
+                                    .foregroundColor(result ? .green : .red)
+                            }
                         }
                     }
                 }
@@ -293,7 +336,7 @@ struct APIKeysView: View {
                     key.isHidden = false
                 } else {
                     // API Key 为空时阻止开启，并显示错误提示
-                    errorMessage = "\(getCompanyName(for: company)) 需要有效的 API Key，请先设置密钥。"
+                    errorMessage = "\(getCompanyName(for: key)) 需要有效的 API Key，请先设置密钥。"
                     showAPIKeyError = true
                 }
                 saveChanges()
@@ -337,6 +380,176 @@ struct APIKeysView: View {
     private func isAPISettingAllowed(for key: APIKeys) -> Bool {
         guard let company = key.company?.uppercased() else { return false }
         return !(company == "LOCAL" || company == "HANLIN" || company == "HANLIN_OPEN")
+    }
+
+    // MARK: 新增自定义供应商界面
+    @ViewBuilder
+    private func addCustomProviderView() -> some View {
+        NavigationView {
+            AddCustomProviderForm(modelContext: modelContext, isPresented: $showAddCustomProvider)
+        }
+    }
+}
+
+// MARK: - 新增自定义供应商表单视图
+struct AddCustomProviderForm: View {
+    let modelContext: ModelContext
+    @Binding var isPresented: Bool
+
+    @State private var providerName: String = ""
+    @State private var apiKey: String = ""
+    @State private var requestURL: String = ""
+    @State private var showValidationError = false
+    @State private var validationMessage = ""
+
+    var body: some View {
+        Form {
+            Section {
+                VStack(alignment: .center) {
+                    Image("defaultIcon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                        .padding()
+
+                    Text("添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+
+            Section(header: Text("供应商名称")) {
+                TextField("请输入供应商名称", text: $providerName)
+            }
+
+            Section(header: Text("API Key")) {
+                SecureField("请输入 API 密钥", text: $apiKey)
+            }
+
+            Section(header: Text("请求地址（URL）")) {
+                Text("例如：https://api.example.com/v1/chat/completions")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                TextField("请输入请求地址", text: $requestURL)
+                    .keyboardType(.URL)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled()
+
+                if !requestURL.isEmpty && !requestURL.hasSuffix("/v1/chat/completions") {
+                    Button("补全 /v1/chat/completions") {
+                        completeURL()
+                    }
+                    .font(.caption)
+                    .foregroundColor(.hlBluefont)
+                }
+            }
+
+            Section {
+                Text("💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .navigationTitle("新增自定义供应商")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("取消") {
+                    isPresented = false
+                }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button("保存") {
+                    saveCustomProvider()
+                }
+                .disabled(!isFormValid)
+            }
+        }
+        .alert("验证失败", isPresented: $showValidationError) {
+            Button("确定", role: .cancel) {}
+        } message: {
+            Text(validationMessage)
+        }
+    }
+
+    private var isFormValid: Bool {
+        !providerName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !requestURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        (requestURL.hasPrefix("http://") || requestURL.hasPrefix("https://"))
+    }
+
+    private func completeURL() {
+        var trimmedURL = requestURL.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // 移除末尾的斜杠
+        while trimmedURL.hasSuffix("/") {
+            trimmedURL.removeLast()
+        }
+
+        // 补全标准路径
+        if !trimmedURL.hasSuffix("/v1/chat/completions") {
+            trimmedURL += "/v1/chat/completions"
+        }
+
+        requestURL = trimmedURL
+    }
+
+    private func saveCustomProvider() {
+        let trimmedName = providerName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedURL = requestURL.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // 验证
+        guard !trimmedName.isEmpty else {
+            validationMessage = "供应商名称不能为空"
+            showValidationError = true
+            return
+        }
+
+        guard !trimmedKey.isEmpty else {
+            validationMessage = "API Key 不能为空"
+            showValidationError = true
+            return
+        }
+
+        guard !trimmedURL.isEmpty else {
+            validationMessage = "请求地址不能为空"
+            showValidationError = true
+            return
+        }
+
+        guard trimmedURL.hasPrefix("http://") || trimmedURL.hasPrefix("https://") else {
+            validationMessage = "请求地址必须以 http:// 或 https:// 开头"
+            showValidationError = true
+            return
+        }
+
+        // 创建自定义供应商
+        let customProvider = APIKeys(
+            name: trimmedName,
+            company: "CUSTOM_\(UUID().uuidString.prefix(8).uppercased())", // 使用唯一标识避免冲突
+            key: trimmedKey,
+            requestURL: trimmedURL,
+            isHidden: false, // 默认启用
+            help: "自定义 API 供应商",
+            apiType: .openAI,
+            from: .custom,
+            timestamp: Date()
+        )
+
+        modelContext.insert(customProvider)
+
+        do {
+            try modelContext.save()
+            isPresented = false
+        } catch {
+            validationMessage = "保存失败：\(error.localizedDescription)"
+            showValidationError = true
+        }
     }
 }
 
@@ -547,11 +760,11 @@ struct SearchSettingView: View {
                             .scaledToFit()
                             .frame(width: 50, height: 50)
                             .padding()
-                        
+
                         Text("设置 \(getCompanyName(for: key.company ?? "Unknown")) API密钥，以开启该搜索引擎")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
-                        
+
                         if let url = URL(string: key.help) {
                             Link("🔗 点此获取 \(getCompanyName(for: key.company ?? "Unknown")) API密钥", destination: url)
                                 .font(.footnote)
@@ -797,33 +1010,20 @@ struct MapSettingView: View {
         
         Form {
             Section {
-                ZStack {
-                    // 背景图片只在内容范围内展示
-                    Image("Hangzhou")
-                        .resizable()
-                        .scaledToFill()
-                        .overlay(
-                            Color(.systemBackground).opacity(0.80)
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                VStack(alignment: .center) {
+                    Image(systemName: "map")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.hlBluefont)
+                        .padding()
                     
-                    VStack(alignment: .center) {
-                        Image(systemName: "map")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.hlBluefont)
-                            .padding()
-                        
-                        Text("设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图")
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding()
+                    Text("设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom)
                 }
-                .background(Color.clear)
-                .listRowBackground(Color.clear)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding()
             }
             
             Section {
@@ -833,7 +1033,7 @@ struct MapSettingView: View {
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("地图引擎选择（最多只能开启一个）")) {
+            Section(header: Text("地图引擎选择（最多只能开启一个）")) { 
                 ForEach(sortedMapKeys) { key in
                     HStack {
                         // 左侧区域：点击可进入 API 配置界面（APPLEMAPP 不可配置 API）
@@ -850,7 +1050,7 @@ struct MapSettingView: View {
                                 Text(getCompanyName(for: key.company))
                                     .foregroundColor(.primary)
                                 Spacer()
-                                // 对于默认的 APPLEMAP，显示“默认”标识
+                                // 对于默认的 APPLEMAP，显示"默认"标识
                                 if key.company.uppercased() == "APPLEMAP" {
                                     Text("默认")
                                         .font(.caption)
@@ -998,11 +1198,11 @@ struct MapSettingView: View {
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)
                                 .padding()
-                            
+
                             Text("设置 \(getCompanyName(for: key.company)) API密钥，以开启该地图引擎")
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
-                            
+
                             if let url = URL(string: key.help) {
                                 Link("🔗 点此获取 \(getCompanyName(for: key.company)) API密钥", destination: url)
                                     .font(.footnote)
@@ -1526,11 +1726,11 @@ struct WeatherSettingView: View {
                             .scaledToFit()
                             .frame(width: 50, height: 50)
                             .padding()
-                        
+
                         Text("设置 \(getCompanyName(for: key.company)) API 密钥，以开启该天气服务")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
-                        
+
                         if let url = URL(string: key.help) {
                             Link("🔗 点此获取 \(getCompanyName(for: key.company)) API 密钥", destination: url)
                                 .font(.footnote)

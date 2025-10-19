@@ -729,7 +729,7 @@ func getKeyList() -> [APIKeys] {
             name: "CHERRY_IN_API_KEY",
             company: "CHERRY_IN",
             key: "",
-            requestURL: "https://open.cherryin.ai/v1/chat/completions",
+            requestURL: "https://open.cherryin.net/v1/chat/completions",
             help: "https://open.cherryin.ai/console/token",
             from: .system
         ),
@@ -849,7 +849,7 @@ func getKeyList() -> [APIKeys] {
             company: "PERPLEXITY",
             key: "",
             requestURL: "https://api.perplexity.ai/chat/completions",
-            help: "https://www.perplexity.ai/pplx-api",
+            help: "https://www.perplexity.ai/account/api/keys",
             from: .system
         ),
         APIKeys(
@@ -956,6 +956,15 @@ func getSearchKeyList() -> [SearchKeys] {
             price: 0.0219,
             isUsing: false,
             help: "https://api-dashboard.search.brave.com/app/keys"
+        ),
+        SearchKeys(
+            name: "PERPLEXITY_KEY",
+            company: "PERPLEXITY",
+            key: "",
+            requestURL: "https://api.perplexity.ai/search",
+            price: 0.005,
+            isUsing: false,
+            help: "https://www.perplexity.ai/account/api/keys"
         ),
     ]
     return keys
@@ -1353,6 +1362,16 @@ func getCompanyName(for companyName: String) -> String {
     let key = "company_\(companyName.uppercased())" // 生成动态 key
     let localizedName = NSLocalizedString(key, tableName: "Localizable", bundle: .main, value: "未知", comment: "Company Name")
     return localizedName
+}
+
+// 重载函数：处理 APIKeys 对象，自定义供应商显示其名称
+func getCompanyName(for apiKey: APIKeys) -> String {
+    // 如果是自定义供应商，直接返回其名称
+    if apiKey.from == .custom {
+        return apiKey.name ?? "自定义供应商"
+    }
+    // 否则使用原有的本地化逻辑
+    return getCompanyName(for: apiKey.company ?? "Unknown")
 }
 
 func priceText(for price: Int16) -> String {
