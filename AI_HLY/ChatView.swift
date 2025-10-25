@@ -879,7 +879,7 @@ struct ChatView: View {
     private func buildScrollContent(_ scrollViewProxy: ScrollViewProxy) -> some View {
         
             ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
+                LazyVStack(alignment: .leading, spacing: 8, pinnedViews: []) {
                     // 加载数据提示
                     HStack {
                         Spacer()
@@ -890,16 +890,16 @@ struct ChatView: View {
                         }
                         Spacer()
                     }
-                    
+
                     // 聊天记录
                     ForEach(chatTemps) { msg in
                         createChatBubble(for: msg)
                             .sensoryFeedback(.success, trigger: isOutPut)
                             .id(msg.id)
                     }
-                    
+
                     Spacer()
-                    
+
                     // 底部留白
                     Color.clear
                         .padding(.bottom, dynamicBottomPadding())
