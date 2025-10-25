@@ -2433,7 +2433,7 @@ class APIManager {
                                     "type": "disabled",
                                 ]
                             }
-                        } else if modelInfo.company == "ZHIPUAI" || modelInfo.company == "HANLIN" || modelInfo.company == "DOUBAO" {
+                        } else if modelInfo.company == "ZHIPUAI" || modelInfo.company == "HANLIN" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER" {
                             if ifThink {
                                 requestBody["thinking"] = [
                                     "type": "enabled",
@@ -2462,7 +2462,7 @@ class APIManager {
                         switch thinkingLength {
                         case 1:
                             // 短暂思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" {
+                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER"  {
                                 requestBody["reasoning_effort"] = "low"
                             } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
                                 requestBody["thinking_budget"] = 1024
@@ -2470,7 +2470,7 @@ class APIManager {
                             
                         case 2:
                             // 中等思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" {
+                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER"  {
                                 requestBody["reasoning_effort"] = "medium"
                             } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
                                 requestBody["thinking_budget"] = 8192
@@ -2478,9 +2478,9 @@ class APIManager {
 
                         case 3:
                             // 深度思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" {
+                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" {
                                 requestBody["reasoning_effort"] = "high"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
+                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" || modelInfo.company == "OPENROUTER"  {
                                 requestBody["thinking_budget"] = 16384
                             }
 

@@ -23,7 +23,14 @@ func getModelList() -> [AllModels] {
     
     let rawModels: [AllModels] = [
         // MARK: Cherry_IN
-        
+        // 0
+        AllModels(name: "openai/gpt-5-chat_repeat_cherryin", displayName: "GPT5(CherryIN)", identity: "model", position: 103, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
+        // 0
+        AllModels(name: "anthropic/claude-sonnet-4.5_repeat_cherryin", displayName: "Claude-Sonnet-4.5(CherryIN)", identity: "model", position: 103, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
+        // 0
+        AllModels(name: "gemini/gemini-2.5-flash_repeat_cherryin", displayName: "Gemini2.5-Flash(CherryIN)", identity: "model", position: 104, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        // 0
+        AllModels(name: "google/gemini-2.5-pro_repeat_cherryin", displayName: "Gemini2.5-Pro(CherryIN)", identity: "model", position: 105, company: "CHERRY_IN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         
         // MARK: 通义
         // 0.00015
@@ -115,17 +122,13 @@ func getModelList() -> [AllModels] {
         
         // MARK: Kimi
         // 0.006
-        AllModels(name: "kimi-k2-0711-preview", displayName: "Kimi-Auto", identity: "model", position: 44, company: "KIMI", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "kimi-k2-0905-preview", displayName: "Kimi-K2", identity: "model", position: 44, company: "KIMI", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         
         // MARK: 阶跃星辰
         // 0.0015
         AllModels(name: "step-2-mini", displayName: "Step2-Mini", identity: "model", position: 46, company: "STEP", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.079
-        AllModels(name: "step-2-16k", displayName: "Step2", identity: "model", position: 47, company: "STEP", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0525
-        AllModels(name: "step-1o-turbo-vision", displayName: "Step1o-Turbo", identity: "model", position: 48, company: "STEP", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 0.0425
-        AllModels(name: "step-1o-vision-32k", displayName: "Step1o", identity: "model", position: 49, company: "STEP", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "step-3", displayName: "Step3", identity: "model", position: 48, company: "STEP", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         
         // MARK: 讯飞星火
         // 0.0015
@@ -139,103 +142,69 @@ func getModelList() -> [AllModels] {
         
         // MARK: MiniMax
         // 0.0045
-        AllModels(name: "MiniMax-Text-01", displayName: "MiniMax-Text-01", identity: "model", position: 50, company: "MINIMAX", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.001
-        AllModels(name: "abab6.5s-chat", displayName: "Abab6.5s", identity: "model", position: 50, company: "MINIMAX", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "MiniMax-M2", displayName: "MiniMax-Text-01", identity: "model", position: 50, company: "MINIMAX", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         
         // MARK: SiliconCloud
         // 0
         AllModels(name: "THUDM/GLM-4-9B-0414", displayName: "GLM-4-9B(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00189
-        AllModels(name: "THUDM/GLM-4-32B-0414", displayName: "GLM-4-32B(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0035
         AllModels(name: "zai-org/GLM-4.5-Air", displayName: "GLM-4.5-Air(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.00875
         AllModels(name: "zai-org/GLM-4.5", displayName: "GLM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // 0.00875
+        AllModels(name: "zai-org/GLM-4.6", displayName: "GLM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0035
         AllModels(name: "zai-org/GLM-4.5V", displayName: "GLM-4.5V(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0
-        AllModels(name: "THUDM/GLM-Z1-9B-0414", displayName: "GLM-Z1-9B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.0025
-        AllModels(name: "THUDM/GLM-Z1-32B-0414", displayName: "GLM-Z1-32B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.0025
-        AllModels(name: "THUDM/GLM-Z1-Rumination-32B-0414", displayName: "GLM-Z1-Rumination-32B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0
         AllModels(name: "internlm/internlm2_5-7b-chat", displayName: "Internlm2.5-7B(SiliconCloud)", identity: "model", position: 56, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.001
-        AllModels(name: "internlm/internlm2_5-20b-chat", displayName: "Internlm2.5-20B(SiliconCloud)", identity: "model", position: 57, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0
         AllModels(name: "Qwen/Qwen3-8B", displayName: "Qwen3-8B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00125
-        AllModels(name: "Qwen/Qwen3-14B", displayName: "Qwen3-14B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00175
-        AllModels(name: "Qwen/Qwen3-30B-A3B", displayName: "Qwen3-30B-A3B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00175
+        // 0.0028
         AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507", displayName: "Qwen3-30B-A3B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00175
+        // 0.0028
         AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507", displayName: "Qwen3-30B-A3B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.0025
-        AllModels(name: "Qwen/Qwen3-32B", displayName: "Qwen3-32B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00625
-        AllModels(name: "Qwen/Qwen3-235B-A22B", displayName: "Qwen3-235B-A22B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00625
+        // 0.01
         AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507", displayName: "Qwen3-235B-A22B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00625
+        // 0.01
         AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507", displayName: "Qwen3-235B-A22B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.005
-        AllModels(name: "deepseek-ai/DeepSeek-V3", displayName: "DeepSeek-V3(SiliconCloud)", identity: "model", position: 58, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // 0.0028
+        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Instruct", displayName: "Qwen3-VL-30B-A3B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        // 0.0028
+        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Thinking", displayName: "Qwen3-VL-30B-A3B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "deepseek-ai/DeepSeek-R1", displayName: "DeepSeek-R1(SiliconCloud)", identity: "model", position: 59, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Instruct", displayName: "Qwen3-VL-235B-A22B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "deepseek-ai/DeepSeek-V3.1", displayName: "DeepSeek-V3.1(SiliconCloud)", identity: "model", position: 59, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00126
-        AllModels(name: "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", displayName: "DeepSeek-R1-Distill-Qwen-32B(SiliconCloud)", identity: "model", position: 60, company: "SILICONCLOUD", price:2, isHidden:true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.00099
-        AllModels(name: "deepseek-ai/deepseek-vl2", displayName: "DeepSeek-VL2(SiliconCloud)", identity: "model", position: 61, company: "SILICONCLOUD", price:1, isHidden:true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Thinking", displayName: "Qwen3-VL-235B-A22B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "moonshotai/Kimi-K2-Instruct", displayName: "Kimi-K2-Instruct(SiliconCloud)", identity: "model", position: 61, company: "SILICONCLOUD", price:3, isHidden:true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "deepseek-ai/DeepSeek-V3.2-Exp", displayName: "DeepSeek-V3.2(SiliconCloud)", identity: "model", position: 59, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // 0.01
+        AllModels(name: "moonshotai/Kimi-K2-Instruct-0905", displayName: "Kimi-K2-Instruct-0905(SiliconCloud)", identity: "model", position: 61, company: "SILICONCLOUD", price:3, isHidden:true, supportsSearch: true, supportsToolUse: true),
         // 免费
         AllModels(name: "Kwai-Kolors/Kolors", displayName: "Kolors(SiliconCloud)", identity: "model", position: 62, company: "SILICONCLOUD", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
         // MARK: ModelScope
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen2.5-14B-Instruct_repeat_ms", displayName: "Qwen2.5-14B(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen2.5-32B-Instruct_repeat_ms", displayName: "Qwen2.5-32B(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen2.5-72B-Instruct_repeat_ms", displayName: "Qwen2.5-72B(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 免费2000次/天Qwen/Qwen3-14B
-        AllModels(name: "Qwen/Qwen3-14B_repeat_ms", displayName: "Qwen3-14B(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-32B_repeat_ms", displayName: "Qwen3-32B(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-235B-A22B_repeat_ms", displayName: "Qwen3-235B-A22B(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "deepseek-ai/DeepSeek-V3-0324_repeat_ms", displayName: "DeepSeek-V3(ModelScope)", identity: "model", position: 64, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "Qwen/Qwen2.5-VL-7B-Instruct_repeat_ms", displayName: "Qwen2.5-VL-7B(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Instruct_repeat_ms", displayName: "Qwen3-Next-80B-A3B-Instruct(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "Qwen/Qwen2.5-VL-32B-Instruct_repeat_ms", displayName: "Qwen2.5-VL-32B(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Thinking_repeat_ms", displayName: "Qwen/Qwen3-Next-80B-A3B-Thinking(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "Qwen/Qwen2.5-VL-72B-Instruct_repeat_ms", displayName: "Qwen2.5-VL-72B(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Instruct_repeat_ms", displayName: "Qwen3-VL-30B-A3B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 免费2000次/天
-        AllModels(name: "deepseek-ai/DeepSeek-R1_repeat_ms", displayName: "DeepSeek-R1(ModelScope)", identity: "model", position: 66, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/QwQ-32B_repeat_ms", displayName: "QwQ-32B(ModelScope)", identity: "model", position: 67, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/QVQ-72B-Preview_repeat_ms", displayName: "QVQ-72B(ModelScope)", identity: "model", position: 67, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "MusePublic/489_ckpt_FLUX_1_repeat_ms", displayName: "Flux.1-dev", identity: "model", position: 68, company: "MODELSCOPE", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
+        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Instruct_repeat_ms", displayName: "Qwen3-VL-235B-A22B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         
         // MARK: Gitee
-        // 0.01/次
-        AllModels(name: "Fin-R1", displayName: "Fin-R1", identity: "model", position: 69, company: "GITEE", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true),
-        // 0.01/次
-        AllModels(name: "GLM-4-9B-Chat", displayName: "GLM-4-9B", identity: "model", position: 70, company: "GITEE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.01/次
-        AllModels(name: "InternLM3-8B-Instruct", displayName: "InternLM3-8B-Instruct", identity: "model", position: 71, company: "GITEE", price: 0, isHidden: true, supportsSearch: true),
-        // 0.02/次
-        AllModels(name: "Qwen2.5-72B-Instruct", displayName: "Qwen2.5-72B-Instruct", identity: "model", position: 72, company: "GITEE", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // 0.04/次
+        AllModels(name: "GLM-4.6", displayName: "GLM-4.6(Gitee)", identity: "model", position: 70, company: "GITEE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        // 0.05/次
+        AllModels(name: "kimi-k2-instruct", displayName: "kimi-k2-instruct(Gitee)", identity: "model", position: 71, company: "GITEE", price: 0, isHidden: true, supportsSearch: true),
         
         // MARK: GPT
         // 0.041
@@ -277,29 +246,19 @@ func getModelList() -> [AllModels] {
         
         // MARK: Claude
         // 0.035
-        AllModels(name: "claude-3-5-haiku-latest", displayName: "Claude3.5-Haiku", identity: "model", position: 88, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsToolUse: true),
+        AllModels(name: "claude-haiku-4-5", displayName: "Claude4.5-Haiku", identity: "model", position: 88, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsToolUse: true),
         // 0.0657
-        AllModels(name: "claude-3-7-sonnet-latest", displayName: "Claude3.7-Sonnet", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "claude-sonnet-4-5", displayName: "Claude4.5-Sonnet", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0657
-        AllModels(name: "claude-sonnet-4-0", displayName: "Claude4.0-Sonnet", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.0657
-        AllModels(name: "claude-opus-4-0", displayName: "Claude4.0-Opus", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "claude-opus-4-1", displayName: "Claude4.1-Opus", identity: "model", position: 90, company: "ANTHROPIC", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
         // MARK: xAI
         // 0.0657
-        AllModels(name: "grok-4", displayName: "Grok4", identity: "model", position: 91, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "grok-4", displayName: "Grok4", identity: "model", position: 91, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 0.0657
-        AllModels(name: "grok-3-latest", displayName: "Grok3", identity: "model", position: 91, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.1095
-        AllModels(name: "grok-3-fast-latest", displayName: "Grok3-Fast", identity: "model", position: 92, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00584
-        AllModels(name: "grok-3-mini-latest", displayName: "Grok3-Mini", identity: "model", position: 93, company: "XAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.01679
-        AllModels(name: "grok-3-mini-fast-latest", displayName: "Grok3-Mini-Fast", identity: "model", position: 94, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.0438
-        AllModels(name: "grok-2-latest", displayName: "Grok2", identity: "model", position: 95, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.073
-        AllModels(name: "grok-2-vision-latest", displayName: "Grok2-Vision", identity: "model", position: 96, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "grok-4-fast-non-reasoning", displayName: "Grok4", identity: "model", position: 91, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // 0.0657
+        AllModels(name: "grok-4-fast-reasoning", displayName: "Grok4", identity: "model", position: 91, company: "XAI", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 0.511
         AllModels(name: "grok-2-image", displayName: "Grok-2-Image", identity: "model", position: 97, company: "XAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
@@ -317,25 +276,17 @@ func getModelList() -> [AllModels] {
         
         // MARK: OPENROUTER
         // 0
-        AllModels(name: "qwen/qwen3-32b:free", displayName: "Qwen3-32B(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true),
+        AllModels(name: "x-ai/grok-code-fast-1_repeat_openrouter", displayName: "Grok-Code-Fast-1(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true),
         // 0
-        AllModels(name: "qwen/qwen3-235b-a22b:free", displayName: "Qwen3-235B-A22B(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true),
+        AllModels(name: "anthropic/claude-haiku-4.5_repeat_openrouter", displayName: "Claude4.5-Haiku(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         // 0
-        AllModels(name: "qwen/qwen2.5-vl-72b-instruct:free", displayName: "Qwen2.5VL-72B(OpenRouter)", identity: "model", position: 104, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "anthropic/claude-sonnet-4.5_repeat_openrouter", displayName: "Claude4.5-Sonnet(OpenRouter)", identity: "model", position: 103, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportReasoningChange: true),
         // 0
-        AllModels(name: "google/gemini-2.5-pro-exp-03-25:free", displayName: "Gemini2.5-Pro(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "google/gemini-2.5-flash_repeat_openrouter", displayName: "Gemini2.5-Flash(OpenRouter)", identity: "model", position: 104, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         // 0
-        AllModels(name: "meta-llama/llama-4-scout:free", displayName: "Llama4-Scout(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "google/gemini-2.5-pro_repeat_openrouter", displayName: "Gemini2.5-Pro(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
         // 0
-        AllModels(name: "meta-llama/llama-4-maverick:free", displayName: "Llama4-Maverick(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 0
-        AllModels(name: "deepseek/deepseek-chat-v3-0324:free", displayName: "DeepSeek-V3(OpenRouter)", identity: "model", position: 106, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true),
-        // 0
-        AllModels(name: "deepseek/deepseek-prover-v2:free", displayName: "DeepSeek-Prover-V2(OpenRouter)", identity: "model", position: 106, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true),
-        // 0
-        AllModels(name: "deepseek/deepseek-r1:free", displayName: "DeepSeek-R1(OpenRouter)", identity: "model", position: 107, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
-        // 0
-        AllModels(name: "qwen/qwq-32b:free", displayName: "Qwen-QWQ-32B(OpenRouter)", identity: "model", position: 108, company: "OPENROUTER", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
+        AllModels(name: "x-ai/grok-4-fast_repeat_openrouter", displayName: "Grok4-Fast(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
 
         // MARK: 翰林内置
         // 免费
@@ -636,48 +587,12 @@ func getModelList() -> [AllModels] {
 }
 
 func getTestModel(for company: String) -> String {
-    switch company.uppercased() {
-    case "QWEN":
-        return "qwen-turbo"
-    case "ZHIPUAI":
-        return "glm-4-flash"
-    case "DOUBAO":
-        return "doubao-1-5-lite-32k-250115"
-    case "DEEPSEEK":
-        return "deepseek-chat"
-    case "SILICONCLOUD":
-        return "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
-    case "HUNYUAN":
-        return "hunyuan-lite"
-    case "YI":
-        return "yi-lightning"
-    case "KIMI":
-        return "moonshot-v1-auto"
-    case "STEP":
-        return "step-2-mini"
-    case "OPENAI":
-        return "gpt-4o-mini"
-    case "GOOGLE":
-        return "gemini-2.0-flash"
-    case "ANTHROPIC":
-        return "claude-3-5-haiku-latest"
-    case "XAI":
-        return "grok-2-latest"
-    case "WENXIN":
-        return "ernie-speed-128k"
-    case "SPARK":
-        return "spark"
-    case "PERPLEXITY":
-        return "sonar"
-    case "OPENROUTER":
-        return "qwen/qwen3-30b-a3b-instruct-2507"
-    case "MODELSCOPE":
-        return "Qwen/Qwen2.5-32B-Instruct"
-    case "GITEE":
-        return "Qwen2-7B-Instruct"
-    default:
-        return "Unknown"
+    let models = getModelList()
+    if let model = models.first(where: { $0.company?.uppercased() == company.uppercased() }) {
+        let baseName = restoreBaseModelName(from: model.name ?? "Unknown")
+        return baseName
     }
+    return "Unknown"
 }
 
 // 获得Key列表

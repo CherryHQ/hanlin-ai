@@ -321,18 +321,6 @@ struct ChatView: View {
     @State private var showModelSuggestions: Bool = false
     @State private var filteredModels: [AllModels] = []
 
-    // 流式状态变量（用于优化性能，避免频繁更新 SwiftData）
-    @State private var streamingMessageId: UUID? = nil
-    @State private var streamingText: String = ""
-    @State private var streamingReasoning: String = ""
-    @State private var streamingToolContent: String = ""
-    @State private var streamingToolName: String = ""
-    @State private var streamingResources: [Resource] = []
-    @State private var streamingSearchEngine: String = ""
-    @State private var streamingImages: [UIImage] = []
-    @State private var streamingImagesText: String = ""
-    @State private var streamingDocumentText: String = ""
-
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
     @ScaledMetric(relativeTo: .body) var size_20: CGFloat = 20
     @ScaledMetric(relativeTo: .body) var size_32: CGFloat = 32
