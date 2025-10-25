@@ -120,6 +120,21 @@ func extractPPTXContent(from fileURL: URL) throws -> String {
     return extractedText.trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
+/// 截断过长的内容以防止内存问题和 UI 崩溃
+/// - Parameters:
+///   - content: 原始内容
+///   - maxLength: 最大字符长度（默认 100,000 字符）
+/// - Returns: 截断后的内容（如果超长会添加提示信息）
+func truncateContent(_ content: String, maxLength: Int = 100_000) -> String {
+    if content.count <= maxLength {
+        return content
+    }
+
+    let truncated = String(content.prefix(maxLength))
+    let warningMessage = "\n\n⚠️ 内容已截断（原文件约 \(content.count.formatted()) 字符，已截取前 \(maxLength.formatted()) 字符）"
+    return truncated + warningMessage
+}
+
 /// 根据传入文件的 URL 异步提取文本内容
 /// 支持的格式包括：.pdf, .docx, .xlsx, .pptx 以及纯文本格式（例如：.csv, .py, .txt, .md, .json, .log, .html）
 func extractContent(from fileURL: URL) async throws -> String {
@@ -144,34 +159,38 @@ func extractContent(from fileURL: URL) async throws -> String {
     switch fileExtension {
     // 纯文本文件：CSV、PY、TXT、MD、JSON、LOG、HTML
     case "csv", "py", "txt", "md", "json", "log", "html":
-        return try await Task.detached {
+        let content = try await Task.detached {
             return try String(contentsOf: fileURL, encoding: .utf8)
         }.value
-        
+        return truncateContent(content)
+
     case "pdf":
         if let pdfDocument = PDFDocument(url: fileURL),
            let content = pdfDocument.string, !content.isEmpty {
-            return content
+            return truncateContent(content)
         } else {
             return "PDF 文件为空或无法提取文本"
         }
-        
+
     case "docx":
-        return try await Task.detached {
+        let content = try await Task.detached {
             let archive = try Archive(url: fileURL, accessMode: .read)
             return try extractXMLContent(from: archive, xmlPath: "word/document.xml")
         }.value
-        
+        return truncateContent(content)
+
     case "xlsx":
-        return try await Task.detached {
+        let content = try await Task.detached {
             return try extractXLSXContent(from: fileURL)
         }.value
-        
+        return truncateContent(content)
+
     case "pptx":
-        return try await Task.detached {
+        let content = try await Task.detached {
             return try extractPPTXContent(from: fileURL)
         }.value
-        
+        return truncateContent(content)
+
     default:
         return "不支持的文件类型：\(fileExtension)"
     }

@@ -320,7 +320,19 @@ struct ChatView: View {
     // 便捷输入
     @State private var showModelSuggestions: Bool = false
     @State private var filteredModels: [AllModels] = []
-    
+
+    // 流式状态变量（用于优化性能，避免频繁更新 SwiftData）
+    @State private var streamingMessageId: UUID? = nil
+    @State private var streamingText: String = ""
+    @State private var streamingReasoning: String = ""
+    @State private var streamingToolContent: String = ""
+    @State private var streamingToolName: String = ""
+    @State private var streamingResources: [Resource] = []
+    @State private var streamingSearchEngine: String = ""
+    @State private var streamingImages: [UIImage] = []
+    @State private var streamingImagesText: String = ""
+    @State private var streamingDocumentText: String = ""
+
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
     @ScaledMetric(relativeTo: .body) var size_20: CGFloat = 20
     @ScaledMetric(relativeTo: .body) var size_32: CGFloat = 32
@@ -789,7 +801,7 @@ struct ChatView: View {
                             .padding(.horizontal, 10)
                             .clipShape(Capsule())
                             .background(
-                                BlurView(style: .systemUltraThinMaterial)
+                                GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Capsule())
                                     .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
                             )
@@ -821,7 +833,7 @@ struct ChatView: View {
                                 .frame(width: buttonHeight, height: buttonHeight)
                                 .clipShape(Circle())
                                 .background(
-                                    BlurView(style: .systemUltraThinMaterial)
+                                    GlassView(style: .systemUltraThinMaterial)
                                         .clipShape(Circle())
                                         .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
                                 )
@@ -1021,7 +1033,7 @@ struct ChatView: View {
             }
             .padding(12)
             .background(
-                BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
             )
@@ -1102,7 +1114,7 @@ struct ChatView: View {
                     showMaxMessagesNumSlider = false
                 }
                 .background(
-                    BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                         .clipShape(RoundedRectangle(cornerRadius: 26))
                         .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
@@ -1110,7 +1122,6 @@ struct ChatView: View {
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: scrollTriggerState)
-                
             }
             .padding(.vertical, 6)
             .padding(.horizontal, 15)

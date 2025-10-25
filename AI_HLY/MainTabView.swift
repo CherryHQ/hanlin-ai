@@ -87,3 +87,21 @@ struct BlurView: UIViewRepresentable {
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
 
+// Custom glass effect view that works on earlier iOS versions
+struct GlassView: View {
+    let style: UIBlurEffect.Style
+    
+    var body: some View {
+        Group {
+            if #available(iOS 26.0, *) {
+                Rectangle()
+                    .fill(Color.clear)
+                    .glassEffect(in: .rect(cornerRadius: 26))
+            } else {
+                // Fallback implementation for earlier iOS versions
+                BlurView(style: style)
+            }
+        }
+        .allowsHitTesting(false)
+    }
+}

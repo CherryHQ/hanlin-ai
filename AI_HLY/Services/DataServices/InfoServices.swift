@@ -16,6 +16,8 @@ func getEnvironmentVariable(_ name: String) -> String {
     return value
 }
 
+// 0.001 廉价；0.006 标准；
+
 // 获得模型列表
 func getModelList() -> [AllModels] {
     
@@ -25,33 +27,23 @@ func getModelList() -> [AllModels] {
         
         // MARK: 通义
         // 0.00015
-        AllModels(name: "qwen-flash", displayName: "Qwen-Flash", identity: "model", position: 0, company: "QWEN", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.00045
-        AllModels(name: "qwen-turbo", displayName: "Qwen-Turbo", identity: "model", position: 0, company: "QWEN", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "qwen-flash", displayName: "Qwen-Flash", identity: "model", position: 1, company: "QWEN", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
-        AllModels(name: "qwen-plus", displayName: "Qwen-Plus", identity: "model", position: 1, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 0.04
-        AllModels(name: "qwen-max", displayName: "Qwen-Max", identity: "model", position: 2, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.00125
-        AllModels(name: "qwen-long", displayName: "Qwen-Long", identity: "model", position: 3, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "qwen-plus", displayName: "Qwen-Plus", identity: "model", position: 2, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // 0.0375
+        AllModels(name: "qwen3-max", displayName: "Qwen3-Max", identity: "model", position: 3, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.02575
-        AllModels(name: "qwen-omni-turbo", displayName: "Qwen-Omni-Turbo", identity: "model", position: 3, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsVoiceGen: true),
+        AllModels(name: "qwen-omni-flash", displayName: "Qwen-Omni-Flash", identity: "model", position: 3, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsVoiceGen: true),
         // 0.003
-        AllModels(name: "qwen-vl-plus-latest", displayName: "Qwen-VL-Plus", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportsToolUse: true),
-        // 0.006
-        AllModels(name: "qwen-vl-max-latest", displayName: "Qwen-VL-Max", identity: "model", position: 5, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportsToolUse: true),
-        // 0.0028
-        AllModels(name: "qwq-plus", displayName: "Qwen-QwQ-Plus", identity: "model", position: 6, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.0035
-        AllModels(name: "qvq-plus", displayName: "Qwen-QVQ-Plus", identity: "model", position: 7, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.02
-        AllModels(name: "qvq-max", displayName: "Qwen-QVQ-Max", identity: "model", position: 7, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "qwen3-vl-plus", displayName: "Qwen3-VL-Plus", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportReasoningChange: true, supportsToolUse: true),
+        // 0.003
+        AllModels(name: "qwen3-vl-flash", displayName: "Qwen3-VL-Flash", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportReasoningChange: true, supportsToolUse: true),
         // 0.14
         AllModels(name: "wanx2.1-t2i-turbo", displayName: "WanX2.1-Turbo", identity: "model", position: 10, company: "QWEN", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         // 0.2
         AllModels(name: "wanx2.1-t2i-plus", displayName: "WanX2.1-Plus", identity: "model", position: 11, company: "QWEN", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         // 0.25
-        AllModels(name: "qwen-image", displayName: "Qwen-Image", identity: "model", position: 12, company: "QWEN", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
+        AllModels(name: "qwen-image-plus", displayName: "Qwen-Image-Plus", identity: "model", position: 12, company: "QWEN", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
         // MARK: 智谱
         // 免费
@@ -60,22 +52,12 @@ func getModelList() -> [AllModels] {
         AllModels(name: "glm-4.5-air", displayName: "GLM4.5-Air", identity: "model", position: 11, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.005
         AllModels(name: "glm-4.5", displayName: "GLM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // 0.005
+        AllModels(name: "glm-4.6", displayName: "GLM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.004
         AllModels(name: "glm-4.5v", displayName: "GLM4.5V", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 免费
         AllModels(name: "glm-4.1v-thinking-flash", displayName: "GLM4.1V-Thinking", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4-flash-250414", displayName: "GLM4-Flash", identity: "model", position: 12, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.0005
-        AllModels(name: "glm-4-air-250414", displayName: "GLM4-Air", identity: "model", position: 14, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.005
-        AllModels(name: "glm-4-plus", displayName: "GLM4-Plus", identity: "model", position: 15, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.001
-        AllModels(name: "glm-4-long", displayName: "GLM4-Long", identity: "model", position: 16, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.001
-        AllModels(name: "glm-z1-flash", displayName: "GLM-Z1-Flash", identity: "model", position: 17, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true),
-        // 0.0005
-        AllModels(name: "glm-z1-air", displayName: "GLM-Z1-Air", identity: "model", position: 18, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true),
         // 免费
         AllModels(name: "glm-4v-flash", displayName: "GLM4V-Flash", identity: "model", position: 19, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         // 0.003
@@ -87,25 +69,17 @@ func getModelList() -> [AllModels] {
         
         // MARK: 豆包
         // 0.0014
-        AllModels(name: "doubao-seed-1-6-250615", displayName: "Doubao-Seed-1.6", identity: "model", position: 11, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "doubao-seed-1-6-251015", displayName: "Doubao1.6", identity: "model", position: 11, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.00045
-        AllModels(name: "doubao-1-5-lite-32k-250115", displayName: "Doubao1.5-Lite", identity: "model", position: 23, company: "DOUBAO", price: 1, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "doubao-seed-1-6-lite-251015", displayName: "Doubao1.6-Lite", identity: "model", position: 23, company: "DOUBAO", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
-        AllModels(name: "doubao-1-5-pro-32k-250115", displayName: "Doubao1.5-Pro", identity: "model", position: 24, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 0.003
-        AllModels(name: "doubao-1-5-vision-lite-250315", displayName: "Doubao1.5-Vision-Lite", identity: "model", position: 25, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.006
-        AllModels(name: "doubao-1-5-vision-pro-250328", displayName: "Doubao1.5-Vision-Pro", identity: "model", position: 26, company: "DOUBAO", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "doubao-1-5-thinking-pro-250415", displayName: "Doubao1.5-Thinking-Pro", identity: "model", position: 27, company: "DOUBAO", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.01
-        AllModels(name: "doubao-1-5-thinking-pro-m-250415", displayName: "Doubao1.5-Thinking-Pro-M", identity: "model", position: 28, company: "DOUBAO", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "doubao-seed-1-6-flash-250828", displayName: "Doubao1.6-Flash", identity: "model", position: 24, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
         // MARK: Deepseek
         // 0.005
-        AllModels(name: "deepseek-chat", displayName: "DeepSeek-V3.1", identity: "model", position: 29, company: "DEEPSEEK", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "deepseek-chat", displayName: "DeepSeek-Chat", identity: "model", position: 29, company: "DEEPSEEK", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "deepseek-reasoner", displayName: "DeepSeek-V3.1-Thinking", identity: "model", position: 30, company: "DEEPSEEK", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "deepseek-reasoner", displayName: "DeepSeek-Reasoner", identity: "model", position: 30, company: "DEEPSEEK", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         
         // MARK: 百度
         // 免费

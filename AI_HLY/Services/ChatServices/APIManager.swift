@@ -2462,7 +2462,7 @@ class APIManager {
                         switch thinkingLength {
                         case 1:
                             // 短暂思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" {
+                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" {
                                 requestBody["reasoning_effort"] = "low"
                             } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
                                 requestBody["thinking_budget"] = 1024
@@ -2470,7 +2470,7 @@ class APIManager {
                             
                         case 2:
                             // 中等思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" {
+                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" {
                                 requestBody["reasoning_effort"] = "medium"
                             } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
                                 requestBody["thinking_budget"] = 8192
@@ -2478,7 +2478,7 @@ class APIManager {
 
                         case 3:
                             // 深度思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" {
+                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" {
                                 requestBody["reasoning_effort"] = "high"
                             } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
                                 requestBody["thinking_budget"] = 16384
@@ -3917,13 +3917,25 @@ class APIManager {
                         var parameters: [String: Any] = [
                             "n": 1
                         ]
-                        switch selectedImageSize {
-                        case "landscape":
-                            parameters["size"] = "1792*1024"
-                        case "portrait":
-                            parameters["size"] = "1024*1792"
-                        default:
-                            parameters["size"] = "1024*1024"
+                        
+                        if modelInfo.name?.contains("image") == true {
+                            switch selectedImageSize {
+                            case "landscape":
+                                parameters["size"] = "1472*1140"
+                            case "portrait":
+                                parameters["size"] = "1140*1472"
+                            default:
+                                parameters["size"] = "1328*1328"
+                            }
+                        } else {
+                            switch selectedImageSize {
+                            case "landscape":
+                                parameters["size"] = "1792*1024"
+                            case "portrait":
+                                parameters["size"] = "1024*1792"
+                            default:
+                                parameters["size"] = "1024*1024"
+                            }
                         }
                         if !imageReversePrompt.isEmpty {
                             parameters["negative_prompt"] = imageReversePrompt

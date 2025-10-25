@@ -150,7 +150,7 @@ struct KnowledgeWritingView: View {
             }
             .padding(12)
             .background(
-                BlurView(style: .systemThinMaterial)
+                GlassView(style: .systemThinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .shadow(color: .hlBlue, radius: 1)
             )
@@ -521,9 +521,13 @@ struct KnowledgeWritingView: View {
         Button(action: {
             isFeedBack.toggle()
             if documented {
+                // 撤销文档解析结果
                 message = original
                 documented = false
             } else {
+                // 打开文档选择器前，清理旧状态
+                documented = false
+                selectedDocumentURL = nil
                 showDocumentPicker.toggle()
             }
         }) {
@@ -552,6 +556,12 @@ struct KnowledgeWritingView: View {
             }
         }) {
             SingleDocumentPicker(selectedDocumentURL: $selectedDocumentURL)
+        }
+        .onChange(of: selectedDocumentURL) { oldValue, newValue in
+            // 当 URL 变化且不为 nil 时，自动触发处理（解决首次不解析问题）
+            if newValue != nil && newValue != oldValue && !documented && !isDocument {
+                processDocument()
+            }
         }
     }
     
@@ -642,26 +652,59 @@ struct KnowledgeWritingView: View {
     private func processDocument() {
         isDocument = true
         Task {
-            guard selectedDocumentURL != nil else {
-                errorMessage = "请先选择文件"
-                showErrorAlert = true
-                isDocument = false
+            defer {
+                Task { @MainActor in
+                    isDocument = false
+                }
+            }
+
+            guard let fileURL = selectedDocumentURL else {
+                await MainActor.run {
+                    errorMessage = "请先选择文件"
+                    showErrorAlert = true
+                }
                 return
             }
-            
-            documented = false
-            original = message
-            
+
+            // 检查文件大小（防止超大文件导致崩溃）
+            guard let fileSize = try? FileManager.default
+                .attributesOfItem(atPath: fileURL.path)[.size] as? Int64 else {
+                await MainActor.run {
+                    errorMessage = "无法读取文件信息"
+                    showErrorAlert = true
+                }
+                return
+            }
+
+            let maxFileSize: Int64 = 10 * 1024 * 1024  // 10MB 限制
+            if fileSize > maxFileSize {
+                let sizeMB = Double(fileSize) / 1024.0 / 1024.0
+                await MainActor.run {
+                    errorMessage = String(format: "文件过大（%.1fMB），最大支持 10MB", sizeMB)
+                    showErrorAlert = true
+                }
+                return
+            }
+
+            await MainActor.run {
+                documented = false
+                original = message
+            }
+
             do {
-                let documentContent = try await extractContent(from: selectedDocumentURL!)
-                message.append("\n" + documentContent)
-                documented = true
+                let documentContent = try await extractContent(from: fileURL)
+                await MainActor.run {
+                    message.append("\n" + documentContent)
+                    documented = true
+                    selectedDocumentURL = nil  // 清空已处理的 URL
+                }
             } catch {
-                errorMessage = error.localizedDescription
-                showErrorAlert = true
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    showErrorAlert = true
+                }
             }
         }
-        isDocument = false
     }
 
     // MARK: - 文本优化

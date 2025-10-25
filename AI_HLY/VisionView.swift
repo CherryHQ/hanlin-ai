@@ -157,7 +157,7 @@ extension VisionView {
                     .foregroundColor(Color(.systemBackground))
                     .opacity(0.6)
                     .background(
-                        BlurView(style: .systemUltraThinMaterial)
+                        GlassView(style: .systemUltraThinMaterial)
                             .clipShape(Circle())
                             .shadow(color: Color(.systemBackground), radius: 1)
                     )
@@ -180,7 +180,7 @@ extension VisionView {
                             .foregroundColor(showSaveToast ? .hlGreen : Color(.systemBackground))
                             .opacity(0.6)
                             .background(
-                                BlurView(style: .systemUltraThinMaterial)
+                                GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
                                     .shadow(color: showSaveToast ? .hlGreen : Color(.systemBackground), radius: 1)
                             )
@@ -200,7 +200,7 @@ extension VisionView {
                             .foregroundColor(.hlRed)
                             .opacity(0.6)
                             .background(
-                                BlurView(style: .systemUltraThinMaterial)
+                                GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
                                     .shadow(color: .hlRed, radius: 1)
                             )
@@ -221,7 +221,7 @@ extension VisionView {
                             .foregroundColor(isFlashOn ? .hlOrange : Color(.systemBackground))
                             .opacity(0.6)
                             .background(
-                                BlurView(style: .systemUltraThinMaterial)
+                                GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
                                     .shadow(color: isFlashOn ? .hlOrange : Color(.systemBackground), radius: 1)
                             )
@@ -243,7 +243,7 @@ extension VisionView {
                         .foregroundColor(.primary)
                         .opacity(0.6)
                         .background(
-                            BlurView(style: .systemUltraThinMaterial)
+                            GlassView(style: .systemUltraThinMaterial)
                                 .clipShape(Capsule())
                                 .shadow(color: Color(.systemBackground), radius: 1)
                         )
@@ -480,7 +480,7 @@ extension VisionView {
             }
         }
         .background(
-            BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+            GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                 .clipShape(RoundedRectangle(cornerRadius: 26))
                 .shadow(color: Color(.systemBackground), radius: 1)
         )
@@ -561,7 +561,7 @@ extension VisionView {
                     .sensoryFeedback(.impact, trigger: isFeedBack)
                 }
                 .background(
-                    BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                         .clipShape(RoundedRectangle(cornerRadius: 26))
                         .shadow(color: Color(.systemBackground), radius: 1)
                 )
@@ -590,7 +590,7 @@ extension VisionView {
                             .opacity(0.6)
                             .foregroundColor(Color(.systemBackground))
                             .background(
-                                BlurView(style: .systemUltraThinMaterial)
+                                GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
                                     .shadow(color: Color(.systemBackground), radius: 1)
                             )
@@ -627,7 +627,7 @@ extension VisionView {
                         .symbolEffect(.pulse.byLayer, options: .repeat(.continuous), isActive: capturedImage != nil && !isProcessing)
                         .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.byLayer), options: .nonRepeating))
                         .background(
-                            BlurView(style: .systemUltraThinMaterial)
+                            GlassView(style: .systemUltraThinMaterial)
                                 .clipShape(Circle())
                                 .shadow(color: Color(.systemBackground), radius: 1)
                         )
@@ -678,7 +678,7 @@ extension VisionView {
                             .opacity(0.6)
                             .foregroundColor(Color(.systemBackground))
                             .background(
-                                BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                                GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                                     .clipShape(Circle())
                                     .shadow(color: Color(.systemBackground), radius: 1)
                             )
@@ -768,7 +768,7 @@ extension VisionView {
         .frame(width: 180, height: 80)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .background(
-            BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+            GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                 .clipShape(Capsule()) // 胶囊形
                 .shadow(color: Color(.systemBackground), radius: 1)
         )
