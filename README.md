@@ -7,8 +7,8 @@
 </h1>
 
 <p align="center">
-  <strong>开启智能生活的次世代AI工作台</strong><br>
-  <em>Next-generation AI workstation for smart living</em>
+  <strong>开启智能生活的次世代AI移动工作台</strong><br>
+  <em>Next-generation AI mobile workstation for an intelligent lifestyle.</em>
 </p>
 
 <div align="center">
@@ -34,7 +34,7 @@
 
 ### 🔧 智能工具生态
 
-- **🔍 智能搜索引擎**: 支持6大搜索引擎 (智谱AI、博查AI、EXA、TAVILY、LangSearch、BRAVE)
+- **🔍 智能搜索引擎**: 支持7大搜索引擎 (智谱AI、博查AI、EXA、Tavily、LangSearch、BRAVE、Perplexity)
 - **🌐 网页内容提取**: 基于SwiftSoup的智能网页解析，自动提取标题、正文内容和图标，支持批量URL处理
 - **🗺️ 地图定位服务**: 集成CoreLocation和MapKit，支持实时定位、地址解析、位置搜索和导航功能
 - **🌤️ 多源天气服务**: 支持和风天气(QWeather)和OpenWeather API，提供实时天气、预报和气象数据
@@ -104,7 +104,7 @@
 
 1. **克隆项目 Clone the repository**
    ```bash
-   git clone https://github.com/CherryHQ/AI_Hanlin.git
+   git clone https://github.com/CherryHQ/hanlin-ai.git
    cd AI_HLY
    ```
 
@@ -217,6 +217,6 @@ AI_HLY/
 **如果这个项目对你有帮助，请给它一个 ⭐️！**  
 *If this project helps you, please give it a ⭐️!*
 
-Made with ❤️ by the AI_HLY team
+Made with ❤️ by the Hylic.AI team
 
 </div>

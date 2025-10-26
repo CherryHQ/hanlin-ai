@@ -170,43 +170,35 @@ struct AddOnlineModelView: View {
     
     private func saveModel() {
         // 清除前后空格
-        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let baseName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let baseDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
 
         // 系统语言（简单检测，只识别前缀 "zh"）
         let isChinese = Locale.current.language.languageCode?.identifier == "zh"
 
         // 必填项校验
-        guard !trimmedName.isEmpty else {
+        guard !baseName.isEmpty else {
             alertMessage = isChinese ? "请填写系统名称！" : "Please enter the system name!"
             showAlert = true
             return
         }
-        
-        guard !trimmedDisplayName.isEmpty else {
+
+        guard !baseDisplayName.isEmpty else {
             alertMessage = isChinese ? "请填写显示名称！" : "Please enter the display name!"
             showAlert = true
             return
         }
-        
-        // 检查是否存在重复的模型名称（忽略大小写）
-        if allModels.contains(where: { ($0.name ?? "").lowercased() == trimmedName.lowercased() }) {
-            alertMessage = isChinese ? "该模型已存在！" : "This model already exists!"
-            showAlert = true
-            return
-        }
-        
-        if allModels.contains(where: { ($0.displayName ?? "").lowercased() == trimmedDisplayName.lowercased() }) {
-            alertMessage = isChinese ? "该名称已存在！" : "This display name already exists!"
-            showAlert = true
-            return
-        }
-        
+
         guard !selectedCompany.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             alertMessage = isChinese ? "请选择模型厂商！" : "Please select a model vendor!"
             showAlert = true
             return
         }
+
+        // 无论是否重复，都自动添加 _repeat_UUID 以确保唯一性
+        let uniqueUUID = UUID().uuidString
+        let trimmedName = baseName + "_repeat_\(uniqueUUID)"
+        let trimmedDisplayName = baseDisplayName + "_repeat_\(uniqueUUID)"
         
         // 设置厂商信息
         let finalCompany: String = {
@@ -297,46 +289,6 @@ struct LocalModelDownloadView: View {
             icon: "qwen",
             url_model: "https://modelscope.cn/models/lmstudio-community/Qwen3-4B-GGUF/resolve/master/Qwen3-4B-Q4_K_M.gguf",
             url_hugging: "https://huggingface.co/Qwen/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf?download=true"
-        ),
-        LocalModelInfo(
-            name: "Qwen2.5-0.5B-Q4_K_M",
-            displayName: "Qwen2.5-0.5B-Q4_K_M",
-            space: "491.40MB",
-            icon: "qwen",
-            url_model: "https://modelscope.cn/models/Qwen/Qwen2.5-0.5B-Instruct-GGUF/file/view/master/qwen2.5-0.5b-instruct-q4_k_m.gguf?status=2",
-            url_hugging: "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf?download=true"
-        ),
-        LocalModelInfo(
-            name: "Qwen2.5-1.5B-Q4_K_M",
-            displayName: "Qwen2.5-1.5B-Q4_K_M",
-            space: "1.12GB",
-            icon: "qwen",
-            url_model: "https://modelscope.cn/models/Qwen/Qwen2.5-1.5B-Instruct-GGUF/file/view/master/qwen2.5-1.5b-instruct-q4_k_m.gguf?status=2",
-            url_hugging: "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf?download=true"
-        ),
-        LocalModelInfo(
-            name: "Qwen2.5-3B-Q4_K_M",
-            displayName: "Qwen2.5-3B-Q4_K_M",
-            space: "2.10GB",
-            icon: "qwen",
-            url_model: "https://modelscope.cn/models/Qwen/Qwen2.5-3B-Instruct-GGUF/file/view/master/qwen2.5-3b-instruct-q4_k_m.gguf?status=2",
-            url_hugging: "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q4_k_m.gguf?download=true"
-        ),
-        LocalModelInfo(
-            name: "DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M",
-            displayName: "DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M",
-            space: "1.12GB",
-            icon: "deepseek",
-            url_model: "https://modelscope.cn/models/lmstudio-community/DeepSeek-R1-Distill-Qwen-1.5B-GGUF/resolve/master/DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M.gguf",
-            url_hugging: "https://huggingface.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-1.5B-GGUF/resolve/main/DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M.gguf?download=true"
-        ),
-        LocalModelInfo(
-            name: "Llama-3.2-1B-Q4_K_M",
-            displayName: "Llama-3.2-1B-Q4_K_M",
-            space: "808MB",
-            icon: "meta",
-            url_model: "https://modelscope.cn/models/second-state/Llama-3.2-1B-Instruct-GGUF/resolve/master/Llama-3.2-1B-Instruct-Q4_K_M.gguf",
-            url_hugging: "https://huggingface.co/lmstudio-community/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_K_M.gguf?download=true"
         ),
         LocalModelInfo(
             name: "Gemma-3-1B-Q4_K_M",

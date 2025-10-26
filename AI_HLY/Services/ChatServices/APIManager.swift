@@ -4017,6 +4017,17 @@ class APIManager {
                             requestBody["size"] = "1024x1024"
                         }
                         
+                    case "GOOGLE":
+                        url = URL(string: "https://generativelanguage.googleapis.com/v1beta/openai/images/generations")!
+                        request = URLRequest(url: url)
+                        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+                        requestBody = [
+                            "model": baseName,
+                            "prompt": optimizedPrompt,
+                            "n": 1,
+                        ]
+                        
                     case "XAI":
                         url = URL(string: "https://api.x.ai/v1/images/generations")!
                         request = URLRequest(url: url)

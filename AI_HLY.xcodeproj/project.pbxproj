@@ -370,7 +370,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 0.7.1;
+				MARKETING_VERSION = 0.7.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "zhiyuan20002.com.AI-Hanlin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -429,7 +429,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 0.7.1;
+				MARKETING_VERSION = 0.7.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "zhiyuan20002.com.AI-Hanlin";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -1,6 +1,11 @@
 {
   "zh-Hans": [
       {
+          "version": "AI翰林院 0.7.2（公测）",
+          "releaseDate": "发布日期：2025年10月26日",
+          "content": "#### 🚀 主要更新：\n- 新增自定义添加第三方模型API服务商功能，系统默认服务商新增CherryIN；\n- 优化知识库编辑时文档上传的体验；\n- 优化添加在线模型时报错会重复的问题；\n- 搜索服务商增加Perplexity；\n- 适配Qwen Image生图及谷歌官方生图模型；\n- 适配iOS26液态玻璃效果；\n- 修复其他已知问题与错误；"
+      },
+      {
           "version": "AI翰林院 0.7.1（公测）",
           "releaseDate": "发布日期：2025年8月31日",
           "content": "#### 🚀 主要更新：\n- 适配新的GLM4.5、Kimi K2、GPT5等最新大模型；\n- 修复其他已知问题与错误；"
@@ -227,6 +232,11 @@
     }
   ],
   "en": [
+      {
+        "version": "AI Hanlin 0.7.2 (Beta)",
+        "releaseDate": "Release Date: October 26, 2025",
+        "content": "#### 🚀 Major Updates:\n- Added custom third-party model API provider feature, added CherryIN as system default provider;\n- Improved document upload experience when editing knowledge base;\n- Fixed issue where errors would duplicate when adding online models;\n- Added Perplexity as search provider;\n- Added support for Qwen Image generation and Google's official image generation models;\n- Adapted iOS 26 liquid glass effect;\n- Fixed other known issues and bugs;"
+      },
       {
         "version": "AI Hanlin 0.7.1 (Beta)",
         "releaseDate": "Release Date: August 31, 2025",
