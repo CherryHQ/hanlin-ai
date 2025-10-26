@@ -532,6 +532,12 @@
     "company_CHERRY_IN" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CherryIN"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1542,7 +1548,14 @@
 
     },
     "供应商名称" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supplier Name"
+          }
+        }
+      }
     },
     "保存" : {
       "localizations" : {
@@ -2908,7 +2921,14 @@
       }
     },
     "新增自定义供应商" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Custom Supplier"
+          }
+        }
+      }
     },
     "方形画幅" : {
       "localizations" : {
@@ -3541,7 +3561,14 @@
       }
     },
     "添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a custom API provider that uses an API service compatible with the OpenAI format."
+          }
+        }
+      }
     },
     "清空" : {
       "localizations" : {
@@ -4850,7 +4877,14 @@
       }
     },
     "请输入 API 密钥" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the API key."
+          }
+        }
+      }
     },
     "请输入你的昵称" : {
       "localizations" : {
@@ -4863,7 +4897,14 @@
       }
     },
     "请输入供应商名称" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter the supplier name."
+          }
+        }
+      }
     },
     "请输入密钥" : {
       "localizations" : {
@@ -5326,7 +5367,14 @@
       }
     },
     "验证失败" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verification Failed"
+          }
+        }
+      }
     },
     "默认" : {
       "localizations" : {
