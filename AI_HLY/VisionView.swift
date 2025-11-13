@@ -61,7 +61,7 @@ struct VisionView: View {
         ZStack {
             
             if showSaveToast {
-                Text("✅ 图片已保存")
+                Text("✅ Image Saved")
                     .font(.body)
                     .padding()
                     .background(Color.black.opacity(0.6))
@@ -366,7 +366,7 @@ extension VisionView {
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 5)
                         }
-                        Markdown(photoAnalysis ?? "正在加载...")
+                        Markdown(photoAnalysis ?? "Loading...")
                             .font(.body)
                             .multilineTextAlignment(.leading) // 文本左对齐
                             .fixedSize(horizontal: false, vertical: true) // 允许文本高度自适应
@@ -517,7 +517,7 @@ extension VisionView {
         HStack {
             if showInput {
                 HStack {
-                    TextField("消息", text: $followAsk)
+                    TextField("Message", text: $followAsk)
                         .padding(.leading, 12)
                         .frame(height: 44)
                         .focused($isInputActive) // 绑定焦点状态

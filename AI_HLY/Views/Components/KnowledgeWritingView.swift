@@ -106,9 +106,9 @@ struct KnowledgeWritingView: View {
                                 if isEmbedding {
                                     ProgressView()
                                 } else if knowledgeRecord.isEmbedding || embeddingCompleted {
-                                    Label("已成功构建向量", systemImage: "checkmark.circle.fill")
+                                    Label("Embeddings Ready", systemImage: "checkmark.circle.fill")
                                 } else {
-                                    Label("构建以允许聊天召回", systemImage: "compass.drawing")
+                                    Label("Build for Chat Recall", systemImage: "compass.drawing")
                                 }
                             }
                             .frame(maxWidth: .infinity)
@@ -205,7 +205,7 @@ struct KnowledgeWritingView: View {
                             isEditingTitle = true
                         }
                     // 编辑模式标题
-                    TextField("请输入知识名称", text: $newKnowledgeTitle, onCommit: {
+                    TextField("Please enter the name for the knowledge", text: $newKnowledgeTitle, onCommit: {
                         renameKnowledgeRecord(to: newKnowledgeTitle)
                         isEditingTitle = false
                     })
@@ -222,7 +222,7 @@ struct KnowledgeWritingView: View {
                         isViewLoaded = isEditMode
                     }
                 } label: {
-                    Text(isEditMode ? "保存" : "编辑")
+                    Text(isEditMode ? "Save" : "Edit")
                         .foregroundColor(.hlBluefont)
                 }
             }
@@ -301,7 +301,7 @@ struct KnowledgeWritingView: View {
                         .foregroundColor(.orange)
                         .transition(.opacity)
                 } else {
-                    Text("免费")
+                    Text("Free")
                         .font(.caption)
                         .foregroundColor(.green)
                         .transition(.opacity)
@@ -344,13 +344,13 @@ struct KnowledgeWritingView: View {
         VStack {
             if showWebInput {
                 VStack {
-                    Text("请输入网页 URL")
+                    Text("Please enter the webpage URL")
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     HStack {
-                        TextField("网页地址", text: $webInput)
+                        TextField("Web URL", text: $webInput)
                             .padding(.leading, 12)
                             .frame(height: 44)
                             .submitLabel(.send)
@@ -397,7 +397,7 @@ struct KnowledgeWritingView: View {
                 tokenCounter()
             }
             if showPhotoSourceOptions {
-                Text("选择OCR的图片来源")
+                Text("Select OCR Image Source")
                     .font(.caption.bold())
                     .foregroundColor(.hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -608,9 +608,9 @@ struct KnowledgeWritingView: View {
                 .frame(width: size_30, height: size_30)
                 .foregroundColor(Color(.systemGray))
         }
-        .alert("确认清空所有文本？", isPresented: $showAlert) {
-            Button("取消", role: .cancel) { }
-            Button("清空", role: .destructive) { message = "" }
+        .alert("Confirm Clearing All Text?", isPresented: $showAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Clear All", role: .destructive) { message = "" }
         }
     }
 
@@ -815,7 +815,7 @@ struct KnowledgeWritingView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showCameraPicker)
-                    Text("拍摄照片")
+                    Text("Take Photos")
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
@@ -845,7 +845,7 @@ struct KnowledgeWritingView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showImagePicker)
-                    Text("相册选择")
+                    Text("Camera Selection")
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)

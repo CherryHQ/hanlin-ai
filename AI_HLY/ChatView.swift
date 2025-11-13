@@ -473,7 +473,7 @@ struct ChatView: View {
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
-                        Text(" 临 时 对 话 模 式 ")
+                        Text("Temporary Dialogue Mode")
                             .font(.caption)
                             .padding(6)
                     }
@@ -499,7 +499,7 @@ struct ChatView: View {
                             }
                         
                         // 编辑模式
-                        TextField("请输入群聊名称", text: $newChatTitle, onCommit: {
+                        TextField("Please enter the group chat name", text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
                                     chatTitle = newChatTitle
@@ -565,14 +565,14 @@ struct ChatView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     // ------ 调整参数 ------
-                    Menu("调整模型参数", systemImage: "slider.horizontal.3"){
+                    Menu("Adjust Model Parameters", systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider = false
                             showTemperatureSlider.toggle()
                         }) {
-                            Label("调整采样温度", systemImage: "thermometer.variable")
+                            Label("Adjust Sampling Temperature", systemImage: "thermometer.variable")
                         }
                         
                         Button(action: {
@@ -581,7 +581,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTopPSlider.toggle()
                         }) {
-                            Label("调整累积概率", systemImage: "percent")
+                            Label("Adjust Cumulative Probability", systemImage: "percent")
                         }
                         
                         Button(action: {
@@ -590,7 +590,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showMaxTokensSlider.toggle()
                         }) {
-                            Label("最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
+                            Label("Maximum Response Length", systemImage: "textformat.characters.arrow.left.and.right")
                         }
                         
                         Button(action: {
@@ -599,40 +599,40 @@ struct ChatView: View {
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider.toggle()
                         }) {
-                            Label("消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
+                            Label("Message Quantity Limit", systemImage: "arrow.up.and.down.text.horizontal")
                         }
                     }
                     
                     // ------ 聊天记录管理 ------
-                    Menu("聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
+                    Menu("Chat Record Management", systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
                         }) {
-                            Label("设置系统消息", systemImage: "paintbrush.pointed")
+                            Label("Set System Message", systemImage: "paintbrush.pointed")
                         }
                         Button(action: {
                             isViewLoaded.toggle()
                             isMultiSelectMode.toggle()
                         }) {
-                            Label(isMultiSelectMode ? "退出编辑模式" : "编辑聊天记录", systemImage: "checkmark.circle")
+                            Label(isMultiSelectMode ? "Exit Edit Mode" : "Edit Chat History", systemImage: "checkmark.circle")
                         }
                         
                         Button(action: {
                             showingExportOptions = true
                         }) {
-                            Label("导出聊天记录", systemImage: "square.and.arrow.up")
+                            Label("Export Chat History", systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: {
                             showImportExplanationAlert = true
                         }) {
-                            Label("导入聊天记录", systemImage: "square.and.arrow.down")
+                            Label("Import Chat History", systemImage: "square.and.arrow.down")
                         }
                         
                         Button(action: {
                             showClearChatConfirmation = true
                         }) {
-                            Label("清空聊天记录", systemImage: "eraser.line.dashed")
+                            Label("Clear Chat History", systemImage: "eraser.line.dashed")
                         }
                     }
                 } label: {
@@ -643,8 +643,8 @@ struct ChatView: View {
                 }
             }
         }
-        .confirmationDialog("选择导出格式", isPresented: $showingExportOptions, titleVisibility: .visible) {
-            Button("纯文本 (.txt)") {
+        .confirmationDialog("Select Export Format", isPresented: $showingExportOptions, titleVisibility: .visible) {
+            Button("Plain Text (.txt)") {
                 exportUTType = UTType.plainText
                 let exportText = generateExportText(for: .txt)
                 let fileName = "ChatExport.txt"
@@ -657,7 +657,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（文本）") {
+            Button("JSON File (.json) (Only Text)") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: false)
                 let fileName = "ChatExport_text.json"
@@ -670,7 +670,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（多模态）") {
+            Button("JSON File (.json) (Multimodal)") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: true)
                 let fileName = "ChatExport_multimodal.json"
@@ -683,7 +683,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("取消", role: .cancel) { }
+            Button("Cancel", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
             // 分享结束后清除临时文件 URL
@@ -737,26 +737,26 @@ struct ChatView: View {
             }
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
-            Alert(title: Text("导入错误"),
+            Alert(title: Text("Import Error"),
                   message: Text(importError ?? "未知错误"),
-                  dismissButton: .default(Text("确定")))
+                  dismissButton: .default(Text("Confirm")))
         }
-        .alert("确认清空聊天记录", isPresented: $showClearChatConfirmation) {
-            Button("删除", role: .destructive) {
+        .alert("Confirm Clearing Chat History", isPresented: $showClearChatConfirmation) {
+            Button("Delete", role: .destructive) {
                 newConversation()
             }
-            Button("取消", role: .cancel) { }
+            Button("Cancel", role: .cancel) { }
         } message: {
-            Text("是否要删除所有聊天记录？删除后不可恢复。")
+            Text("Do you want to delete all chat history? Once deleted, it cannot be recovered.")
                 .multilineTextAlignment(.leading)
         }
-        .alert("导入聊天记录说明", isPresented: $showImportExplanationAlert) {
-            Button("继续") {
+        .alert("Importing Chat History Instructions", isPresented: $showImportExplanationAlert) {
+            Button("Continue") {
                 isShowingImportPicker = true
             }
-            Button("取消", role: .cancel) { }
+            Button("Cancel", role: .cancel) { }
         } message: {
-            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。")
+            Text("Please provide a JSON file that matches the format exported by this software: OpenAI’s request JSON format, including text dialogues and multimodal dialogues with images encoded in base64.")
                     .multilineTextAlignment(.leading)
         }
         .tint(TemporaryRecord ? .primary : nil)
@@ -1446,14 +1446,14 @@ struct ChatView: View {
                                     showPhotoSourceOptions = true
                                     showCameraPicker = true
                                 }) {
-                                    Label("拍摄照片", systemImage: "camera")
+                                    Label("Take Photos", systemImage: "camera")
                                 }
                                 Button(action: {
                                     isFeedBack.toggle()
                                     showPhotoSourceOptions = true
                                     showImagePicker = true
                                 }) {
-                                    Label("相册选择", systemImage: "photo")
+                                    Label("Camera Selection", systemImage: "photo")
                                 }
                             } label: {
                                 VStack {
@@ -1638,7 +1638,7 @@ struct ChatView: View {
                 VStack {
                     // 针对部分公司显示反向提示词输入框
                     if ["QWEN", "MODELSCOPE", "ZHIPUAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(modelTemp[selectedModelIndex].company) {
-                        TextField("反向提示词", text: $imageReversePrompt)
+                        TextField("Reverse Prompts", text: $imageReversePrompt)
                             .font(.footnote)
                             .padding(8)
                             .background(.background.opacity(0.6))
@@ -1657,7 +1657,7 @@ struct ChatView: View {
                                             Image(systemName: "square")
                                                 .foregroundColor(selectedImageSize == "square" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
                                                 .font(.footnote)
-                                            Text("方形画幅")
+                                            Text("Square Format")
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "square" ? .white : .primary)
                                                 .lineLimit(1)
@@ -1677,7 +1677,7 @@ struct ChatView: View {
                                             Image(systemName: "rectangle")
                                                 .foregroundColor(selectedImageSize == "landscape" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
                                                 .font(.footnote)
-                                            Text("横向画幅")
+                                            Text("Horizontal format")
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "landscape" ? .white : .primary)
                                                 .lineLimit(1)
@@ -1697,7 +1697,7 @@ struct ChatView: View {
                                             Image(systemName: "rectangle.portrait")
                                                 .foregroundColor(selectedImageSize == "portrait" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
                                                 .font(.footnote)
-                                            Text("纵向画幅")
+                                            Text("Vertical")
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "portrait" ? .white : .primary)
                                                 .lineLimit(1)
@@ -2636,43 +2636,43 @@ struct ChatView: View {
                     .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
                     .transition(.opacity.combined(with: .move(edge: .leading)))
                 if model.supportsToolUse {
-                    Text("工具")
+                    Text("Tools")
                         .font(.caption)
                         .foregroundColor(ifToolUse ? .hlBrown : .gray)
                         .transition(.opacity)
                 }
                 if model.company?.uppercased() == "LOCAL" {
-                    Text("本地")
+                    Text("Local")
                         .font(.caption)
                         .foregroundColor(.hlOrange)
                         .transition(.opacity)
                 }
                 if model.supportsMultimodal {
-                    Text("视觉")
+                    Text("Vision")
                         .font(.caption)
                         .foregroundColor(.hlTeal)
                         .transition(.opacity)
                 }
                 if model.supportsReasoning {
-                    Text("思考")
+                    Text("Thinking")
                         .font(.caption)
                         .foregroundColor(ifThink ? .hlPurple : .gray)
                         .transition(.opacity)
                 }
                 if model.supportsVoiceGen {
-                    Text("语音")
+                    Text("Speech")
                         .font(.caption)
                         .foregroundColor(ifAudio ? .hlPink : .gray)
                         .transition(.opacity)
                 }
                 if model.supportsImageGen {
-                    Text("生图")
+                    Text("Generate Image")
                         .font(.caption)
                         .foregroundColor(.hlGreen)
                         .transition(.opacity)
                 }
                 if model.price == 0 {
-                    Text("免费")
+                    Text("Free")
                         .font(.caption)
                         .foregroundColor(.green)
                         .transition(.opacity)
@@ -2818,7 +2818,7 @@ struct ChatView: View {
             .transition(.opacity.combined(with: .move(edge: .bottom)))
             
             if !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "LOCAL" {
-                Text("⚠️ 当前不是视觉模型，分析图片建议使用视觉模型")
+                Text("⚠️ Image analysis is recommended to use visual models.")
                     .font(.caption.bold())
                     .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -2840,7 +2840,7 @@ struct ChatView: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .symbolEffect(.bounce, value: showCameraPicker)
-                            Text("拍摄照片")
+                            Text("Take Photos")
                                 .font(.caption.bold())
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .padding(.top, 3)
@@ -2872,7 +2872,7 @@ struct ChatView: View {
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .symbolEffect(.bounce, value: showImagePicker)
-                            Text("相册选择")
+                            Text("Camera Selection")
                                 .font(.caption.bold())
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .padding(.top, 3)
@@ -2905,7 +2905,7 @@ struct ChatView: View {
                             .frame(width: 30, height: 30)
                             .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
                             .symbolEffect(.bounce, value: showDocumentPicker)
-                        Text("文件文本")
+                        Text("Document Text")
                             .font(.caption.bold())
                             .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
                             .padding(.top, 3)
@@ -3210,7 +3210,7 @@ struct ActionButtonsView: View {
     
     private let lengthDescriptions: [String: [Int: String]] = [
         "zh": [
-            0: "默认",
+            0: "Default",
             1: "短暂",
             2: "中等",
             3: "深度"
@@ -3319,7 +3319,7 @@ struct ActionButtonsView: View {
                                     )
                                 
                                 if showToolReminder {
-                                    Text(ifToolUse ? "使用工具" : "禁用工具")
+                                    Text(ifToolUse ? "Using Tools" : "Disable Tools")
                                         .font(.caption)
                                         .foregroundColor(
                                             ifToolUse
@@ -3367,7 +3367,7 @@ struct ActionButtonsView: View {
                                         : .gray
                                     )
                                 if ifKnowledge {
-                                    Text("知识背包")
+                                    Text("Knowledge Backpack")
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .padding(.trailing, 12)
@@ -3377,8 +3377,8 @@ struct ActionButtonsView: View {
                         }
                         .disabled(isResponding)
                         .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
-                            Button("确定", role: .cancel) { }
+                        .alert("Knowledge Backpack Error", isPresented: $showKnowledgeAlert) {
+                            Button("Confirm", role: .cancel) { }
                         } message: {
                             Text(knowledgeAlertMessage)
                         }
@@ -3412,7 +3412,7 @@ struct ActionButtonsView: View {
                                         : .gray
                                     )
                                 if ifSearch {
-                                    Text("联网搜索")
+                                    Text("Network Search")
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlAzure)
                                         .padding(.trailing, 12)
@@ -3422,10 +3422,10 @@ struct ActionButtonsView: View {
                         }
                         .disabled(isResponding)
                         .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .alert("未启用搜索引擎", isPresented: $showSearchAlert) {
-                            Button("确定", role: .cancel) { }
+                        .alert("No Search Engine Enabled", isPresented: $showSearchAlert) {
+                            Button("Confirm", role: .cancel) { }
                         } message: {
-                            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
+                            Text("No search engine is currently enabled. Please go to Settings > Tools > Search Settings to enable one.")
                         }
                         .background(bgColorSearch)
                         .cornerRadius(20)
@@ -3455,7 +3455,7 @@ struct ActionButtonsView: View {
                                     )
                                 
                                 if ifPlanning {
-                                    Text("规划执行")
+                                    Text("Planning")
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlIndigo)
                                         .padding(.trailing, 12)
@@ -3510,7 +3510,7 @@ struct ActionButtonsView: View {
                                     }
                                 
                                 if ifThink {
-                                    Text("深度思考")
+                                    Text("Deep Thinking")
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlPurple)
                                         .transition(.opacity.combined(with: .move(edge: .leading)))
@@ -3582,7 +3582,7 @@ struct ActionButtonsView: View {
                                     .symbolEffect(.variableColor, value: audioTrigger)
                                 
                                 if ifAudio {
-                                    Text("语音生成")
+                                    Text("Speech Generation")
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlPink)
                                         .padding(.trailing, 12)
@@ -3617,7 +3617,7 @@ struct ActionButtonsView: View {
                                     .frame(width: size32, height: size32)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlGreen)
                                     .symbolEffect(.rotate, value: isFeedBack)
-                                Text("图像生成")
+                                Text("Image Generation")
                                     .font(.caption)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlGreen)
                                     .padding(.trailing, 12)
@@ -3644,7 +3644,7 @@ struct ActionButtonsView: View {
                                     .frame(width: size32, height: size32)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
                                     .symbolEffect(.wiggle, value: isFeedBack)
-                                Text("本地运行")
+                                Text("Run Locally")
                                     .font(.caption)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
                                     .padding(.trailing, 12)

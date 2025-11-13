@@ -67,7 +67,7 @@ struct APIKeysView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("点击名称或钥匙设置厂商密钥并打开该厂商以使用该厂商的模型")
+                    Text("Tap a vendor name or key to set its API key and enable its model.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -130,7 +130,7 @@ struct APIKeysView: View {
                 }
             }
         }
-        .navigationTitle("密钥设置")
+        .navigationTitle("API Key Settings")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -147,8 +147,8 @@ struct APIKeysView: View {
         .sheet(isPresented: $showAddCustomProvider) {
             addCustomProviderView()
         }
-        .alert("无法开启厂商", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert("Unable to Enable Vendor", isPresented: $showAPIKeyError) {
+            Button("Confirm", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -189,7 +189,7 @@ struct APIKeysView: View {
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
-                                Text("建议进入其开放平台获取API密钥")
+                                Text("It is recommended to access its open platform to obtain the API key.")
                                     .font(.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
@@ -199,17 +199,17 @@ struct APIKeysView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 Section(header: Text("API Key")) {
-                    SecureField("请输入密钥", text: Binding(
+                    SecureField("Please enter the API key", text: Binding(
                         get: { key.key ?? "" },
                         set: { key.key = $0 }
                     ))
                 }
                 // 自定义供应商或LAN供应商显示请求地址设置
                 if key.company == "LAN" || key.from == .custom {
-                    Section(header: Text("请求地址（URL）")) {
+                    Section(header: Text("Request URLs")) {
                         Text(verbatim: "例如：http://127.0.0.1:1234/v1/chat/completions")
                             .font(.caption)
-                        TextField("请输入请求地址", text: Binding(
+                        TextField("Please enter the request URLs", text: Binding(
                             get: { key.requestURL ?? "" },
                             set: { key.requestURL = $0 }
                         ))
@@ -222,7 +222,7 @@ struct APIKeysView: View {
                 if key.company != "LAN" && key.from != .custom {
                     Section {
                         HStack {
-                            Button("测试 API") {
+                            Button("Test API") {
                                 testAPI(for: key)
                             }
                             .disabled(isTesting)
@@ -230,7 +230,7 @@ struct APIKeysView: View {
                             if isTesting {
                                 ProgressView()
                             } else if let result = testResult {
-                                Text(result ? "测试通过" : "测试失败")
+                                Text(result ? "Test Passed" : "Test Failed")
                                     .foregroundColor(result ? .green : .red)
                             }
                         }
@@ -240,7 +240,7 @@ struct APIKeysView: View {
                     // 余额查询及状态显示
                     Section {
                         HStack {
-                            Button("查询 API 余额") {
+                            Button("Check API Balance") {
                                 queryBalance(for: key)
                             }
                             .disabled(isInquiring)
@@ -248,26 +248,26 @@ struct APIKeysView: View {
                             if isInquiring {
                                 ProgressView()
                             } else if let result = inquiryResult {
-                                Text(result == -999 ? "该厂商暂未支持" : "¥\(result)")
+                                Text(result == -999 ? "Not Supported" : "¥\(result)")
                                     .foregroundColor(result < 10 ? .red : .green)
                             }
                         }
                     }
                 }
                 Section {
-                    Text("⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商")
+                    Text("⚠️ Note: Once configured, the vendor is enabled automatically. To change it, disable it in the menu.")
                         .font(.footnote)
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle("Edit API Key")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button("Cancel") {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button("Save") {
                         key.timestamp = Date()
                         key.isHidden = false
                         try? modelContext.save()
@@ -412,7 +412,7 @@ struct AddCustomProviderForm: View {
                         .frame(width: 50, height: 50)
                         .padding()
 
-                    Text("添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务")
+                    Text("Add a custom API provider that uses the OpenAI-compatible API format.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -420,26 +420,26 @@ struct AddCustomProviderForm: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
 
-            Section(header: Text("供应商名称")) {
-                TextField("请输入供应商名称", text: $providerName)
+            Section(header: Text("Provider Name")) {
+                TextField("Please enter a provider name", text: $providerName)
             }
 
             Section(header: Text("API Key")) {
-                SecureField("请输入 API 密钥", text: $apiKey)
+                SecureField("Please enter an API key", text: $apiKey)
             }
 
-            Section(header: Text("请求地址（URL）")) {
-                Text("例如：https://api.example.com/v1/chat/completions")
+            Section(header: Text("Request URLs")) {
+                Text("Example: https://api.example.com/v1/chat/completions")
                     .font(.caption)
                     .foregroundColor(.secondary)
 
-                TextField("请输入请求地址", text: $requestURL)
+                TextField("Please enter the request URLs", text: $requestURL)
                     .keyboardType(.URL)
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
 
                 if !requestURL.isEmpty && !requestURL.hasSuffix("/v1/chat/completions") {
-                    Button("补全 /v1/chat/completions") {
+                    Button("Complete /v1/chat/completions") {
                         completeURL()
                     }
                     .font(.caption)
@@ -448,28 +448,28 @@ struct AddCustomProviderForm: View {
             }
 
             Section {
-                Text("💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务")
+                Text("Tip: This feature works with OpenAI-compatible services such as LocalAI, Ollama, or other third-party APIs.")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
         }
-        .navigationTitle("新增自定义供应商")
+        .navigationTitle("Add Custom Provider")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("取消") {
+                Button("Cancel") {
                     isPresented = false
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("保存") {
+                Button("Save") {
                     saveCustomProvider()
                 }
                 .disabled(!isFormValid)
             }
         }
-        .alert("验证失败", isPresented: $showValidationError) {
-            Button("确定", role: .cancel) {}
+        .alert("Verification failed", isPresented: $showValidationError) {
+            Button("Confirm", role: .cancel) {}
         } message: {
             Text(validationMessage)
         }
@@ -597,7 +597,7 @@ struct SearchSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置搜索功能，以便在聊天对话时获取互联网内容，提升回答效果。个性化的设置能最大程度的平衡你的需求与检索带来的成本消耗")
+                    Text("Enable the search function to allow models to fetch internet content during chats, improving response quality; personalized settings balance your needs and retrieval costs.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -606,26 +606,26 @@ struct SearchSettingView: View {
             }
             
             // 检索设置部分
-            Section(header: Text("模型在需要时主动搜索")) {
-                Toggle("启用主动搜索", isOn: Binding(
+            Section(header: Text("Models actively search when needed")) {
+                Toggle("Enable Active Search", isOn: Binding(
                     get: { searchEnable },
                     set: { searchEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("搜索结果数量（范围：5-20）")) {
+            Section(header: Text("Number of Search Results (range: 5-20)")) {
                 Stepper(value: $searchCount, in: 5...20) {
                     Text("搜索结果数量：\(searchCount)")
                 }
             }
             
-            Section(header: Text("搜索时同时搜索中英文内容")) {
-                Toggle("中英文双语检索", isOn: $bilingualSearch)
+            Section(header: Text("Search Both Chinese and English Content")) {
+                Toggle("Bilingual Search (Chinese & English)", isOn: $bilingualSearch)
                     .tint(.hlBlue)
             }
             
             // 搜索 API 配置及厂商选择部分
-            Section(header: Text("搜索引擎选择（最多只能开启一个）")) {
+            Section(header: Text("Search engine selection (only one)")) {
                 ForEach(sortedSearchKeys) { key in
                     HStack {
                         // 点击左侧区域进入编辑 API 配置界面
@@ -642,19 +642,19 @@ struct SearchSettingView: View {
                                 // 显示各厂商的计费或免费说明
                                 switch key.company?.uppercased() {
                                 case "GOOGLE_SEARCH":
-                                    Text("100次免费/日")
+                                    Text("100 free uses/day")
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 case "TAVILY":
-                                    Text("1000免费积分/月")
+                                    Text("1000 free points/month")
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 case "LANGSEARCH":
-                                    Text("免费")
+                                    Text("Free")
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 case "BRAVE":
-                                    Text("2000次免费/月")
+                                    Text("2000 free uses/month")
                                         .font(.caption)
                                         .foregroundColor(.green)
                                 default:
@@ -690,21 +690,21 @@ struct SearchSettingView: View {
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("联网信息检索", systemImage: "network")
-                Label("学术论文检索", systemImage: "graduationcap")
-                Label("网页信息阅读", systemImage: "text.and.command.macwindow")
-                Label("网络文件阅读", systemImage: "text.document")
+            Section(header: Text("Function List")) {
+                Label("Network Information Retrieval", systemImage: "network")
+                Label("Academic Paper Search", systemImage: "graduationcap")
+                Label("Web Content Reading", systemImage: "text.and.command.macwindow")
+                Label("Online Document Reading", systemImage: "text.document")
             }
         }
-        .navigationTitle("联网搜索")
+        .navigationTitle("Network Search")
         // 编辑 API 配置界面（SearchKeysView 部分）的弹出 sheet
         .sheet(item: $selectedKey) { key in
             editKeyView(for: key)
         }
         // 出现错误时弹出警告
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button("Confirm", role: .cancel) { }
         }
         // 加载/保存双语检索相关的用户信息
         .onAppear {
@@ -771,7 +771,7 @@ struct SearchSettingView: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         } else {
-                            Text("建议进入其开放平台获取API密钥")
+                            Text("It is recommended to access its open platform to obtain the API key.")
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
@@ -779,8 +779,8 @@ struct SearchSettingView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
-                Section(header: Text("密钥")) {
-                    SecureField("请输入密钥", text: Binding(
+                Section(header: Text("API KEY")) {
+                    SecureField("Please enter the API key", text: Binding(
                         get: { key.key ?? "" },
                         set: { key.key = $0 }
                     ))
@@ -788,7 +788,7 @@ struct SearchSettingView: View {
                 // 测试 API 部分
                 Section {
                     HStack {
-                        Button("测试 API") {
+                        Button("Test API") {
                             testAPI(for: key)
                         }
                         .disabled(isTesting)
@@ -798,25 +798,25 @@ struct SearchSettingView: View {
                         if isTesting {
                             ProgressView()
                         } else if let result = testResult {
-                            Text(result ? "测试通过" : "测试失败")
+                            Text(result ? "Test Passed" : "Test Failed")
                                 .foregroundColor(result ? .green : .red)
                         }
                     }
                 }
                 Section {
-                    Text("⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎")
+                    Text("⚠️ Note: After configuring the API, enable your desired search engine in the menu.")
                         .font(.footnote)
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle("Edit API Key")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button("Cancel") {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button("Save") {
                         key.timestamp = Date()
                         try? modelContext.save()
                         selectedKey = nil
@@ -908,7 +908,7 @@ struct KnowledgeSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置知识功能，以便在聊天对话时翻找知识背包，获取私有知识库内容，提升回答效果。")
+                    Text("Enable the knowledge function to let models search your knowledge backpack for private content during chats, enhancing response effectiveness.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -916,31 +916,31 @@ struct KnowledgeSettingView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section(header: Text("模型在需要时主动翻找知识背包")) {
-                Toggle("启用主动翻找", isOn: Binding(
+            Section(header: Text("The model actively searches through its knowledge base when needed.")) {
+                Toggle("Enable Active Search", isOn: Binding(
                     get: { knowledgeEnable },
                     set: { knowledgeEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("翻找结果数量（范围：5-20）")) {
+            Section(header: Text("Number of Search Results (range: 5-20)")) {
                 Stepper(value: $knowledgeCount, in: 5...20) {
                     Text("翻找结果数量：\(knowledgeCount)")
                 }
             }
             
-            Section(header: Text("匹配度阈值（范围：0.05 - 1.0）")) {
+            Section(header: Text("Match threshold (range: 0.05 - 1.0)")) {
                 Stepper(value: $knowledgeSimilarity, in: 0.05...1.0, step: 0.05) {
                     Text(String(format: "匹配度阈值：%.2f", knowledgeSimilarity))
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("知识背包翻找", systemImage: "backpack")
-                Label("知识文档撰写", systemImage: "text.document")
+            Section(header: Text("Function List")) {
+                Label("Knowledge Backpack Search", systemImage: "backpack")
+                Label("Knowledge Document Creation", systemImage: "text.document")
             }
         }
-        .navigationTitle("知识背包")
+        .navigationTitle("Knowledge Backpack")
         .onAppear {
             loadUserInfo()
         }
@@ -1017,7 +1017,7 @@ struct MapSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图")
+                    Text("Enable the map function to allow the model to access location-related information and display maps during conversations.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1027,13 +1027,13 @@ struct MapSettingView: View {
             }
             
             Section {
-                Toggle("启用地图", isOn: Binding(
+                Toggle("Enable Maps", isOn: Binding(
                     get: { mapEnable },
                     set: { mapEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("地图引擎选择（最多只能开启一个）")) { 
+            Section(header: Text("Map Engine Selection (max one)")) { 
                 ForEach(sortedMapKeys) { key in
                     HStack {
                         // 左侧区域：点击可进入 API 配置界面（APPLEMAPP 不可配置 API）
@@ -1050,9 +1050,9 @@ struct MapSettingView: View {
                                 Text(getCompanyName(for: key.company))
                                     .foregroundColor(.primary)
                                 Spacer()
-                                // 对于默认的 APPLEMAP，显示"默认"标识
+                                // 对于默认的 APPLEMAP，显示"Default"标识
                                 if key.company.uppercased() == "APPLEMAP" {
-                                    Text("默认")
+                                    Text("Default")
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 } else {
@@ -1080,14 +1080,14 @@ struct MapSettingView: View {
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("用户定位查询", systemImage: "location")
-                Label("特定位置搜索", systemImage: "mappin.and.ellipse")
-                Label("附近兴趣搜索", systemImage: "mecca")
-                Label("自动路线规划", systemImage: "point.bottomleft.forward.to.point.topright.filled.scurvepath")
+            Section(header: Text("Function List")) {
+                Label("User Location Search", systemImage: "location")
+                Label("Specific Location Search", systemImage: "mappin.and.ellipse")
+                Label("Nearby Interests Search", systemImage: "mecca")
+                Label("Automatic Route Planning", systemImage: "point.bottomleft.forward.to.point.topright.filled.scurvepath")
             }
         }
-        .navigationTitle("地图规划")
+        .navigationTitle("Map & Planning")
         .onAppear {
             loadUserInfo()
         }
@@ -1099,7 +1099,7 @@ struct MapSettingView: View {
             editMapKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button("Confirm", role: .cancel) { }
         }
     }
     
@@ -1187,7 +1187,7 @@ struct MapSettingView: View {
                 // APPLEMAP 无需配置 API
                 if key.company.uppercased() == "APPLEMAP" {
                     Section {
-                        Text("APPLEMAP 不需要配置 API Key")
+                        Text("APPLEMAP does not require API Key configuration.")
                             .foregroundColor(.gray)
                     }
                 } else {
@@ -1210,7 +1210,7 @@ struct MapSettingView: View {
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
-                                Text("建议进入其开放平台获取API密钥")
+                                Text("It is recommended to access its open platform to obtain the API key.")
                                     .font(.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
@@ -1219,23 +1219,23 @@ struct MapSettingView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
-                    Section(header: Text("密钥")) {
-                        SecureField("请输入 API Key", text: Binding(
+                    Section(header: Text("API KEY")) {
+                        SecureField("Please enter the API key", text: Binding(
                             get: { key.key },
                             set: { key.key = $0 }
                         ))
                     }
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle("Edit API Key")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button("Cancel") {
                         selectedMapKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button("Save") {
                         key.timestamp = Date()
                         try? modelContext.save()
                         selectedMapKey = nil
@@ -1264,7 +1264,7 @@ struct CalendarSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项")
+                    Text("Enable calendar functions to let supported models retrieve schedules and reminders or add events to your calendar.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1273,20 +1273,20 @@ struct CalendarSettingView: View {
             }
             
             Section {
-                Toggle("启用日历", isOn: Binding(
+                Toggle("Enable Calendar", isOn: Binding(
                     get: { calendarEnable },
                     set: { calendarEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查找日历事件", systemImage: "calendar.badge.checkmark")
-                Label("查找提醒事项", systemImage: "checklist")
-                Label("新增日历事件", systemImage: "calendar.badge.plus")
-                Label("新增提醒事项", systemImage: "text.badge.plus")
+            Section(header: Text("Function List")) {
+                Label("Find Calendar Events", systemImage: "calendar.badge.checkmark")
+                Label("Find Reminders", systemImage: "checklist")
+                Label("Add Calendar Events", systemImage: "calendar.badge.plus")
+                Label("Add New Reminder", systemImage: "text.badge.plus")
             }
         }
-        .navigationTitle("日历提醒")
+        .navigationTitle("Calendar & Reminder")
         .onAppear {
             loadUserInfo()
         }
@@ -1340,7 +1340,7 @@ struct CodeSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置代码功能，以便在与支持工具的模型对话时，模型为你运行Python代码，或查看模型为你制作网页内容，并与其交互。")
+                    Text("Enable the code function to allow supported models to run Python code or generate web content during conversations.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1349,18 +1349,18 @@ struct CodeSettingView: View {
             }
             
             Section {
-                Toggle("启用代码", isOn: Binding(
+                Toggle("Enable Code", isOn: Binding(
                     get: { CodeEnable },
                     set: { CodeEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("渲染网页内容", systemImage: "macwindow.badge.plus")
-                Label("运行程序代码", systemImage: "apple.terminal")
+            Section(header: Text("Function List")) {
+                Label("Render Web Content", systemImage: "macwindow.badge.plus")
+                Label("Run Program Codes", systemImage: "apple.terminal")
             }
         }
-        .navigationTitle("代码执行")
+        .navigationTitle("Code Execution")
         .onAppear {
             loadUserInfo()
         }
@@ -1414,7 +1414,7 @@ struct HealthSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。")
+                    Text("Enable health functions so supported models can access or record your health and dietary information.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1423,20 +1423,20 @@ struct HealthSettingView: View {
             }
             
             Section {
-                Toggle("启用健康", isOn: Binding(
+                Toggle("Enable Health", isOn: Binding(
                     get: { healthEnable },
                     set: { healthEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查询步数距离", systemImage: "figure.walk")
-                Label("查询能量消耗", systemImage: "flame")
-                Label("查询营养摄入", systemImage: "bubbles.and.sparkles")
-                Label("写入营养摄入", systemImage: "pencil.and.list.clipboard")
+            Section(header: Text("Function List")) {
+                Label("Query Step Distance", systemImage: "figure.walk")
+                Label("Query Energy Consumption", systemImage: "flame")
+                Label("Enquire Nutritional Intake", systemImage: "bubbles.and.sparkles")
+                Label("Nutritional Intake", systemImage: "pencil.and.list.clipboard")
             }
         }
-        .navigationTitle("健康生活")
+        .navigationTitle("Healthy & Living")
         .onAppear {
             loadUserInfo()
         }
@@ -1490,7 +1490,7 @@ struct CanvasSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置画布功能，以便在与支持工具的模型对话时，模型能够使用画布工具，带来更好的长文本、大段落或结构化内容的输出编辑体验。")
+                    Text("Enable canvas function so that when interacting with models that support tools, the model can use the canvas tool to provide a better editing experience for long texts, large paragraphs, or structured content output.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1499,20 +1499,20 @@ struct CanvasSettingView: View {
             }
             
             Section {
-                Toggle("启用画布", isOn: Binding(
+                Toggle("Enable Canvas", isOn: Binding(
                     get: { canvasEnable },
                     set: { canvasEnable = $0 }))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("创建信息画布", systemImage: "pencil.and.outline")
-                Label("编辑画布内容", systemImage: "pencil.and.scribble")
-                Label("运行画布代码", systemImage: "play.circle")
-                Label("渲染画布网页", systemImage: "macwindow")
+            Section(header: Text("Function List")) {
+                Label("Create an Information Canvas", systemImage: "pencil.and.outline")
+                Label("Edit Canvas Contents", systemImage: "pencil.and.scribble")
+                Label("Run Canvas Codes", systemImage: "play.circle")
+                Label("Render Canvas Webpage", systemImage: "macwindow")
             }
         }
-        .navigationTitle("信息画布")
+        .navigationTitle("Information Canvas")
         .onAppear {
             loadUserInfo()
         }
@@ -1582,7 +1582,7 @@ struct WeatherSettingView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报")
+                    Text("Enable the weather feature to obtain real-time weather information and future forecasts when conversing with models that support this tool.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -1591,14 +1591,14 @@ struct WeatherSettingView: View {
             }
             
             Section {
-                Toggle("启用天气", isOn: Binding(
+                Toggle("Enable Weather", isOn: Binding(
                     get: { weatherEnable },
                     set: { weatherEnable = $0 }
                 ))
                 .tint(.hlBlue)
             }
             
-            Section(header: Text("天气服务商选择（最多只能开启一个）")) {
+            Section(header: Text("Weather service provider selection (only one can be enabled)")) {
                 ForEach(sortedWeatherKeys) { key in
                     HStack {
                         // 点击进入 API 配置界面
@@ -1636,12 +1636,12 @@ struct WeatherSettingView: View {
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查询实时天气", systemImage: "cloud.sun")
-                Label("未来天气预报", systemImage: "calendar")
+            Section(header: Text("Function List")) {
+                Label("Check Real-time Weather", systemImage: "cloud.sun")
+                Label("Future Weather Forecast", systemImage: "calendar")
             }
         }
-        .navigationTitle("天气查询")
+        .navigationTitle("Weather Enquiry")
         .onAppear {
             loadUserInfo()
         }
@@ -1653,7 +1653,7 @@ struct WeatherSettingView: View {
             editWeatherKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button("Confirm", role: .cancel) { }
         }
     }
     
@@ -1737,7 +1737,7 @@ struct WeatherSettingView: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         } else {
-                            Text("建议进入其开放平台获取 API 密钥")
+                            Text("It is recommended to access its open platform to obtain the API key.")
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
@@ -1746,29 +1746,29 @@ struct WeatherSettingView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Section(header: Text("密钥")) {
-                    SecureField("请输入 API Key", text: Binding(
+                Section(header: Text("API KEY")) {
+                    SecureField("Please enter the API key", text: Binding(
                         get: { key.key },
                         set: { key.key = $0 }
                     ))
                 }
                 
-                Section(header: Text("请求地址")) {
-                    TextField("请输入 API Host", text: Binding(
+                Section(header: Text("Request Address")) {
+                    TextField("Please enter the API Host", text: Binding(
                         get: { key.requestURL },
                         set: { key.requestURL = $0 }
                     ))
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle("Edit API Key")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button("Cancel") {
                         selectedWeatherKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button("Save") {
                         key.timestamp = Date()
                         try? modelContext.save()
                         selectedWeatherKey = nil

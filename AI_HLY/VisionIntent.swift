@@ -11,11 +11,11 @@ import SwiftUI
 
 struct OpenVisionIntent: AppIntent {
     static var openAppWhenRun: Bool = true
-    static var title: LocalizedStringResource = "启动视觉"
-    static var description = IntentDescription("打开应用的视觉页面")
+    static var title: LocalizedStringResource = "Activate Vision"
+    static var description = IntentDescription("Open App’s Visual Page")
     static var supportsWidget: Bool = true
     static var supportsForegroundExecution: Bool = true
-    static var suggestedInvocationPhrase: String? = "启动视觉"
+    static var suggestedInvocationPhrase: String? = "Activate Vision"
     
     @MainActor
     func perform() async throws -> some IntentResult {

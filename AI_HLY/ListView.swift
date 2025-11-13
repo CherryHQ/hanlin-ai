@@ -62,7 +62,7 @@ struct ListView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             content
-                .navigationTitle("AI翰林院")
+                .navigationTitle("AI Hanlin")
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 75)
                 }
@@ -78,7 +78,7 @@ struct ListView: View {
                         if loadHistoryMessages {
                             HStack {
                                 ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
+                                Text("Loading...").font(.caption)
                             }
                         } else {
                             HStack {
@@ -86,7 +86,7 @@ struct ListView: View {
                                     showSafariGuide = true
                                 }) {
                                     Label {
-                                        Text("软件指南")
+                                        Text("Software Guide")
                                             .font(.caption)
                                     } icon: {
                                         Image(systemName: "text.rectangle.page")
@@ -148,7 +148,7 @@ struct ListView: View {
             chatRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索聊天与消息内容")
+        .searchable(text: $searchText, prompt: "Search chat and message content")
         .onChange(of: searchText) {
             // 取消上一次搜索任务
             searchTask?.cancel()
@@ -192,7 +192,7 @@ struct ListView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.hlBluefont)
-                        Text("即时翻译")
+                        Text("Translation")
                             .foregroundColor(.hlBluefont)
                     }
                     .padding(.vertical, 10)
@@ -211,7 +211,7 @@ struct ListView: View {
                             .scaledToFit()
                             .frame(width: 18, height: 18)
                             .foregroundColor(.hlGreen)
-                        Text("即时润色")
+                        Text("Refinement")
                             .foregroundColor(.hlGreen)
                     }
                     .padding(.vertical, 10)
@@ -230,7 +230,7 @@ struct ListView: View {
                             .scaledToFit()
                             .frame(width: 18, height: 18)
                             .foregroundColor(.hlCyanite)
-                        Text("即时摘要")
+                        Text("Summary")
                             .foregroundColor(.hlCyanite)
                     }
                     .padding(.vertical, 10)
@@ -284,19 +284,19 @@ struct ListView: View {
                     editingTitle  = record.name ?? ""
                     showIconSheet = true
                 } label: {
-                    Label("编辑图标", systemImage: "paintbrush")
+                    Label("Edit Icon", systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "取消置顶" : "置顶消息", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    Label(record.isPinned ? "Unpin" : "Pin Message", systemImage: record.isPinned ? "pin.slash" : "pin")
                 }
                 
                 Button(role: .destructive) {
                     deleteChat(record)
                 } label: {
-                    Label("删除消息", systemImage: "trash")
+                    Label("Delete Message", systemImage: "trash")
                 }
             }
         }
@@ -308,7 +308,7 @@ struct ListView: View {
             Button(role: .destructive) {
                 deleteChat(record)
             } label: {
-                Label("删除消息", systemImage: "trash")
+                Label("Delete Message", systemImage: "trash")
             }
             .tint(Color(.hlRed))
         }
@@ -317,7 +317,7 @@ struct ListView: View {
                 togglePin(record)
             } label: {
                 Label(
-                    record.isPinned ? "取消置顶" : "置顶消息",
+                    record.isPinned ? "Unpin" : "Pin Message",
                     systemImage: record.isPinned ? "pin.slash" : "pin"
                 )
             }
@@ -331,7 +331,7 @@ struct ListView: View {
                 editingTitle  = record.name ?? ""
                 showIconSheet = true
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label("Edit Icon", systemImage: "paintbrush")
             }
             .tint(.hlGreen)
         }

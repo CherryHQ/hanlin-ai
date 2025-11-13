@@ -34,7 +34,7 @@ struct UserInfoView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("设定个性化内容，使得模型在对话时了解你的需求与偏好，更好的进行回复。")
+                    Text("Set personalized content so that the model understands your needs and preferences during conversations, allowing for better responses.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -42,41 +42,41 @@ struct UserInfoView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section(header: Text("模型应该怎么称呼你？")) {
-                TextField("请输入你的昵称", text: $name)
+            Section(header: Text("How Should Models Address You?")) {
+                TextField("Please enter your nickname", text: $name)
             }
 
-            Section(header: Text("做一段自我介绍吧！")) {
+            Section(header: Text("Introduce Yourself!")) {
                 TextEditor(text: $userInfo)
                     .frame(height: 100)
             }
 
-            Section(header: Text("模型需要注意什么？")) {
+            Section(header: Text("What Should Be Noted About Models?")) {
                 TextEditor(text: $userRequirements)
                     .frame(height: 160)
             }
 
-            Section(header: Text("注意：用户信息的设置会让模型的回复更符合你的习惯，但是会消耗更多的tokens。")) {
-                Button("保存") {
+            Section(header: Text("Note: Setting user information will make model responses more tailored to your preferences but will consume more tokens.")) {
+                Button("Save") {
                     saveUserInfo()
                 }
             }
         }
-        .navigationTitle("用户信息")
+        .navigationTitle("User Information")
         .onAppear {
             loadUserInfo()
         }
         // 弹窗反馈
-        .alert("保存成功", isPresented: $showToast) {
-            Button("确定", role: .cancel) { }
+        .alert("Save Successful", isPresented: $showToast) {
+            Button("Confirm", role: .cancel) { }
         } message: {
-            Text("您的用户信息已成功更新。")
+            Text("Your user information has been successfully updated.")
         }
         // 弹窗反馈
-        .alert("保存失败", isPresented: $showToast) {
-            Button("确定", role: .cancel) { }
+        .alert("Save Failed", isPresented: $showToast) {
+            Button("Confirm", role: .cancel) { }
         } message: {
-            Text("您的用户信息更新失败！")
+            Text("Your user information update failed!")
         }
     }
 
@@ -122,13 +122,13 @@ struct FeedBackView: View {
     var body: some View {
         Form {
             Section {
-                Toggle("文本内容生成反馈", isOn: Binding(
+                Toggle("Text Content Generation Feedback", isOn: Binding(
                     get: { outPutFeedBack },
                     set: { outPutFeedBack = $0 }))
                 .tint(.hlBlue)
             }
         }
-        .navigationTitle("触感反馈")
+        .navigationTitle("Haptic Feedback")
         .onAppear {
             loadUserInfo()
         }
@@ -183,7 +183,7 @@ struct VersionInfoView: View {
                     .frame(width: 140, height: 140)
                     .cornerRadius(20)
                     
-                Text("AI翰林院")
+                Text("AI Hanlin")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(.primary)
@@ -198,17 +198,17 @@ struct VersionInfoView: View {
                     .frame(width: 200)
                     .background(Color.gray.opacity(0.5))
                 
-                Text("软件含有AI生成信息，请注意鉴别")
+                Text("This software contains AI-generated content; please verify its authenticity.")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text("本软件对生成结果不负有任何责任")
+                Text("The software is not responsible for the generated results.")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text("感谢您使用 AI 翰林院")
+                Text("Thank You for Using AI 翰林院 Products")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -216,18 +216,18 @@ struct VersionInfoView: View {
                 Spacer()
                 
                 VStack(spacing: 8) {
-                    Text("2025年2月·新加坡")
+                    Text("February 2025 · Singapore")
                         .font(.footnote)
                         .foregroundColor(.secondary)
                     
-                    Text("© 2025 HLY 保留所有权利")
+                    Text("© 2025 HLY All Rights Reserved")
                         .font(.footnote)
                         .foregroundColor(.secondary)
                 }
             }
             .padding()
         }
-        .navigationTitle("软件信息")
+        .navigationTitle("Software Information")
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -267,14 +267,14 @@ struct SelectEmbeddingModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("向量模型将被用于知识背包文档索引的构建与知识背包查找功能，优秀的向量模型能带来精确、全面的查找效果，提高信息的召回率。")
+                    Text("Embedding models power document indexing and search in the Knowledge Backpack, ensuring precise and comprehensive retrieval and improving information recall.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
-            Section(header: Text("选择向量模型（仅启用一个）")) {
+            Section(header: Text("Select an Embedding Model")) {
                 ForEach(models, id: \.name) { model in
                     HStack {
                         
@@ -295,7 +295,7 @@ struct SelectEmbeddingModelView: View {
                                     .font(.caption)
                                     .foregroundColor(.orange)
                             } else {
-                                Text("免费")
+                                Text("Free")
                                     .font(.caption)
                                     .foregroundColor(.green)
                             }
@@ -322,9 +322,9 @@ struct SelectEmbeddingModelView: View {
                 }
             }
         }
-        .navigationTitle("向量模型")
+        .navigationTitle("Embedding Models")
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button("Confirm", role: .cancel) { }
         }
     }
     
@@ -402,7 +402,7 @@ struct SelectTTSModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("语音模型将用于合成语音。选择 Siri 模型可使用本地合成，而选择大模型合成将通过 API 请求生成语音，后者需要配置有效的 API Key。")
+                    Text("Speech models will be used to synthesize speech. Selecting the Siri model will use native synthesis, while selecting Large Model Synthesis will generate speech via API requests, the latter requiring a valid API Key to be configured.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -411,7 +411,7 @@ struct SelectTTSModelView: View {
             }
             
             // 列表选择区域
-            Section(header: Text("选择语音模型（仅启用一个）")) {
+            Section(header: Text("Select a Speech Model")) {
                 ForEach(models, id: \.name) { model in
                     HStack {
                         
@@ -432,7 +432,7 @@ struct SelectTTSModelView: View {
                                     .font(.caption)
                                     .foregroundColor(.orange)
                             } else {
-                                Text("免费")
+                                Text("Free")
                                     .font(.caption)
                                     .foregroundColor(.green)
                             }
@@ -459,9 +459,9 @@ struct SelectTTSModelView: View {
                 }
             }
         }
-        .navigationTitle("语音模型")
+        .navigationTitle("Speech Model")
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button("Confirm", role: .cancel) { }
         }
     }
     
@@ -549,7 +549,7 @@ struct UpdateNotesView: View {
                 .padding(.horizontal, 5)
             }
         }
-        .navigationTitle("更新说明")
+        .navigationTitle("Update Notes")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             loadUpdateNotes()
@@ -558,7 +558,7 @@ struct UpdateNotesView: View {
     
     // 解析 JSON 文件
     func loadUpdateNotes() {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentLanguage = Locale.preferredLanguages.first ?? "en"
         let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         // 读取 JSON 数据
@@ -566,7 +566,7 @@ struct UpdateNotesView: View {
             do {
                 let data = try Data(contentsOf: url)
                 let jsonResult = try JSONDecoder().decode([String: [UpdateNote]].self, from: data)
-                updateNotes = jsonResult[languageKey] ?? []
+                updateNotes = jsonResult[languageKey] ?? jsonResult["en"] ?? []
             } catch {
                 print("JSON 解析失败：\(error)")
             }
@@ -653,7 +653,7 @@ struct SoftwareIntroView: View {
                 .padding()
             }
         }
-        .navigationTitle("软件介绍")
+        .navigationTitle("Software Introduction")
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -668,12 +668,12 @@ struct SoftwareIntroView: View {
                     .frame(width: 45, height: 45)
                     .cornerRadius(20)
                     
-                Text("AI翰林院")
+                Text("AI Hanlin")
                     .font(.largeTitle)
                     .bold()
             }
             
-            Text("开启智能生活的次世代AI工作台")
+            Text("Next-Gen AI Workbench for Smart Living")
                 .font(.subheadline)
         }
         .padding(.top, 30)
@@ -704,12 +704,12 @@ struct SoftwareIntroView: View {
     @ViewBuilder
     private func betaInvitationView() -> some View {
         VStack(spacing: 10) {
-            Text("「群智秒启，AI随行」")
+            Text("Smart Companion, AI on the Go")
                 .font(.title3)
                 .bold()
                 .padding(.vertical)
             
-            Text("百位AI翰林待诏候旨，作为智能时代的掌玺者，您将在21世纪最澎湃的算力浪潮中，见证思维内阁呈递的万方策论。而你，21世纪最富期待的科技革命的亲历者，AI翰林院诚邀您检阅百模智囊团，在史无前例的认知盛宴中，谱写您那属于数字时代的新华章！")
+            Text("A hundred AI scholars stand by, awaiting your command. As the keeper of the imperial seal in the era of intelligence, you will witness the grand strategies presented by the Cabinet of Thought amidst the most surging tide of computational power in the 21st century. And you, the most eagerly anticipated pioneer of this century’s technological revolution, are cordially invited by the AI Academy to review the wisdom of a hundred models. In this unprecedented cognitive feast, let us compose a new chapter that belongs to you in the digital age!")
                 .font(.body)
                 .multilineTextAlignment(.leading)
         }
@@ -746,7 +746,7 @@ struct ContactUsView: View {
                     .frame(width: 120, height: 120)
                     .cornerRadius(20)
                 
-                Text("如果您有任何问题或建议，可以通过邮件联系我们。此外，我们有一个微信社群，如果您感兴趣您可以邮件联系我，我将邀请您加入社群。")
+                Text("If you have any questions or suggestions, please contact us by email. We also have a WeChat group — email us if you’d like to join.")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -762,7 +762,7 @@ struct ContactUsView: View {
                         .foregroundColor(.hlBluefont)
                         .contextMenu {
                             Button(action: copyEmailToClipboard) {
-                                Label("复制", systemImage: "doc.on.doc")
+                                Label("Copy", systemImage: "doc.on.doc")
                             }
                         }
                 }
@@ -778,7 +778,7 @@ struct ContactUsView: View {
                 }) {
                     HStack {
                         Image(systemName: "envelope.fill")
-                        Text("发送邮件")
+                        Text("Send Email")
                     }
                     .font(.headline)
                     .foregroundColor(.white)
@@ -795,10 +795,10 @@ struct ContactUsView: View {
             }
             .padding()
             .alert(isPresented: $showCopyAlert) {
-                Alert(title: Text("已复制"), message: Text("邮箱已复制到剪贴板"), dismissButton: .default(Text("确定")))
+                Alert(title: Text("Copied"), message: Text("The email has been copied to the clipboard."), dismissButton: .default(Text("Confirm")))
             }
         }
-        .navigationTitle("联系我们")
+        .navigationTitle("Contact Us")
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -971,7 +971,7 @@ struct SelectOptimizationModelView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("文本优化模型")) {
+            Section(header: Text("Text Optimization Model")) {
                 
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush.pointed")
@@ -980,14 +980,14 @@ struct SelectOptimizationModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("文本优化模型将被广泛用于软件的提示词优化、文章内容优化、联网搜索提问优化、知识背包检索优化、图片生成提示词优化、自动生成群聊标题、自动生成智能体设定、翻译文本等功能上，优秀的文本优化模型能带来更好的产品体验。")
+                    Text("Text optimization models are widely used for prompt & content optimization, online search enhancement, Knowledge Backpack retrieval, image-generation prompting, auto-generating group titles, agent creation, translation, and more. An excellent text-optimization model provides a better user experience.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Picker("选择文本优化模型", selection: $selectedTextModel) {
+                Picker("Select a Text Optimization Model", selection: $selectedTextModel) {
                     ForEach(textOptimizationModels, id: \.id) { model in
                         Text(model.displayName ?? "Unknown")
                             .tag(model as AllModels?)
@@ -1005,11 +1005,11 @@ struct SelectOptimizationModelView: View {
                             }
                             HStack {
                                 if model.supportsMultimodal {
-                                    Text("视觉")
+                                    Text("Vision")
                                         .font(.caption)
                                         .foregroundColor(.teal)
                                 } else {
-                                    Text("文本")
+                                    Text("Text")
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 }
@@ -1025,7 +1025,7 @@ struct SelectOptimizationModelView: View {
                 }
             }
             
-            Section(header: Text("视觉优化模型")) {
+            Section(header: Text("Visual Optimization Model")) {
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush")
                         .font(.largeTitle)
@@ -1033,14 +1033,14 @@ struct SelectOptimizationModelView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("视觉优化模型将被广泛用于软件的联网搜索提问优化、知识背包检索优化、图片生成提示词优化、OCR扫描文本、文本及推理模型分析图片等功能上，优秀的视觉优化模型能带来更好的产品体验。")
+                    Text("Visual optimization models are widely used for online search query optimization, Knowledge Backpack retrieval, image-generation prompts, OCR text scanning, and image analysis with text & reasoning. High-quality visual optimization models deliver a superior user experience.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Picker("选择视觉优化模型", selection: $selectedVisualModel) {
+                Picker("Select a Visual Optimization Model", selection: $selectedVisualModel) {
                     ForEach(visualOptimizationModels, id: \.id) { model in
                         Text(model.displayName ?? "Unknown")
                             .tag(model as AllModels?)
@@ -1056,7 +1056,7 @@ struct SelectOptimizationModelView: View {
                                 Text(model.displayName ?? "Unknown")
                             }
                             HStack {
-                                Text("视觉")
+                                Text("Vision")
                                     .font(.caption)
                                     .foregroundColor(.teal)
                                 
@@ -1071,7 +1071,7 @@ struct SelectOptimizationModelView: View {
                 }
             }
         }
-        .navigationTitle("优化模型")
+        .navigationTitle("Optimization Models")
         .onAppear {
             // 从 UserInfo 中加载已保存的模型名称，并在当前模型列表中查找对应模型
             if let user = try? modelContext.fetch(FetchDescriptor<UserInfo>()).first {
@@ -1085,7 +1085,7 @@ struct SelectOptimizationModelView: View {
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("保存") {
+                Button("Save") {
                     // 保存选择到 UserInfo 中
                     if let user = try? modelContext.fetch(FetchDescriptor<UserInfo>()).first {
                         user.optimizationTextModel = selectedTextModel?.name ?? user.optimizationTextModel
@@ -1099,16 +1099,16 @@ struct SelectOptimizationModelView: View {
             }
         }
         // 弹窗反馈
-        .alert("保存成功", isPresented: $showSaveSuccessAlert) {
-            Button("确定", role: .cancel) { }
+        .alert("Save Successful", isPresented: $showSaveSuccessAlert) {
+            Button("Confirm", role: .cancel) { }
         } message: {
-            Text("您的优化模型已成功更新。")
+            Text("Your optimization model has been successfully updated.")
         }
         // 弹窗反馈
-        .alert("保存失败", isPresented: $showSaveErrorAlert) {
-            Button("确定", role: .cancel) { }
+        .alert("Save Failed", isPresented: $showSaveErrorAlert) {
+            Button("Confirm", role: .cancel) { }
         } message: {
-            Text("您的优化模型更新失败！")
+            Text("Your optimization model update failed!")
         }
     }
 }

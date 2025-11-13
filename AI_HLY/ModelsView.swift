@@ -85,18 +85,18 @@ struct ModelsView: View {
                     modelsListSection
                 }
             }
-            .navigationTitle(selectedIdentity.lowercased() == "agent" ? "智能体" : "模型")
+            .navigationTitle(selectedIdentity.lowercased() == "agent" ? "Agent" : "Models")
             .safeAreaInset(edge: .bottom) {
                 // 底部额外留白区域
                 Color.clear.frame(height: 75)
             }
-            .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? "搜索智能体" : "搜索模型")
+            .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? "Search Agent" : "Search Model")
             .toolbar {
                 // 中间 Picker 选择身份
                 ToolbarItem(placement: .principal) {
-                    Picker("身份选择", selection: $selectedIdentity) {
-                        Text("模型").tag("model")
-                        Text("智能体").tag("agent")
+                    Picker("Identity Selection", selection: $selectedIdentity) {
+                        Text("Models").tag("model")
+                        Text("Agent").tag("agent")
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
@@ -113,24 +113,24 @@ struct ModelsView: View {
                         Button {
                             resetModelPositionToDefault(context: context)
                         } label: {
-                            Label("恢复默认排序", systemImage: "arrow.up.arrow.down")
+                            Label("Restore Default Sorting", systemImage: "arrow.up.arrow.down")
                         }
                     } else {
                         Menu {
                             Button {
                                 showOnlineModelView = true
                             } label: {
-                                Label("添加在线模型", systemImage: "link.badge.plus")
+                                Label("Add Online Model", systemImage: "link.badge.plus")
                             }
                             Button {
                                 showLocalModelDownloadView = true
                             } label: {
-                                Label("添加本地模型", systemImage: "externaldrive.badge.plus")
+                                Label("Add Local Models", systemImage: "externaldrive.badge.plus")
                             }
                             Button {
                                 showAddAgentView = true
                             } label: {
-                                Label("添加新智能体", systemImage: "person.badge.plus")
+                                Label("Add New Agent", systemImage: "person.badge.plus")
                             }
                         } label: {
                             Image(systemName: "plus")
@@ -140,9 +140,9 @@ struct ModelsView: View {
             }
             .environment(\.editMode, .constant(isEditing ? .active : .inactive))
             // 删除确认弹窗
-            .alert("确定要删除此模型吗？", isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
-                Button("取消", role: .cancel) {}
-                Button("删除", role: .destructive) {
+            .alert("Are You Sure You Want to Delete This Model?", isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
+                Button("Cancel", role: .cancel) {}
+                Button("Delete", role: .destructive) {
                     deleteModel(model)
                 }
             }
@@ -182,8 +182,8 @@ struct ModelsView: View {
         .onAppear {
             initializeModelStates()
         }
-        .alert("API Key 缺失", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert("API Key Missing", isPresented: $showAPIKeyError) {
+            Button("Confirm", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -268,7 +268,7 @@ struct ModelsView: View {
     
     private func deleteModel(_ model: AllModels) {
         guard model.systemProvision == false else {
-            errorMessage = "\(model.displayName ?? "模型") 为系统预置模型，无法删除。"
+            errorMessage = "\(model.displayName ?? "Models") 为系统预置模型，无法删除。"
             showAPIKeyError = true
             return
         }
@@ -305,7 +305,7 @@ struct ModelsView: View {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         if currentLanguage.hasPrefix("zh") {
             switch price {
-            case 0: return "免费"
+            case 0: return "Free"
             case 1: return "廉价"
             case 2: return "适中"
             default: return "昂贵"
@@ -396,41 +396,41 @@ struct ModelRowView: View {
                 HStack {
                     
                     if model.supportsToolUse {
-                        Text("工具")
+                        Text("Tools")
                             .font(.caption)
                             .foregroundColor(.hlBrown)
                     }
                     
                     if model.supportsMultimodal {
-                        Text("视觉")
+                        Text("Vision")
                             .font(.caption)
                             .foregroundColor(.hlTeal)
                     } else if model.supportsTextGen {
-                        Text("文本")
+                        Text("Text")
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
                     
                     if model.supportsImageGen {
-                        Text("生图")
+                        Text("Generate Image")
                             .font(.caption)
                             .foregroundColor(.hlGreen)
                     }
                     
                     if model.supportsVoiceGen {
-                        Text("语音")
+                        Text("Speech")
                             .font(.caption)
                             .foregroundColor(.hlPink)
                     }
                     
                     if model.supportsReasoning {
-                        Text("思考")
+                        Text("Thinking")
                             .font(.caption)
                             .foregroundColor(.hlPurple)
                     }
                     
                     if model.company?.uppercased() == "LOCAL" {
-                        Text("本地")
+                        Text("Local")
                             .font(.caption)
                             .foregroundColor(.hlOrange)
                     }
@@ -449,7 +449,7 @@ struct ModelRowView: View {
                         model.isHidden = !newValue
                         saveChanges()
                     } else {
-                        errorMessage = "\(model.displayName ?? "模型") 需要有效的 API Key，请前往设置中添加。"
+                        errorMessage = "\(model.displayName ?? "Models") 需要有效的 API Key，请前往设置中添加。"
                         showAPIKeyError = true
                     }
                 }
@@ -464,7 +464,7 @@ struct ModelRowView: View {
                 Button(role: .destructive) {
                     onDelete()
                 } label: {
-                    Label("删除", systemImage: "trash")
+                    Label("Delete", systemImage: "trash")
                 }
                 .tint(Color(.hlRed))
             }
@@ -474,7 +474,7 @@ struct ModelRowView: View {
                 // 直接打开本行的编辑 sheet
                 showEditSheet = true
             } label: {
-                Label("编辑", systemImage: "square.and.pencil")
+                Label("Edit", systemImage: "square.and.pencil")
             }
             .tint(Color(.hlBlue))
         }

@@ -39,7 +39,7 @@ struct TranslationDicView: View {
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
-                    Text("自定义翻译词典将使得“即时翻译”的翻译结果变得更加个性化，特别是对于某些私有化的翻译知识而言，在翻译词典中添加搭配能最快速的优化你的翻译结果。")
+                    Text("Setting up a translation dictionary will make the results of \"instant translation\" more personalized, especially for certain proprietary translation knowledge. Adding collocations to the translation dictionary can quickly optimize your translation results.")
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -47,9 +47,9 @@ struct TranslationDicView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             // MARK: 翻译输入区
-            Section(header: Text("输入翻译词汇")) {
+            Section(header: Text("Input Translation Dictionary")) {
                 
-                TextField("内容1", text: $contentOne)
+                TextField("Content 1", text: $contentOne)
                 
                 HStack {
                     Spacer()
@@ -59,14 +59,14 @@ struct TranslationDicView: View {
                     Spacer()
                 }
                 
-                TextField("内容2", text: $contentTwo)
+                TextField("Content 2", text: $contentTwo)
                 
                 Button(action: {
                     addTranslation()
                 }, label: {
                     HStack {
                         Spacer()
-                        Text("保存翻译搭配")
+                        Text("Save Translation Mappings")
                             .foregroundColor(.hlBluefont)
                             .bold()
                         Spacer()
@@ -76,9 +76,9 @@ struct TranslationDicView: View {
             }
             
             // MARK: 翻译词典列表
-            Section(header: Text("翻译词典")) {
+            Section(header: Text("Translation Dictionary")) {
                 if translationEntries.isEmpty {
-                    Text("暂无翻译记录")
+                    Text("No translation record")
                         .foregroundColor(.gray)
                 } else {
                     ForEach(translationEntries) { entry in
@@ -97,7 +97,7 @@ struct TranslationDicView: View {
                             Button {
                                 editingTranslation = entry
                             } label: {
-                                Label("编辑", systemImage: "paintbrush")
+                                Label("Edit", systemImage: "paintbrush")
                             }
                             .tint(.hlGreen)
                         }
@@ -107,7 +107,7 @@ struct TranslationDicView: View {
                                     deleteTranslation(at: IndexSet(integer: index))
                                 }
                             } label: {
-                                Label("删除", systemImage: "trash")
+                                Label("Delete", systemImage: "trash")
                             }
                             .tint(.hlRed)
                         }
@@ -116,7 +116,7 @@ struct TranslationDicView: View {
             }
         }
         .listStyle(.insetGrouped)    // 原生分组列表风格
-        .navigationTitle("翻译词典")
+        .navigationTitle("Translation Dictionary")
         .overlay(toastOverlay)
         .sheet(item: $editingTranslation) { translation in
             EditTranslationView(translation: translation)
@@ -215,8 +215,8 @@ struct EditTranslationView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("编辑翻译词汇")) {
-                    TextField("内容1", text: $contentOne)
+                Section(header: Text("Edit Translation")) {
+                    TextField("Content 1", text: $contentOne)
                     
                     HStack {
                         Spacer()
@@ -226,18 +226,18 @@ struct EditTranslationView: View {
                         Spacer()
                     }
                     
-                    TextField("内容2", text: $contentTwo)
+                    TextField("Content 2", text: $contentTwo)
                 }
             }
-            .navigationTitle("编辑翻译")
+            .navigationTitle("Edit Translation")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button("Save") {
                         saveEdits()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button("Cancel") {
                         dismiss()
                     }
                 }

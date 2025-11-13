@@ -10,7 +10,7 @@ import UniformTypeIdentifiers
 
 // MARK: - 导出格式枚举（仅支持 txt 和 json）
 enum ExportFormat: String, CaseIterable, Identifiable {
-    case txt = "纯文本 (.txt)"
+    case txt = "Plain Text (.txt)"
     case json = "JSON文件 (.json)"
     
     var id: String { rawValue }

@@ -1268,7 +1268,7 @@ func priceText(for price: Int16) -> String {
     
     if currentLanguage.hasPrefix("zh") {
         switch price {
-        case 0: return "免费"
+        case 0: return "Free"
         case 1: return "廉价"
         case 2: return "适中"
         default: return "昂贵"

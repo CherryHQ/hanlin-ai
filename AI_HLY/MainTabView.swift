@@ -20,7 +20,7 @@ struct MainTabView: View {
             // 第一个Tab: ListView
             ListView()
                 .tabItem {
-                    Label("列表", systemImage: "list.bullet")
+                    Label("List", systemImage: "list.bullet")
                 }
                 .tag(0)
             
@@ -28,28 +28,28 @@ struct MainTabView: View {
             VisionView(selectedTab: $selectedTab)
                 .toolbar(.hidden, for: .tabBar)
                 .tabItem {
-                    Label("视觉", systemImage: "eye")
+                    Label("Vision", systemImage: "eye")
                 }
                 .tag(1)
             
             // 第三个Tab: KnowledgeListView
             KnowledgeListView()
                 .tabItem {
-                    Label("知识库", systemImage: "books.vertical")
+                    Label("Knowledge Base", systemImage: "books.vertical")
                 }
                 .tag(2)
             
             // 第四个Tab: ModelsView
             ModelsView()
                 .tabItem {
-                    Label("模型", systemImage: "square.stack.3d.up")
+                    Label("Models", systemImage: "square.stack.3d.up")
                 }
                 .tag(3)
             
             // 第五个Tab: SettingsView
             SettingsView()
                 .tabItem {
-                    Label("设置", systemImage: "gear")
+                    Label("Settings", systemImage: "gear")
                 }
                 .tag(4)
         }

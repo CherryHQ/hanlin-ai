@@ -29,7 +29,7 @@ struct KnowledgeListView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             content
-                .navigationTitle("知识背包")
+                .navigationTitle("Knowledge Backpack")
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 75)
                 }
@@ -45,7 +45,7 @@ struct KnowledgeListView: View {
                         if loadHistoryMessages {
                             HStack {
                                 ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
+                                Text("Loading...").font(.caption)
                             }
                         }
                     }
@@ -82,7 +82,7 @@ struct KnowledgeListView: View {
             knowledgeRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索知识文档")
+        .searchable(text: $searchText, prompt: "Search Knowledge Documents")
         .onChange(of: searchText) { searchRecords() }
         .refreshable {
             handleOnAppear()
@@ -194,19 +194,19 @@ struct KnowledgeListView: View {
                     editingTitle  = record.name
                     showIconSheet = true
                 } label: {
-                    Label("编辑图标", systemImage: "paintbrush")
+                    Label("Edit Icon", systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "取消置顶" : "置顶知识", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    Label(record.isPinned ? "Unpin" : "Pin Knowledge", systemImage: record.isPinned ? "pin.slash" : "pin")
                 }
                 
                 Button(role: .destructive) {
                     deleteKnowledge(record)
                 } label: {
-                    Label("删除知识", systemImage: "trash")
+                    Label("Delete Knowledge", systemImage: "trash")
                 }
             }
         }
@@ -218,7 +218,7 @@ struct KnowledgeListView: View {
             Button(role: .destructive) {
                 deleteKnowledge(record)
             } label: {
-                Label("删除知识", systemImage: "trash")
+                Label("Delete Knowledge", systemImage: "trash")
             }
             .tint(.hlRed)
         }
@@ -226,7 +226,7 @@ struct KnowledgeListView: View {
             Button {
                 togglePin(record)
             } label: {
-                Label(record.isPinned ? "取消置顶" : "置顶知识", systemImage: record.isPinned ? "pin.slash" : "pin")
+                Label(record.isPinned ? "Unpin" : "Pin Knowledge", systemImage: record.isPinned ? "pin.slash" : "pin")
             }
             .tint(.hlBlue)
             
@@ -237,7 +237,7 @@ struct KnowledgeListView: View {
                 editingTitle  = record.name
                 showIconSheet = true
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label("Edit Icon", systemImage: "paintbrush")
             }
             .tint(.hlGreen)
         }

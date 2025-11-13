@@ -3547,7 +3547,7 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "fetch_nutrition_details":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "查询营养摄入" : "Fetching Nutrition"))
+                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "Enquire Nutritional Intake" : "Fetching Nutrition"))
                                                 useFunctionName = functionName
                                                 
                                                 do {

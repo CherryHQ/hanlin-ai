@@ -72,7 +72,7 @@ struct TranslationView: View {
                         .scaledToFit()
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlBluefont)
-                    Text("即时翻译")
+                    Text("Translation")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.hlBluefont)
                     Spacer()
@@ -83,7 +83,7 @@ struct TranslationView: View {
                 VStack(spacing: 10) {
                     // 选择原文本语言
                     HStack {
-                        Picker(" 现有文本", selection: $sourceLanguage) {
+                        Picker("Existing text", selection: $sourceLanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
                                 Text(language)
                             }
@@ -157,7 +157,7 @@ struct TranslationView: View {
                     
                     // 选择目标语言
                     HStack {
-                        Picker(" 目标文本", selection: $targetLanguage) {
+                        Picker("Target text", selection: $targetLanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
                                 Text(language)
                             }
@@ -259,7 +259,7 @@ struct TranslationView: View {
                     // 打开 TranslationDicView
                     isShowTranslationDicView = true // 可替换为你自己的呈现逻辑
                 }) {
-                    Label("翻译词典", systemImage: "character.book.closed")
+                    Label("Translation Dictionary", systemImage: "character.book.closed")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.hlBluefont)
@@ -276,7 +276,7 @@ struct TranslationView: View {
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("温馨提示：即时功能不会保存你的数据，重要数据请及时备份！")
+                        Text("Reminder: Instant features do not save your data. Please back up important information in time!")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Spacer()
@@ -465,7 +465,7 @@ struct PolishView: View {
     @State private var polishOptions: [[String: String]] = []
     
     private func loadPolishOptions() -> [[String: String]] {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentLanguage = Locale.preferredLanguages.first ?? "en"
         let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         guard let url = Bundle.main.url(forResource: "Refinement", withExtension: "json") else {
@@ -476,7 +476,7 @@ struct PolishView: View {
         do {
             let data = try Data(contentsOf: url)
             let optionsDict = try JSONDecoder().decode([String: [[String: String]]].self, from: data)
-            return optionsDict[languageKey] ?? []
+            return optionsDict[languageKey] ?? optionsDict["en"] ?? []
         } catch {
             print("解析 Refinement.json 失败: \(error)")
             return []
@@ -493,7 +493,7 @@ struct PolishView: View {
                         .scaledToFit()
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlGreen)
-                    Text("即时润色")
+                    Text("Refinement")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.hlGreen)
                     Spacer()
@@ -504,7 +504,7 @@ struct PolishView: View {
                 VStack(spacing: 10) {
                     // 选择原文本
                     HStack {
-                        Text("现有文本")
+                        Text("Existing Text")
                         Spacer()
                     }
                     .padding(.top)
@@ -518,12 +518,12 @@ struct PolishView: View {
                         .focused($isInputActive)
                     
                     HStack {
-                        Text("润色要求")
+                        Text("Refinement Requirements")
                             .padding(.top, 5)
                         Spacer()
                     }
                     // 内容选择区
-                    Section(header: Text("内容风格")
+                    Section(header: Text("Content Styles")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                     ) {
@@ -531,7 +531,7 @@ struct PolishView: View {
                     }
 
                     // 格式选择区
-                    Section(header: Text("格式规范")
+                    Section(header: Text("Formatting Standards")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                     ) {
@@ -539,18 +539,18 @@ struct PolishView: View {
                     }
 
                     // 长度选择区
-                    Section(header: Text("内容长度")
+                    Section(header: Text("Content Length")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                     ) {
                         selectionGrid(for: "length")
                     }
                     
-                    Section(header: Text("特别要求")
+                    Section(header: Text("Special Requests")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                     ) {
-                        TextField("要求描述...", text: $formatText)
+                        TextField("Request Description…", text: $formatText)
                             .focused($isFormatActive)
                             .disabled(isPolish)
                             .padding()
@@ -560,7 +560,7 @@ struct PolishView: View {
                     }
                     
                     // 模型选择 & 润色按钮
-                    Section(header: Text("模型选择")
+                    Section(header: Text("Model Selection")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                     ) {
@@ -613,7 +613,7 @@ struct PolishView: View {
                     
                     // 润色文本
                     HStack {
-                        Text("润色文本")
+                        Text("Refine Text")
                         Spacer()
                     }
                     
@@ -702,7 +702,7 @@ struct PolishView: View {
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("温馨提示：即时功能不会保存你的数据，重要数据请及时备份！")
+                        Text("Reminder: Instant features do not save your data. Please back up important information in time!")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Spacer()
@@ -868,7 +868,7 @@ struct SummaryView: View {
                         .scaledToFit()
                         .frame(width: 30, height: 30)
                         .foregroundColor(.hlCyanite)
-                    Text("即时摘要")
+                    Text("Summary")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.hlCyanite)
                     Spacer()
@@ -879,7 +879,7 @@ struct SummaryView: View {
                 VStack(spacing: 10) {
                     // 选择原文本语言
                     HStack {
-                        Text("现有文本或网页链接")
+                        Text("Existing Text or Web Links")
                         Spacer()
                     }
                     .padding(.top)
@@ -983,7 +983,7 @@ struct SummaryView: View {
                     
                     // 摘要文本
                     HStack {
-                        Text("摘要文本")
+                        Text("Summarized Text")
                         Spacer()
                     }
                     
@@ -1074,7 +1074,7 @@ struct SummaryView: View {
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("温馨提示：即时功能不会保存你的数据，重要数据请及时备份！")
+                        Text("Reminder: Instant features do not save your data. Please back up important information in time!")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Spacer()
@@ -1254,31 +1254,31 @@ func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> so
                 .foregroundColor(color)
                 .transition(.opacity.combined(with: .move(edge: .leading)))
             if model.supportsReasoning {
-                Text("思考")
+                Text("Thinking")
                     .font(.caption)
                     .foregroundColor(Color(.systemPurple))
                     .transition(.opacity)
             }
             if model.supportsImageGen {
-                Text("生图")
+                Text("Generate Image")
                     .font(.caption)
                     .foregroundColor(.green)
                     .transition(.opacity)
             }
             if model.supportsVoiceGen {
-                Text("音频")
+                Text("Voice")
                     .font(.caption)
                     .foregroundColor(.pink)
                     .transition(.opacity)
             }
             if model.price == 0 {
-                Text("免费")
+                Text("Free")
                     .font(.caption)
                     .foregroundColor(Color(.systemGreen))
                     .transition(.opacity)
             }
             if model.company?.uppercased() == "LOCAL" {
-                Text("本地")
+                Text("Local")
                     .font(.caption)
                     .foregroundColor(Color(.systemOrange))
                     .transition(.opacity)

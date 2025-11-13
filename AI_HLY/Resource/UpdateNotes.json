@@ -1,412 +1,180 @@
 {
-  "zh-Hans": [
-      {
-          "version": "AI翰林院 0.7.2（公测）",
-          "releaseDate": "发布日期：2025年10月26日",
-          "content": "#### 🚀 主要更新：\n- 新增自定义添加第三方模型API服务商功能，系统默认服务商新增CherryIN；\n- 优化知识库编辑时文档上传的体验；\n- 优化添加在线模型时报错会重复的问题；\n- 搜索服务商增加Perplexity；\n- 适配Qwen Image生图及谷歌官方生图模型；\n- 适配iOS26液态玻璃效果；\n- 修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.7.1（公测）",
-          "releaseDate": "发布日期：2025年8月31日",
-          "content": "#### 🚀 主要更新：\n- 适配新的GLM4.5、Kimi K2、GPT5等最新大模型；\n- 修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.7.0（公测）",
-          "releaseDate": "发布日期：2025年5月30日",
-          "content": "#### 🚀 主要更新：\n- 新增规划执行功能，非思考模型选择规划执行后，模型会先进行思考，规划执行步骤随后再执行任务；\n- 支持部分推理模型的推理思考长度设置；\n- 更新适配最新的 DeepSeek R1 和 Claude 4.0 等模型；\n- 优化部分界面与功能，提升流畅度，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.9（公测）",
-          "releaseDate": "发布日期：2025年5月20日",
-          "content": "#### 🚀 主要更新：\n- 新增画布工具，与受支持的模型对话时，可以在画布中更好的编辑、查看长文本或结构化的内容，支持模型编辑画布，支持画布部分内容编辑等功能；\n- 优化天气查询工具，现支持和风天气与OpenWeather服务，支持未来天气预报查询；\n- 全面升级工具输出时的内容排版，输出内容更加符合阅读习惯；\n- 新增支持 MiniMax 文本模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.8（公测）",
-          "releaseDate": "发布日期：2025年5月13日",
-          "content": "#### 🚀 主要更新：\n- 新增支持Qwen全模态模型Omni及其音频输出，支持语音消息生成后的自动保存，支持暂停播放、倍速播放、任意位置开始播放、时长显示等；\n- 增加科学文本模式，用于渲染数学公式；\n- 优化思考模式的内容输出形式，体验更加流畅；\n- 智能体Agent支持二次编辑基座模型，选择更灵活，支持复制系统提供的智能体；\n- 增加模型默认排序按钮，在编辑模式下点击左上角恢复模型默认排序；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.7（公测）",
-          "releaseDate": "发布日期：2025年4月29日",
-          "content": "#### 🚀 主要更新：\n- 优化知识背包功能，增加撰写工具，与受支持的模型对话时，可以让模型撰写知识文档。优化知识片段召回策略，引入新机制，让查找更精准，更快速；\n- 更新Qwen3、百度4.5Turbo等最新发布的模型，支持Qwen3推理开关；\n- 增强网络搜索功能，新增 arXiv 文献搜索工具，新增在线文件解析工具，与受支持的模型对话时，模型可以自己查找论文，并且根据论文文件链接精度论文详细内容；\n- 支持聊天翻译结果持久化保存，避免重复翻译；\n- 支持推理时间、参考文献数量显示；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.6（公测）",
-          "releaseDate": "发布日期：2025年4月24日",
-          "content": "#### 🚀 主要更新：\n- 优化记忆功能，支持更新记忆与灌输记忆，提升记忆功能的召回效果；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.5（公测）",
-          "releaseDate": "发布日期：2025年4月22日",
-          "content": "#### 🚀 主要更新：\n- 聊天新增健康工具，与受支持的模型对话时，可以让模型查询运动、能量、饮食数据，也可以让模型分析您的饮食并为您创建营养卡片，方便您存入系统的健康应用；\n- 地图工具新增天气查询功能；\n- 代码工具新增运行 Python 代码；\n- 知识背包引入主动翻找，受支持的模型会在需要的时候主动翻找知识背包。知识背包支持更多参数设置；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.4（公测）",
-          "releaseDate": "发布日期：2025年4月18日",
-          "content": "#### 🚀 主要更新：\n- 聊天新增网页工具，与受支持的模型对话时，可以让模型撰写网页代码，从而实现特定的工具或者展示特定的内容；\n- 联网搜索引入主动搜索，开启后受支持的模型会在需要的时候主动检索互联网信息；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.3（公测）",
-          "releaseDate": "发布日期：2025年4月17日",
-          "content": "#### 🚀 主要更新：\n- 聊天新增日历工具，支持受支持的模型智能查询日程、提醒事项并允许大模型写入日程、提醒事项；\n- 地图新引入谷歌地图引擎，可根据需要进行配置选择；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.2（公测）",
-          "releaseDate": "发布日期：2025年4月16日",
-          "content": "#### 🚀 主要更新：\n- 地图引入高德地图引擎，可根据需要进行配置选择；\n- 更新适配GPT4.1、智谱新模型等；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.1（公测）",
-          "releaseDate": "发布日期：2025年4月14日",
-          "content": "#### 🚀 主要更新：\n- 地图功能新增支持路线规划，与受支持的模型对话时，模型可以主动帮用户规划驾驶、公交或步行路线；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.6.0（公测）",
-          "releaseDate": "发布日期：2025年4月12日",
-          "content": "#### 🚀 主要更新：\n- 聊天对话支持地图显示！与受支持的模型对话，询问地理信息将得到直观的地图内容展示，支持询问自己的位置，支持基于特定位置寻找周边地点等功能，选择地点，一键查看路线，支持查看卫星地图；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.9（公测）",
-          "releaseDate": "发布日期：2025年4月10日",
-          "content": "#### 🚀 主要更新：\n- 新增支持模力方舟API服务，更新百度X1、Grok3等最新模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.8（公测）",
-          "releaseDate": "发布日期：2025年4月9日",
-          "content": "#### 🚀 主要更新：\n- 新增支持语音模型的选择，目前支持Siri语音、OpenAI、硅基流动三种语音的选择；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.7（公测）",
-          "releaseDate": "发布日期：2025年4月8日",
-          "content": "#### 🚀 主要更新：\n- 优化文件上传及解析功能，现在支持同时上传多个文件进行对话；\n- 新增翻译词典功能，自定义翻译搭配，在即时翻译中获得更加贴合自己的翻译服务；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.6（公测）",
-          "releaseDate": "发布日期：2025年4月6日",
-          "content": "#### 🚀 主要更新：\n- 新增支持生图模型反向提示词与画幅设定，仅对支持设定的模型适用，优化聊天界面性能；\n- 支持更多本地模型的快速下载，允许用户自主上传 GGUF 格式文件以使用本地模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.5（公测）",
-          "releaseDate": "发布日期：2025年4月4日",
-          "content": "#### 🚀 主要更新：\n- 新增自定义文本优化模型与视觉优化模型功能；\n- 新增自定义设置搜索结果数量；\n- 新增自主添加在线OpenAI同格式的生图模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.4（公测）",
-          "releaseDate": "发布日期：2025年4月3日",
-          "content": "#### 🚀 主要更新：\n- 优化群聊的流畅度和消息处理机制，增加@输入模型名称辅助，对话更便捷、自然。\n- 新增支持魔塔社区的生图模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.3（公测）",
-          "releaseDate": "发布日期：2025年4月2日",
-          "content": "#### 🚀 主要更新：\n- 修复本地模型18.4系统的适配问题，优化本地模型性能，新增DeepSeek蒸馏模型、Llama模型等可供下载使用，本地模型也可以进行推理。本地模型现在也支持温度、累积概率、最大回复长度等参数调节。\n- 新增支持xAI的生图模型；\n- 新增记忆档案功能，与受支持的模型（模型列表标注有“工具”）对话时，模型会自动记住某些重要信息并在需要的时候回忆，提升对话体验。在设置中可以查看管理记忆档案内容；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.2（公测）",
-          "releaseDate": "发布日期：2025年4月1日",
-          "content": "#### 🚀 主要更新：\n- 新增支持文字生图模型，在聊天对话中选择生图模型，输入提示词即可根据提示词生成图片。目前支持OpenAI、阿里万相、智谱AI与硅基流动，并且内置了两款免费的尝试模型。支持上下文理解优化图像生成提示词。\n- 搜索引擎新增支持Brave搜索引擎；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.1（公测）",
-          "releaseDate": "发布日期：2025年3月30日",
-          "content": "#### 🚀 主要更新：\n- 全新推出“知识背包”板块，可编辑知识内容并将其向量化。在聊天时，只需点击“背包”按钮，系统便会自动搜寻知识库内容，并提供关联度最高的资料内容给大模型，以此获得更好的回复。在专业领域，知识背包也被称为检索增强（RAG）技术。知识输入支持文件解析、网页解析、自动Markdown优化等，建议知识的内容采用Markdown的形式进行记录，使用效果更佳！\n- 群聊对话工具栏新增“存为知识”按钮，用于将输入或输出内容快速存储入知识背包；\n- 支持硅基流动与DeepSeek的快捷余额查询，在编辑密钥界面点击查询API余额，即可快速获得账户余额信息；\n- 新增软件使用指南文档，帮助更好的使用软件；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.5.0（公测）",
-          "releaseDate": "发布日期：2025年3月25日",
-          "content": "#### 🚀 主要更新：\n- 全新推出“智能代理”板块，可基于现有模型列表模型，制作智能代理（也称智能体）。添加的智能体将无缝集成于现有的群聊、视觉及即时功能上，带来更加个性化和专业化的体验，可搭配提示词库带来无与伦比的大模型快速响应体验；\n- 添加“智能代理”时包含便捷的自动填写，可根据人物名称生成人物设定。输入工具的加入助力快速编辑设定内容；\n- 优化图标库，提供更丰富的聊天图标与智能体图标选择；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.4.4（公测）",
-          "releaseDate": "发布日期：2025年3月23日",
-          "content": "#### 🚀 主要更新：\n- 群聊新增语音输入功能，点击麦克风即可进入语音输入界面，语音输入界面支持“锤子”自动优化提示词；\n- 即时功能引入本地模型，现在无需网络也可进行大模型翻译、润色与摘要，具体效果视本地模型能力而定，非必要不推荐使用；\n- 新增支持 OpenRouter 系列模型，默认包含DeepSeekR1、Qwen-72B、Gemini2.0等6款免费模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.4.3（公测）",
-          "releaseDate": "发布日期：2025年3月22日",
-          "content": "#### 🚀 主要更新：\n- 新增自定义设置多轮对话的系统消息，提升对话的自由度与可玩性；\n- 优化视觉功能的意图猜测，回复更精准；\n- 提示词库支持长按变更位置顺序，新增根据提示词标题搜索提示词卡片，支持拼音检索；\n- 模型加入 腾讯混元T1 与 OpenAI o1-Pro 模型；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.4.2（公测）",
-          "releaseDate": "发布日期：2025年3月21日",
-          "content": "#### 🚀 主要更新：\n- 新增设置临时聊天按钮，退出临时聊天后系统自动删除聊天信息；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.4.1（公测）",
-          "releaseDate": "发布日期：2025年3月20日",
-          "content": "#### 🚀 主要更新：\n- 新增聊天记录导出功能，支持更便于交流分享的纯文本文件（.txt）和便于使用的 Json（.json）格式的文本内容导出，其中 Json 支持 OpenAI 多模态格式导出 base64 图片数据；\n- 新增聊天记录导入功能，使用与导出文本格式一致的 JSON 文件即可一键还原完整对话内容，支持 base64 图片数据的还原；\n- 新增消息数量上限调节并支持调节数据按群聊自动保存，最大回复长度改为支持调节数据按群聊自动保存；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.4.0（公测）",
-          "releaseDate": "发布日期：2025年3月19日",
-          "content": "#### 🚀 主要更新：\n- “提示词库”功能重磅登场，在设置中预先编辑好常用的提示词，在聊天对话中点击即可快速开启任务，注意提示词内容将加到您输入的内容之前。本地模型也支持使用“提示词库”；\n- 本地模型新增支持本地文件上传，无需网络连接即可处理文件内容；\n- 新增支持百度文心系列模型、讯飞星火系列模型、Perplexity系列模型；\n- 新增翰林预置模型，小白也能先享AI智能；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.3.6（公测）",
-          "releaseDate": "发布日期：2025年3月17日",
-          "content": "#### 🚀 主要更新：\n- 聊天界面新增滚动到底按钮；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.3.5（内测）",
-          "releaseDate": "发布日期：2025年3月16日",
-          "content": "#### 🚀 主要更新：\n- 优化初次进入应用时的交互，引导用户设置密钥以正常使用；\n- 本群模型列表中增加“同步模型列表”按钮，用于快速同步总模型列表；\n- 优化列表顶部的搜索功能，支持搜索结果高亮，优化拼音搜索，支持直接跳转到搜索到的聊天记录；\n- 即时摘要功能支持网页阅读摘要；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.3.4（内测）",
-          "releaseDate": "发布日期：2025年3月16日",
-          "content": "#### 🚀 主要更新：\n- 修复相机无法翻转的问题；\n- 优化部分界面与功能，修复其他已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.3.3（内测）",
-          "releaseDate": "发布日期：2025年3月15日",
-          "content": "#### 🚀 主要更新：\n- 支持在线检索数据显示在聊天界面，并支持查看、删除操作，方便自由控制上下文长度。\n- 支持聊天消息的单条删除，长按该消息即可查看删除选项。\n- 支持聊天消息的多选及删除，右上角进入编辑模式即可，方便自由控制对话内容。\n- 新增API配置时的测试功能；\n- 优化部分界面与功能，修复已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.3.2（内测）",
-          "releaseDate": "发布日期：2025年3月14日",
-          "content": "#### 🚀 主要更新：\n- 支持iCloud数据自动同步，无缝衔接你的智能生活。\n- 支持输入内容所含链接的自动解析及链接快速删除，增加大模型对输入内容中成功解析的网站的解析与阅读，实测可以解析各类新闻网页、百科网页、信息网页、媒体网页、腾讯文档等。\n- 优化聊天界面的输入框输入与发送。支持长按每条消息以进行复制、文本选择等操作。\n- 优化部分界面与功能，修复已知问题与错误；"
-      },
-      {
-          "version": "AI翰林院 0.3.1（内测）",
-          "releaseDate": "发布日期：2025年3月12日",
-          "content": "#### 🚀 主要更新：\n- 支持以粘贴的方式向聊天输入框中添加图片；\n- 优化文件解析功能，扩展支持的文件类型，包括：纯文本（TXT）、Markdown（MD）、Word 文档（DOCX）、PowerPoint 演示文稿（PPTX）、PDF 文件（PDF）、Excel 电子表格（XLSX）、逗号分隔值文件（CSV）、Python 代码文件（PY）、JSON 文件（JSON）、日志文件（LOG）和 HTML 文件（HTML）。\n- 优化底部选择栏的样式，修复可能的不显示问题；\n- 增加支持最大回复长度的调节；\n- 优化部分界面、动画与功能，修复已知问题与错误；"
-      },
-    {
-        "version": "AI翰林院 0.3（内测）",
-        "releaseDate": "发布日期：2025年3月11日",
-        "content": "#### 🚀 主要更新：\n- 全新升级联网搜索，支持配置选择搜索引擎，现支持博查AI（DeepSeeek同款）、博查AI国际版（LangSearch）、EXA AI、Tavily、智谱华章，并且支持开启双语检索；\n- 优化搜索功能与其性能，优化搜索上下文理解与图片搜索功能；\n- 优化聊天记录加载性能，支持下拉加载。增加自动群聊命名功能，有效对话达到5条时自动命名；\n- 优化部分界面与功能，修复已知问题与错误；"
-    },
-    {
-        "version": "AI翰林院 0.2.2（内测）",
-        "releaseDate": "发布日期：2025年3月8日",
-        "content": "#### 🚀 主要更新：\n- 优化视觉功能手电筒，支持自拍照明，优化变焦流畅度；\n- 优化部分界面与功能，修复已知问题与错误；\n- 初步适配中英文软件界面及中英文提示词、问答等；"
-    },
-    {
-      "version": "AI翰林院 0.2.1（内测）",
-      "releaseDate": "发布日期：2025年3月4日",
-      "content": "#### 🚀 主要更新：\n- 增加按键及大模型输出振动触感反馈，支持自定义开关文本生成时的反馈；\n- 优化视觉功能，支持相册选取照片，增加镜头翻转功能、手电筒功能及保存图片功能，针对Pro机型，支持更大范围的变焦，新增文本选择按钮；\n- 支持模型厂商自定义是否开启，关闭后总模型列表、群聊模型列表都将关闭该厂商的模型；\n- 新增群聊模型列表的检索功能，包括文本检索与拼音检索；\n- 更新智谱新Logo，优化性能，优化部分界面与功能，修复已知问题与错误；"
-    },
-    {
-      "version": "AI翰林院 0.2（内测）",
-      "releaseDate": "发布日期：2025年2月28日",
-      "content": "#### 🚀 主要更新：\n- 增加即时翻译、即时润色与即时摘要功能，开启快速使用AI新体验，即用即走，不用担心数据冗余与聊天杂乱，助力用户轻量化使用AI。即时翻译功能默认提供19种语言（或方言）的相互翻译；即时润色功能默认提供12种风格、9种规范和3种长度的选择，并支持自定义特别要求；即时摘要功能助力用户快速对长文本信息进行简洁摘要。即时功能与视觉功能一样，共享模型列表中的所有在线模型，可以通过操作模型列表的启用/隐藏来操作即时功能中的模型；\n- 优化文档上传与文本模型的图片处理速度；\n- 适配阶跃星辰系列模型；\n- 优化配色方案，优化部分界面与功能，修复已知问题与错误；"
-    },
-    {
-      "version": "AI翰林院 0.1.5（内测）",
-      "releaseDate": "发布日期：2025年2月26日",
-      "content": "#### 🚀 主要更新：\n- 增加多模态模型的联网检索功能，可结合图片的内容进行联网检索，如果有多张图片，仅结合第一张图片，至此理论上实现所有模型的联网检索功能；\n- 增加文本模型的图片分析功能，现在语言模型也可以上传图片，注意效果可能不如多模态模型，加载时间也会延长，本功能旨在更方便使用推理模型；\n- 视觉部分增加对追问问题的显示；\n- 增加对腾讯混元大模型的支持；"
-    },
-    {
-      "version": "AI翰林院 0.1.4（内测）",
-      "releaseDate": "发布日期：2025年2月18日",
-      "content": "#### 🚀 主要更新：\n- 加入本地模型的下载、管理与使用；\n- 支持快捷指令快速打开视觉界面；\n- 增加用户信息填写，让聊天更符合个性化需求；\n- 优化群聊界面打开时的默认模型选择逻辑；\n- 优化部分界面与功能，修复已知问题与错误；"
-    },
-    {
-      "version": "AI翰林院 0.1.3（内测）",
-      "releaseDate": "发布日期：2025年2月16日",
-      "content": "#### 🚀 主要更新：\n- 启用全新视觉配色方案；\n- 修复启动软件时原有音频播放暂停的问题；\n- 优化部分界面，修复已知问题与错误；"
-    },
-    {
-      "version": "AI翰林院 0.1.2（内测）",
-      "releaseDate": "发布日期：2025年2月15日",
-      "content": "#### 🚀 主要更新：\n- 优化聊天界面，提升流畅度与用户体验；\n- 新增联网检索功能并提供参考资料，支持所有纯文本模型；\n- 适配零一万物系列模型；\n- 修复其他已知问题与错误，提高稳定性；"
-    },
-    {
-      "version": "AI翰林院 0.1.1（内测）",
-      "releaseDate": "发布日期：2025年2月13日",
-      "content": "#### 🚀 主要更新：\n- 优化视觉模块交互与UI，增加追问对话功能；\n- 新增支持Claude旗舰模型；\n- 优化部分数据处理逻辑，提高软件性能；\n- 修复其他已知问题与错误，提高稳定性；"
-    },
-    {
-      "version": "AI翰林院 0.1（内测）",
-      "releaseDate": "发布日期：2025年2月13日",
-      "content": "#### 🚀 主要更新：\n- 增加模型列表与增加模型选项，支持同步模型更改到所有群聊；\n- 主聊天界面重新设计，提高信息密度，更符合聊天场景，优化闪屏问题，支持下拉刷新，支持拼音检索群聊名称；\n- 支持Kimi、xAI及局域网模型，借助Olama或LM Studio可以实现电脑运行本地模型，手机上使用的效果，豆包模型新增接入点设置；\n- 全新增加视觉界面，提供快捷的视觉能力使用方式；\n- 修复其他已知问题与错误，优化性能，提高稳定性；"
-    },
-    {
-      "version": "AI翰林院 0.0.1（内测）",
-      "releaseDate": "发布日期：2025年2月12日",
-      "content": "#### 🚀 主要更新：\n- 修正价格指标，具体为：\n  1. 0元：免费\n  2. 0.001元 / 千 tokens 以下：廉价\n  3. 0.001元 - 0.006元 / 千 tokens：适中\n  4. 0.006元 / 千 tokens 及以上：昂贵\n  - 注：输入输出分别计费：输入 * 50% + 输出 * 50%\n- 优化部分 UI 交互体验，添加时间显示，支持左侧界面滑动返回；\n- 更新部分支持模型，将在新建的聊天中生效，原有模型将在旧的聊天中继续支持；\n- 修复已知问题与错误，优化性能，提高稳定性；"
-    },
-    {
-      "version": "AI翰林院 0.0 正式发布内测",
-      "releaseDate": "发布日期：2025年2月10日",
-      "content": "#### 🚀 主要功能：\n- 多模型群聊：支持智谱清言、通义千问、字节豆包、深度求索、硅基流动、OpenAI(Beta)、谷歌Gemini(Beta)等主流平台的主流模型，支持用户自定义API；\n- 多模态输入：根据不同模型，支持文本输入、图像上传、文件上传、联网搜索等功能；\n- 多行文本便捷输入：支持多行文本输入，提示词自动优化，输入文本快速翻译，智能文本识别；\n- 多种模型回复呈现与操作方式：支持Markdown格式解析，推理思维链呈现，快速复制，文本选择，智能翻译，Siri朗读，重新请求；\n- 多样个性化选择：支持自定义群聊名称、群聊符号及其颜色，支持分别定义不同群聊呈现模型及呈现顺序；\n- 多个对话的管理：支持新建多个群聊，支持群聊名称、群聊内容的快速搜索，支持将群聊置顶。\n\n👏 欢迎使用，如有遇到问题，请积极联系开发者。"
-    }
-  ],
   "en": [
-      {
-        "version": "AI Hanlin 0.7.2 (Beta)",
-        "releaseDate": "Release Date: October 26, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added custom third-party model API provider feature, added CherryIN as system default provider;\n- Improved document upload experience when editing knowledge base;\n- Fixed issue where errors would duplicate when adding online models;\n- Added Perplexity as search provider;\n- Added support for Qwen Image generation and Google's official image generation models;\n- Adapted iOS 26 liquid glass effect;\n- Fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.7.1 (Beta)",
-        "releaseDate": "Release Date: August 31, 2025",
-        "content": "#### 🚀 Major updates:\n- Adapted to the latest large models such as GLM4.5, Kimi K2, GPT5;\n- Fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.7.0 (Beta)",
-        "releaseDate": "Release Date: May 30, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added planning execution feature: for non-thinking models, selecting planning execution will let the model think first, then execute tasks based on the plan;\n- Supported reasoning length settings for certain reasoning models;\n- Updated compatibility with latest models such as DeepSeek R1 and Claude 4.0;\n- Optimized parts of the UI and features to improve smoothness, and fixed other known bugs and issues."
-      },
-      {
-        "version": "AI Hanlin 0.6.9 (Beta)",
-        "releaseDate": "Release Date: May 20, 2025",
-        "content": "#### 🚀 Major Updates:\n- Introduced the Canvas Tool: When interacting with supported models, you can now edit and view long-form or structured content more effectively within the canvas. Supports model-assisted editing and partial content editing.\n- Enhanced the Weather Query Tool: Now supports both QWeather and OpenWeather services, with future weather forecasts.\n- Fully upgraded the layout of tool outputs for better readability and formatting.\n- Added support for MiniMax text models.\n- Improved parts of the interface and features, and fixed other known bugs and issues."
-      },
-      {
-        "version": "AI Hanlin 0.6.8 (Beta)",
-        "releaseDate": "Release Date: May 13, 2025",
-        "content": "#### 🚀 Main Updates:\n- Added support for Qwen’s full-modal model Omni and its audio output, including automatic saving after voice message generation, as well as playback controls like pause, speed adjustment, seek, and duration display;\n- Introduced scientific text mode for rendering mathematical formulas;\n- Optimized the output format of Thought Mode for a smoother experience;\n- Agent now supports re-editing the base model, with more flexible selection and support for copying system-provided agents;\n- Added default model sorting button, which restores the default model order when clicked in edit mode;\n- Optimized parts of the interface and functionality, and fixed other known bugs and issues;"
-      },
-      {
-        "version": "AI Hanlin 0.6.7 (Beta)",
-        "releaseDate": "Release Date: April 29, 2025",
-        "content": "#### 🚀 Major Updates:\n- Optimized the Knowledge Backpack feature: added a writing tool that allows supported models to draft knowledge documents. Improved knowledge chunk retrieval strategies by introducing a new mechanism for more accurate and faster searches;\n- Updated to the latest models such as Qwen3 and Baidu 4.5Turbo, with support for the Qwen3 inference toggle;\n- Enhanced web search capabilities: added arXiv literature search tool and an online file parsing tool. Supported models can now autonomously search for papers and analyze detailed content based on provided paper links;\n- Supported persistent saving of chat translation results to avoid redundant translations;\n- Supported display of inference time and reference count;\n- Optimized parts of the interface and functionality, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.6.6 (Beta)",
-        "releaseDate": "Release Date: April 24, 2025",
-        "content": "#### 🚀 Major Updates:\n- Enhanced memory features: now supports memory updates and injections, improving recall performance;\n- UI and feature refinements, along with fixes for known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.6.5 (Beta)",
-        "releaseDate": "Release Date: April 22, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added a Health Tool in chat: When using supported models, you can now query your activity, energy, and nutrition data. Models can also analyze your diet and generate nutrition cards for easy storage in the system’s Health app;\n- Weather query feature added to the Map Tool;\n- Code Tool now supports running Python code;\n- Knowledge Backpack introduces proactive retrieval: supported models will now proactively search the backpack when needed. More parameter settings are now available for customization;\n- UI and functionality optimizations, along with various bug fixes."
-      },
-      {
-        "version": "AI Hanlin 0.6.4 (Beta)",
-        "releaseDate": "Release Date: April 18, 2025",
-        "content": "#### 🚀 Main Updates:\n- Introduced a new Web Tool in chat: supported models can now generate HTML code to implement specific tools or display custom content;\n- Added proactive online search: when enabled, supported models will automatically retrieve information from the internet when needed;\n- Optimized parts of the UI and features, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.6.3 (Beta)",
-        "releaseDate": "Release Date: April 18, 2025",
-        "content": "#### 🚀 Main Updates:\n- Calendar tool added in chat: supported models can now intelligently query calendar events and reminders, and are allowed to write events/reminders directly;\n- Google Maps engine introduced in the map tool, configurable as needed;\n- UI and feature optimizations, along with fixes for known bugs and issues;"
-      },
-      {
-        "version": "AI Hanlin 0.6.2 (Beta)",
-        "releaseDate": "Release Date: April 16, 2025",
-        "content": "#### 🚀 Major Updates:\n- Introduced Amap (Gaode) map engine with configurable options;\n- Updated support for GPT-4.1, new Zhipu models, and more;\n- Optimized some UI and features, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.6.1 (Beta)",
-        "releaseDate": "Release Date: April 14, 2025",
-        "content": "#### 🚀 Main Updates:\n- Map feature now supports route planning. When chatting with supported models, the model can proactively help plan driving, public transit, or walking routes;\n- Optimized parts of the interface and functionality, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.6.0 (Beta)",
-        "releaseDate": "Release Date: April 12, 2025",
-        "content": "#### 🚀 Major Updates:\n- Chat conversations now support map display! When chatting with supported models, geographic questions will result in an intuitive map view. You can ask about your current location, search for nearby places based on specific locations, select a location, view directions with one click, and switch to satellite map view;\n- UI and feature improvements, along with fixes for other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.9 (Beta)",
-        "releaseDate": "Release Date: April 10, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added support for Gitee AI API services, and updated to include the latest models such as Baidu X1 and Grok 3;\n- Improved parts of the UI and functionality, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.8 (Beta)",
-        "releaseDate": "Release Date: April 9, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added support for selecting voice models, currently supporting Siri, OpenAI, and SiliconCloud voices;\n- Optimized some interfaces and features, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.7 (Beta)",
-        "releaseDate": "Release Date: April 8, 2025",
-        "content": "#### 🚀 Major Updates:\n- Optimized file upload and parsing: now supports uploading multiple files and conversations simultaneously;\n- Added translation dictionary feature: customize translation pairs for more personalized translation in real-time usage;\n- Improved some UI and features, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.6 (Beta)",
-        "releaseDate": "Release Date: April 6, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added support for reverse prompts and canvas size settings in image generation models (only applicable to supported models); optimized chat interface performance;\n- Enabled fast downloads for more local models and allowed users to upload GGUF-format files to use local models;\n- Optimized some UI elements and features; fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.5 (Beta)",
-        "releaseDate": "Release Date: April 4, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added support for customizing text and visual optimization models;\n- Added setting for customizing the number of search results;\n- Added ability to manually add image generation models compatible with OpenAI format;\n- Improved several UI components and functionalities, and fixed known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.4 (Beta)",
-        "releaseDate": "Release Date: April 3, 2025",
-        "content": "#### 🚀 Main Updates:\n- Improved group chat smoothness and message handling mechanism; added @mention support for model names, making conversations more convenient and natural.\n- Added support for image generation models from the Magic Tower community.\n- Optimized some UI elements and features; fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.5.3 (Beta)",
-        "releaseDate": "Release Date: April 2, 2025",
-        "content": "#### 🚀 Main Updates:\n- Fixed compatibility issues with local models on the 18.4 system, optimized local model performance, and added downloadable DeepSeek distilled model and Llama model; local models can now also perform inference. Local models now also support adjustments for parameters such as temperature, cumulative probability, and maximum response length.\n- Added support for xAI's image generation model;\n- Introduced a memory archive feature. When conversing with supported models (marked with “Tools” in the model list), the model will automatically remember certain important information and recall it when needed to enhance the conversation experience. You can view and manage memory archive contents in the settings;\n- Optimized certain interfaces and functionalities, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.2 (Beta)",
-        "releaseDate": "Release Date: April 1, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added support for text-to-image generation models. You can now select an image generation model in chat and generate images based on prompts. Currently supports OpenAI, Alibaba Wanxian, Zhipu AI, and SiliconFlow, with two free built-in trial models. Context-aware prompt optimization is supported.\n- Added support for the Brave search engine;\n- Optimized parts of the UI and features, and fixed other known issues and bugs;"
-      },
-      {
-        "version": "AI Hanlin 0.5.1 (Beta)",
-        "releaseDate": "Release Date: March 30, 2025",
-        "content": "#### 🚀 Major Updates:\n- Introducing the brand-new 'Knowledge Backpack' section, allowing you to edit knowledge content and vectorize it. During a conversation, simply tap the 'Backpack' button, and the system will automatically search your knowledge base and provide the most relevant information to the model for better responses. In professional fields, this is also known as Retrieval-Augmented Generation (RAG). Knowledge input supports document parsing, web page parsing, and automatic Markdown optimization. We recommend recording knowledge in Markdown format for the best results!\n- Added a 'Save as Knowledge' button in the group chat toolbar, enabling quick storage of input or output into the Knowledge Backpack.\n- Added quick balance checks for SiliconFlow and DeepSeek APIs. Just tap 'Check API Balance' in the API key editor to view your account balance instantly.\n- Added a software user guide to help you make better use of the app.\n- Optimized parts of the UI and features, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.5.0 (Beta)",
-        "releaseDate": "Release Date: March 25, 2025",
-        "content": "#### 🚀 Main Updates:\n- Introducing the brand-new 'AI Agents' section, allowing users to create AI agents based on the existing model list. These agents seamlessly integrate into group chats, vision features, and instant tools, offering a more personalized and professional experience. Combine them with prompt libraries for an unparalleled fast-response experience with large language models.\n- AI agent creation now includes convenient autofill features that generate character settings based on a given name. An input tool has also been added to facilitate quick edits to the agent configuration.\n- Optimize the icon library to provide a richer selection of chat icons and AI Agents' icons; \n- Improved parts of the UI and features, and fixed other known bugs and issues."
-      },
-      {
-        "version": "AI Hanlin 0.4.4 (Beta)",
-        "releaseDate": "Release Date: March 23, 2025",
-        "content": "#### 🚀 Major Updates:\n- Group chat now supports voice input; tap the microphone to enter the voice input interface, which supports \"Hammer\" automatic prompt optimization.\n- Real-time features now incorporate local models, allowing large model translation, polishing, and summarization without a network connection. The actual performance depends on the local model's capabilities, and its use is not recommended unless necessary.\n- Added support for OpenRouter series models, with 6 free models included by default, such as DeepSeekR1, Qwen-72B, Gemini2.0, etc.\n- Optimized some interfaces and functionalities, and fixed other known issues and bugs."
-      },
-      {
-          "version": "AI Hanlin 0.4.3 (Beta)",
-          "releaseDate": "Release Date: March 22, 2025",
-          "content": "#### 🚀 Major Updates:\n- Added custom system messages for multi-turn conversations, enhancing flexibility and interactivity;\n- Improved intent prediction for visual functions, making responses more precise;\n- Prompt library now supports long-press to reorder, added search by prompt title, and supports Pinyin search;\n- Integrated Tencent Hunyuan T1 and OpenAI o1-Pro models;\n- Optimized some UI elements and functionalities, and fixed known issues and bugs."
-      },
-      {
-          "version": "AI Hanlin 0.4.2 (Beta)",
-          "releaseDate": "Release Date: March 21, 2025",
-          "content": "#### 🚀 Major Updates:\n- Added a temporary chat button. Chat information will be automatically deleted after exiting temporary chat;\n- Optimized some interfaces and functionalities, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.4.1 (Beta)",
-        "releaseDate": "Release Date: March 20, 2025",
-        "content": "#### 🚀 Major Updates:\n- Added chat history export feature, supporting both plain text files (.txt) for easier sharing and JSON (.json) format for structured content export. The JSON format also supports OpenAI multimodal format with base64 image data export;\n- Added chat history import feature, allowing one-click restoration of complete conversations using JSON files that match the export format, including base64 image data restoration;\n- Introduced a message limit adjustment feature with automatic per-chat saving. The maximum response length setting is now also saved per chat;\n- Optimized various UI elements and functionalities, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin Academy 0.4.0 (Beta)",
-        "releaseDate": "Release Date: March 19, 2025",
-        "content": "#### 🚀 Major Updates:\n- The 'Prompt Library' feature is now available! You can pre-edit commonly used prompts in settings and quickly apply them in chats by clicking. Note that the prompt content will be added before your input. Local models also support the 'Prompt Library';\n- Local models now support local file uploads, allowing you to process files without an internet connection;\n- Added support for Baidu Wenxin series models, iFlytek Spark series models, and Perplexity series models;\n- Introduced Hanlin preset models, making AI intelligence accessible for beginners;\n- Optimized some UI elements and functionalities, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.3.6 (Beta)",
-        "releaseDate": "Release Date: March 17, 2025",
-        "content": "#### 🚀 Main Updates:\n- Optimized some interfaces and features, and fixed other known issues and bugs."
-      },
-      {
-          "version": "AI Hanlin 0.3.5 (Beta)",
-          "releaseDate": "Release Date: March 16, 2025",
-          "content": "#### 🚀 Major Updates:\n- Optimized the interaction when first entering the app, guiding users to set up API keys for normal use;\n- Added a 'Sync Model List' button in the model list to quickly synchronize the global model list;\n- Improved the search function at the top of the list, supporting highlighted search results, optimized Pinyin search, and enabling direct navigation to found chat records;\n- Instant summary function now supports web page content summarization;\n- Optimized some interfaces and functions, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.3.4 (Beta)",
-        "releaseDate": "Release Date: March 16, 2025",
-        "content": "#### 🚀 Major Updates:\n- Fixed the issue where the camera could not be flipped;\n- Optimized some interfaces and functionalities, and fixed other known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.3.3 (Beta)",
-        "releaseDate": "Release Date: March 15, 2025",
-        "content": "#### 🚀 Major Updates:\n- Supports displaying online search results in the chat interface, with options to view and delete, allowing flexible control over context length.\n- Supports deleting individual chat messages by long-pressing the message to access the delete option.\n- Supports multi-selection and deletion of chat messages by entering edit mode in the top right corner, allowing for flexible conversation management.\n- Added API configuration testing functionality.\n- Optimized some UI elements and features, fixing known issues and bugs."
-      },
-      {
-        "version": "AI Hanlin 0.3.2 (Beta)",
-        "releaseDate": "Release Date: March 14, 2025",
-        "content": "#### 🚀 Major Updates:\n- Supports automatic iCloud data synchronization, seamlessly integrating into your smart life.\n- Added automatic parsing of links in input content and quick link deletion. Enhanced AI model's ability to parse and read successfully recognized websites, tested with various news sites, encyclopedias, information pages, media websites, Tencent Docs, and more.\n- Improved input and sending functionality in the chat interface. Long-press on messages to copy, select text, and perform other actions.\n- Optimized certain interfaces and features, fixing known issues and bugs."
-      },
-      {
+    {
+      "version": "AI Hanlin 0.7.2 (Beta)",
+      "releaseDate": "Release Date: October 26, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added custom third-party model API provider feature, added CherryIN as system default provider;\n- Improved document upload experience when editing knowledge base;\n- Fixed issue where errors would duplicate when adding online models;\n- Added Perplexity as search provider;\n- Added support for Qwen Image generation and Google's official image generation models;\n- Adapted iOS 26 liquid glass effect;\n- Fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.7.1 (Beta)",
+      "releaseDate": "Release Date: August 31, 2025",
+      "content": "#### 🚀 Major updates:\n- Adapted to the latest large models such as GLM4.5, Kimi K2, GPT5;\n- Fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.7.0 (Beta)",
+      "releaseDate": "Release Date: May 30, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added planning execution feature: for non-thinking models, selecting planning execution will let the model think first, then execute tasks based on the plan;\n- Supported reasoning length settings for certain reasoning models;\n- Updated compatibility with latest models such as DeepSeek R1 and Claude 4.0;\n- Optimized parts of the UI and features to improve smoothness, and fixed other known bugs and issues."
+    },
+    {
+      "version": "AI Hanlin 0.6.9 (Beta)",
+      "releaseDate": "Release Date: May 20, 2025",
+      "content": "#### 🚀 Major Updates:\n- Introduced the Canvas Tool: When interacting with supported models, you can now edit and view long-form or structured content more effectively within the canvas. Supports model-assisted editing and partial content editing.\n- Enhanced the Weather Query Tool: Now supports both QWeather and OpenWeather services, with future weather forecasts.\n- Fully upgraded the layout of tool outputs for better readability and formatting.\n- Added support for MiniMax text models.\n- Improved parts of the interface and features, and fixed other known bugs and issues."
+    },
+    {
+      "version": "AI Hanlin 0.6.8 (Beta)",
+      "releaseDate": "Release Date: May 13, 2025",
+      "content": "#### 🚀 Main Updates:\n- Added support for Qwen’s full-modal model Omni and its audio output, including automatic saving after voice message generation, as well as playback controls like pause, speed adjustment, seek, and duration display;\n- Introduced scientific text mode for rendering mathematical formulas;\n- Optimized the output format of Thought Mode for a smoother experience;\n- Agent now supports re-editing the base model, with more flexible selection and support for copying system-provided agents;\n- Added default model sorting button, which restores the default model order when clicked in edit mode;\n- Optimized parts of the interface and functionality, and fixed other known bugs and issues;"
+    },
+    {
+      "version": "AI Hanlin 0.6.7 (Beta)",
+      "releaseDate": "Release Date: April 29, 2025",
+      "content": "#### 🚀 Major Updates:\n- Optimized the Knowledge Backpack feature: added a writing tool that allows supported models to draft knowledge documents. Improved knowledge chunk retrieval strategies by introducing a new mechanism for more accurate and faster searches;\n- Updated to the latest models such as Qwen3 and Baidu 4.5Turbo, with support for the Qwen3 inference toggle;\n- Enhanced web search capabilities: added arXiv literature search tool and an online file parsing tool. Supported models can now autonomously search for papers and analyze detailed content based on provided paper links;\n- Supported persistent saving of chat translation results to avoid redundant translations;\n- Supported display of inference time and reference count;\n- Optimized parts of the interface and functionality, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.6.6 (Beta)",
+      "releaseDate": "Release Date: April 24, 2025",
+      "content": "#### 🚀 Major Updates:\n- Enhanced memory features: now supports memory updates and injections, improving recall performance;\n- UI and feature refinements, along with fixes for known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.6.5 (Beta)",
+      "releaseDate": "Release Date: April 22, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added a Health Tool in chat: When using supported models, you can now query your activity, energy, and nutrition data. Models can also analyze your diet and generate nutrition cards for easy storage in the system’s Health app;\n- Weather query feature added to the Map Tool;\n- Code Tool now supports running Python code;\n- Knowledge Backpack introduces proactive retrieval: supported models will now proactively search the backpack when needed. More parameter settings are now available for customization;\n- UI and functionality optimizations, along with various bug fixes."
+    },
+    {
+      "version": "AI Hanlin 0.6.4 (Beta)",
+      "releaseDate": "Release Date: April 18, 2025",
+      "content": "#### 🚀 Main Updates:\n- Introduced a new Web Tool in chat: supported models can now generate HTML code to implement specific tools or display custom content;\n- Added proactive online search: when enabled, supported models will automatically retrieve information from the internet when needed;\n- Optimized parts of the UI and features, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.6.3 (Beta)",
+      "releaseDate": "Release Date: April 18, 2025",
+      "content": "#### 🚀 Main Updates:\n- Calendar tool added in chat: supported models can now intelligently query calendar events and reminders, and are allowed to write events/reminders directly;\n- Google Maps engine introduced in the map tool, configurable as needed;\n- UI and feature optimizations, along with fixes for known bugs and issues;"
+    },
+    {
+      "version": "AI Hanlin 0.6.2 (Beta)",
+      "releaseDate": "Release Date: April 16, 2025",
+      "content": "#### 🚀 Major Updates:\n- Introduced Amap (Gaode) map engine with configurable options;\n- Updated support for GPT-4.1, new Zhipu models, and more;\n- Optimized some UI and features, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.6.1 (Beta)",
+      "releaseDate": "Release Date: April 14, 2025",
+      "content": "#### 🚀 Main Updates:\n- Map feature now supports route planning. When chatting with supported models, the model can proactively help plan driving, public transit, or walking routes;\n- Optimized parts of the interface and functionality, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.6.0 (Beta)",
+      "releaseDate": "Release Date: April 12, 2025",
+      "content": "#### 🚀 Major Updates:\n- Chat conversations now support map display! When chatting with supported models, geographic questions will result in an intuitive map view. You can ask about your current location, search for nearby places based on specific locations, select a location, view directions with one click, and switch to satellite map view;\n- UI and feature improvements, along with fixes for other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.9 (Beta)",
+      "releaseDate": "Release Date: April 10, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added support for Gitee AI API services, and updated to include the latest models such as Baidu X1 and Grok 3;\n- Improved parts of the UI and functionality, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.8 (Beta)",
+      "releaseDate": "Release Date: April 9, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added support for selecting voice models, currently supporting Siri, OpenAI, and SiliconCloud voices;\n- Optimized some interfaces and features, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.7 (Beta)",
+      "releaseDate": "Release Date: April 8, 2025",
+      "content": "#### 🚀 Major Updates:\n- Optimized file upload and parsing: now supports uploading multiple files and conversations simultaneously;\n- Added translation dictionary feature: customize translation pairs for more personalized translation in real-time usage;\n- Improved some UI and features, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.6 (Beta)",
+      "releaseDate": "Release Date: April 6, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added support for reverse prompts and canvas size settings in image generation models (only applicable to supported models); optimized chat interface performance;\n- Enabled fast downloads for more local models and allowed users to upload GGUF-format files to use local models;\n- Optimized some UI elements and features; fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.5 (Beta)",
+      "releaseDate": "Release Date: April 4, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added support for customizing text and visual optimization models;\n- Added setting for customizing the number of search results;\n- Added ability to manually add image generation models compatible with OpenAI format;\n- Improved several UI components and functionalities, and fixed known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.4 (Beta)",
+      "releaseDate": "Release Date: April 3, 2025",
+      "content": "#### 🚀 Main Updates:\n- Improved group chat smoothness and message handling mechanism; added @mention support for model names, making conversations more convenient and natural.\n- Added support for image generation models from the Magic Tower community.\n- Optimized some UI elements and features; fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.5.3 (Beta)",
+      "releaseDate": "Release Date: April 2, 2025",
+      "content": "#### 🚀 Main Updates:\n- Fixed compatibility issues with local models on the 18.4 system, optimized local model performance, and added downloadable DeepSeek distilled model and Llama model; local models can now also perform inference. Local models now also support adjustments for parameters such as temperature, cumulative probability, and maximum response length.\n- Added support for xAI's image generation model;\n- Introduced a memory archive feature. When conversing with supported models (marked with “Tools” in the model list), the model will automatically remember certain important information and recall it when needed to enhance the conversation experience. You can view and manage memory archive contents in the settings;\n- Optimized certain interfaces and functionalities, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.2 (Beta)",
+      "releaseDate": "Release Date: April 1, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added support for text-to-image generation models. You can now select an image generation model in chat and generate images based on prompts. Currently supports OpenAI, Alibaba Wanxian, Zhipu AI, and SiliconFlow, with two free built-in trial models. Context-aware prompt optimization is supported.\n- Added support for the Brave search engine;\n- Optimized parts of the UI and features, and fixed other known issues and bugs;"
+    },
+    {
+      "version": "AI Hanlin 0.5.1 (Beta)",
+      "releaseDate": "Release Date: March 30, 2025",
+      "content": "#### 🚀 Major Updates:\n- Introducing the brand-new 'Knowledge Backpack' section, allowing you to edit knowledge content and vectorize it. During a conversation, simply tap the 'Backpack' button, and the system will automatically search your knowledge base and provide the most relevant information to the model for better responses. In professional fields, this is also known as Retrieval-Augmented Generation (RAG). Knowledge input supports document parsing, web page parsing, and automatic Markdown optimization. We recommend recording knowledge in Markdown format for the best results!\n- Added a 'Save as Knowledge' button in the group chat toolbar, enabling quick storage of input or output into the Knowledge Backpack.\n- Added quick balance checks for SiliconFlow and DeepSeek APIs. Just tap 'Check API Balance' in the API key editor to view your account balance instantly.\n- Added a software user guide to help you make better use of the app.\n- Optimized parts of the UI and features, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.5.0 (Beta)",
+      "releaseDate": "Release Date: March 25, 2025",
+      "content": "#### 🚀 Main Updates:\n- Introducing the brand-new 'AI Agents' section, allowing users to create AI agents based on the existing model list. These agents seamlessly integrate into group chats, vision features, and instant tools, offering a more personalized and professional experience. Combine them with prompt libraries for an unparalleled fast-response experience with large language models.\n- AI agent creation now includes convenient autofill features that generate character settings based on a given name. An input tool has also been added to facilitate quick edits to the agent configuration.\n- Optimize the icon library to provide a richer selection of chat icons and AI Agents' icons; \n- Improved parts of the UI and features, and fixed other known bugs and issues."
+    },
+    {
+      "version": "AI Hanlin 0.4.4 (Beta)",
+      "releaseDate": "Release Date: March 23, 2025",
+      "content": "#### 🚀 Major Updates:\n- Group chat now supports voice input; tap the microphone to enter the voice input interface, which supports \"Hammer\" automatic prompt optimization.\n- Real-time features now incorporate local models, allowing large model translation, polishing, and summarization without a network connection. The actual performance depends on the local model's capabilities, and its use is not recommended unless necessary.\n- Added support for OpenRouter series models, with 6 free models included by default, such as DeepSeekR1, Qwen-72B, Gemini2.0, etc.\n- Optimized some interfaces and functionalities, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.4.3 (Beta)",
+      "releaseDate": "Release Date: March 22, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added custom system messages for multi-turn conversations, enhancing flexibility and interactivity;\n- Improved intent prediction for visual functions, making responses more precise;\n- Prompt library now supports long-press to reorder, added search by prompt title, and supports Pinyin search;\n- Integrated Tencent Hunyuan T1 and OpenAI o1-Pro models;\n- Optimized some UI elements and functionalities, and fixed known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.4.2 (Beta)",
+      "releaseDate": "Release Date: March 21, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added a temporary chat button. Chat information will be automatically deleted after exiting temporary chat;\n- Optimized some interfaces and functionalities, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.4.1 (Beta)",
+      "releaseDate": "Release Date: March 20, 2025",
+      "content": "#### 🚀 Major Updates:\n- Added chat history export feature, supporting both plain text files (.txt) for easier sharing and JSON (.json) format for structured content export. The JSON format also supports OpenAI multimodal format with base64 image data export;\n- Added chat history import feature, allowing one-click restoration of complete conversations using JSON files that match the export format, including base64 image data restoration;\n- Introduced a message limit adjustment feature with automatic per-chat saving. The maximum response length setting is now also saved per chat;\n- Optimized various UI elements and functionalities, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin Academy 0.4.0 (Beta)",
+      "releaseDate": "Release Date: March 19, 2025",
+      "content": "#### 🚀 Major Updates:\n- The 'Prompt Library' feature is now available! You can pre-edit commonly used prompts in settings and quickly apply them in chats by clicking. Note that the prompt content will be added before your input. Local models also support the 'Prompt Library';\n- Local models now support local file uploads, allowing you to process files without an internet connection;\n- Added support for Baidu Wenxin series models, iFlytek Spark series models, and Perplexity series models;\n- Introduced Hanlin preset models, making AI intelligence accessible for beginners;\n- Optimized some UI elements and functionalities, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.3.6 (Beta)",
+      "releaseDate": "Release Date: March 17, 2025",
+      "content": "#### 🚀 Main Updates:\n- Optimized some interfaces and features, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.3.5 (Beta)",
+      "releaseDate": "Release Date: March 16, 2025",
+      "content": "#### 🚀 Major Updates:\n- Optimized the interaction when first entering the app, guiding users to set up API keys for normal use;\n- Added a 'Sync Model List' button in the model list to quickly synchronize the global model list;\n- Improved the search function at the top of the list, supporting highlighted search results, optimized Pinyin search, and enabling direct navigation to found chat records;\n- Instant summary function now supports web page content summarization;\n- Optimized some interfaces and functions, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.3.4 (Beta)",
+      "releaseDate": "Release Date: March 16, 2025",
+      "content": "#### 🚀 Major Updates:\n- Fixed the issue where the camera could not be flipped;\n- Optimized some interfaces and functionalities, and fixed other known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.3.3 (Beta)",
+      "releaseDate": "Release Date: March 15, 2025",
+      "content": "#### 🚀 Major Updates:\n- Supports displaying online search results in the chat interface, with options to view and delete, allowing flexible control over context length.\n- Supports deleting individual chat messages by long-pressing the message to access the delete option.\n- Supports multi-selection and deletion of chat messages by entering edit mode in the top right corner, allowing for flexible conversation management.\n- Added API configuration testing functionality.\n- Optimized some UI elements and features, fixing known issues and bugs."
+    },
+    {
+      "version": "AI Hanlin 0.3.2 (Beta)",
+      "releaseDate": "Release Date: March 14, 2025",
+      "content": "#### 🚀 Major Updates:\n- Supports automatic iCloud data synchronization, seamlessly integrating into your smart life.\n- Added automatic parsing of links in input content and quick link deletion. Enhanced AI model's ability to parse and read successfully recognized websites, tested with various news sites, encyclopedias, information pages, media websites, Tencent Docs, and more.\n- Improved input and sending functionality in the chat interface. Long-press on messages to copy, select text, and perform other actions.\n- Optimized certain interfaces and features, fixing known issues and bugs."
+    },
+    {
       "version": "AI Hanlin 0.3.1 (Beta)",
       "releaseDate": "releaseDate: March 12, 2025",
       "content": "#### 🚀 Major Updates:\n- Support for adding images to the chat input box by pasting;\n- Optimize file parsing function and expand the supported file types, including: Plain Text (TXT), Markdown (MD), Word Document (DOCX), PowerPoint Presentation (PPTX), PDF files (PDF), Excel spreadsheets (XLSX), comma-separated value files (CSV), Python code files (PY), JSON files (JSON), log files (LOG) and HTML files (HTML). \n- Optimize the style of the bottom status bar, fix possible non-display issues; \n- Optimize some interfaces and functions, fix known issues and bugs;"
-      },
-      {
+    },
+    {
       "version": "AI Hanlin 0.3 (Beta)",
       "releaseDate": "Release Date: March 11, 2025",
       "content": "#### 🚀 Major Updates:\n- A completely upgraded online search feature, supporting configuration options for selecting search engines. Now supports Bocha AI (same as DeepSeeek), Bocha AI International Version (LangSearch), EXA AI, Tavily, and Zhipu Huazhang, with support for enabling bilingual searches;\n- Optimized search functionality and performance, improved understanding of search context and image search capabilities;\n- Optimize chat history loading performance and support pull-to-load. Add an automatic group chat naming feature that automatically names the chat when there are 5 effective messages.\n- Improved certain interfaces and functionalities, fixed known issues and bugs;"
-      },
+    },
     {
       "version": "AI Hanlin 0.2.2 (Beta)",
       "releaseDate": "Release Date: March 8, 2025",

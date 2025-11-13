@@ -29,80 +29,80 @@ struct SettingsView: View {
         
         NavigationStack {
             List {
-                Section(header: Text("个性化")) {
+                Section(header: Text("Personalization")) {
                     NavigationLink(destination: UserInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("用户信息", systemImage: "person")
+                        Label("User Information", systemImage: "person")
                     }
                     NavigationLink(destination: PromptRepoView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("提示词库", systemImage: "tray.full")
+                        Label("Prompt Library", systemImage: "tray.full")
                     }
                     NavigationLink(destination: MemoryArchiveView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("记忆档案", systemImage: "archivebox")
+                        Label("Memory Archive", systemImage: "archivebox")
                     }
                     NavigationLink(destination: TranslationDicView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("翻译词典", systemImage: "character.book.closed")
+                        Label("Translation Dictionary", systemImage: "character.book.closed")
                     }
                 }
                 if noAPIKeys {
                     Section {
-                        Text("指引：点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态")
+                        Text("Guideline: Click on \"Model Key\" in the \"Model\" section below to set the large model key and enable the vendor status.")
                             .font(.caption)
                             .foregroundColor(.hlBluefont)
                     }
                 }
-                Section(header: Text("模型")) {
+                Section(header: Text("Models")) {
                     NavigationLink(destination: APIKeysView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("模型密钥", systemImage: "key.2.on.ring")
+                        Label("Model Keys", systemImage: "key.2.on.ring")
                     }
                     NavigationLink(destination: SelectEmbeddingModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("向量模型", systemImage: "compass.drawing")
+                        Label("Embedding Models", systemImage: "compass.drawing")
                     }
                     NavigationLink(destination: SelectOptimizationModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("优化模型", systemImage: "hammer")
+                        Label("Optimization Models", systemImage: "hammer")
                     }
                     NavigationLink(destination: SelectTTSModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("语音模型", systemImage: "waveform")
+                        Label("Speech Model", systemImage: "waveform")
                     }
                 }
                 if noSearchKeys {
                     Section {
-                        Text("指引：点击下方“工具”中的“联网搜索”设置搜索引擎密钥和需要使用的搜索引擎")
+                        Text("Guide: Click “Network Search” under “Tools” to set the search engine key and select the search engine to use.")
                             .font(.caption)
                             .foregroundColor(.hlBluefont)
                     }
                 }
-                Section(header: Text("工具")) {
+                Section(header: Text("Tools")) {
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("联网搜索", systemImage: "magnifyingglass")
+                        Label("Network Search", systemImage: "magnifyingglass")
                     }
                     NavigationLink(destination: KnowledgeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("知识背包", systemImage: "backpack")
+                        Label("Knowledge Backpack", systemImage: "backpack")
                     }
                     NavigationLink(destination: CanvasSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("信息画布", systemImage: "pencil.and.outline")
+                        Label("Information Canvas", systemImage: "pencil.and.outline")
                     }
                     NavigationLink(destination: MapSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("地图规划", systemImage: "map")
+                        Label("Map & Planning", systemImage: "map")
                     }
                     NavigationLink(destination: WeatherSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("天气查询", systemImage: "cloud.sun")
+                        Label("Weather Enquiry", systemImage: "cloud.sun")
                     }
                     NavigationLink(destination: CalendarSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("日历提醒", systemImage: "calendar")
+                        Label("Calendar & Reminder", systemImage: "calendar")
                     }
                     NavigationLink(destination: HealthSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("健康生活", systemImage: "heart")
+                        Label("Healthy & Living", systemImage: "heart")
                     }
                     NavigationLink(destination: CodeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("代码执行", systemImage: "apple.terminal")
+                        Label("Code Execution", systemImage: "apple.terminal")
                     }
                 }
-                Section(header: Text("帮助")) {
+                Section(header: Text("Help")) {
                     Button(action: {
                         showSafariGuide = true
                     }) {
                         Label {
-                            Text("软件指南")
+                            Text("Software Guide")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "text.rectangle.page")
@@ -112,42 +112,42 @@ struct SettingsView: View {
                         showSafariCost = true
                     }) {
                         Label {
-                            Text("成本参考")
+                            Text("Cost")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "creditcard")
                         }
                     }
                 }
-                Section(header: Text("通用")) {
+                Section(header: Text("General")) {
                     Button(action: openLanguageSettings) {
                         Label {
-                            Text("语言设置")
+                            Text("Language Settings")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "globe")
                         }
                     }
                     NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("触感反馈", systemImage: "iphone.gen3.radiowaves.left.and.right")
+                        Label("Haptic Feedback", systemImage: "iphone.gen3.radiowaves.left.and.right")
                     }
                 }
-                Section(header: Text("软件")) {
+                Section(header: Text("Software")) {
                     NavigationLink(destination: SoftwareIntroView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("软件介绍", systemImage: "text.book.closed")
+                        Label("Software Introduction", systemImage: "text.book.closed")
                     }
                     NavigationLink(destination: UpdateNotesView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("更新说明", systemImage: "newspaper")
+                        Label("Update Notes", systemImage: "newspaper")
                     }
                     NavigationLink(destination: VersionInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("软件信息", systemImage: "info.circle")
+                        Label("Software Information", systemImage: "info.circle")
                     }
                     NavigationLink(destination: ContactUsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("联系我们", systemImage: "envelope")
+                        Label("Contact Us", systemImage: "envelope")
                     }
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle("Settings")
             .onChange(of: isPushed) {
                 NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // 发送通知，控制TabBar显示/隐藏
             }

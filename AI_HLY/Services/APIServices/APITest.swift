@@ -52,7 +52,7 @@ func testAIAPI(apiKey: String, requestURL: String, company: String) async -> Boo
         guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
             return false
         }
-        print("测试通过")
+        print("Test Passed")
         return true
     } catch {
         return false
