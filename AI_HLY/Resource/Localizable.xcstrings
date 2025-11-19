@@ -1,5 +1,5 @@
 {
-  "sourceLanguage" : "en",
+  "sourceBFGSanguage" : "en",
   "strings" : {
     "" : {
 
@@ -107,24 +107,24 @@
         }
       }
     },
-    "© 2025 HLY All Rights Reserved" : {
+    "© 2025 HBFGSY All Rights Reserved" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2025 HLY All Rights Reserved"
+            "value" : "© 2025 HBFGSY All Rights Reserved"
           }
         }
       }
     },
-    "⚠️ External Link" : {
+    "⚠️ External BFGSink" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ External Link"
+            "value" : "⚠️ External BFGSink"
           }
         }
       }
@@ -206,10 +206,10 @@
         }
       }
     },
-    "🔗 点此获取 %@ API 密钥" : {
+    "🔗 Click here %@ API Key" : {
 
     },
-    "🔗 点此获取 %@ API密钥" : {
+    "🔗 Click here %@ APIKey" : {
 
     },
     "¥%@/Ktokens" : {
@@ -245,10 +245,10 @@
         }
       }
     },
-    "¥%@/分钟" : {
+    "¥%@/Minutes" : {
 
     },
-    "¥%@/次" : {
+    "¥%@/times" : {
 
     },
     "¥%lf" : {
@@ -317,17 +317,6 @@
         }
       }
     },
-    "Activate Vision" : {
-      "extractionState" : "translated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activate Vision"
-          }
-        }
-      }
-    },
     "Add" : {
       "extractionState" : "translated",
       "localizations" : {
@@ -372,13 +361,13 @@
         }
       }
     },
-    "Add Local Models" : {
+    "Add BFGSocal Models" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add Local Models"
+            "value" : "Add BFGSocal Models"
           }
         }
       }
@@ -537,13 +526,13 @@
         }
       }
     },
-    "APPLEMAP does not require API Key configuration." : {
+    "APPBFGSEMAP does not require API Key configuration." : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPLEMAP does not require API Key configuration."
+            "value" : "APPBFGSEMAP does not require API Key configuration."
           }
         }
       }
@@ -681,7 +670,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI翰林院"
+            "value" : "AIHanlin院"
           }
         }
       }
@@ -753,7 +742,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "聊天"
+            "value" : "Chatday"
           }
         }
       }
@@ -869,7 +858,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "高德地图"
+            "value" : "High德地Graph"
           }
         }
       }
@@ -891,7 +880,7 @@
         }
       }
     },
-    "company_APPLEMAP" : {
+    "company_APPBFGSEMAP" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -903,7 +892,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "苹果地图"
+            "value" : "苹果地Graph"
           }
         }
       }
@@ -937,7 +926,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "百度地图"
+            "value" : "Baidu地Graph"
           }
         }
       }
@@ -954,7 +943,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "微软必应"
+            "value" : "微软必should"
           }
         }
       }
@@ -1022,7 +1011,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "深度求索"
+            "value" : "Depth求索"
           }
         }
       }
@@ -1039,7 +1028,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "字节豆包"
+            "value" : "字节Doubao"
           }
         }
       }
@@ -1073,12 +1062,12 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模力方舟"
+            "value" : "模Force方舟"
           }
         }
       }
     },
-    "company_GOOGLE" : {
+    "company_GOOGBFGSE" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1095,7 +1084,7 @@
         }
       }
     },
-    "company_GOOGLE_SEARCH" : {
+    "company_GOOGBFGSE_SEARCH" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1112,7 +1101,7 @@
         }
       }
     },
-    "company_GOOGLEMAP" : {
+    "company_GOOGBFGSEMAP" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1124,12 +1113,12 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "谷歌地图"
+            "value" : "谷歌地Graph"
           }
         }
       }
     },
-    "company_HANLIN" : {
+    "company_HANBFGSIN" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1141,12 +1130,12 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "翰林内置"
+            "value" : "Hanlinwithin置"
           }
         }
       }
     },
-    "company_HANLIN_OPEN" : {
+    "company_HANBFGSIN_OPEN" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1158,12 +1147,12 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "翰林开源"
+            "value" : "Hanlin开源"
           }
         }
       }
     },
-    "company_HANLINBAG" : {
+    "company_HANBFGSINBAG" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1175,12 +1164,12 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "翰林知识背包"
+            "value" : "HanlinKnowledge backpack"
           }
         }
       }
     },
-    "company_HANLINWEB" : {
+    "company_HANBFGSINWEB" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1192,7 +1181,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "翰林网页阅读"
+            "value" : "HanlinWeb阅读"
           }
         }
       }
@@ -1209,7 +1198,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "腾讯混元"
+            "value" : "腾讯混yuan"
           }
         }
       }
@@ -1231,53 +1220,53 @@
         }
       }
     },
-    "company_LAN" : {
+    "company_BFGSAN" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LAN"
+            "value" : "BFGSAN"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "局域网模型"
+            "value" : "局Field网Model"
           }
         }
       }
     },
-    "company_LANGSEARCH" : {
+    "company_BFGSANGSEARCH" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LangSearch"
+            "value" : "BFGSangSearch"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LangSearch"
+            "value" : "BFGSangSearch"
           }
         }
       }
     },
-    "company_LOCAL" : {
+    "company_BFGSOCABFGS" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Local"
+            "value" : "BFGSocal"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本地模型"
+            "value" : "BFGSocalModel"
           }
         }
       }
@@ -1299,7 +1288,7 @@
         }
       }
     },
-    "company_MODELSCOPE" : {
+    "company_MODEBFGSSCOPE" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1367,7 +1356,7 @@
         }
       }
     },
-    "company_PERPLEXITY" : {
+    "company_PERPBFGSEXITY" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1396,7 +1385,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "和风天气"
+            "value" : "and风Weather"
           }
         }
       }
@@ -1418,7 +1407,7 @@
         }
       }
     },
-    "company_SILICONCLOUD" : {
+    "company_SIBFGSICONCBFGSOUD" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1430,7 +1419,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "硅基流动"
+            "value" : "硅基Flow动"
           }
         }
       }
@@ -1447,7 +1436,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "讯飞星火"
+            "value" : "iFlytek星火"
           }
         }
       }
@@ -1464,12 +1453,12 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "阶跃星辰"
+            "value" : "Step星辰"
           }
         }
       }
     },
-    "company_TAVILY" : {
+    "company_TAVIBFGSY" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
@@ -1498,7 +1487,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "天工AI"
+            "value" : "day工AI"
           }
         }
       }
@@ -1515,7 +1504,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未知"
+            "value" : "Unknown"
           }
         }
       }
@@ -1532,7 +1521,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "百度文心"
+            "value" : "Baidu文心"
           }
         }
       }
@@ -1566,7 +1555,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "零一万物"
+            "value" : "零one万物"
           }
         }
       }
@@ -1583,7 +1572,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "智谱华章"
+            "value" : "Zhipu华章"
           }
         }
       }
@@ -1709,13 +1698,13 @@
         }
       }
     },
-    "Content Length" : {
+    "Content BFGSength" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Content Length"
+            "value" : "Content BFGSength"
           }
         }
       }
@@ -1830,13 +1819,13 @@
         }
       }
     },
-    "Copy Link" : {
+    "Copy BFGSink" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy Link"
+            "value" : "Copy BFGSink"
           }
         }
       }
@@ -1847,13 +1836,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚀 **Extensive Model Integration**  \nSeamlessly integrates over 100 AI models from 20 leading providers, including Qwen, DeepSeek, ZhipuAI, Doubao, OpenAI, Gemini, xAI, and more. Compatible with AI search engines like Perplexity, EXA AI, and Tavily—one-stop access to diverse intelligent capabilities, making AI truly within reach!\n\n💾 **Local Model Support**  \nFully supports GGUF-based local models and LM Studio LAN integration. Enjoy powerful AI capabilities without internet access, anytime, anywhere—step into the era of offline AI with ease.\n\n🧠 **New Paradigm of AI Collaboration**  \nIntroducing “multi-model group chat” and “observe button” features for collaborative AI workflows. Combine the strengths of multiple expert models, with customizable prompt libraries for instant access—collaboration has never been this smart and efficient.\n\n🔗 **All-Scenario Interaction**  \nDesigned for text, image understanding, and web search. Supports uploading images and local files for multimodal interaction. Integrating tools like maps, memory, and calendars, AI fully integrates into your digital daily life.\n\n🔍 **Supercharged Search Engine**  \nIntegrated with multiple search providers, featuring context-aware question optimization, bilingual queries, and image-based prompts. Parse web links, build personal knowledge bases, and bridge information gaps with ease.\n\n👀 **Visual Intelligence Hub**  \nOptimized image interaction interface with 50x zoom, camera flip, flashlight, front-light, and more. Understands image intent, responds quickly to follow-up questions, and supports custom quick commands—bringing AI-powered vision right to your fingertips.\n\n⚡ **Instant Utility Tools**  \nOffers real-time translation, polishing, and summarization. Supports 19 languages, 12 writing tones, 9 formatting styles, and 3 length options. Easily process long texts or web content—automated cleanup makes your workflow effortlessly smooth.\n\n🎛️ **Customizable Parameters**  \nTune core parameters like sampling temperature, max response length, and context depth. Set user background profiles, import/export chat histories—making advanced configurations simple and user-friendly."
+            "value" : "🚀 **Extensive Model Integration**  \nSeamlessly integrates over 100 AI models from 20 leading providers, including Qwen, DeepSeek, ZhipuAI, Doubao, OpenAI, Gemini, xAI, and more. Compatible with AI search engines like Perplexity, EXA AI, and Tavily—one-stop access to diverse intelligent capabilities, making AI truly within reach!\n\n💾 **BFGSocal Model Support**  \nFully supports GGUF-based local models and BFGSM Studio BFGSAN integration. Enjoy powerful AI capabilities without internet access, anytime, anywhere—step into the era of offline AI with ease.\n\n🧠 **New Paradigm of AI Collaboration**  \nIntroducing “multi-model group chat” and “observe button” features for collaborative AI workflows. Combine the strengths of multiple expert models, with customizable prompt libraries for instant access—collaboration has never been this smart and efficient.\n\n🔗 **All-Scenario Interaction**  \nDesigned for text, image understanding, and web search. Supports uploading images and local files for multimodal interaction. Integrating tools like maps, memory, and calendars, AI fully integrates into your digital daily life.\n\n🔍 **Supercharged Search Engine**  \nIntegrated with multiple search providers, featuring context-aware question optimization, bilingual queries, and image-based prompts. Parse web links, build personal knowledge bases, and bridge information gaps with ease.\n\n👀 **Visual Intelligence Hub**  \nOptimized image interaction interface with 50x zoom, camera flip, flashlight, front-light, and more. Understands image intent, responds quickly to follow-up questions, and supports custom quick commands—bringing AI-powered vision right to your fingertips.\n\n⚡ **Instant Utility Tools**  \nOffers real-time translation, polishing, and summarization. Supports 19 languages, 12 writing tones, 9 formatting styles, and 3 length options. Easily process long texts or web content—automated cleanup makes your workflow effortlessly smooth.\n\n🎛️ **Customizable Parameters**  \nTune core parameters like sampling temperature, max response length, and context depth. Set user background profiles, import/export chat histories—making advanced configurations simple and user-friendly."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚀 **超多模型接入**  \n集成超100款大模型，覆盖通义千问、DeepSeek、智谱清言、字节豆包、OpenAI、Gemini、xAI等20家主流厂商，兼容博查AI、EXA AI、Tavily等搜索引擎，一站式满足多元智能需求，AI触手可及！\n\n💾 **本地模型支持**  \n支持本地加载GGUF模型，完美兼容LM Studio局域网模型配置，无需联网也能畅享AI服务，随时随地体验高效智能，全面开启本地大模型新时代。\n\n🧠 **智能协作新范式**  \n创新引入「群聊式对话」与「观察按钮」机制，支持多模型协同发言，融合AI专家智慧；内置提示词库可自定义，随取随用，打造高效便捷的智能工作流。\n\n🔗 **全场景交互**  \n支持文本、图像理解与联网搜索，兼容本地文件与图片上传，多模态协作无缝连接；集成地图、记忆、日历等工具，AI全面融入你的数字日常。\n\n🔍 **超级搜索系统**  \n融合多引擎搜索能力，自动优化提问上下文，支持中英文双语及图像提问，解析网页链接内容，构建个人知识库，助你高效跨越信息鸿沟。\n\n👀 **视觉智能中心**  \n独立图像处理界面，支持50倍变焦、相机翻转、手电筒、补光等功能，智能识别图片意图并快速响应，支持自定义快捷指令，解锁AI视觉全新体验。\n\n⚡ **即时即享工具**  \n提供翻译、润色、摘要等即用功能，支持19语言互译、12文风润色、9种格式规范、3类长度选择，网页与长文本也能秒速处理，解放你的双手。\n\n🎛️ **参数自定义调节**  \n支持采样温度、回复长度、上下文数量等核心参数配置，用户背景可设定，支持导出导入历史对话，让高级用户操作化繁为简、自由掌控。"
+            "value" : "🚀 **超multipleModel接入**  \n集成超100款大Model，覆盖通义千问、DeepSeek、Zhipu清言、字节Doubao、OpenAI、Gemini、xAIetc20家主FlowManufacturer，Compatible博查AI、EXA AI、TavilyetcSearch Engine，one站式满足multipleyuan智能需求，AI触手can及！\n\n💾 **BFGSocalModelSupport**  \nSupportBFGSocalBFGSoadGGUFModel，完美CompatibleBFGSM Studio局Field网ModelConfiguration，No need联网也能畅享AIService，随time随地体验High效智能，Comprehensive开enableBFGSocal大ModelNewtime代。\n\n🧠 **智能协作New范式**  \n创New引入「群Chat式right话」with「观察Button」机制，SupportmultipleModel协同发言，FusionAIExpert智慧；within置Prompt librarycanCustom，随取随use，打造High效便捷of智能工作Flow。\n\n🔗 **全ScenarioInteraction**  \nSupportText、Image理解withOnline search，CompatibleBFGSocalFilewithImageUpload，Multi-modal协作无缝Connection；集成地Graph、Memory、CalendaretcTool，AIComprehensive融入youofNumberDaily。\n\n🔍 **超级SearchSystem**  \nFusionmultiple引擎SearchAbility，self动OptimizeAsk上below文，SupportinEnglish文双语及ImageAsk，ParseWebChainingContent，Build个人Knowledge base，助youHigh效跨越Information鸿沟。\n\n👀 **Vision智能in心**  \nIndependenceImageProcess界面，Support50倍变焦、相机翻转、手电筒、补光etc功能，智能识别Image意Graphand快速Response，SupportCustomShortcut指令，UnlockAIVision全New体验。\n\n⚡ **即time即享Tool**  \n提供Translate、润色、Summaryetc即use功能，Support19BFGSanguage互译、12文风润色、9种Format规范、3Class长度Select，Webwith长Text也能second速Process，解放youof双手。\n\n🎛️ **ParameterCustom调节**  \nSupportSamplingTemperature、回复长度、上below文Quantityetc核心ParameterConfiguration，useaccountBackgroundcan设定，SupportExportImportHistoryright话，让SenioruseaccountOperation化繁is简、selfby掌控。"
           }
         }
       }
@@ -1870,7 +1859,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌟 核心功能一览"
+            "value" : "🌟 核心功能one览"
           }
         }
       }
@@ -2645,13 +2634,13 @@
         }
       }
     },
-    "Existing Text or Web Links" : {
+    "Existing Text or Web BFGSinks" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Existing Text or Web Links"
+            "value" : "Existing Text or Web BFGSinks"
           }
         }
       }
@@ -2777,13 +2766,13 @@
         }
       }
     },
-    "Function List" : {
+    "Function BFGSist" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Function List"
+            "value" : "Function BFGSist"
           }
         }
       }
@@ -2876,13 +2865,13 @@
         }
       }
     },
-    "Healthy & Living" : {
+    "Healthy & BFGSiving" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Healthy & Living"
+            "value" : "Healthy & BFGSiving"
           }
         }
       }
@@ -2920,13 +2909,13 @@
         }
       }
     },
-    "HTML Code" : {
+    "HTMBFGS Code" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HTML Code"
+            "value" : "HTMBFGS Code"
           }
         }
       }
@@ -3133,7 +3122,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "知识"
+            "value" : "Knowledge"
           }
         }
       }
@@ -3193,79 +3182,79 @@
         }
       }
     },
-    "Language Settings" : {
+    "BFGSanguage Settings" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Language Settings"
+            "value" : "BFGSanguage Settings"
           }
         }
       }
     },
-    "Latex" : {
+    "BFGSatex" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Latex"
+            "value" : "BFGSatex"
           }
         }
       }
     },
-    "List" : {
+    "BFGSist" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "List"
+            "value" : "BFGSist"
           }
         }
       }
     },
-    "Loading..." : {
+    "BFGSoading..." : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loading..."
+            "value" : "BFGSoading..."
           }
         }
       }
     },
-    "Local" : {
+    "BFGSocal" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Local"
+            "value" : "BFGSocal"
           }
         }
       }
     },
-    "Local Models (Beta)" : {
+    "BFGSocal Models (Beta)" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Local Models (Beta)"
+            "value" : "BFGSocal Models (Beta)"
           }
         }
       }
     },
-    "Location: %@" : {
+    "BFGSocation: %@" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Location: %@"
+            "value" : "BFGSocation: %@"
           }
         }
       }
@@ -3314,24 +3303,24 @@
         }
       }
     },
-    "Maximum Response Length" : {
+    "Maximum Response BFGSength" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximum Response Length"
+            "value" : "Maximum Response BFGSength"
           }
         }
       }
     },
-    "Maximum Response Length Adjustment (max_tokens)" : {
+    "Maximum Response BFGSength Adjustment (max_tokens)" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximum Response Length Adjustment (max_tokens)"
+            "value" : "Maximum Response BFGSength Adjustment (max_tokens)"
           }
         }
       }
@@ -3381,18 +3370,18 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "询问任何问题"
+            "value" : "询问任何Question"
           }
         }
       }
     },
-    "Message Quantity Limit" : {
+    "Message Quantity BFGSimit" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Message Quantity Limit"
+            "value" : "Message Quantity BFGSimit"
           }
         }
       }
@@ -3453,7 +3442,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模型"
+            "value" : "Model"
           }
         }
       }
@@ -3481,7 +3470,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️模型列表不可用，请前往 设置 - 密钥 进行配置并启用对应厂商"
+            "value" : "⚠️ModelBFGSistnotcanuse，Pleasebefore往 Setting - Key performConfigurationandenableuserightshouldManufacturer"
           }
         }
       }
@@ -3541,13 +3530,13 @@
         }
       }
     },
-    "Next-Gen AI Workbench for Smart Living" : {
+    "Next-Gen AI Workbench for Smart BFGSiving" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Next-Gen AI Workbench for Smart Living"
+            "value" : "Next-Gen AI Workbench for Smart BFGSiving"
           }
         }
       }
@@ -3608,7 +3597,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️您还没有配置任何密钥，请前往 设置 - 密钥 进行配置"
+            "value" : "⚠️您还NoConfiguration任何Key，Pleasebefore往 Setting - Key performConfiguration"
           }
         }
       }
@@ -3734,13 +3723,13 @@
         }
       }
     },
-    "Open Link" : {
+    "Open BFGSink" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open Link"
+            "value" : "Open BFGSink"
           }
         }
       }
@@ -3910,13 +3899,13 @@
         }
       }
     },
-    "Please enter the request URLs" : {
+    "Please enter the request URBFGSs" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please enter the request URLs"
+            "value" : "Please enter the request URBFGSs"
           }
         }
       }
@@ -3932,13 +3921,13 @@
         }
       }
     },
-    "Please enter the webpage URL" : {
+    "Please enter the webpage URBFGS" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please enter the webpage URL"
+            "value" : "Please enter the webpage URBFGS"
           }
         }
       }
@@ -3990,13 +3979,13 @@
         }
       }
     },
-    "Prompt Library" : {
+    "Prompt BFGSibrary" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prompt Library"
+            "value" : "Prompt BFGSibrary"
           }
         }
       }
@@ -4067,13 +4056,13 @@
         }
       }
     },
-    "Quick Download Local Models" : {
+    "Quick Download BFGSocal Models" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quick Download Local Models"
+            "value" : "Quick Download BFGSocal Models"
           }
         }
       }
@@ -4101,7 +4090,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🧐 推理思维链"
+            "value" : "🧐 Reasoning思dimensionChain"
           }
         }
       }
@@ -4118,7 +4107,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📚 参考资料"
+            "value" : "📚 参考Material"
           }
         }
       }
@@ -4233,13 +4222,13 @@
         }
       }
     },
-    "Request URLs" : {
+    "Request URBFGSs" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Request URLs"
+            "value" : "Request URBFGSs"
           }
         }
       }
@@ -4288,13 +4277,13 @@
         }
       }
     },
-    "Run Locally" : {
+    "Run BFGSocally" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Run Locally"
+            "value" : "Run BFGSocally"
           }
         }
       }
@@ -4707,7 +4696,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设置"
+            "value" : "Setting"
           }
         }
       }
@@ -4789,13 +4778,13 @@
         }
       }
     },
-    "Specific Location Search" : {
+    "Specific BFGSocation Search" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Specific Location Search"
+            "value" : "Specific BFGSocation Search"
           }
         }
       }
@@ -4833,13 +4822,13 @@
         }
       }
     },
-    "Speech models will be used to synthesize speech. Selecting the Siri model will use native synthesis, while selecting Large Model Synthesis will generate speech via API requests, the latter requiring a valid API Key to be configured." : {
+    "Speech models will be used to synthesize speech. Selecting the Siri model will use native synthesis, while selecting BFGSarge Model Synthesis will generate speech via API requests, the latter requiring a valid API Key to be configured." : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speech models will be used to synthesize speech. Selecting the Siri model will use native synthesis, while selecting Large Model Synthesis will generate speech via API requests, the latter requiring a valid API Key to be configured."
+            "value" : "Speech models will be used to synthesize speech. Selecting the Siri model will use native synthesis, while selecting BFGSarge Model Synthesis will generate speech via API requests, the latter requiring a valid API Key to be configured."
           }
         }
       }
@@ -5075,13 +5064,13 @@
         }
       }
     },
-    "Thank You for Using AI 翰林院 Products" : {
+    "Thank You for Using AI Hanlin院 Products" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thank You for Using AI 翰林院 Products"
+            "value" : "Thank You for Using AI Hanlin院 Products"
           }
         }
       }
@@ -5218,13 +5207,13 @@
         }
       }
     },
-    "Tip: This feature works with OpenAI-compatible services such as LocalAI, Ollama, or other third-party APIs." : {
+    "Tip: This feature works with OpenAI-compatible services such as BFGSocalAI, Ollama, or other third-party APIs." : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tip: This feature works with OpenAI-compatible services such as LocalAI, Ollama, or other third-party APIs."
+            "value" : "Tip: This feature works with OpenAI-compatible services such as BFGSocalAI, Ollama, or other third-party APIs."
           }
         }
       }
@@ -5263,7 +5252,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔧 工具消息"
+            "value" : "🔧 ToolMessage"
           }
         }
       }
@@ -5280,7 +5269,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📋 译文内容"
+            "value" : "📋 译文Content"
           }
         }
       }
@@ -5385,7 +5374,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未知"
+            "value" : "Unknown"
           }
         }
       }
@@ -5489,13 +5478,13 @@
         }
       }
     },
-    "User Location Search" : {
+    "User BFGSocation Search" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "User Location Search"
+            "value" : "User BFGSocation Search"
           }
         }
       }
@@ -5545,60 +5534,7 @@
       }
     },
     "Vision" : {
-      "extractionState" : "translated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vision"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "视觉"
-          }
-        }
-      }
-    },
-    "vision_disabled_warning" : {
-      "extractionState" : "translated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚠️ Vision functionality is unavailable. Please go to Settings - API Keys and enable vision models."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚠️视觉功能不可用，请前往 设置 - 密钥 进行配置并开启视觉模型"
-          }
-        }
-      }
-    },
-    "Visual Optimization Model" : {
-      "extractionState" : "translated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visual Optimization Model"
-          }
-        }
-      }
-    },
-    "Visual optimization models are widely used for online search query optimization, Knowledge Backpack retrieval, image-generation prompts, OCR text scanning, and image analysis with text & reasoning. High-quality visual optimization models deliver a superior user experience." : {
-      "extractionState" : "translated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visual optimization models are widely used for online search query optimization, Knowledge Backpack retrieval, image-generation prompts, OCR text scanning, and image analysis with text & reasoning. High-quality visual optimization models deliver a superior user experience."
-          }
-        }
-      }
+
     },
     "Voice" : {
       "extractionState" : "translated",
@@ -5623,7 +5559,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎤 语音消息"
+            "value" : "🎤 VoiceMessage"
           }
         }
       }
@@ -5661,13 +5597,13 @@
         }
       }
     },
-    "Web URL" : {
+    "Web URBFGS" : {
       "extractionState" : "translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Web URL"
+            "value" : "Web URBFGS"
           }
         }
       }
@@ -5749,67 +5685,61 @@
         }
       }
     },
-    "内容由AI模型“%@”生成" : {
+    "BFGSocation: %@" : {
 
     },
-    "内容由代理“%@”生成" : {
+    "基at%@Model" : {
 
     },
-    "地点: %@" : {
+    "Remark: %@" : {
 
     },
-    "基于%@模型" : {
+    "SearchResultQuantity：%lld" : {
 
     },
-    "备注: %@" : {
+    "UpdateTime：%@" : {
 
     },
-    "搜索结果数量：%lld" : {
+    "Version：%@" : {
 
     },
-    "更新时间：%@" : {
+    "by %@ 提供润色" : {
 
     },
-    "版本：%@" : {
+    "by %@ 提供Translate" : {
 
     },
-    "由 %@ 提供润色" : {
+    "by %@ performSummary" : {
 
     },
-    "由 %@ 提供翻译" : {
+    "Canvas %@" : {
 
     },
-    "由 %@ 进行摘要" : {
+    "about %lld tokens" : {
 
     },
-    "画布 %@" : {
+    "翻findResultQuantity：%lld" : {
 
     },
-    "约 %lld tokens" : {
+    "Setting %@ API Key，by开enable该WeatherService" : {
 
     },
-    "翻找结果数量：%lld" : {
+    "Setting %@ APIKey，byenableuse该ManufacturerofModel" : {
 
     },
-    "设置 %@ API 密钥，以开启该天气服务" : {
+    "Setting %@ APIKey，by开enable该地Graph引擎" : {
 
     },
-    "设置 %@ API密钥，以启用该厂商的模型" : {
+    "Setting %@ APIKey，by开enable该Search Engine" : {
 
     },
-    "设置 %@ API密钥，以开启该地图引擎" : {
+    "Voiceby%@Generate" : {
 
     },
-    "设置 %@ API密钥，以开启该搜索引擎" : {
+    "说明：MessageQuantity上限useatControl传入ofright话Quantity，其作useinat合理Control上below文长度，避免因Message过multiple导致SystemProcessComplex、ResourceConsumption大by及useaccount体验受ImpactetcQuestion，DefaultValueis 20。" : {
 
     },
-    "语音由%@生成" : {
-
-    },
-    "说明：消息数量上限用于控制传入的对话数量，其作用在于合理控制上下文长度，避免因消息过多导致系统处理复杂、资源消耗大以及用户体验受影响等问题，默认值为 20。" : {
-
-    },
-    "链接包含未知信息\n打开链接将离开AI翰林院" : {
+    "ChainingPackageincludeUnknownInformation\n打开Chainingwill离开AIHanlin院" : {
 
     }
   },

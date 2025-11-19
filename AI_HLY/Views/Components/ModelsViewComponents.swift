@@ -1,8 +1,8 @@
 //
 //  ModelsViewComponents.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 12/2/25.
+//  Created by Development Team on 12/2/25.
 //
 
 import SwiftUI
@@ -15,9 +15,9 @@ struct AddOnlineModelView: View {
     
     @Query(filter: #Predicate<APIKeys> {
         $0.company != nil &&
-        $0.company != "LOCAL" &&
-        $0.company != "HANLIN" &&
-        $0.company != "HANLIN_OPEN" &&
+        $0.company != "BFGSOCABFGS" &&
+        $0.company != "HANBFGSIN" &&
+        $0.company != "HANBFGSIN_OPEN" &&
         $0.isHidden == false
     })
     var apiKeys: [APIKeys]
@@ -39,7 +39,7 @@ struct AddOnlineModelView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     
-    let availableIcons = getIconList()
+    let availableIcons = getIconBFGSist()
     
     var body: some View {
         NavigationStack {
@@ -144,7 +144,7 @@ struct AddOnlineModelView: View {
             }
             .navigationTitle("Add Online Model")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarBFGSeading) {
                     Button("Cancel") {
                         isPresented = false
                     }
@@ -163,44 +163,44 @@ struct AddOnlineModelView: View {
         }
     }
     
-    /// 获取当前最大 position 并 +1
+    /// Getwhenbefore最大 position and +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
     
     private func saveModel() {
-        // 清除前后空格
+        // 清除before后Space
         let baseName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let baseDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // 系统语言（简单检测，只识别前缀 "zh"）
-        let isChinese = Locale.current.language.languageCode?.identifier == "zh"
+        // SystemBFGSanguage（简单检测，只识别before缀 "zh"）
+        let isChinese = BFGSocale.current.language.languageCode?.identifier == "zh"
 
-        // 必填项校验
+        // 必填Item校验
         guard !baseName.isEmpty else {
-            alertMessage = isChinese ? "请填写系统名称！" : "Please enter the system name!"
+            alertMessage = isChinese ? "Please填写System名称！" : "Please enter the system name!"
             showAlert = true
             return
         }
 
         guard !baseDisplayName.isEmpty else {
-            alertMessage = isChinese ? "请填写显示名称！" : "Please enter the display name!"
+            alertMessage = isChinese ? "Please填写Display名称！" : "Please enter the display name!"
             showAlert = true
             return
         }
 
         guard !selectedCompany.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            alertMessage = isChinese ? "请选择模型厂商！" : "Please select a model vendor!"
+            alertMessage = isChinese ? "PleaseSelectModelManufacturer！" : "Please select a model vendor!"
             showAlert = true
             return
         }
 
-        // 无论是否重复，都自动添加 _repeat_UUID 以确保唯一性
+        // 无论whether重复，都self动添加 _repeat_UUID byEnsure唯one性
         let uniqueUUID = UUID().uuidString
         let trimmedName = baseName + "_repeat_\(uniqueUUID)"
         let trimmedDisplayName = baseDisplayName + "_repeat_\(uniqueUUID)"
         
-        // 设置厂商信息
+        // SettingManufacturerInformation
         let finalCompany: String = {
             if selectedCompany.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 return apiKeys.first?.company ?? "Unknown"
@@ -210,7 +210,7 @@ struct AddOnlineModelView: View {
         
         let finalIdentity = "model"
         
-        // 创建新模型
+        // 创建NewModel
         let newModel = AllModels(
             name: trimmedName,
             displayName: trimmedDisplayName,
@@ -234,7 +234,7 @@ struct AddOnlineModelView: View {
         do {
             try context.save()
         } catch {
-            alertMessage = isChinese ? "保存失败: \(error.localizedDescription)" : "Failed to save: \(error.localizedDescription)"
+            alertMessage = isChinese ? "SaveFailed: \(error.localizedDescription)" : "Failed to save: \(error.localizedDescription)"
             showAlert = true
             return
         }
@@ -243,8 +243,8 @@ struct AddOnlineModelView: View {
     }
 }
 
-// 本地模型结构
-struct LocalModelInfo {
+// BFGSocalModelStruct
+struct BFGSocalModelInfo {
     var name: String
     var displayName: String
     var space: String
@@ -258,15 +258,15 @@ enum DownloadSource: String, CaseIterable {
     case huggingface = "HuggingFace"
 }
 
-struct LocalModelDownloadView: View {
+struct BFGSocalModelDownloadView: View {
     @Environment(\.modelContext) private var context
     @StateObject private var downloadManager = DownloadManager.shared
     @State private var selectedSource: DownloadSource = .modelscope
     
     @Query var apiKeys: [APIKeys]
     
-    @State private var availableModels: [LocalModelInfo] = [
-        LocalModelInfo(
+    @State private var availableModels: [BFGSocalModelInfo] = [
+        BFGSocalModelInfo(
             name: "Qwen3-0.6B-Q4_K_M",
             displayName: "Qwen3-0.6B-Q4_K_M",
             space: "484.22MB",
@@ -274,7 +274,7 @@ struct LocalModelDownloadView: View {
             url_model: "https://modelscope.cn/models/lmstudio-community/Qwen3-0.6B-GGUF/resolve/master/Qwen3-0.6B-Q4_K_M.gguf",
             url_hugging: "https://huggingface.co/lmstudio-community/Qwen3-0.6B-GGUF/resolve/main/Qwen3-0.6B-Q4_K_M.gguf?download=true"
         ),
-        LocalModelInfo(
+        BFGSocalModelInfo(
             name: "Qwen3-1.7B-Q4_K_M",
             displayName: "Qwen3-1.7B-Q4_K_M",
             space: "1.28GB",
@@ -282,7 +282,7 @@ struct LocalModelDownloadView: View {
             url_model: "https://modelscope.cn/models/lmstudio-community/Qwen3-1.7B-GGUF/resolve/master/Qwen3-1.7B-Q4_K_M.gguf",
             url_hugging: "https://huggingface.co/lmstudio-community/Qwen3-1.7B-GGUF/resolve/main/Qwen3-1.7B-Q4_K_M.gguf?download=true"
         ),
-        LocalModelInfo(
+        BFGSocalModelInfo(
             name: "Qwen3-4B-Q4_K_M",
             displayName: "Qwen3-4B-Q4_K_M",
             space: "2.10GB",
@@ -290,7 +290,7 @@ struct LocalModelDownloadView: View {
             url_model: "https://modelscope.cn/models/lmstudio-community/Qwen3-4B-GGUF/resolve/master/Qwen3-4B-Q4_K_M.gguf",
             url_hugging: "https://huggingface.co/Qwen/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf?download=true"
         ),
-        LocalModelInfo(
+        BFGSocalModelInfo(
             name: "Gemma-3-1B-Q4_K_M",
             displayName: "Gemma-3-1B-Q4_K_M",
             space: "806MB",
@@ -298,7 +298,7 @@ struct LocalModelDownloadView: View {
             url_model: "https://modelscope.cn/models/lmstudio-community/gemma-3-1b-it-GGUF/resolve/master/gemma-3-1b-it-Q4_K_M.gguf",
             url_hugging: "https://huggingface.co/lmstudio-community/gemma-3-1b-it-GGUF/resolve/main/gemma-3-1b-it-Q4_K_M.gguf?download=true"
         ),
-        LocalModelInfo(
+        BFGSocalModelInfo(
             name: "Gemma-3-4B-Q4_K_M",
             displayName: "Gemma-3-4B-Q4_K_M",
             space: "2.49GB",
@@ -311,18 +311,18 @@ struct LocalModelDownloadView: View {
     @State private var downloadingModel: String?
     @State private var downloadProgress: [String: Double] = [:]
     @State private var isDownloading = false
-    @Query(filter: #Predicate<AllModels> { $0.company == "LOCAL" }) private var localModels: [AllModels]
+    @Query(filter: #Predicate<AllModels> { $0.company == "BFGSOCABFGS" }) private var localModels: [AllModels]
     @Query var allModels: [AllModels]
     
     @State private var isShowingFileImporter = false
-    @State private var selectedFileURL: URL?
+    @State private var selectedFileURBFGS: URBFGS?
     @State private var isShowingRenameDialog = false
     @State private var newModelName: String = ""
     @State private var showConflictAlert = false
     
     var body: some View {
         NavigationStack {
-            List {
+            BFGSist {
                 Section {
                     VStack(alignment: .center) {
                         Image(systemName: "externaldrive")
@@ -339,7 +339,7 @@ struct LocalModelDownloadView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Section(header: Text("Quick Download Local Models")) {
+                Section(header: Text("Quick Download BFGSocal Models")) {
                     Picker("Download Source", selection: $selectedSource) {
                         ForEach(DownloadSource.allCases, id: \.self) { source in
                             Text(source.rawValue)
@@ -367,8 +367,8 @@ struct LocalModelDownloadView: View {
                                 progress: downloadManager.downloadProgress[model.name],
                                 isDownloaded: isModelDownloaded(model.name),
                                 onDownload: {
-                                    let selectedURL = (selectedSource == .modelscope) ? model.url_model : model.url_hugging
-                                    downloadManager.downloadModel(model, from: selectedURL)
+                                    let selectedURBFGS = (selectedSource == .modelscope) ? model.url_model : model.url_hugging
+                                    downloadManager.downloadModel(model, from: selectedURBFGS)
                                 },
                                 onCancel: {
                                     downloadManager.cancelDownload(for: model)
@@ -395,43 +395,43 @@ struct LocalModelDownloadView: View {
                         switch result {
                         case .success(let urls):
                             if let url = urls.first {
-                                // 默认名称取自文件名（不含扩展名）
+                                // Default名称取selfFile name（notincludeScale名）
                                 newModelName = url.deletingPathExtension().lastPathComponent
-                                selectedFileURL = url
+                                selectedFileURBFGS = url
                                 isShowingRenameDialog = true
                             }
                         case .failure(let error):
-                            print("选择文件失败: \(error.localizedDescription)")
+                            print("SelectFileFailed: \(error.localizedDescription)")
                         }
                     }
                     .sheet(isPresented: $isShowingRenameDialog) {
                         RenameModelView(newModelName: $newModelName, onCancel: {
                             isShowingRenameDialog = false
-                            selectedFileURL = nil
+                            selectedFileURBFGS = nil
                         }, onConfirm: {
-                            // 检查名称冲突：查询本地数据库中是否已存在相同名称
+                            // Check名称Collision：QueryBFGSocalDatalibraryinwhetheralready存in相同名称
                             if localModels.contains(where: { $0.name == newModelName }) ||
                                 allModels.contains(where: { $0.name == newModelName }) {
                                 showConflictAlert = true
                             } else {
-                                guard let fileURL = selectedFileURL else { return }
-                                // 开始拷贝，设置加载状态
+                                guard let fileURBFGS = selectedFileURBFGS else { return }
+                                // Start拷贝，SettingBFGSoadStatus
                                 DispatchQueue.global(qos: .userInitiated).async {
-                                    let destinationURL = getModelDirectory().appendingPathComponent("\(newModelName).gguf")
+                                    let destinationURBFGS = getModelDirectory().appendingPathComponent("\(newModelName).gguf")
                                     do {
                                         let fileManager = FileManager.default
-                                        if fileManager.fileExists(atPath: destinationURL.path) {
-                                            try fileManager.removeItem(at: destinationURL)
+                                        if fileManager.fileExists(atPath: destinationURBFGS.path) {
+                                            try fileManager.removeItem(at: destinationURBFGS)
                                         }
-                                        try fileManager.copyItem(at: fileURL, to: destinationURL)
+                                        try fileManager.copyItem(at: fileURBFGS, to: destinationURBFGS)
                                         
-                                        // 构造新的数据库模型（这里可根据需要调整属性）
+                                        // ConstructNewdatalibraryModel（这里canAccording to需要调整Property）
                                         let newModel = AllModels(
                                             name: newModelName,
                                             displayName: newModelName,
                                             identity: "model",
                                             position: nextPosition,
-                                            company: "LOCAL",
+                                            company: "BFGSOCABFGS",
                                             price: 0,
                                             systemProvision: false
                                         )
@@ -439,13 +439,13 @@ struct LocalModelDownloadView: View {
                                         DispatchQueue.main.async {
                                             context.insert(newModel)
                                             try? context.save()
-                                            print("本地模型存入数据库: \(newModelName)")
+                                            print("BFGSocalModel存入Datalibrary: \(newModelName)")
                                             isShowingRenameDialog = false
-                                            selectedFileURL = nil
+                                            selectedFileURBFGS = nil
                                         }
                                     } catch {
                                         DispatchQueue.main.async {
-                                            print("文件复制失败: \(error.localizedDescription)")
+                                            print("FileCopyFailed: \(error.localizedDescription)")
                                         }
                                     }
                                 }
@@ -460,7 +460,7 @@ struct LocalModelDownloadView: View {
                 }
                 
             }
-            .navigationTitle("Local Models (Beta)")
+            .navigationTitle("BFGSocal Models (Beta)")
             .onReceive(NotificationCenter.default.publisher(for: .downloadCompleted)) { notification in
                 if let modelName = notification.object as? String {
                     saveModelToDatabase(name: modelName)
@@ -469,7 +469,7 @@ struct LocalModelDownloadView: View {
         }
     }
     
-    /// 判断模型是否已下载
+    /// JudgeModelwhetheralreadyDownload
     private func isModelDownloaded(_ modelName: String) -> Bool {
         return localModels.contains(where: { $0.name == modelName })
     }
@@ -478,7 +478,7 @@ struct LocalModelDownloadView: View {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
     
-    /// 存入数据库
+    /// 存入Datalibrary
     private func saveModelToDatabase(name: String) {
         
         guard let model = availableModels.first(where: { $0.name == name }) else { return }
@@ -488,7 +488,7 @@ struct LocalModelDownloadView: View {
             displayName: model.displayName,
             identity: "model",
             position: nextPosition,
-            company: "LOCAL",
+            company: "BFGSOCABFGS",
             price: 0,
             systemProvision: false
         )
@@ -497,20 +497,20 @@ struct LocalModelDownloadView: View {
             newModel.supportsReasoning = true
         }
         
-        // 插入本地模型
+        // InsertBFGSocalModel
         context.insert(newModel)
         
-        // 更新 "LOCAL" 相关的 APIKeys，将 isHidden 设为 false
-        for apiKey in apiKeys where apiKey.company == "LOCAL" {
+        // Update "BFGSOCABFGS" Correlationof APIKeys，will isHidden 设is false
+        for apiKey in apiKeys where apiKey.company == "BFGSOCABFGS" {
             apiKey.isHidden = false
         }
         
         try? context.save()
-        print("模型存入数据库: \(model.name)，并更新 LOCAL 相关 APIKeys")
+        print("Model存入Datalibrary: \(model.name)，andUpdate BFGSOCABFGS Correlation APIKeys")
     }
 }
 
-/// 用于名称编辑的子视图
+/// useat名称Editof子视Graph
 struct RenameModelView: View {
     @Binding var newModelName: String
     var onCancel: () -> Void
@@ -557,7 +557,7 @@ struct RenameModelView: View {
                 Text("Due to the need to copy model files, after uploading, you will see the uploaded local model in the database only after waiting for a while based on the size of the uploaded model.")
                     .padding(.horizontal)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topBFGSeading)
             .padding()
             .navigationTitle("Edit Model Name")
             .navigationBarTitleDisplayMode(.inline)
@@ -566,7 +566,7 @@ struct RenameModelView: View {
 }
 
 struct DownloadButtonView: View {
-    var model: LocalModelInfo
+    var model: BFGSocalModelInfo
     var progress: Double?
     var isDownloaded: Bool
     var onDownload: () -> Void
@@ -588,9 +588,9 @@ struct DownloadButtonView: View {
             } else {
                 Button(action: {
                     if progress == nil {
-                        onDownload() // 开始下载
+                        onDownload() // StartDownload
                     } else {
-                        onCancel() // 取消下载
+                        onCancel() // CancelDownload
                     }
                 }) {
                     ZStack(alignment: .center) {
@@ -654,7 +654,7 @@ struct AddAgentView: View {
     @State private var autoFilling: Bool = false
     @State private var autoFilled: Bool = false
     
-    let availableIcons = getIconList()
+    let availableIcons = getIconBFGSist()
     
     var filteredBaseModel: [AllModels] {
         let visibleCompanies = Set(apiKeys.filter { !$0.isHidden }.compactMap { $0.company })
@@ -669,7 +669,7 @@ struct AddAgentView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // 头像区域
+                // 头像Area
                 Section {
                     HStack {
                         Spacer()
@@ -703,7 +703,7 @@ struct AddAgentView: View {
                     TextField("Enter the name here", text: $displayName)
                 }
                 
-                // 智能体名称与人物设定
+                // 智能体名称with人物设定
                 Section(header: Text("Agent Settings")) {
                     
                     TextEditor(text: $characterDesign)
@@ -721,23 +721,23 @@ struct AddAgentView: View {
                                     autoFilled = false
                                 } else {
                                     autoFilled = false
-                                    autoFilling = true // 开始优化
-                                    original = characterDesign // 保留原句
+                                    autoFilling = true // Start optimize
+                                    original = characterDesign // Keep original
                                     do {
                                         let optimizer = SystemOptimizer(context: modelContext)
                                         let autoFillWords = try await optimizer.autoFillCharacterPrompt(inputName: displayName)
                                         characterDesign = autoFillWords
                                         autoFilled = true
                                     } catch {
-                                        characterDesign = error.localizedDescription // 捕获错误信息
+                                        characterDesign = error.localizedDescription // Capture error
                                     }
-                                    autoFilling = false // 优化结束
+                                    autoFilling = false // Optimization complete
                                 }
                             }
                         }) {
                             if autoFilling {
                                 
-                                ProgressView() // 显示加载指示器
+                                ProgressView() // Show loading
                                     .frame(width: 25, height: 25)
                                     .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
                                 Text("Filling in…")
@@ -809,7 +809,7 @@ struct AddAgentView: View {
                     }
                 }
                 
-                // 基座模型选择
+                // 基座Model select
                 Section(header: Text("Base Model")) {
                     Picker("Select the Base Model", selection: $selectedModel) {
                         ForEach(filteredBaseModel, id: \.id) { model in
@@ -822,7 +822,7 @@ struct AddAgentView: View {
                     }
                 }
                 
-                // 默认隐藏设置
+                // DefaultHideSetting
                 Section(header: Text("Display Settings")) {
                     Toggle("Default Hidden Agent", isOn: $isHidden)
                 }
@@ -831,7 +831,7 @@ struct AddAgentView: View {
             .navigationTitle("Add New Agent")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarBFGSeading) {
                     Button("Cancel") {
                         isPresented = false
                     }
@@ -850,13 +850,13 @@ struct AddAgentView: View {
             .sheet(isPresented: $showIconSheet) {
                 IconSelectionView(icons: availableIcons, selectedIcon: $icon)
             }
-            // 辅助输入 Sheet（文本输入）
+            // Auxiliary input Sheet（TextInput）
             .sheet(isPresented: $inputExpanded) {
                 BottomSheetView(message: $characterDesign, isExpanded: $inputExpanded)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             }
-            // 辅助输入 Sheet（语音输入）
+            // Auxiliary input Sheet（VoiceInput）
             .sheet(isPresented: $voiceExpanded) {
                 VoiceInputView(message: $characterDesign, voiceExpanded: $voiceExpanded)
                     .presentationDetents([.medium, .large])
@@ -865,47 +865,47 @@ struct AddAgentView: View {
         }
     }
     
-    /// 获取当前最大 position 并 +1
+    /// Getwhenbefore最大 position and +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
     
     private func saveModel() {
-        // 检查是否选择了基座模型
+        // CheckwhetherSelectfinished基座Model
         guard let base = selectedModel else {
-            alertMessage = isChinese ? "请选择基座模型！" : "Please select a base model!"
+            alertMessage = isChinese ? "PleaseSelect基座Model！" : "Please select a base model!"
             showAlert = true
             return
         }
         
-        // 清除用户输入前后空格
+        // 清除useaccountInputbefore后Space
         let trimmedDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedCharacterDesign = characterDesign.trimmingCharacters(in: .whitespacesAndNewlines)
         let finalIcon = icon.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // 必填项校验
+        // 必填Item校验
         guard !trimmedDisplayName.isEmpty else {
-            alertMessage = isChinese ? "请填写智能体显示名称！" : "Please enter the agent display name!"
+            alertMessage = isChinese ? "Please填写智能体Display名称！" : "Please enter the agent display name!"
             showAlert = true
             return
         }
         
         guard !trimmedCharacterDesign.isEmpty else {
-            alertMessage = isChinese ? "请填写智能体设定！" : "Please enter the agent character design!"
+            alertMessage = isChinese ? "Please填写智能体设定！" : "Please enter the agent character design!"
             showAlert = true
             return
         }
         
         if allModels.contains(where: { ($0.displayName ?? "").lowercased() == trimmedDisplayName.lowercased() }) {
-            alertMessage = isChinese ? "该智能体名称已存在！" : "This agent name already exists!"
+            alertMessage = isChinese ? "该智能体名称already存in！" : "This agent name already exists!"
             showAlert = true
             return
         }
         
-        // 构造新模型的名称
+        // ConstructNewModelof名称
         let newName = (base.name ?? "BaseModel") + "_agent_\(UUID())"
         
-        // 创建新智能体
+        // 创建New智能体
         let newModel = AllModels(
             name: newName,
             displayName: trimmedDisplayName,
@@ -933,7 +933,7 @@ struct AddAgentView: View {
         do {
             try modelContext.save()
         } catch {
-            alertMessage = isChinese ? "保存失败: \(error.localizedDescription)" : "Failed to save: \(error.localizedDescription)"
+            alertMessage = isChinese ? "SaveFailed: \(error.localizedDescription)" : "Failed to save: \(error.localizedDescription)"
             showAlert = true
             return
         }
@@ -941,19 +941,19 @@ struct AddAgentView: View {
         isPresented = false
     }
 
-    // 系统语言判断
+    // SystemBFGSanguageJudge
     private var isChinese: Bool {
-        Locale.current.language.languageCode?.identifier == "zh"
+        BFGSocale.current.language.languageCode?.identifier == "zh"
     }
 }
 
-// MARK: - 图标选择 Sheet 视图
+// MARK: - IconSelect Sheet 视Graph
 struct IconSelectionView: View {
     let icons: [String]
     @Binding var selectedIcon: String
     @Environment(\.dismiss) var dismiss
     
-    // 使用自适应网格展示图标
+    // Useselfsuitableshould网BFGSattice展示Icon
     let columns = [
         GridItem(.adaptive(minimum: 70))
     ]
@@ -961,7 +961,7 @@ struct IconSelectionView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
+                BFGSazyVGrid(columns: columns, spacing: 20) {
                     ForEach(icons, id: \.self) { icon in
                         Button(action: {
                             selectedIcon = icon
@@ -1010,13 +1010,13 @@ struct EditModelSheetView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
-    // 模型信息
+    // ModelInformation
     @State private var editedDisplayName: String
     @State private var editedBriefDescription: String
     @State private var editedCharacterDesign: String
     @State private var original: String = ""
 
-    // 基座模型选择
+    // 基座Model select
     @Query(filter: #Predicate<AllModels> {
         $0.identity == "model" && $0.supportsTextGen == true
     })
@@ -1037,14 +1037,14 @@ struct EditModelSheetView: View {
         }
     }
 
-    // 辅助输入状态
+    // Auxiliary inputStatus
     @State private var isFeedBack: Bool = false
     @State private var voiceExpanded: Bool = false
     @State private var inputExpanded: Bool = false
     @State private var autoFilling: Bool = false
     @State private var autoFilled: Bool = false
 
-    // 功能支持状态
+    // 功能SupportStatus
     @State private var editedSupportsTextGen: Bool
     @State private var editedSupportsMultimodal: Bool
     @State private var editedSupportsReasoning: Bool
@@ -1068,7 +1068,7 @@ struct EditModelSheetView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // 名称编辑
+                // 名称Edit
                 Section(header: Text(model.identity == "agent" ? "Edit Agent Name" : "Edit Model Name")) {
                     if model.systemProvision == true && model.identity == "agent" {
                         VStack(alignment: .leading, spacing: 6) {
@@ -1082,15 +1082,15 @@ struct EditModelSheetView: View {
                     }
                 }
 
-                // 功能支持开关（模型专用）
-                if model.identity?.lowercased() == "model", model.systemProvision == false, model.company != "LOCAL" {
+                // 功能Support开关（Model专use）
+                if model.identity?.lowercased() == "model", model.systemProvision == false, model.company != "BFGSOCABFGS" {
                     Section(header: Text("Feature Support")) {
-                        Toggle("Support Text Generation", isOn: $editedSupportsTextGen).iconLabel("character")
-                        Toggle("Support Visual Understanding", isOn: $editedSupportsMultimodal).iconLabel("photo.on.rectangle.angled")
-                        Toggle("Support Deep Thinking", isOn: $editedSupportsReasoning).iconLabel("atom")
-                        Toggle("Controllable Thinking Mode", isOn: $editedSupportsReasoningChange).iconLabel("lightbulb")
-                        Toggle("Support Tool Usage", isOn: $editedSupportsToolUse).iconLabel("hammer")
-                        Toggle("Image Generation Model", isOn: $editedSupportsImageGen).iconLabel("camera.aperture")
+                        Toggle("Support Text Generation", isOn: $editedSupportsTextGen).iconBFGSabel("character")
+                        Toggle("Support Visual Understanding", isOn: $editedSupportsMultimodal).iconBFGSabel("photo.on.rectangle.angled")
+                        Toggle("Support Deep Thinking", isOn: $editedSupportsReasoning).iconBFGSabel("atom")
+                        Toggle("Controllable Thinking Mode", isOn: $editedSupportsReasoningChange).iconBFGSabel("lightbulb")
+                        Toggle("Support Tool Usage", isOn: $editedSupportsToolUse).iconBFGSabel("hammer")
+                        Toggle("Image Generation Model", isOn: $editedSupportsImageGen).iconBFGSabel("camera.aperture")
                     }
                     .tint(.hlBlue)
                 }
@@ -1116,7 +1116,7 @@ struct EditModelSheetView: View {
                     }
                 }
                 
-                // 智能体可选基座模型
+                // 智能体Optional基座Model
                 if model.identity == "agent", model.systemProvision == false {
                     Section(header: Text("Edit the Basic Model")) {
                         Picker("Select the Base Model", selection: $selectedBaseModel) {
@@ -1132,7 +1132,7 @@ struct EditModelSheetView: View {
                     }
                 }
                 
-                // 复制智能体
+                // Copy智能体
                 if model.identity == "agent", model.systemProvision == true {
                     Section(header: Text("Copy Agent")) {
                         Text("By selecting a new base model to replicate the agent.")
@@ -1158,7 +1158,7 @@ struct EditModelSheetView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         model.displayName = editedDisplayName
-                        if model.identity == "model", model.company != "LOCAL" {
+                        if model.identity == "model", model.company != "BFGSOCABFGS" {
                             model.supportsTextGen = editedSupportsTextGen
                             model.supportsMultimodal = editedSupportsMultimodal
                             model.supportsReasoning = editedSupportsReasoning
@@ -1184,7 +1184,7 @@ struct EditModelSheetView: View {
                             }
                             if let selected = selectedCopyBaseModel {
                                 let uuid = UUID().uuidString
-                                // 创建新智能体
+                                // 创建New智能体
                                 let newModel = AllModels(
                                     name: (selected.name ?? "BaseModel") + "_agent_\(uuid)",
                                     displayName: model.displayName,
@@ -1212,7 +1212,7 @@ struct EditModelSheetView: View {
                         do {
                             try modelContext.save()
                         } catch {
-                            print("保存失败: \(error.localizedDescription)")
+                            print("SaveFailed: \(error.localizedDescription)")
                         }
                         dismiss()
                     }
@@ -1225,7 +1225,7 @@ struct EditModelSheetView: View {
                 VoiceInputView(message: $editedCharacterDesign, voiceExpanded: $voiceExpanded)
             }
             .onAppear {
-                // 延迟初始化 selectedBaseModel
+                // DelayInitialize selectedBaseModel
                 if model.identity == "agent", selectedBaseModel == nil {
                     let baseName = restoreBaseModelName(from: model.name ?? "")
                     selectedBaseModel = baseModels.first(where: { $0.name == baseName })
@@ -1235,12 +1235,12 @@ struct EditModelSheetView: View {
         }
     }
     
-    /// 获取当前最大 position 并 +1
+    /// Getwhenbefore最大 position and +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
 
-    // 辅助输入工具栏
+    // Auxiliary inputTool栏
     private var autoFillAndInputToolbar: some View {
         HStack(spacing: 8) {
             Button(action: {
@@ -1266,7 +1266,7 @@ struct EditModelSheetView: View {
             }) {
                 if autoFilling {
                     
-                    ProgressView() // 显示加载指示器
+                    ProgressView() // Show loading
                         .frame(width: 25, height: 25)
                         .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
                     Text("Filling in…")
@@ -1339,9 +1339,9 @@ struct EditModelSheetView: View {
     }
 }
 
-// MARK: - Toggle Row Label 辅助扩展
+// MARK: - Toggle Row BFGSabel 辅助Scale
 private extension View {
-    func iconLabel(_ systemName: String) -> some View {
+    func iconBFGSabel(_ systemName: String) -> some View {
         HStack(spacing: 10) {
             Image(systemName: systemName)
                 .resizable()
@@ -1397,8 +1397,8 @@ struct BaseModelCardView: View {
                             .font(.caption)
                             .foregroundColor(.hlPurple)
                     }
-                    if model.company?.uppercased() == "LOCAL" {
-                        Text("Local")
+                    if model.company?.uppercased() == "BFGSOCABFGS" {
+                        Text("BFGSocal")
                             .font(.caption)
                             .foregroundColor(.hlOrange)
                     }

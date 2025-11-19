@@ -143,12 +143,6 @@
 3. 选择AI模型和配置参数
 4. 开始对话
 
-### 视觉分析
-1. 点击"视觉"标签页
-2. 使用相机拍摄包含文字的图像
-3. 应用会自动识别并提取文字
-4. 可以进一步对图像进行AI分析
-
 ### 知识库管理
 1. 点击"知识库"标签页
 2. 创建新的知识库
@@ -164,7 +158,6 @@ AI_HLY/
 │   ├── Views/                 # 视图组件
 │   │   ├── MainTabView.swift
 │   │   ├── ChatView.swift
-│   │   ├── VisionView.swift
 │   │   └── ...
 │   ├── Models/                # 数据模型
 │   │   ├── ChatRecords.swift
@@ -184,11 +177,10 @@ AI_HLY/
 1. **应用入口** (`AI_HLY.swift`)
    - SwiftData模型容器初始化
    - CloudKit配置
-   - 深度链接处理
+   - SwiftUI scene wiring and preload tasks
 
 2. **主界面** (`MainTabView.swift`)
-   - 五个标签页导航
-   - 深度链接路由
+   - 四个标签页导航（列表、知识库、模型、设置）
 
 3. **数据层** (`Models/`)
    - SwiftData模型定义

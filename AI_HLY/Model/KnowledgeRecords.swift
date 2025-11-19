@@ -1,8 +1,8 @@
 //
 //  KnowledgeRecords.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 28/3/25.
+//  Created by Development Team on 28/3/25.
 //
 //
 
@@ -13,20 +13,20 @@ import SwiftData
 class KnowledgeRecords {
     var id: UUID = UUID()
     @Attribute(.spotlight)
-    var name: String = "新知识"
+    var name: String = "NewKnowledge"
     var lastEdited: Date = Date()
     var isPinned: Bool = false
-    var icon: String? // 图标
-    var color: String? // 颜色
-    var content: String? // 内容
-    var isEmbedding: Bool = false // 是否已经向量化
+    var icon: String? // Icon
+    var color: String? // Color
+    var content: String? // Content
+    var isEmbedding: Bool = false // whetheralready经Vector化
     @Relationship(deleteRule: .cascade)
     var chunks: [KnowledgeChunk]?
     
-    // 初始化方法
+    // InitializeMethod
     public init(
         id: UUID = UUID(),
-        name: String = "新知识",
+        name: String = "NewKnowledge",
         lastEdited: Date = Date(),
         isPinned: Bool = false,
         icon: String = "document.circle",

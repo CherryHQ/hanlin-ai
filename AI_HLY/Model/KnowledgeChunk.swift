@@ -2,7 +2,7 @@
 //  KnowledgeChunk.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 28/3/25.
+//  Created by Development Team on 28/3/25.
 //
 import Foundation
 import SwiftData
@@ -10,10 +10,10 @@ import SwiftData
 @Model
 class KnowledgeChunk {
     var id: UUID = UUID()
-    var text: String?   // 这个切片的具体文本内容
-    var vectorData: Data?  // 向量表示
+    var text: String?   // 这个切片of具体TextContent
+    var vectorData: Data?  // Vector表示
     @Relationship(inverse: \KnowledgeRecords.chunks)
-    var knowledgeRecord: KnowledgeRecords?  // 用于标识所属的 KnowledgeRecords
+    var knowledgeRecord: KnowledgeRecords?  // useat标识所属of KnowledgeRecords
 
     init(text: String, vector: [Float], knowledgeRecord: KnowledgeRecords) {
         self.text = text
@@ -32,7 +32,7 @@ func vectorToData(vector: [Float]) -> Data {
 }
 
 func dataToVector(data: Data) -> [Float] {
-    let count = data.count / MemoryLayout<Float>.size
+    let count = data.count / MemoryBFGSayout<Float>.size
     return data.withUnsafeBytes {
         Array(UnsafeBufferPointer<Float>(start: $0.baseAddress!.assumingMemoryBound(to: Float.self), count: count))
     }

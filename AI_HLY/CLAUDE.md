@@ -4,11 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AI翰林院 (AI Hanlin Academy) is a Swift-based iOS application that serves as a comprehensive AI workstation. The app integrates 20+ AI providers including OpenAI, Claude, Qwen, DeepSeek, GLM, and others, providing chat, vision analysis, knowledge management, and specialized tool integration.
+AI翰林院 (AI Hanlin Academy) is a Swift-based iOS application that serves as a comprehensive AI workstation. The app integrates 20+ AI providers including OpenAI, Claude, Qwen, DeepSeek, GLM, and others, providing chat, knowledge management, and specialized tool integration.
 
 **Key Features:**
 - Multi-provider AI chat with streaming responses and tool calling
-- Vision analysis with camera integration and multi-modal AI models
 - RAG-based knowledge management with document parsing
 - Integrated tools: web search, maps, weather, calendar, health data, code execution
 - Local AI model support via LLM.swift
@@ -60,16 +59,13 @@ The app follows a tab-based architecture with SwiftData for persistence:
 1. **App Entry Point**: `AI_HLY.swift`
    - Sets up SwiftData `ModelContainer` with CloudKit integration
    - Configures all data models and preloads default data
-   - Handles deep linking for VisionView
 
 2. **Main Navigation**: `MainTabView.swift`
-   - Five-tab structure: Chat List, Vision, Knowledge, Models, Settings
-   - Deep link handling for external app integration
+   - Four-tab structure: List (chat), Knowledge, Models, Settings
 
 3. **Core Views**:
    - `ListView.swift` - Chat conversation management
    - `ChatView.swift` - Individual chat interface with streaming responses
-   - `VisionView.swift` - Camera-based OCR and image analysis
    - `KnowledgeListView.swift` - Knowledge base management
    - `ModelsView.swift` - AI model selection and configuration
    - `SettingsView.swift` - App configuration and API key management
@@ -123,7 +119,6 @@ Services are organized by functionality in `/Services`:
 3. **Specialized Services**:
    - `ModelServices` - Model management and local inference
    - `KnowledgeServices` - RAG implementation and knowledge retrieval
-   - `VisionServices` - Image analysis and OCR
    - `DataServices` - Data preloading and system optimization
 
 ### Key Architectural Patterns
@@ -195,9 +190,7 @@ Services are organized by functionality in `/Services`:
 - macOS 14.0+ for development
 
 ### Deep Linking
-- App supports `AI-Hanlin://` URL scheme for external integrations
-- Configured in `AI-HLY-Info.plist`
-- Handles deep links to VisionView for OCR functionality
+- Custom URL scheme (`AI-Hanlin://`) usage was removed together with the Vision flow
 
 ### API Key Management
 - API keys are stored encrypted using SwiftData

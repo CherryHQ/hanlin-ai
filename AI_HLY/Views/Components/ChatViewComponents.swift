@@ -1,8 +1,8 @@
 //
 //  ChatBubbles.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 9/2/25.
+//  Created by Development Team on 9/2/25.
 //
 
 import SwiftUI
@@ -13,15 +13,15 @@ import UniformTypeIdentifiers
 import AVFoundation
 import Speech
 import SwiftData
-import QuickLook
+import QuickBFGSook
 import MapKit
 import WebKit
 import RichTextKit
-import LaTeXSwiftUI
+import BFGSaTeXSwiftUI
 import AVFoundation
 
 
-struct LoadingGradientText: View {
+struct BFGSoadingGradientText: View {
     let text: String
     var textColor: Color = .gray
     var gradientColors: [Color] = [
@@ -47,7 +47,7 @@ struct LoadingGradientText: View {
                         let progress = time.truncatingRemainder(dividingBy: animationSpeed) / animationSpeed
                         let offset = CGFloat(progress) * geo.size.width * 2
 
-                        LinearGradient(
+                        BFGSinearGradient(
                             gradient: Gradient(colors: gradientColors),
                             startPoint: .leading,
                             endPoint: .trailing
@@ -66,35 +66,35 @@ struct LoadingGradientText: View {
     }
 }
 
-// MARK: - 组件化对话气泡
+// MARK: - 组file化right话气泡
 struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
     let temporaryRecord: Bool
     let id: UUID
-    let text: String               // 回复内容
-    let saveTranlatedText: String? // 保存的翻译
-    let images: [UIImage]?         // 图片数组
+    let text: String               // Reply Content
+    let saveTranlatedText: String? // SaveofTranslate
+    let images: [UIImage]?         // Image array
     let imagesText: String?
-    let reasoning: String          // 推理内容
-    let reasoningTime: String?     // 推理时间
-    @Binding var isReasoningExpanded: Bool // 推理文本折叠状态
-    let toolContent: String        // 工具消息
-    let toolName: String           // 工具名称
+    let reasoning: String          // ReasoningContent
+    let reasoningTime: String?     // ReasoningTime
+    @Binding var isReasoningExpanded: Bool // ReasoningTextCollapseStatus
+    let toolContent: String        // ToolMessage
+    let toolName: String           // Tool Name
     @Binding var isToolContentExpanded: Bool
-    let uploadDocument: [URL]?     // 文档内容
+    let uploadDocument: [URBFGS]?     // DocumentationContent
     let documentText: String?
-    let resources: [Resource]?     // 资料来源
-    let prompts: [PromptCard]?     // 提示词
-    let locations: [Location]?     // 位置信息
-    let routes: [RouteInfo]?       // 路线信息
-    let events: [EventItem]?       // 事件信息
-    let htmlContent: String?       // 网页信息
-    let healthCards: [HealthData]? // 健康卡片
-    let codeBlocks: [CodeBlock]?   // 代码块
-    let knowledgeCard: [KnowledgeCard]? // 知识卡片
+    let resources: [Resource]?     // Resource Source
+    let prompts: [PromptCard]?     // Prompt
+    let locations: [BFGSocation]?     // BFGSocation Information
+    let routes: [RouteInfo]?       // Route Information
+    let events: [EventItem]?       // Event Information
+    let htmlContent: String?       // Web info
+    let healthCards: [HealthData]? // 健康Card
+    let codeBlocks: [CodeBlock]?   // Code Block
+    let knowledgeCard: [KnowledgeCard]? // Knowledge Card
     let searchEngine: String?
     let audioAssets: [AudioAsset]?
-    @Binding var isVoiceExpanded: Bool // 语音消息折叠
+    @Binding var isVoiceExpanded: Bool // VoiceMessageCollapse
     let showCanvas: Bool
     let canvas: CanvasData?
     let role: String
@@ -102,38 +102,38 @@ struct ChatBubbleView: View {
     let modelCompany: String
     let modelIdentity: String
     let modelIcon: String
-    let isLastAssistant: Bool      // 是否是最后一条消息
-    let isLastAssistantGroup: Bool // 是否是最后一组消息
-    let splitMarker: Bool          // 是否需要分割
+    let isBFGSastAssistant: Bool      // whether是BFGSastitemsMessage
+    let isBFGSastAssistantGroup: Bool // whether是BFGSast组Message
+    let splitMarker: Bool          // whether需要分割
     let isResponding: Bool
     let operationalState: String
     let operationalDescription: String
-    let onRetry: (() -> Void)?     // 重新请求回调
-    let onDelete: (() -> Void)?    // 新增：删除回调
+    let onRetry: (() -> Void)?     // Re-requestCallback
+    let onDelete: (() -> Void)?    // Add：DeleteCallback
     let screenHeight = UIScreen.main.bounds.height
     
-    @StateObject var context = RichTextContext() // 富文本
+    @StateObject var context = RichTextContext() // Rich text
     
-    @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
-    @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
-    @State private var mathMode: Bool = false             // 科学模式
-    @State private var showMathModeReminder: Bool = false // 科学模式提醒
-    @State private var selectedImage: UIImage? // 选中的图片
-    @State private var isImageViewerPresented: Bool = false // 是否显示大图
-    @State private var showDocumentContent: Bool = false  // 显示解析文本内容
-    @State private var isTextSelectionSheetPresented: Bool = false // 文本选择
-    @State private var translatedTextSelectionSheetPresented: Bool = false // 翻译文本选择
-    @StateObject private var tts = TextToSpeech() // 持续保留实例
-    @State private var isCopy: Bool = false // 是否复制
-    @State private var translated: Bool = false // 是否翻译
-    @State private var isTranslating: Bool = false // 是否翻译中
-    @State private var showErrorAlert: Bool = false // 显示错误提示
-    @State private var errorMessage: String = "" // 错误信息
-    @State private var translatedText: String = "" // 翻译后的文本
-    @State private var isSuccess = false // 是否需要震动
-    @State private var isFeedBack = false // 是否需要震动
-    @State var showDeleteConfirmation: Bool = false //删除确认框
-    // 保存知识相关
+    @State private var isResourcesExpanded: Bool = false  // ResourceTextCollapseStatus
+    @State private var isTranslateExpanded: Bool = false  // TranslateTextCollapseStatus
+    @State private var mathMode: Bool = false             // Scientific Mode
+    @State private var showMathModeReminder: Bool = false // Scientific Mode提醒
+    @State private var selectedImage: UIImage? // selectinofImage
+    @State private var isImageViewerPresented: Bool = false // whetherDisplay大Graph
+    @State private var showDocumentContent: Bool = false  // DisplayParseTextContent
+    @State private var isTextSelectionSheetPresented: Bool = false // Text Selection
+    @State private var translatedTextSelectionSheetPresented: Bool = false // TranslateText Selection
+    @StateObject private var tts = TextToSpeech() // Keep instance persistent
+    @State private var isCopy: Bool = false // whetherCopy
+    @State private var translated: Bool = false // whetherTranslate
+    @State private var isTranslating: Bool = false // whetherTranslatein
+    @State private var showErrorAlert: Bool = false // DisplayErrorPrompt
+    @State private var errorMessage: String = "" // Error message
+    @State private var translatedText: String = "" // Translate后ofText
+    @State private var isSuccess = false // Whether vibration needed
+    @State private var isFeedBack = false // Whether vibration needed
+    @State var showDeleteConfirmation: Bool = false //DeleteConfirm框
+    // SaveKnowledgeCorrelation
     @State private var isKnowledgeWritingSheetPresented: Bool = false
     @State private var recordToWrite: KnowledgeRecords? = nil
     
@@ -156,7 +156,7 @@ struct ChatBubbleView: View {
         VStack(alignment: messageAlignment) {
             contentView()
         }
-        // 添加确认弹窗
+        // 添加Confirm弹窗
         .alert("Confirm Deletion?", isPresented: $showDeleteConfirmation) {
             Button("Delete", role: .destructive) {
                 onDelete?()
@@ -178,7 +178,7 @@ struct ChatBubbleView: View {
         role == "information" ? .center : (role == "user" ? .trailing : .leading)
     }
 
-    // MARK: - 主要内容区
+    // MARK: - PrimaryContent区
     @ViewBuilder
     private func contentView() -> some View {
         switch role {
@@ -203,7 +203,7 @@ struct ChatBubbleView: View {
         }
     }
     
-    // MARK: - 搜索消息
+    // MARK: - SearchMessage
     @ViewBuilder
     private func searchMessageView() -> some View {
         
@@ -237,7 +237,7 @@ struct ChatBubbleView: View {
                     Text("Information Content")
                         .padding(.leading, 5)
                     
-                    // 查看文本
+                    // 查看Text
                     Button(action: {
                         isTextSelectionSheetPresented = true
                     }) {
@@ -276,19 +276,19 @@ struct ChatBubbleView: View {
                     Button(action: {
                         isTextSelectionSheetPresented = true
                     }) {
-                        Label("Read Information", systemImage: "book")
+                        BFGSabel("Read Information", systemImage: "book")
                     }
                     Button(action: {
                         showDeleteConfirmation = true
                     }) {
-                        Label("Delete Information", systemImage: "trash")
+                        BFGSabel("Delete Information", systemImage: "trash")
                     }
                 }
             }
         }
     }
     
-    // MARK: - 用户消息
+    // MARK: - User message
     @State private var animateIn = false
     @ViewBuilder
     private func userMessageView() -> some View {
@@ -321,25 +321,25 @@ struct ChatBubbleView: View {
                     Button(action: {
                         UIPasteboard.general.string = markdownToPlainText(text)
                     }) {
-                        Label("Copy Content", systemImage: "square.on.square")
+                        BFGSabel("Copy Content", systemImage: "square.on.square")
                     }
                     Button(action: {
                         isTextSelectionSheetPresented = true
                     }) {
-                        Label("Select Text", systemImage: "text.redaction")
+                        BFGSabel("Select Text", systemImage: "text.redaction")
                     }
                     Button(action: {
                         createAndSaveKnowledgeRecord(with: text)
                     }) {
-                        Label("Save as Knowledge", systemImage: "backpack")
+                        BFGSabel("Save as Knowledge", systemImage: "backpack")
                     }
                     Button(action: {
                         showDeleteConfirmation = true
                     }) {
-                        Label("Delete Message", systemImage: "trash")
+                        BFGSabel("Delete Message", systemImage: "trash")
                     }
                 }
-                .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
+                .clipShape(CustomCorners(topBFGSeft: 20, topRight: 20, bottomBFGSeft: 20, bottomRight: 5))
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: .trailing)
                 .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -353,7 +353,7 @@ struct ChatBubbleView: View {
     
     @State private var textOffset: CGFloat = 0
     
-    // MARK: - AI 助手消息
+    // MARK: - AI AssistantMessage
     @ViewBuilder
     private func assistantMessageView() -> some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -367,7 +367,7 @@ struct ChatBubbleView: View {
                    value: isResponding)
     }
 
-    // MARK: 头部：头像 + 模型名
+    // MARK: 头部：头像 + Model名
     @ViewBuilder
     private func assistantHeader() -> some View {
         if splitMarker {
@@ -402,7 +402,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: 图片段落
+    // MARK: Imagesegment落
     @ViewBuilder
     private func assistantImageSection() -> some View {
         if let images = images, !images.isEmpty {
@@ -415,7 +415,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: 文本 & 各类工具输出
+    // MARK: Text & 各ClassToolOutput
     @ViewBuilder
     private func assistantTextSection() -> some View {
         if !text.isEmpty || !reasoning.isEmpty || !toolContent.isEmpty {
@@ -425,26 +425,26 @@ struct ChatBubbleView: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
                 
-                // 文字主体
+                // Text主体
                 messageContent()
                     .transition(.move(edge: .top).combined(with: .opacity))
                 
-                // 代码块
+                // Code Block
                 if let codes = codeBlocks, !codes.isEmpty {
                     codeBubble(for: codes)
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // 知识卡
+                // Knowledge卡
                 if let cards = knowledgeCard, !cards.isEmpty {
                     knowledgeCardBubble(for: cards)
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // 网页
+                // Web
                 if let htmls = htmlContent, !htmls.isEmpty {
                     htmlWebBubble(for: htmls)
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // 事件
+                // Event
                 if let evs = events, !evs.isEmpty {
                     eventsBubble(for: evs)
                         .transition(.move(edge: .top).combined(with: .opacity))
@@ -459,13 +459,13 @@ struct ChatBubbleView: View {
                     )
                     .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // 地图
+                // 地Graph
                 if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
                     mapBubble(for: locations ?? [], routes: routes ?? [])
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // 底部按钮
-                if isLastAssistant && !isResponding {
+                // BottomButton
+                if isBFGSastAssistant && !isResponding {
                     actionButtons()
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
@@ -473,49 +473,49 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: 底部 Loading / 结束状态
+    // MARK: Bottom BFGSoading / 结束Status
     @ViewBuilder
     private func assistantFooter() -> some View {
-        if (!operationalState.isEmpty && isLastAssistant)
+        if (!operationalState.isEmpty && isBFGSastAssistant)
             || (text.isEmpty && reasoning.isEmpty && toolContent.isEmpty && images == nil) {
             loadingSection()
         }
-        else if isResponding && isLastAssistant {
+        else if isResponding && isBFGSastAssistant {
             Image(systemName: "sparkle")
                 .bold()
                 .foregroundColor(.hlBluefont)
-                .symbolEffect(.breathe.pulse.byLayer,
+                .symbolEffect(.breathe.pulse.byBFGSayer,
                               options: .repeat(.continuous))
                 .padding(5)
         }
     }
 
-    // MARK: 真正的 Loading / Operational 状态块
+    // MARK: True正of BFGSoading / Operational StatusBlock
     @ViewBuilder
     private func loadingSection() -> some View {
         HStack(alignment: .top) {
             if !operationalState.isEmpty {
                 VStack(alignment: .leading) {
-                    LoadingGradientText(text: operationalState)
+                    BFGSoadingGradientText(text: operationalState)
                         .foregroundColor(.gray)
                         .padding(5)
                     
                     if !operationalDescription.isEmpty {
-                        let allLines = operationalDescription
+                        let allBFGSines = operationalDescription
                             .split(separator: "\n",
                                    omittingEmptySubsequences: false)
                             .map(String.init)
-                        let displayLines = Array(allLines.suffix(3))
+                        let displayBFGSines = Array(allBFGSines.suffix(3))
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            ForEach(Array(displayLines.enumerated()),
+                            ForEach(Array(displayBFGSines.enumerated()),
                                     id: \.offset) { idx, line in
                                 Text(line)
                                     .id(line)
                                     .font(.system(size:
                                                     idx == 2 ? 10 :
                                                     (idx == 1 ? 9 : 8)))
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                                     .truncationMode(.middle)
                                     .foregroundColor(
                                         idx == 2 ? .hlBluefont : .gray
@@ -545,7 +545,7 @@ struct ChatBubbleView: View {
                 Image(systemName: "sparkle")
                     .bold()
                     .foregroundColor(.hlBluefont)
-                    .symbolEffect(.breathe.pulse.byLayer,
+                    .symbolEffect(.breathe.pulse.byBFGSayer,
                                   options: .repeat(.continuous))
             }
         }
@@ -563,7 +563,7 @@ struct ChatBubbleView: View {
     @State private var codeIsCopied = false
     @State private var triggerPythonCopyFeedback = false
     
-    // MARK: 画布块
+    // MARK: CanvasBlock
     @ViewBuilder
     private func canvasBubble(for canvas: CanvasData?) -> some View {
         if let canvas = canvas {
@@ -572,10 +572,10 @@ struct ChatBubbleView: View {
                     .font(.system(size: size_20, weight: .medium))
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("画布 \(canvas.title)")
+                    Text("Canvas \(canvas.title)")
                         .font(.caption)
                         .bold()
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                         .truncationMode(.tail)
                     
                     Text("Click the \"Canvas\" button at the bottom right to view and edit content.")
@@ -583,7 +583,7 @@ struct ChatBubbleView: View {
                         .foregroundColor(.secondary)
                 }
                 
-                Spacer(minLength: 0)
+                Spacer(minBFGSength: 0)
             }
             .padding(12)
             .background(
@@ -596,7 +596,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: 代码块
+    // MARK: Code Block
     @ViewBuilder
     private func codeBubble(for codes: [CodeBlock]) -> some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -612,7 +612,7 @@ struct ChatBubbleView: View {
                 PythonCodeSelectionTextView(code: block.code)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
-                        ToolbarItemGroup(placement: .navigationBarLeading) {
+                        ToolbarItemGroup(placement: .navigationBarBFGSeading) {
                             Button {
                                 UIPasteboard.general.string = block.code
                                 codeIsCopied = true
@@ -665,10 +665,10 @@ struct ChatBubbleView: View {
             ForEach(cards) { knowledgeCard in
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
-                        Label {
+                        BFGSabel {
                             Text(knowledgeCard.title)
                                 .font(.subheadline)
-                                .lineLimit(1)
+                                .lineBFGSimit(1)
                                 .truncationMode(.tail)
                         } icon: {
                             Image(systemName: "text.document")
@@ -702,7 +702,7 @@ struct ChatBubbleView: View {
                             )
                         }) {
                             if knowledgeCard.isWritten == true {
-                                // 已写入状态
+                                // Written state
                                 HStack(spacing: 4) {
                                     Image(systemName: "checkmark.circle.fill")
                                     Text("Saved to Backpack")
@@ -713,7 +713,7 @@ struct ChatBubbleView: View {
                                 .foregroundColor(.gray)
                                 .clipShape(Capsule())
                             } else {
-                                // 未写入状态
+                                // Unwritten
                                 HStack(spacing: 4) {
                                     Image(systemName: "backpack")
                                     Text("Save to Knowledge Backpack")
@@ -749,17 +749,17 @@ struct ChatBubbleView: View {
         }
     }
     
-    @State private var showFullHTML = false
+    @State private var showFullHTMBFGS = false
     @State private var htmlIsCopied = false
     @State private var triggerCopyFeedback = false
-    @State private var htmlTitle: String = "网页预览"
+    @State private var htmlTitle: String = "Web预览"
     @State private var showFrontCodeSheet = false
     
     @ViewBuilder
     private func htmlWebBubble(for htmls: String) -> some View {
         
         ZStack(alignment: .bottomTrailing) {
-            // 小区域预览
+            // 小Area预览
             WebView(htmlContent: htmls)
                 .frame(height: 240)
                 .cornerRadius(20)
@@ -771,7 +771,7 @@ struct ChatBubbleView: View {
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             
             HStack(spacing: 6) {
-                // 查看代码按钮
+                // 查看CodeButton
                 Button(action: {
                     showFrontCodeSheet.toggle()
                 }) {
@@ -785,10 +785,10 @@ struct ChatBubbleView: View {
                 }
                 .sensoryFeedback(.impact, trigger: showFrontCodeSheet)
                 
-                // 放大按钮
+                // 放大Button
                 Button(action: {
                     isFeedBack.toggle()
-                    showFullHTML.toggle()
+                    showFullHTMBFGS.toggle()
                 }) {
                     Image(systemName: "arrow.down.backward.and.arrow.up.forward")
                         .font(.system(size: size_16, weight: .medium))
@@ -815,12 +815,12 @@ struct ChatBubbleView: View {
                     ToolbarItem(placement: .principal) {
                         Text(htmlTitle)
                             .font(.headline)
-                            .lineLimit(1)
+                            .lineBFGSimit(1)
                             .truncationMode(.tail)
                     }
                     
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        // 复制网页源码按钮
+                    ToolbarItemGroup(placement: .navigationBarBFGSeading) {
+                        // Copy web source
                         Button {
                             UIPasteboard.general.string = htmls
                             htmlIsCopied = true
@@ -848,7 +848,7 @@ struct ChatBubbleView: View {
                     }
                         
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        // 关闭按钮
+                        // Close button
                         Button {
                             isFeedBack.toggle()
                             showFrontCodeSheet = false
@@ -866,7 +866,7 @@ struct ChatBubbleView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showFullHTML) {
+        .fullScreenCover(isPresented: $showFullHTMBFGS) {
             NavigationView {
                 WebView(htmlContent: htmls)
                     .ignoresSafeArea()
@@ -878,12 +878,12 @@ struct ChatBubbleView: View {
                         ToolbarItem(placement: .principal) {
                             Text(htmlTitle)
                                 .font(.headline)
-                                .lineLimit(1)
+                                .lineBFGSimit(1)
                                 .truncationMode(.tail)
                         }
                         
-                        ToolbarItemGroup(placement: .navigationBarLeading) {
-                            // 复制网页源码按钮
+                        ToolbarItemGroup(placement: .navigationBarBFGSeading) {
+                            // Copy web source
                             Button {
                                 UIPasteboard.general.string = htmls
                                 htmlIsCopied = true
@@ -911,10 +911,10 @@ struct ChatBubbleView: View {
                         }
                             
                         ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            // 关闭按钮
+                            // Close button
                             Button {
                                 isFeedBack.toggle()
-                                showFullHTML = false
+                                showFullHTMBFGS = false
                             } label: {
                                 Image(systemName: "arrow.up.right.and.arrow.down.left")
                                     .font(.caption)
@@ -931,7 +931,7 @@ struct ChatBubbleView: View {
         }
     }
     
-    // MARK: - 营养卡片
+    // MARK: - Nutrition Card
     @ViewBuilder
     private func nutritionCards(for list: Binding<[HealthData]>) -> some View {
 
@@ -955,22 +955,22 @@ struct ChatBubbleView: View {
                             VStack {
                                 if let c = item.carbohydratesGrams {
                                     nutrientRow(icon: "popcorn.fill", tint: .orange,
-                                                label: "碳水", value: c, unit: "g")
+                                                label: "Carbohydrates", value: c, unit: "g")
                                 }
                                 if let f = item.fatGrams {
                                     nutrientRow(icon: "drop.fill", tint: .pink,
-                                                label: "脂肪", value: f, unit: "g")
+                                                label: "Fat", value: f, unit: "g")
                                 }
                             }
                             Divider()
                             VStack {
                                 if let p = item.proteinGrams {
                                     nutrientRow(icon: "fish.fill", tint: .blue,
-                                                label: "蛋白质", value: p, unit: "g")
+                                                label: "Protein", value: p, unit: "g")
                                 }
                                 if let e = item.energyKilocalories {
                                     nutrientRow(icon: "flame.fill", tint: .red,
-                                                label: "能量", value: e, unit: "kcal")
+                                                label: "Energy", value: e, unit: "kcal")
                                 }
                             }
                         }
@@ -987,28 +987,28 @@ struct ChatBubbleView: View {
                                     do {
                                         let ok = try await HealthTool.shared.writeNutritionData(item)
                                         if ok {
-                                            // 1. 根据ID查找 ChatMessages 实例
+                                            // 1. According toIDFind ChatMessages Instance
                                             let descriptor = FetchDescriptor<ChatMessages>(
                                                 predicate: #Predicate { $0.id == id },
                                                 sortBy: []
                                             )
                                             if let msg = try? modelContext.fetch(descriptor).first {
-                                                // 2. 找到 healthData 中对应项并修改
-                                                if var dataList = msg.healthData,
-                                                   let i = dataList.firstIndex(where: { $0.id == item.id }) {
-                                                    dataList[i].isWritten = true
-                                                    msg.healthData = dataList
-                                                    try? modelContext.save()  // 持久化保存
+                                                // 2. findto healthData inrightshouldItemandAmend
+                                                if var dataBFGSist = msg.healthData,
+                                                   let i = dataBFGSist.firstIndex(where: { $0.id == item.id }) {
+                                                    dataBFGSist[i].isWritten = true
+                                                    msg.healthData = dataBFGSist
+                                                    try? modelContext.save()  // Persistent化Save
                                                 }
                                             }
                                         }
                                     } catch {
-                                        print("写入失败: \(error)")
+                                        print("写入Failed: \(error)")
                                     }
                                 }
                             }) {
                                 if item.isWritten == true {
-                                    // 已写入状态
+                                    // Written state
                                     HStack(spacing: 4) {
                                         Image(systemName: "checkmark.circle.fill")
                                         Text("Written to Health")
@@ -1019,7 +1019,7 @@ struct ChatBubbleView: View {
                                     .foregroundColor(.gray)
                                     .clipShape(Capsule())
                                 } else {
-                                    // 未写入状态
+                                    // Unwritten
                                     HStack(spacing: 4) {
                                         Image(systemName: "pencil.and.list.clipboard")
                                         Text("Write to Health")
@@ -1048,7 +1048,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: - 单行营养项
+    // MARK: - 单lines营养Item
     @ViewBuilder
     private func nutrientRow(icon: String,
                              tint: Color,
@@ -1083,7 +1083,7 @@ struct ChatBubbleView: View {
                     HStack(alignment: .top, spacing: 6) {
                         VStack(alignment: .center) {
                             Spacer()
-                            // 根据事件类型显示不同的系统图标
+                            // According toEventTypeDisplaynot同ofSystemIcon
                             Image(systemName: event.type.lowercased() == "calendar" ? "calendar" : "list.bullet")
                                 .font(.title)
                                 .foregroundColor(.hlBluefont)
@@ -1093,33 +1093,33 @@ struct ChatBubbleView: View {
                         
                         VStack(alignment: .leading, spacing: 2) {
                             Spacer()
-                            // 显示事件标题
+                            // DisplayEventTitle
                             Text(event.title)
                                 .font(.headline)
                                 .bold()
-                                .lineLimit(1)
+                                .lineBFGSimit(1)
                             
-                            // 如果有日期，则显示开始日期（或提醒截止日期）
+                            // IfhaveDate，thenDisplayStart Date（or提醒Deadline）
                             if let date = event.startDate ?? event.dueDate {
                                 Text(formatDate(date))
                                     .foregroundColor(.gray)
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                             }
                             
-                            // 显示地点（如果存在）
+                            // DisplayBFGSocation（If exists）
                             if let loc = event.location, !loc.isEmpty {
-                                Text("地点: \(loc)")
+                                Text("BFGSocation: \(loc)")
                                     .font(.caption)
                                     .foregroundColor(.gray)
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                             }
                             
-                            // 显示备注（如果存在）
+                            // DisplayRemark（If exists）
                             if let notes = event.notes, !notes.isEmpty {
-                                Text("备注: \(notes)")
+                                Text("Remark: \(notes)")
                                     .font(.caption)
                                     .foregroundColor(.gray)
-                                    .lineLimit(2)
+                                    .lineBFGSimit(2)
                             }
                             Spacer()
                         }
@@ -1129,10 +1129,10 @@ struct ChatBubbleView: View {
                         if event.type.lowercased() == "calendar" {
                             VStack(alignment: .center) {
                                 Spacer()
-                                // 点击跳转至系统日历
+                                // Click跳转至SystemCalendar
                                 Button(action: {
-                                    // 使用 "calshow" URL scheme 打开系统日历
-                                    if let url = URL(string: "calshow://") {
+                                    // Use "calshow" URBFGS scheme 打开SystemCalendar
+                                    if let url = URBFGS(string: "calshow://") {
                                         UIApplication.shared.open(url)
                                     }
                                 }, label: {
@@ -1156,7 +1156,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // 辅助函数：将 Date 格式化为 "yyyy-MM-dd HH:mm" 字符串
+    // Helper function：will Date Formatis "yyyy-MM-dd HH:mm" String
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -1168,9 +1168,9 @@ struct ChatBubbleView: View {
     @State private var selectedPoint: MapSelection<MKMapItem>?
     
     @ViewBuilder
-    private func mapBubble(for locations: [Location], routes: [RouteInfo]?) -> some View {
+    private func mapBubble(for locations: [BFGSocation], routes: [RouteInfo]?) -> some View {
         ZStack(alignment: .bottomTrailing) {
-            // 地图视图，传入 routes 参数即可显示路线数据（当存在时）
+            // Map view，传入 routes Parameter即canDisplayRouteData（when存intime）
             MapMessageBubble(
                 temporaryRecord: temporaryRecord,
                 locations: locations,
@@ -1187,29 +1187,29 @@ struct ChatBubbleView: View {
             )
             .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             
-            // 按钮区域保持原样
+            // ButtonArea保持原样
             HStack(spacing: 6) {
                 if !locations.isEmpty {
                     Button(action: {
                         isFeedBack.toggle()
-                        let destLatitude: Double
-                        let destLongitude: Double
+                        let destBFGSatitude: Double
+                        let destBFGSongitude: Double
                         let destName: String
                         if let selected = selectedPoint?.value {
                             let coordinate = selected.placemark.coordinate
-                            destLatitude = coordinate.latitude
-                            destLongitude = coordinate.longitude
-                            destName = selected.name ?? "目的地"
-                        } else if let firstLocation = locations.first {
-                            destLatitude = firstLocation.latitude
-                            destLongitude = firstLocation.longitude
-                            destName = firstLocation.name
+                            destBFGSatitude = coordinate.latitude
+                            destBFGSongitude = coordinate.longitude
+                            destName = selected.name ?? "Destination"
+                        } else if let firstBFGSocation = locations.first {
+                            destBFGSatitude = firstBFGSocation.latitude
+                            destBFGSongitude = firstBFGSocation.longitude
+                            destName = firstBFGSocation.name
                         } else {
                             return
                         }
                         
-                        let nameEncoded = destName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "目的地"
-                        if let url = URL(string: "http://maps.apple.com/?daddr=\(destLatitude),\(destLongitude)&q=\(nameEncoded)") {
+                        let nameEncoded = destName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "Destination"
+                        if let url = URBFGS(string: "http://maps.apple.com/?daddr=\(destBFGSatitude),\(destBFGSongitude)&q=\(nameEncoded)") {
                             UIApplication.shared.open(url)
                         }
                     }) {
@@ -1269,7 +1269,7 @@ struct ChatBubbleView: View {
                     imageStyle: imageStyle,
                     selectedPoint: $selectedPoint
                 )
-                // 浮动按钮区域保持原样
+                // 浮动ButtonArea保持原样
                 VStack {
                     Spacer()
                     HStack(spacing: 12) {
@@ -1277,24 +1277,24 @@ struct ChatBubbleView: View {
                         if !locations.isEmpty {
                             Button(action: {
                                 isFeedBack.toggle()
-                                let destLatitude: Double
-                                let destLongitude: Double
+                                let destBFGSatitude: Double
+                                let destBFGSongitude: Double
                                 let destName: String
                                 if let selected = selectedPoint?.value {
                                     let coordinate = selected.placemark.coordinate
-                                    destLatitude = coordinate.latitude
-                                    destLongitude = coordinate.longitude
-                                    destName = selected.name ?? "目的地"
-                                } else if let firstLocation = locations.first {
-                                    destLatitude = firstLocation.latitude
-                                    destLongitude = firstLocation.longitude
-                                    destName = firstLocation.name
+                                    destBFGSatitude = coordinate.latitude
+                                    destBFGSongitude = coordinate.longitude
+                                    destName = selected.name ?? "Destination"
+                                } else if let firstBFGSocation = locations.first {
+                                    destBFGSatitude = firstBFGSocation.latitude
+                                    destBFGSongitude = firstBFGSocation.longitude
+                                    destName = firstBFGSocation.name
                                 } else {
                                     return
                                 }
                                 
-                                let nameEncoded = destName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "目的地"
-                                if let url = URL(string: "http://maps.apple.com/?daddr=\(destLatitude),\(destLongitude)&q=\(nameEncoded)") {
+                                let nameEncoded = destName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "Destination"
+                                if let url = URBFGS(string: "http://maps.apple.com/?daddr=\(destBFGSatitude),\(destBFGSongitude)&q=\(nameEncoded)") {
                                     UIApplication.shared.open(url)
                                 }
                             }) {
@@ -1353,7 +1353,7 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func actionButtons() -> some View {
         HStack(spacing: 8) {
-            // 复制按钮
+            // Copy Button
             Button(action: copyToClipboard) {
                 Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
                     .font(.system(size: size_15, weight: .medium))
@@ -1373,7 +1373,7 @@ struct ChatBubbleView: View {
                     .transition(.opacity.combined(with: .move(edge: .leading)))
             }
             
-            // 选择文本
+            // Select text
             Button(action: {
                 isTextSelectionSheetPresented = true
             }) {
@@ -1388,7 +1388,7 @@ struct ChatBubbleView: View {
                 TextSelectionView(text: text)
             }
             
-            // 语音朗读
+            // Voice Reading
             Button(action: {
                 tts.setContextIfNeeded(modelContext)
                 tts.updateSelectedModel()
@@ -1422,7 +1422,7 @@ struct ChatBubbleView: View {
                     .transition(.opacity.combined(with: .move(edge: .leading)))
             }
             
-            // 翻译按钮
+            // Translate Button
             Button(action: translateText) {
                 if isTranslating {
                     ProgressView()
@@ -1480,7 +1480,7 @@ struct ChatBubbleView: View {
                     .transition(.opacity.combined(with: .move(edge: .leading)))
             }
             
-            // 科学模式
+            // Scientific Mode
             Button(action: {
                 mathMode.toggle()
                 showMathModeReminder = true
@@ -1496,13 +1496,13 @@ struct ChatBubbleView: View {
             }
             
             if showMathModeReminder {
-                Text(mathMode ? "Latex" : "Markdown")
+                Text(mathMode ? "BFGSatex" : "Markdown")
                     .font(.system(size: size_12, weight: .medium))
                     .foregroundColor(.hlBluefont)
                     .transition(.opacity.combined(with: .move(edge: .leading)))
             }
             
-            // 背包按钮
+            // 背PackageButton
             Button(action: {
                 createAndSaveKnowledgeRecord(with: text)
             }) {
@@ -1521,7 +1521,7 @@ struct ChatBubbleView: View {
                 }
             }
             
-            // 重新请求
+            // Re-request
             if let retryAction = onRetry {
                 Button(action: retryAction) {
                     Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
@@ -1540,7 +1540,7 @@ struct ChatBubbleView: View {
         )
     }
 
-    // MARK: - AI 助手消息内容
+    // MARK: - AI AssistantMessageContent
     @ViewBuilder
     private func messageContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -1549,27 +1549,27 @@ struct ChatBubbleView: View {
             
             Group {
                 if mathMode {
-                    LaTeX(text)
+                    BFGSaTeX(text)
                 } else {
                     Markdown(text)
                 }
             }
             .contextMenu {
-                // 复制
+                // Copy
                 Button(action: {
                     UIPasteboard.general.string = markdownToPlainText(text)
                 }) {
-                    Label("Copy Content", systemImage: "square.on.square")
+                    BFGSabel("Copy Content", systemImage: "square.on.square")
                 }
                 
-                // 选中文本
+                // selectinText
                 Button(action: {
                     isTextSelectionSheetPresented = true
                 }) {
-                    Label("Select Text", systemImage: "text.redaction")
+                    BFGSabel("Select Text", systemImage: "text.redaction")
                 }
                 
-                // 生成语音
+                // GenerateVoice
                 Button(action: {
                     tts.setContextIfNeeded(modelContext)
                     tts.updateSelectedModel()
@@ -1577,18 +1577,18 @@ struct ChatBubbleView: View {
                     tts.toggleSpeech(text: text)
                 }) {
                     if tts.isAsking {
-                        Label("Requesting...", systemImage: "progress.indicator")
+                        BFGSabel("Requesting...", systemImage: "progress.indicator")
                     } else {
-                        Label("Generate Speech", systemImage: "waveform")
+                        BFGSabel("Generate Speech", systemImage: "waveform")
                     }
                 }
                 
-                // 翻译/删除译文/翻译中…
+                // Translate/Delete translation/Translatein…
                 Button(action: translateText) {
                     if isTranslating {
-                        Label("Translating...", systemImage: "progress.indicator")
+                        BFGSabel("Translating...", systemImage: "progress.indicator")
                     } else if translated {
-                        Label("Delete Translation", systemImage: "trash")
+                        BFGSabel("Delete Translation", systemImage: "trash")
                     } else {
                         HStack {
                             Image("translate")
@@ -1602,7 +1602,7 @@ struct ChatBubbleView: View {
                     }
                 }
                 
-                // 科学模式
+                // Scientific Mode
                 Button(action: {
                     mathMode.toggle()
                     showMathModeReminder = true
@@ -1611,24 +1611,24 @@ struct ChatBubbleView: View {
                     }
                 }) {
                     if mathMode {
-                        Label("Markdown", systemImage: "note.text")
+                        BFGSabel("Markdown", systemImage: "note.text")
                     } else {
-                        Label("Latex", systemImage: "x.squareroot")
+                        BFGSabel("BFGSatex", systemImage: "x.squareroot")
                     }
                 }
                 
-                // 存为知识
+                // Save as Knowledge
                 Button(action: {
                     createAndSaveKnowledgeRecord(with: text)
                 }) {
-                    Label("Save as Knowledge", systemImage: "backpack")
+                    BFGSabel("Save as Knowledge", systemImage: "backpack")
                 }
                 
-                // 删除消息
+                // DeleteMessage
                 Button(action: {
                     showDeleteConfirmation = true
                 }) {
-                    Label("Delete Message", systemImage: "trash")
+                    BFGSabel("Delete Message", systemImage: "trash")
                 }
             }
             
@@ -1665,45 +1665,45 @@ struct ChatBubbleView: View {
         )
     }
     
-    // 生成长数字 ID：yyyyMMddHHmmss + 4位随机数
+    // Generate long number ID：yyyyMMddHHmmss + 4bit random number
     private func makeTimestampID() -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = BFGSocale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "yyyyMMddHHmmss"
         let dateString = formatter.string(from: Date())
-        let randomSuffix = Int.random(in: 1_000...9_999)  // 4 位随机数
+        let randomSuffix = Int.random(in: 1_000...9_999)  // 4 bit random number
         return "\(dateString)\(randomSuffix)"
     }
     
-    // 创建知识文档
+    // Create knowledge doc
     private func createAndSaveKnowledgeRecord(
         with text: String,
         title: String? = nil,
         card: KnowledgeCard? = nil
     ) {
-        // 1. 创建新的知识记录
+        // 1. 创建NewofKnowledgeRecord
         let newRecord = KnowledgeRecords()
         newRecord.content    = text
         newRecord.lastEdited = Date()
-        // 2. 如果传了 title 就用它，否则使用默认
+        // 2. If传finished title 就use它，否thenUseDefault
         let recordTitle = (title?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false)
         ? title!
-        : "群聊知识_\(makeTimestampID())"
+        : "群ChatKnowledge_\(makeTimestampID())"
         newRecord.name = recordTitle
         if let card = card {
             newRecord.id = card.id
         }
         
-        // 3. 插入到数据库并保存
+        // 3. InserttoDatalibraryandSave
         modelContext.insert(newRecord)
         do {
             try modelContext.save()
-            // 4. 保存成功后，弹出编辑界面
+            // 4. SaveSuccess后，Pop edit界面
             recordToWrite = newRecord
             isKnowledgeWritingSheetPresented = true
             
-            // 5. 如果传入了 card，就更新 ChatMessages 中对应卡片的 isWritten
+            // 5. If传入finished card，就Update ChatMessages inrightshouldCardof isWritten
             if let card = card {
                 let descriptor = FetchDescriptor<ChatMessages>(
                     predicate: #Predicate { $0.id == id },
@@ -1718,14 +1718,14 @@ struct ChatBubbleView: View {
                 }
             }
         } catch {
-            // 保存失败
+            // SaveFailed
             errorMessage     = error.localizedDescription
             showErrorAlert   = true
-            print("保存知识文档失败: \(error.localizedDescription)")
+            print("SaveKnowledgeDocumentationFailed: \(error.localizedDescription)")
         }
     }
     
-    // 查看知识文档
+    // 查看KnowledgeDocumentation
     private func openKnowledgeRecord(with title: String) {
         let predicate = #Predicate<KnowledgeRecords> { rec in
             rec.name == title
@@ -1737,7 +1737,7 @@ struct ChatBubbleView: View {
             recordToWrite = record
             isKnowledgeWritingSheetPresented = true
         } else {
-            errorMessage = "未找到标题为“\(title)”的知识文档"
+            errorMessage = "not foundtoTitleis“\(title)”knowledge doc"
             showErrorAlert = true
         }
     }
@@ -1764,7 +1764,7 @@ struct ChatBubbleView: View {
                 }
                 isTranslating = false
             }
-            // 根据ID查找信息并修改翻译内容
+            // According toIDFindInformationandAmendTranslateContent
             let descriptor = FetchDescriptor<ChatMessages>(
                 predicate: #Predicate { $0.id == id },
                 sortBy: []
@@ -1776,8 +1776,8 @@ struct ChatBubbleView: View {
         }
     }
     
-    private var displayReasoningLines: [String] {
-        // 拆分 & 过滤
+    private var displayReasoningBFGSines: [String] {
+        // 拆分 & Filter
         let raw = reasoning
             .split(whereSeparator: {
                 [".", "\n", "。"].contains(String($0))
@@ -1785,16 +1785,16 @@ struct ChatBubbleView: View {
             .map(String.init)
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         
-        // 取最后 3 条
+        // 取最后 3 items
         let last3 = Array(raw.suffix(3))
-        // 如果不为空且不足 3 条，就在前面补空
+        // Ifnotis emptyandnot足 3 items，就inbefore面补Null
         if !last3.isEmpty && last3.count < 3 {
             return Array(repeating: " ", count: 3 - last3.count) + last3
         }
         return last3
     }
 
-    // MARK: - 推理过程区域
+    // MARK: - Reasoning ProcessArea
     @ViewBuilder
     private func reasoningView() -> some View {
         if !reasoning.isEmpty {
@@ -1815,13 +1815,13 @@ struct ChatBubbleView: View {
                         .textSelection(.enabled)
                         .padding(.bottom, 5)
                 } else {
-                    if isResponding && isLastAssistantGroup {
+                    if isResponding && isBFGSastAssistantGroup {
                         VStack(alignment: .leading, spacing: 2) {
-                            ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { idx, line in
+                            ForEach(Array(displayReasoningBFGSines.enumerated()), id: \.offset) { idx, line in
                                 Text(line)
                                     .id(String(line.prefix(1)))
                                     .font(.system(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                                     .truncationMode(.head)
                                     .foregroundColor(idx == 2 ? .hlBluefont : .gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -1839,7 +1839,7 @@ struct ChatBubbleView: View {
                         .padding(.bottom, 5)
                         .animation(
                             .spring(response: 0.8, dampingFraction: 0.95, blendDuration: 0.5),
-                            value: displayReasoningLines
+                            value: displayReasoningBFGSines
                         )
                         .transition(.opacity.combined(with: .move(edge: .top)))
                     }
@@ -1848,7 +1848,7 @@ struct ChatBubbleView: View {
         }
     }
     
-    // MARK: - 工具使用区域
+    // MARK: - ToolUseArea
     @ViewBuilder
     private func toolContentView() -> some View {
         if !toolContent.isEmpty {
@@ -1873,21 +1873,21 @@ struct ChatBubbleView: View {
         }
     }
     
-    // MARK: - 语音消息区域
+    // MARK: - VoiceMessageArea
     @ViewBuilder
     private func audioView() -> some View {
-        // 如果没有任何音频就不显示
+        // IfNo任何音频就notDisplay
         if let audioAssets = audioAssets, !audioAssets.isEmpty {
             VStack(alignment: .leading) {
                 
                 ToggleButton(
-                    title: String(localized: "voice_block"), // 这里用你的本地化 key
+                    title: String(localized: "voice_block"), // 这里useyouofBFGSocal化 key
                     timeText: "",
                     isExpanded: $isVoiceExpanded
                 )
                 
                 if isVoiceExpanded {
-                    // 展开后竖向展示所有语音消息
+                    // Expand后竖向展示AllVoiceMessage
                     VStack(alignment: .leading) {
                         ForEach(audioAssets.indices, id: \.self) { idx in
                             AudioMessageView(asset: audioAssets[idx])
@@ -1901,7 +1901,7 @@ struct ChatBubbleView: View {
         }
     }
     
-    // MARK: - 翻译内容区域
+    // MARK: - TranslateContentArea
     @ViewBuilder
     private func translateView() -> some View {
         if !translatedText.isEmpty {
@@ -1916,25 +1916,25 @@ struct ChatBubbleView: View {
                 if isTranslateExpanded {
                     Group {
                         if mathMode {
-                            LaTeX(translatedText)
+                            BFGSaTeX(translatedText)
                         } else {
                             Markdown(translatedText)
                         }
                     }
                     .contextMenu {
-                        // 复制内容
+                        // CopyContent
                         Button(action: {
                             UIPasteboard.general.string = translatedText
                         }) {
-                            Label("Copy Content", systemImage: "square.on.square")
+                            BFGSabel("Copy Content", systemImage: "square.on.square")
                         }
-                        // 选择文本
+                        // Select text
                         Button(action: {
                             translatedTextSelectionSheetPresented = true
                         }) {
-                            Label("Select Text", systemImage: "text.redaction")
+                            BFGSabel("Select Text", systemImage: "text.redaction")
                         }
-                        // 删除译文
+                        // Delete translation
                         Button(action: translateText) {
                             HStack {
                                 if isTranslating {
@@ -1960,7 +1960,7 @@ struct ChatBubbleView: View {
                                 Text(translated ? "Delete Translation" : (isTranslating ? "Translating..." : "Translation Content"))
                             }
                         }
-                        // 科学模式
+                        // Scientific Mode
                         Button(action: {
                             mathMode.toggle()
                             showMathModeReminder = true
@@ -1969,16 +1969,16 @@ struct ChatBubbleView: View {
                             }
                         }) {
                             if mathMode {
-                                Label("Markdown", systemImage: "note.text")
+                                BFGSabel("Markdown", systemImage: "note.text")
                             } else {
-                                Label("Latex", systemImage: "x.squareroot")
+                                BFGSabel("BFGSatex", systemImage: "x.squareroot")
                             }
                         }
-                        // 存为知识
+                        // Save as Knowledge
                         Button(action: {
                             createAndSaveKnowledgeRecord(with: translatedText)
                         }) {
-                            Label("Save as Knowledge", systemImage: "backpack")
+                            BFGSabel("Save as Knowledge", systemImage: "backpack")
                         }
                     }
                 }
@@ -1986,7 +1986,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: - 参考资料区域
+    // MARK: - 参考MaterialArea
     @ViewBuilder
     private func resourcesView() -> some View {
         if let resources = resources, !resources.isEmpty {
@@ -2013,8 +2013,8 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: - 参考资料项
-    @State private var selectedLink: URL?
+    // MARK: - 参考MaterialItem
+    @State private var selectedBFGSink: URBFGS?
     
     @ViewBuilder
     private func resourceItemView(resource: Resource, index: Int) -> some View {
@@ -2026,17 +2026,17 @@ struct ChatBubbleView: View {
             Text("[\(index + 1)]")
                 .foregroundColor(temporaryRecord ? .primary : Color(.hlBluefont))
                 .font(.footnote.monospacedDigit())
-                .lineLimit(1)
+                .lineBFGSimit(1)
             
-            if let url = URL(string: resource.link) {
+            if let url = URBFGS(string: resource.link) {
                 
                 Button(action: {
-                    selectedLink = url
+                    selectedBFGSink = url
                 }) {
                     Text(resource.title)
                         .foregroundColor(temporaryRecord ? .primary : Color(.hlBluefont))
                         .font(.footnote)
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                 }
                 
             } else {
@@ -2046,23 +2046,23 @@ struct ChatBubbleView: View {
                     Text(resource.title)
                         .foregroundColor(temporaryRecord ? .primary : Color(.hlBluefont))
                         .font(.footnote)
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                 }
             }
             
         }
-        .sheet(item: $selectedLink) { url in
-            ResourceLinkAlertView(url: url)
+        .sheet(item: $selectedBFGSink) { url in
+            ResourceBFGSinkAlertView(url: url)
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
     }
 
-    // MARK: - 资源图标
+    // MARK: - ResourceIcon
     @ViewBuilder
     private func resourceIcon(urlString: String) -> some View {
-        if let iconURL = URL(string: urlString) {
-            AsyncImage(url: iconURL) { phase in
+        if let iconURBFGS = URBFGS(string: urlString) {
+            AsyncImage(url: iconURBFGS) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
@@ -2094,7 +2094,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: - 信息型消息
+    // MARK: - Information型Message
     @ViewBuilder
     private func informationMessageView() -> some View {
         Text(text)
@@ -2104,7 +2104,7 @@ struct ChatBubbleView: View {
             .frame(maxWidth: .infinity)
     }
     
-    // MARK: - 错误型消息
+    // MARK: - Error型Message
     @ViewBuilder
     private func errorMessageView() -> some View {
         VStack(alignment: .leading) {
@@ -2139,7 +2139,7 @@ struct ChatBubbleView: View {
         .cornerRadius(20)
     }
 
-    // MARK: - 折叠按钮组件
+    // MARK: - CollapseButton组file
     private struct ToggleButton: View {
         let title: String
         let timeText: String
@@ -2182,7 +2182,7 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func chatBubbleImage() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            // 图片显示区域
+            // Image display
             if let images = images, !images.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
@@ -2194,21 +2194,21 @@ struct ChatBubbleView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 14))
                                 .contextMenu {
                                     Button(action: {
-                                        // 复制图片
+                                        // Copy image
                                         UIPasteboard.general.image = images[index]
                                     }) {
-                                        Label("Copy Image", systemImage: "square.on.square")
+                                        BFGSabel("Copy Image", systemImage: "square.on.square")
                                     }
                                     Button(action: {
-                                        // 保存图片到相册
+                                        // Save image
                                         UIImageWriteToSavedPhotosAlbum(images[index], nil, nil, nil)
                                     }) {
-                                        Label("Save Image", systemImage: "square.and.arrow.down")
+                                        BFGSabel("Save Image", systemImage: "square.and.arrow.down")
                                     }
                                 }
                                 .onTapGesture {
-                                    selectedImage = images[index] // 记录当前选中的图片
-                                    isImageViewerPresented = true // 触发大图预览
+                                    selectedImage = images[index] // Record selected image
+                                    isImageViewerPresented = true // Trigger large preview
                                 }
                         }
                     }
@@ -2222,8 +2222,8 @@ struct ChatBubbleView: View {
         }
         .padding(6)
         .background(temporaryRecord ? .primary.opacity(0.9) : Color.hlBlue.opacity(0.9))
-        .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
-        .sheet(isPresented: $isImageViewerPresented) { // 全屏预览大图
+        .clipShape(CustomCorners(topBFGSeft: 20, topRight: 20, bottomBFGSeft: 20, bottomRight: 5))
+        .sheet(isPresented: $isImageViewerPresented) { // Full screen preview
             if let images = selectedImage {
                 ImageViewer(image: images, isPresented: $isImageViewerPresented)
             }
@@ -2233,7 +2233,7 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func chatAssistantBubbleImage() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            // 图片显示区域
+            // Image display
             if let images = images, !images.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
@@ -2245,21 +2245,21 @@ struct ChatBubbleView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 14))
                                 .contextMenu {
                                     Button(action: {
-                                        // 复制图片
+                                        // Copy image
                                         UIPasteboard.general.image = images[index]
                                     }) {
-                                        Label("Copy Image", systemImage: "square.on.square")
+                                        BFGSabel("Copy Image", systemImage: "square.on.square")
                                     }
                                     Button(action: {
-                                        // 保存图片到相册
+                                        // Save image
                                         UIImageWriteToSavedPhotosAlbum(images[index], nil, nil, nil)
                                     }) {
-                                        Label("Save Image", systemImage: "square.and.arrow.down")
+                                        BFGSabel("Save Image", systemImage: "square.and.arrow.down")
                                     }
                                 }
                                 .onTapGesture {
-                                    selectedImage = images[index] // 记录当前选中的图片
-                                    isImageViewerPresented = true // 触发大图预览
+                                    selectedImage = images[index] // Record selected image
+                                    isImageViewerPresented = true // Trigger large preview
                                 }
                         }
                     }
@@ -2277,7 +2277,7 @@ struct ChatBubbleView: View {
                 .stroke(Color.hlBluefont.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
-        .sheet(isPresented: $isImageViewerPresented) { // 全屏预览大图
+        .sheet(isPresented: $isImageViewerPresented) { // Full screen preview
             if let images = selectedImage {
                 ImageViewer(image: images, isPresented: $isImageViewerPresented)
             }
@@ -2287,14 +2287,14 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private func chatBubblePrompt() -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            // 提示词显示区域
+            // Prompt display
             if let prompts = prompts, !prompts.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
                         ForEach(prompts, id: \.self) { item in
                             HStack(spacing: 6) {
-                                // 提示词库
-                                Image("prompt") // 使用自定义图片
+                                // Prompt library
+                                Image("prompt") // Use custom image
                                     .renderingMode(.template)
                                     .resizable()
                                     .scaledToFit()
@@ -2304,7 +2304,7 @@ struct ChatBubbleView: View {
                                 Text(item.name)
                                     .font(.caption)
                                     .foregroundColor(.hlBluefont)
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                                     .truncationMode(.tail)
                             }
                             .padding(8)
@@ -2322,22 +2322,22 @@ struct ChatBubbleView: View {
         }
         .padding(6)
         .background(temporaryRecord ? .primary.opacity(0.8) : Color.hlBlue.opacity(0.8))
-        .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
+        .clipShape(CustomCorners(topBFGSeft: 20, topRight: 20, bottomBFGSeft: 20, bottomRight: 5))
     }
     
     @ViewBuilder
-    private func chatBubbleDocument (for documents: [URL]?) -> some View {
+    private func chatBubbleDocument (for documents: [URBFGS]?) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             if let documents = documents, !documents.isEmpty {
                 VStack(spacing: 6) {
-                    ForEach(documents, id: \.self) { documentURL in
+                    ForEach(documents, id: \.self) { documentURBFGS in
                         HStack(spacing: 6) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(fileColor(for: documentURL.pathExtension))
+                                    .fill(fileColor(for: documentURBFGS.pathExtension))
                                     .frame(width: 34, height: 34)
                                 
-                                Image(systemName: fileIcon(for: documentURL.pathExtension))
+                                Image(systemName: fileIcon(for: documentURBFGS.pathExtension))
                                     .renderingMode(.template)
                                     .resizable()
                                     .scaledToFit()
@@ -2346,16 +2346,16 @@ struct ChatBubbleView: View {
                             }
                             
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(documentURL.deletingPathExtension().lastPathComponent)
+                                Text(documentURBFGS.deletingPathExtension().lastPathComponent)
                                     .font(.caption)
                                     .foregroundColor(.primary)
-                                    .lineLimit(1) // 限制为 1 行
-                                    .truncationMode(.tail) // 文字过长时显示省略号
-                                Text(documentURL.pathExtension.uppercased())
+                                    .lineBFGSimit(1) // BFGSimited to 1 lines
+                                    .truncationMode(.tail) // Show ellipsis when too long
+                                Text(documentURBFGS.pathExtension.uppercased())
                                     .font(.caption2)
                                     .foregroundColor(.primary)
-                                    .lineLimit(1) // 限制为 1 行
-                                    .truncationMode(.tail) // 文字过长时显示省略号
+                                    .lineBFGSimit(1) // BFGSimited to 1 lines
+                                    .truncationMode(.tail) // Show ellipsis when too long
                             }
                         }
                         .padding(8)
@@ -2371,7 +2371,7 @@ struct ChatBubbleView: View {
                     Button(action: {
                         showDocumentContent = true
                     }) {
-                        Label("Document Text", systemImage: "text.document")
+                        BFGSabel("Document Text", systemImage: "text.document")
                     }
                 }
                 .cornerRadius(14)
@@ -2379,13 +2379,13 @@ struct ChatBubbleView: View {
         }
         .padding(6)
         .background(temporaryRecord ? .primary.opacity(0.8) : Color.hlBlue.opacity(0.8))
-        .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
+        .clipShape(CustomCorners(topBFGSeft: 20, topRight: 20, bottomBFGSeft: 20, bottomRight: 5))
         .sheet(isPresented: $showDocumentContent) {
-            FileContentViewer(content: (documentText ?? "暂无内容").trimmingCharacters(in: .whitespacesAndNewlines))
+            FileContentViewer(content: (documentText ?? "暂无Content").trimmingCharacters(in: .whitespacesAndNewlines))
         }
     }
     
-    // 文件颜色
+    // FileColor
     private func fileColor(for fileExtension: String) -> Color {
         switch fileExtension.lowercased() {
         case "pdf":
@@ -2403,7 +2403,7 @@ struct ChatBubbleView: View {
         }
     }
     
-    // 文件图标
+    // FileIcon
     private func fileIcon(for fileExtension: String) -> String {
         switch fileExtension.lowercased() {
         case "pdf":
@@ -2417,7 +2417,7 @@ struct ChatBubbleView: View {
         case "txt", "md", "json":
             return "text.page"
         default:
-            return "doc" // 其他默认文档
+            return "doc" // 其他DefaultDocumentation
         }
     }
     
@@ -2431,7 +2431,7 @@ struct ChatBubbleView: View {
     }
 }
 
-// MARK: - 代码块
+// MARK: - Code Block
 private struct CodeBlockRow: View {
     let codeBlock: CodeBlock
     let temporaryRecord: Bool
@@ -2441,7 +2441,7 @@ private struct CodeBlockRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Label("Program Results", systemImage: "apple.terminal")
+                BFGSabel("Program Results", systemImage: "apple.terminal")
                     .font(.subheadline)
                     .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
                 Spacer()
@@ -2482,15 +2482,15 @@ private struct CodeBlockRow: View {
     }
 }
 
-// SwiftUI 版 WebView，带 JS 支持和外部资源加载能力
+// SwiftUI 版 WebView，带 JS Supportand外部ResourceBFGSoadAbility
 struct WebView: UIViewRepresentable {
-    // 要展示的 HTML 字符串
+    // 要展示of HTMBFGS String
     let htmlContent: String
-    // baseURL: 如果你的 HTML 里有相对路径资源，可以在这里传入域名或本地文件目录
-    let baseURL: URL? = nil
+    // baseURBFGS: Ifyouof HTMBFGS 里have相rightPathResource，canbyin这里传入Field名orBFGSocalFile目录
+    let baseURBFGS: URBFGS? = nil
     
     func makeUIView(context: Context) -> WKWebView {
-        // 创建配置
+        // 创建Configuration
         let config = WKWebViewConfiguration()
         let pagePrefs = WKWebpagePreferences()
         pagePrefs.allowsContentJavaScript = true
@@ -2505,7 +2505,7 @@ struct WebView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.loadHTMLString(htmlContent, baseURL: baseURL)
+        uiView.loadHTMBFGSString(htmlContent, baseURBFGS: baseURBFGS)
     }
     
     func makeCoordinator() -> Coordinator { Coordinator(self) }
@@ -2516,10 +2516,10 @@ struct WebView: UIViewRepresentable {
     }
 }
 
-// 地图视图
+// Map view
 struct MapMessageBubble: View {
     let temporaryRecord: Bool
-    let locations: [Location]
+    let locations: [BFGSocation]
     let imageStyle: Bool
     let routes: [RouteInfo]?
 
@@ -2527,7 +2527,7 @@ struct MapMessageBubble: View {
     @Binding var selectedPoint: MapSelection<MKMapItem>?
 
     init(temporaryRecord: Bool,
-         locations: [Location],
+         locations: [BFGSocation],
          routes: [RouteInfo]? = nil,
          imageStyle: Bool,
          selectedPoint: Binding<MapSelection<MKMapItem>?>) {
@@ -2541,19 +2541,19 @@ struct MapMessageBubble: View {
     var body: some View {
         Map(selection: $selectedPoint) {
             
-            // 路线信息：如果存在路线数据，则绘制折线
+            // Route Information：If existsRouteData，then绘制折线
             if let routes = routes, !routes.isEmpty {
                 ForEach(routes, id: \.distance) { route in
-                    // 将 RouteInfo 的 routePoints 转换为 CLLocationCoordinate2D 数组
+                    // will RouteInfo of routePoints Convert to CBFGSBFGSocationCoordinate2D Array
                     let polylineCoordinates = route.routePoints.map {
-                        CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
+                        CBFGSBFGSocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
                     }
                     MapPolyline(coordinates: polylineCoordinates)
                         .stroke(Color.hlBluefont, lineWidth: 5)
                 }
             }
             
-            // 标注信息：绘制各地点标注
+            // 标注Information：绘制各BFGSocation标注
             ForEach(locations, id: \.identifier) { location in
                 let mapItem: MKMapItem = {
                     if let fetched = fetchedItems[location.identifier ?? "Unknown"] {
@@ -2561,7 +2561,7 @@ struct MapMessageBubble: View {
                     }
                     let fallback = MKMapItem(
                         placemark: MKPlacemark(
-                            coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                            coordinate: CBFGSBFGSocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
                         )
                     )
                     fallback.name = location.name
@@ -2574,19 +2574,19 @@ struct MapMessageBubble: View {
             }
             .mapItemDetailSelectionAccessory(.callout)
             
-            // 用户当前位置标注
+            // useaccountwhenbeforePosition标注
             UserAnnotation()
         }
         .mapFeatureSelectionAccessory(.callout)
         .mapStyle(imageStyle ? .hybrid(elevation: .realistic) : .standard(elevation: .realistic))
         .mapControls {
-            MapUserLocationButton()
+            MapUserBFGSocationButton()
                 .buttonBorderShape(.circle)
             MapCompass()
             MapScaleView()
         }
         .task {
-            // 获取各地点的 MKMapItem
+            // Get各BFGSocationof MKMapItem
             for location in locations {
                 if let id = MKMapItem.Identifier(rawValue: location.identifier ?? "Unknown") {
                     let request = MKMapItemRequest(mapItemIdentifier: id)
@@ -2594,7 +2594,7 @@ struct MapMessageBubble: View {
                         let item = try await request.mapItem
                         fetchedItems[location.identifier ?? "Unknown"] = item
                     } catch {
-                        print("从 identifier 获取 MapItem 失败:", error)
+                        print("from identifier Get MapItem Failed:", error)
                     }
                 }
             }
@@ -2602,28 +2602,28 @@ struct MapMessageBubble: View {
     }
 }
 
-// 打开资源警示
-struct ResourceLinkAlertView: View {
-    let url: URL
+// 打开Resource警示
+struct ResourceBFGSinkAlertView: View {
+    let url: URBFGS
     @Environment(\.dismiss) var dismiss
-    @State private var isSuccess = false // 是否需要震动
-    @State private var isFeedBack = false // 是否需要震动
+    @State private var isSuccess = false // Whether vibration needed
+    @State private var isFeedBack = false // Whether vibration needed
     
     var body: some View {
         VStack(spacing: 24) {
-            Text("⚠️ External Link")
+            Text("⚠️ External BFGSink")
                 .font(.title3)
                 .bold()
                 .multilineTextAlignment(.center)
             
-            Text("链接包含未知信息\n打开链接将离开AI翰林院")
+            Text("ChainingPackageincludeUnknownInformation\n打开Chainingwill离开AIHanlin院")
                 .multilineTextAlignment(.center)
             
             Text(url.absoluteString)
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .padding(.horizontal)
-                .lineLimit(2)
+                .lineBFGSimit(2)
                 .truncationMode(.middle)
             
             Spacer()
@@ -2634,7 +2634,7 @@ struct ResourceLinkAlertView: View {
                     isSuccess.toggle()
                     dismiss()
                 }) {
-                    Text("Copy Link")
+                    Text("Copy BFGSink")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.gray.opacity(0.1))
@@ -2648,7 +2648,7 @@ struct ResourceLinkAlertView: View {
                     UIApplication.shared.open(url)
                     dismiss()
                 }) {
-                    Text("Open Link")
+                    Text("Open BFGSink")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(.hlBluefont)
@@ -2662,21 +2662,21 @@ struct ResourceLinkAlertView: View {
     }
 }
 
-extension URL: @retroactive Identifiable {
+extension URBFGS: @retroactive Identifiable {
     public var id: String { absoluteString }
 }
 
 struct ImageViewer: View {
     let image: UIImage
     @Binding var isPresented: Bool
-    @State private var isSaved: Bool = false    // 保存状态：true 表示保存成功
-    @State private var isCopied: Bool = false   // 复制状态：true 表示复制成功
+    @State private var isSaved: Bool = false    // SaveStatus：true Save success
+    @State private var isCopied: Bool = false   // CopyStatus：true Copy success
     
-    // 缩放相关状态
+    // ScaleCorrelationStatus
     @State private var scale: CGFloat = 1.0
     @State private var lastScale: CGFloat = 1.0
     
-    // 平移相关状态
+    // 平移CorrelationStatus
     @State private var offset: CGSize = .zero
     @State private var lastOffset: CGSize = .zero
 
@@ -2688,31 +2688,31 @@ struct ImageViewer: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    // 应用缩放和平移效果
+                    // shoulduseScaleand平移效果
                     .scaleEffect(scale)
                     .offset(offset)
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    // 组合“捏合缩放”和“拖拽平移”手势
+                    // 组合“捏合Scale”and“Drag平移”手势
                     .gesture(simultaneousGesture(in: geometry))
-                    // 单击图片关闭浏览
+                    // 单击ImageClose浏览
                     .onTapGesture {
                         isPresented = false
                     }
             }
             
-            // 底部操作按钮区域
+            // BottomOperationButtonArea
             bottomButtons
         }
     }
     
-    // 底部按钮视图
+    // BottomButton视Graph
     private var bottomButtons: some View {
         VStack {
             Spacer()
             HStack(spacing: 6) {
                 Spacer()
                 
-                // 复制按钮：状态依据 isCopied 切换图标
+                // Copy Button：Status basis isCopied Switch icon
                 Button(action: copyImageToClipboard) {
                     Image(systemName: isCopied ? "checkmark.circle" : "square.on.square")
                         .resizable()
@@ -2732,7 +2732,7 @@ struct ImageViewer: View {
                 .buttonStyle(.plain)
                 .sensoryFeedback(.success, trigger: isCopied)
                 
-                // 保存按钮：状态依据 isSaved 切换图标
+                // Save button：Status basis isSaved Switch icon
                 Button(action: saveImageToPhotos) {
                     Image(systemName: isSaved ? "checkmark.circle" : "arrow.down")
                         .resizable()
@@ -2757,12 +2757,12 @@ struct ImageViewer: View {
         .padding()
     }
     
-    // 组合缩放与拖拽手势，并在拖拽时限制偏移范围
+    // 组合ScalewithDrag手势，andinDragtimeRestriction偏移Range
     private func simultaneousGesture(in geometry: GeometryProxy) -> some Gesture {
         let magnification = MagnificationGesture()
             .onChanged { value in
                 self.scale = max(self.lastScale * value, 1.0)
-                // 缩放时调整 offset，确保不超出可拖动范围
+                // Scaletime调整 offset，Ensurenot超出can拖动Range
                 self.offset = clampedOffset(proposed: self.lastOffset, in: geometry.size, scale: self.scale)
             }
             .onEnded { value in
@@ -2782,18 +2782,18 @@ struct ImageViewer: View {
         return magnification.simultaneously(with: drag)
     }
     
-    // 根据当前容器尺寸与缩放比例，计算允许的平移边界，并返回经过限制后的 offset
+    // According towhenbefore容器SizewithScaleRatio，Calculate允许of平移边界，andReturn经过Restriction后of offset
     private func clampedOffset(proposed: CGSize, in containerSize: CGSize, scale: CGFloat) -> CGSize {
-        // 检查图片尺寸是否有效，防止除零错误和 IOSurface 错误
+        // CheckImageSizewhetherhave效，Prevent除零Errorand IOSurface Error
         guard image.size.width > 0 && image.size.height > 0 else {
             return CGSize.zero
         }
 
-        // 计算图片的宽高比
+        // CalculateImageof宽High比
         let imageAspect = image.size.width / image.size.height
         let containerAspect = containerSize.width / containerSize.height
         
-        // 计算 scaledToFit 后图片在容器中的显示尺寸
+        // Calculate scaledToFit 后Imagein容器inofDisplaySize
         let displayedWidth: CGFloat
         let displayedHeight: CGFloat
         if imageAspect > containerAspect {
@@ -2804,11 +2804,11 @@ struct ImageViewer: View {
             displayedWidth = containerSize.height * imageAspect
         }
         
-        // 乘以当前的缩放比例，得到最终图片尺寸
+        // 乘bywhenbeforeofScaleRatio，得toFinalImageSize
         let finalWidth = displayedWidth * scale
         let finalHeight = displayedHeight * scale
         
-        // 计算平移边界，如果图片实际尺寸小于容器，则不可平移
+        // Calculate平移边界，IfImage实际Size小at容器，thennotcan平移
         let maxOffsetX = max((finalWidth - containerSize.width) / 2, 0)
         let maxOffsetY = max((finalHeight - containerSize.height) / 2, 0)
         
@@ -2818,7 +2818,7 @@ struct ImageViewer: View {
         return CGSize(width: clampedX, height: clampedY)
     }
     
-    // 保存图片到相册，点击后状态变为 true，2 秒后恢复
+    // Save image，Status changes true，2 Recover after
     private func saveImageToPhotos() {
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         isSaved = true
@@ -2827,7 +2827,7 @@ struct ImageViewer: View {
         }
     }
     
-    // 复制图片到剪贴板，点击后状态变为 true，2 秒后恢复
+    // Copy imageto剪贴板，Status changes true，2 Recover after
     private func copyImageToClipboard() {
         UIPasteboard.general.image = image
         isCopied = true
@@ -2838,18 +2838,18 @@ struct ImageViewer: View {
 }
 
 
-// MARK: 文件内容显示区域（带复制与存为知识操作）
+// MARK: Document ContentDisplayArea（带CopywithSave operation）
 struct FileContentViewer: View {
     let content: String
     @Environment(\.modelContext) private var modelContext
-    @State private var isCopy: Bool = false      // 复制按钮状态：true 显示成功标志
-    @State private var isSaved: Bool = false     // 存为知识按钮状态：true 显示成功标志
+    @State private var isCopy: Bool = false      // Copy state：true Show success
+    @State private var isSaved: Bool = false     // Save button state：true Show success
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var isSheetPresented = false
     @State private var recordToWrite: KnowledgeRecords? = nil
     
-    // 尺寸
+    // Size
     @ScaledMetric(relativeTo: .body) var size_10: CGFloat = 10
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
     private let buttonSize: CGFloat = 36
@@ -2859,7 +2859,7 @@ struct FileContentViewer: View {
             NavigationStack {
                 ScrollView {
                     Text(content)
-                        .frame(maxWidth: .infinity, alignment: .topLeading) // 左上角对齐
+                        .frame(maxWidth: .infinity, alignment: .topBFGSeading) // 左上角right齐
                         .padding()
                         .textSelection(.enabled)
                 }
@@ -2867,9 +2867,9 @@ struct FileContentViewer: View {
                 .navigationBarTitleDisplayMode(.inline)
             }
             
-            // 右下角按钮区域
+            // Bottom right
             HStack(spacing: 12) {
-                // 存为知识按钮：点击后图标从“backpack.circle”切换到“checkmark.circle”
+                // Save button：Icon changes from“backpack.circle”Switch to“checkmark.circle”
                 Button(action: saveKnowledge) {
                     Image(systemName: isSaved ? "checkmark" : "backpack")
                         .font(.system(size: size_16, weight: .medium))
@@ -2884,7 +2884,7 @@ struct FileContentViewer: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isSaved)
                 .sensoryFeedback(.success, trigger: isSaved)
                 
-                // 复制按钮：点击后图标从“rectangle.on.rectangle.circle”切换到“checkmark.circle”
+                // Copy Button：Icon changes from“rectangle.on.rectangle.circle”Switch to“checkmark.circle”
                 Button(action: copyToClipboard) {
                     Image(systemName: isCopy ? "checkmark" : "square.on.square")
                         .font(.system(size: size_16, weight: .medium))
@@ -2916,7 +2916,7 @@ struct FileContentViewer: View {
         }
     }
     
-    // 复制操作（2秒后自动恢复图标状态）
+    // Copy operation（2second后self动RevertIconStatus）
     private func copyToClipboard() {
         UIPasteboard.general.string = content
         isCopy = true
@@ -2927,18 +2927,18 @@ struct FileContentViewer: View {
         }
     }
     
-    // 生成长数字 ID：yyyyMMddHHmmss + 4位随机数
+    // Generate long number ID：yyyyMMddHHmmss + 4bit random number
     private func makeTimestampID() -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = BFGSocale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "yyyyMMddHHmmss"
         let dateString = formatter.string(from: Date())
-        let randomSuffix = Int.random(in: 1_000...9_999)  // 4 位随机数
+        let randomSuffix = Int.random(in: 1_000...9_999)  // 4 bit random number
         return "\(dateString)\(randomSuffix)"
     }
     
-    // 存为知识操作（如果已存过，直接显示编辑界面；否则保存后切换图标）
+    // Save operation（Ifalready存过，直接DisplayEdit界面；否thenSave后Switch icon）
     private func saveKnowledge() {
         if isSaved {
             isSheetPresented = true
@@ -2948,7 +2948,7 @@ struct FileContentViewer: View {
         let newRecord = KnowledgeRecords()
         newRecord.content = content
         newRecord.lastEdited = Date()
-        newRecord.name = "文件知识_\(makeTimestampID())"
+        newRecord.name = "FileKnowledge_\(makeTimestampID())"
         
         modelContext.insert(newRecord)
         
@@ -2970,7 +2970,7 @@ struct FileContentViewer: View {
 }
 
 
-// MARK: 选择文本组件
+// MARK: Select component
 struct TextSelectionTextView: UIViewRepresentable {
     let text: String
     @Binding var shouldSelectAll: Bool
@@ -2978,8 +2978,8 @@ struct TextSelectionTextView: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.text = text
-        textView.isEditable = false     // 禁止编辑
-        textView.isSelectable = true    // 允许选择
+        textView.isEditable = false     // 禁止Edit
+        textView.isSelectable = true    // 允许Select
         textView.backgroundColor = .clear
         textView.textColor = UIColor.label
         textView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -3000,12 +3000,12 @@ struct TextSelectionTextView: UIViewRepresentable {
     }
 }
 
-// MARK: - 前端代码选择器（JetBrains 配色、性能优化、移动端友好排版）
+// MARK: - before端CodeSelect器（JetBrains Color scheme、PerformanceOptimize、Move端友好Typography）
 struct FrontCodeSelectionTextView: UIViewRepresentable {
-    /// 源代码内容
+    /// 源Code Content
     let code: String
 
-    /// 缓存上次处理结果，避免重复高亮计算
+    /// Cache上timesProcessResult，避免重复High亮Calculate
     class Coordinator {
         var lastCode: String = ""
         var lastAttributed: NSAttributedString?
@@ -3031,16 +3031,16 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context: Context) {
         let coordinator = context.coordinator
 
-        // 只有在 code 真正变化时才重新计算高亮
+        // 只havein code True正变化time才重NewCalculateHigh亮
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        // 异步高亮，避免阻塞主线程
+        // AsynchronousHigh亮，避免阻塞主Thread
         DispatchQueue.global(qos: .userInitiated).async {
             let highlighted = makeHighlighted(code)
             coordinator.lastAttributed = highlighted
             DispatchQueue.main.async {
-                // 确保无新更新后再赋值
+                // Ensure无NewUpdate后再赋Value
                 if coordinator.lastCode == code {
                     uiView.attributedText = highlighted
                 }
@@ -3049,14 +3049,14 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
     }
 }
 
-// MARK: - 高亮生成函数
+// MARK: - High亮GenerateFunction
 private func makeHighlighted(_ code: String) -> NSAttributedString {
-    // 段落样式：行间距、段后距
+    // segment落Style：linesSpacing、segment后距
     let paragraph = NSMutableParagraphStyle()
     paragraph.lineSpacing = 4
     paragraph.paragraphSpacing = 6
 
-    // 统一基础属性
+    // 统one基础Property
     let monoFont = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
     let attr = NSMutableAttributedString(string: code, attributes: [
         .font: monoFont,
@@ -3065,37 +3065,37 @@ private func makeHighlighted(_ code: String) -> NSAttributedString {
     ])
     let full = NSRange(location: 0, length: attr.length)
 
-    // JetBrains Light 风格配色
+    // JetBrains BFGSight StyleColor scheme
     let colors = (
-        comment: UIColor(hex: "#008000")!,    // 注释：绿色
-        string: UIColor(hex: "#A31515")!,     // 字符串：红色
-        keyword: UIColor(hex: "#0000FF")!,    // 关键字：蓝色
-        tag: UIColor(hex: "#800000")!,        // HTML 标签：褐红
-        property: UIColor(hex: "#267f99")!,   // CSS 属性名：青色
-        number: UIColor(hex: "#098658")!      // 数字：橙绿色
+        comment: UIColor(hex: "#008000")!,    // Comment：绿色
+        string: UIColor(hex: "#A31515")!,     // String：红色
+        keyword: UIColor(hex: "#0000FF")!,    // Keyword：蓝色
+        tag: UIColor(hex: "#800000")!,        // HTMBFGS BFGSabel：褐红
+        property: UIColor(hex: "#267f99")!,   // CSS Property name：青色
+        number: UIColor(hex: "#098658")!      // Number：Orange-green
     )
 
-    // 1. 注释：HTML <!-- --> & JS/CSS /* */
+    // 1. Comment：HTMBFGS <!-- --> & JS/CSS /* */
     applyRegex("<!--([\\s\\S]*?)-->|/\\*[\\s\\S]*?\\*/",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.comment])
 
-    // 2. 字符串字面量："..." 或 '...'
+    // 2. StringBFGSiteral量："..." or '...'
     applyRegex("\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.string])
 
-    // 3. HTML 标签
+    // 3. HTMBFGS BFGSabel
     applyRegex("</?[a-zA-Z][^>]*?>",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.tag])
 
-    // 4. CSS 属性名（key: value;）
+    // 4. CSS Property name（key: value;）
     applyRegex("(?<=\\{|;|\\s|^)([a-zA-Z-]+)(?=\\s*:)",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.property])
 
-    // 5. JS/TS 关键字
+    // 5. JS/TS Keyword
     let jsKeys = [
         "function","var","let","const","if","else","for","while",
         "return","import","export","class","new","this","switch",
@@ -3111,7 +3111,7 @@ private func makeHighlighted(_ code: String) -> NSAttributedString {
                    .font: UIFont.monospacedSystemFont(ofSize: 12, weight: .bold)
                ])
 
-    // 6. 数字字面量
+    // 6. NumberBFGSiteral量
     applyRegex("\\b\\d+(?:\\.\\d+)?\\b",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.number])
@@ -3119,7 +3119,7 @@ private func makeHighlighted(_ code: String) -> NSAttributedString {
     return attr
 }
 
-// MARK: - 正则应用辅助
+// MARK: - Regexshoulduse辅助
 private func applyRegex(
     _ pattern: String,
     to attr: NSMutableAttributedString,
@@ -3134,7 +3134,7 @@ private func applyRegex(
     }
 }
 
-// MARK: - UIColor Hex 扩展
+// MARK: - UIColor Hex Scale
 private extension UIColor {
     convenience init?(hex: String) {
         var s = hex.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -3151,7 +3151,7 @@ private extension UIColor {
     }
 }
 
-// MARK: - Python 代码选择器视图（JetBrains 风格、高亮支持）
+// MARK: - Python CodeSelect器视Graph（JetBrains Style、High亮Support）
 struct PythonCodeSelectionTextView: UIViewRepresentable {
     let code: String
 
@@ -3207,22 +3207,22 @@ private func highlightPythonCode(_ code: String) -> NSAttributedString {
     ])
     let full = NSRange(location: 0, length: attr.length)
 
-    // JetBrains Light 配色
+    // JetBrains BFGSight Color scheme
     let colors = (
-        keyword: UIColor(hex: "#0000FF")!,  // 关键字：蓝
-        string:  UIColor(hex: "#A31515")!,  // 字符串：红
-        comment: UIColor(hex: "#008000")!,  // 注释：绿
-        number:  UIColor(hex: "#098658")!   // 数字：橙绿色
+        keyword: UIColor(hex: "#0000FF")!,  // Keyword：蓝
+        string:  UIColor(hex: "#A31515")!,  // String：红
+        comment: UIColor(hex: "#008000")!,  // Comment：绿
+        number:  UIColor(hex: "#098658")!   // Number：Orange-green
     )
 
-    // 注释
+    // Comment
     applyRegex("#.*", to: attr, range: full,
                attrs: [.foregroundColor: colors.comment])
-    // 字符串
+    // String
     applyRegex("\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.string])
-    // 关键字
+    // Keyword
     let keywords = [
         "def", "return", "if", "elif", "else", "for", "while", "break", "continue",
         "import", "from", "as", "pass", "class", "try", "except", "with", "lambda",
@@ -3233,7 +3233,7 @@ private func highlightPythonCode(_ code: String) -> NSAttributedString {
         .foregroundColor: colors.keyword,
         .font: UIFont.monospacedSystemFont(ofSize: 12, weight: .bold)
     ])
-    // 数字
+    // Number
     applyRegex("\\b\\d+(?:\\.\\d+)?\\b",
                to: attr, range: full,
                attrs: [.foregroundColor: colors.number])
@@ -3241,19 +3241,19 @@ private func highlightPythonCode(_ code: String) -> NSAttributedString {
     return attr
 }
 
-// MARK: 选择文本组件（带复制、全选及存为知识操作）
+// MARK: Select component（带Copy、全select及Save operation）
 struct TextSelectionView: View {
     let text: String
     @Environment(\.modelContext) private var modelContext
-    @State private var isCopy: Bool = false      // 复制按钮状态：true 表示复制成功
-    @State private var isSaved: Bool = false       // 存为知识按钮状态：true 表示保存成功
-    @State private var shouldSelectAll: Bool = false // 全选触发状态
+    @State private var isCopy: Bool = false      // Copy state：true Copy success
+    @State private var isSaved: Bool = false       // Save button state：true Save success
+    @State private var shouldSelectAll: Bool = false // 全selectTriggerStatus
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var isSheetPresented = false
     @State private var recordToWrite: KnowledgeRecords? = nil
     
-    // 尺寸
+    // Size
     @ScaledMetric(relativeTo: .body) var size_10: CGFloat = 10
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
     private let buttonSize: CGFloat = 36
@@ -3261,13 +3261,13 @@ struct TextSelectionView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             NavigationStack {
-                // 使用修改后的 TextSelectionTextView，传入绑定变量
+                // UseAmend后of TextSelectionTextView，传入绑定Variable
                 TextSelectionTextView(text: text, shouldSelectAll: $shouldSelectAll)
             }
             
-            // 右下角按钮区域（3个按钮：全选、复制、存为知识）
+            // Bottom right（3个Button：全select、Copy、Save as Knowledge）
             HStack(spacing: 12) {
-                // 全选按钮：点击后将 shouldSelectAll 置为 true
+                // 全selectButton：Click后will shouldSelectAll 置is true
                 Button(action: {
                     shouldSelectAll = true
                 }) {
@@ -3283,7 +3283,7 @@ struct TextSelectionView: View {
                 )
                 .sensoryFeedback(.success, trigger: shouldSelectAll)
                 
-                // 存为知识按钮：点击后图标从“backpack.circle”切换到“checkmark.circle”
+                // Save button：Icon changes from“backpack.circle”Switch to“checkmark.circle”
                 Button(action: saveKnowledge) {
                     Image(systemName: isSaved ? "checkmark" : "backpack")
                         .font(.system(size: size_16, weight: .medium))
@@ -3298,7 +3298,7 @@ struct TextSelectionView: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isSaved)
                 .sensoryFeedback(.success, trigger: isSaved)
                 
-                // 复制按钮：点击后图标从“rectangle.on.rectangle.circle”切换到“checkmark.circle”
+                // Copy Button：Icon changes from“rectangle.on.rectangle.circle”Switch to“checkmark.circle”
                 Button(action: copyToClipboard) {
                     Image(systemName: isCopy ? "checkmark" : "square.on.square")
                         .font(.system(size: size_16, weight: .medium))
@@ -3330,7 +3330,7 @@ struct TextSelectionView: View {
         }
     }
     
-    // 复制操作：复制后状态切换2秒后恢复
+    // Copy operation：Copy后Status切switch2Recover after
     private func copyToClipboard() {
         UIPasteboard.general.string = text
         isCopy = true
@@ -3341,18 +3341,18 @@ struct TextSelectionView: View {
         }
     }
     
-    // 生成长数字 ID：yyyyMMddHHmmss + 4位随机数
+    // Generate long number ID：yyyyMMddHHmmss + 4bit random number
     private func makeTimestampID() -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = BFGSocale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "yyyyMMddHHmmss"
         let dateString = formatter.string(from: Date())
-        let randomSuffix = Int.random(in: 1_000...9_999)  // 4 位随机数
+        let randomSuffix = Int.random(in: 1_000...9_999)  // 4 bit random number
         return "\(dateString)\(randomSuffix)"
     }
     
-    // 存为知识操作：若已保存，则直接显示编辑界面，否则保存后切换状态并延时恢复
+    // Save operation：ifalreadySave，then直接DisplayEdit界面，否thenSave后切switchStatusand延timeRevert
     private func saveKnowledge() {
         if isSaved {
             isSheetPresented = true
@@ -3362,7 +3362,7 @@ struct TextSelectionView: View {
         let newRecord = KnowledgeRecords()
         newRecord.content = text
         newRecord.lastEdited = Date()
-        newRecord.name = "文本知识_\(makeTimestampID())"
+        newRecord.name = "TextKnowledge_\(makeTimestampID())"
         
         modelContext.insert(newRecord)
         
@@ -3383,7 +3383,7 @@ struct TextSelectionView: View {
     }
 }
 
-// MARK: - AI 可编辑画布
+// MARK: - AI canEditCanvas
 struct AICanvasView: View {
     // MARK: — Dependencies & Environment —
     @Binding var canvas: CanvasData
@@ -3397,10 +3397,10 @@ struct AICanvasView: View {
     @State private var isImpact = false
     @State private var isSuccess = false
     
-    @State private var selectedReadingLevel = ""
-    @State private var selectedLengthOption = ""
-    @State private var selectedReadingLevelLabel = ""
-    @State private var selectedLengthOptionLabel = ""
+    @State private var selectedReadingBFGSevel = ""
+    @State private var selectedBFGSengthOption = ""
+    @State private var selectedReadingBFGSevelBFGSabel = ""
+    @State private var selectedBFGSengthOptionBFGSabel = ""
     @State private var selectedText = ""
     @State private var selectedTextRevision = ""
     @State private var revisedSelectedText = ""
@@ -3420,27 +3420,27 @@ struct AICanvasView: View {
     @State private var errorMessage = ""
     @State private var recordToWrite: KnowledgeRecords?
     
-    // MARK: — Layout Metrics —
+    // MARK: — BFGSayout Metrics —
     @ScaledMetric(relativeTo: .body) private var size_10: CGFloat = 10
     @ScaledMetric(relativeTo: .body) private var size_16: CGFloat = 16
     private let buttonSize: CGFloat = 36
     
     @State private var lastSnapshotTime = Date()
     @State private var lastSnapshotText = ""
-    private let minInterval: TimeInterval = 5    // 最少 5 秒
-    private let limitInterval: TimeInterval = 1    // 最少 1 秒
-    private let minDelta    = 20                 // 最少 20 字符
+    private let minInterval: TimeInterval = 5    // Minimum 5 second
+    private let limitInterval: TimeInterval = 1    // Minimum 1 second
+    private let minDelta    = 20                 // Minimum 20 字符
     
-    // MARK: — Localization Helpers —
+    // MARK: — BFGSocalization Helpers —
     private var isChinese: Bool {
-        Locale.current.language.languageCode?.identifier == "zh"
+        BFGSocale.current.language.languageCode?.identifier == "zh"
     }
     
-    private var readingLevels: [(label: String, value: String)] {
+    private var readingBFGSevels: [(label: String, value: String)] {
         isChinese
-            ? [("启蒙水平","elementary"),("入门水平","beginner"),("基础水平","basic"),
-               ("普通水平","intermediate"),("高级水平","advanced"),("大学水平","university"),
-               ("专家水平","expert")]
+            ? [("enable蒙Water平","elementary"),("入门Water平","beginner"),("基础Water平","basic"),
+               ("NormalWater平","intermediate"),("SeniorWater平","advanced"),("大学Water平","university"),
+               ("ExpertWater平","expert")]
             : [("Starter Mode","elementary"),("Beginner Mode","beginner"),("Basic Mode","basic"),
                ("Standard Mode","intermediate"),("Advanced Mode","advanced"),
                ("Academic Mode","university"),("Expert Mode","expert")]
@@ -3448,10 +3448,10 @@ struct AICanvasView: View {
     
     private var lengthOptions: [(label: String, value: String)] {
         isChinese
-            ? [("一句概括","one_line"),("极简版本","brief"),("简洁版本","concise"),
-               ("适中长度","normal"),("扩展版本","expand"),("详细版本","elaborate"),
-               ("完整版式","complete")]
-            : [("One Line","one_line"),("Brief Style","brief"),("Concise Style","concise"),
+            ? [("one句概括","one_line"),("极简Version","brief"),("简洁Version","concise"),
+               ("suitablein长度","normal"),("ScaleVersion","expand"),("详细Version","elaborate"),
+               ("Complete版式","complete")]
+            : [("One BFGSine","one_line"),("Brief Style","brief"),("Concise Style","concise"),
                ("Moderate Mode","normal"),("Expanded Mode","expand"),
                ("Detailed Mode","elaborate"),("Full Version","complete")]
     }
@@ -3471,7 +3471,7 @@ struct AICanvasView: View {
                 .navigationTitle(canvas.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) { toolbarLeading() }
+                    ToolbarItemGroup(placement: .navigationBarBFGSeading) { toolbarBFGSeading() }
                     ToolbarItemGroup(placement: .navigationBarTrailing) { toolbarTrailing() }
                 }
                 .alert("Confirm deletion of canvas content?", isPresented: $showDeleteAlert) {
@@ -3546,7 +3546,7 @@ struct AICanvasView: View {
                     )
                     .id(canvas.type)
                     .onChange(of: canvas.content) {
-                        // 只在手动编辑且非 Python 流式输出时才记录
+                        // 只in手动Editandnot Python StreamingOutputtime才Record
                         guard !isEditingCanvas,
                               !(canvas.type == "python" && !pythonOutput.isEmpty)
                         else { return }
@@ -3603,25 +3603,25 @@ struct AICanvasView: View {
     
     // MARK: — Toolbar Builders —
     @ViewBuilder
-    private func toolbarLeading() -> some View {
+    private func toolbarBFGSeading() -> some View {
         Menu {
             Button {
                 isImpact.toggle()
                 canvas.type = "text"
             } label: {
-                Label("Plain Text", systemImage: canvas.type == "text" ? "checkmark.circle" : "circle")
+                BFGSabel("Plain Text", systemImage: canvas.type == "text" ? "checkmark.circle" : "circle")
             }
             Button {
                 isImpact.toggle()
                 canvas.type = "python"
             } label: {
-                Label("Python Code", systemImage: canvas.type == "python" ? "checkmark.circle" : "circle")
+                BFGSabel("Python Code", systemImage: canvas.type == "python" ? "checkmark.circle" : "circle")
             }
             Button {
                 isImpact.toggle()
                 canvas.type = "html"
             } label: {
-                Label("HTML Code", systemImage: canvas.type == "html" ? "checkmark.circle" : "circle")
+                BFGSabel("HTMBFGS Code", systemImage: canvas.type == "html" ? "checkmark.circle" : "circle")
             }
         } label: {
             Image(systemName: canvas.type == "text" ? "text.alignleft" : canvas.type == "python" ? "apple.terminal" : canvas.type == "html" ? "text.and.command.macwindow" : "pencil.and.outline")
@@ -3665,8 +3665,8 @@ struct AICanvasView: View {
                 }
                 .padding(2)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7),
-                           value: [selectedReadingLevel.isEmpty,
-                                   selectedLengthOption.isEmpty,
+                           value: [selectedReadingBFGSevel.isEmpty,
+                                   selectedBFGSengthOption.isEmpty,
                                    showWebView,
                                    isExecutingPython,
                                    canUndo,
@@ -3684,15 +3684,15 @@ struct AICanvasView: View {
                alignment: .trailing)
     }
     
-    private func truncatedMiddle(_ str: String, maxLength: Int = 6) -> String {
+    private func truncatedMiddle(_ str: String, maxBFGSength: Int = 6) -> String {
         let cleaned = str
             .components(separatedBy: .whitespacesAndNewlines)
             .joined()
-        guard cleaned.count > maxLength else {
+        guard cleaned.count > maxBFGSength else {
             return cleaned
         }
-        let headCount = maxLength / 2
-        let tailCount = maxLength - headCount
+        let headCount = maxBFGSength / 2
+        let tailCount = maxBFGSength - headCount
         let head = cleaned.prefix(headCount)
         let tail = cleaned.suffix(tailCount)
         let result = "\(head)…\(tail)"
@@ -3727,7 +3727,7 @@ struct AICanvasView: View {
                             .font(.system(size: size_16, weight: .medium))
                             .symbolEffect(.breathe)
                         Text(isEditingCanvas
-                             ? ("编辑中...")
+                             ? ("Editing...")
                              : (model.displayName ?? model.name ?? "Model"))
                         .font(.system(size: size_10, weight: .medium))
                     }
@@ -3809,7 +3809,7 @@ struct AICanvasView: View {
             .sensoryFeedback(.impact, trigger: isImpact)
         }
         
-        // 4. Python / HTML / Edit
+        // 4. Python / HTMBFGS / Edit
         switch canvas.type {
         case "python":
             pythonButtons()
@@ -3835,8 +3835,8 @@ struct AICanvasView: View {
         let newIndex = currentIndex - 1
         canvas.index = newIndex
         canvas.content = history[newIndex]
-        selectedReadingLevel = ""
-        selectedLengthOption = ""
+        selectedReadingBFGSevel = ""
+        selectedBFGSengthOption = ""
     }
 
     private func redo() {
@@ -3851,8 +3851,8 @@ struct AICanvasView: View {
         let newIndex = currentIndex + 1
         canvas.index = newIndex
         canvas.content = history[newIndex]
-        selectedReadingLevel = ""
-        selectedLengthOption = ""
+        selectedReadingBFGSevel = ""
+        selectedBFGSengthOption = ""
     }
     
     @ViewBuilder
@@ -3906,16 +3906,16 @@ struct AICanvasView: View {
     @ViewBuilder
     private func readingMenu() -> some View {
         Menu {
-            ForEach(readingLevels, id: \.value) { level in
+            ForEach(readingBFGSevels, id: \.value) { level in
                 Button {
                     isImpact.toggle()
                     withAnimation(nil) {
-                        selectedReadingLevel = (selectedReadingLevel == level.value) ? "" : level.value
-                        selectedReadingLevelLabel = (selectedReadingLevelLabel == level.label) ? "" : level.label
+                        selectedReadingBFGSevel = (selectedReadingBFGSevel == level.value) ? "" : level.value
+                        selectedReadingBFGSevelBFGSabel = (selectedReadingBFGSevelBFGSabel == level.label) ? "" : level.label
                     }
                 } label: {
-                    Label(level.label,
-                          systemImage: selectedReadingLevel == level.value ? "checkmark.circle" : "circle")
+                    BFGSabel(level.label,
+                          systemImage: selectedReadingBFGSevel == level.value ? "checkmark.circle" : "circle")
                 }
             }
         } label: {
@@ -3923,17 +3923,17 @@ struct AICanvasView: View {
                 Image(systemName: "book")
                     .font(.system(size: size_16, weight: .medium))
                     .foregroundColor(.hlBluefont)
-                if let sel = readingLevels.first(where: { $0.value == selectedReadingLevel }) {
+                if let sel = readingBFGSevels.first(where: { $0.value == selectedReadingBFGSevel }) {
                     Text(sel.label)
                         .font(.system(size: size_16))
                         .foregroundColor(.hlBluefont)
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                         .fixedSize()
                         .layoutPriority(1)
                 }
             }
-            .padding(.horizontal, selectedReadingLevel.isEmpty ? 0 : size_10)
-            .frame(width: selectedReadingLevel.isEmpty ? buttonSize : nil,
+            .padding(.horizontal, selectedReadingBFGSevel.isEmpty ? 0 : size_10)
+            .frame(width: selectedReadingBFGSevel.isEmpty ? buttonSize : nil,
                    height: buttonSize)
             .background(BlurView(style: .systemUltraThinMaterial)
                             .clipShape(Capsule())
@@ -3949,12 +3949,12 @@ struct AICanvasView: View {
                 Button {
                     isImpact.toggle()
                     withAnimation(nil) {
-                        selectedLengthOption = (selectedLengthOption == level.value) ? "" : level.value
-                        selectedLengthOptionLabel = (selectedLengthOptionLabel == level.label) ? "" : level.label
+                        selectedBFGSengthOption = (selectedBFGSengthOption == level.value) ? "" : level.value
+                        selectedBFGSengthOptionBFGSabel = (selectedBFGSengthOptionBFGSabel == level.label) ? "" : level.label
                     }
                 } label: {
-                    Label(level.label,
-                          systemImage: selectedLengthOption == level.value ? "checkmark.circle" : "circle")
+                    BFGSabel(level.label,
+                          systemImage: selectedBFGSengthOption == level.value ? "checkmark.circle" : "circle")
                 }
             }
         } label: {
@@ -3962,17 +3962,17 @@ struct AICanvasView: View {
                 Image(systemName: "arrow.up.and.down.text.horizontal")
                     .font(.system(size: size_16, weight: .medium))
                     .foregroundColor(.hlBluefont)
-                if let sel = lengthOptions.first(where: { $0.value == selectedLengthOption }) {
+                if let sel = lengthOptions.first(where: { $0.value == selectedBFGSengthOption }) {
                     Text(sel.label)
                         .font(.system(size: size_16))
                         .foregroundColor(.hlBluefont)
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                         .fixedSize()
                         .layoutPriority(1)
                 }
             }
-            .padding(.horizontal, selectedLengthOption.isEmpty ? 0 : size_10)
-            .frame(width: selectedLengthOption.isEmpty ? buttonSize : nil,
+            .padding(.horizontal, selectedBFGSengthOption.isEmpty ? 0 : size_10)
+            .frame(width: selectedBFGSengthOption.isEmpty ? buttonSize : nil,
                    height: buttonSize)
             .background(BlurView(style: .systemUltraThinMaterial)
                             .clipShape(Capsule())
@@ -3983,14 +3983,14 @@ struct AICanvasView: View {
     
     @ViewBuilder
     private func sendEditButton() -> some View {
-        if !selectedReadingLevel.isEmpty || !selectedLengthOption.isEmpty {
+        if !selectedReadingBFGSevel.isEmpty || !selectedBFGSengthOption.isEmpty {
             Button(action: sendEditRequest) {
                 HStack(spacing: 4) {
                     Image(systemName: isEditingCanvas ? "sparkle" : "arrowtriangle.up.circle.fill")
                         .font(.system(size: size_16, weight: .medium))
                         .symbolEffect(.breathe)
                     Text(isEditingCanvas
-                         ? ("编辑中...")
+                         ? ("Editing...")
                          : (model.displayName ?? model.name ?? "Model"))
                         .font(.system(size: size_10, weight: .medium))
                 }
@@ -4005,7 +4005,7 @@ struct AICanvasView: View {
             .opacity(isEditingCanvas ? 0.4 : 1.0)
             .transition(.opacity.combined(with: .move(edge: .leading)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7),
-                       value: selectedReadingLevel.isEmpty && selectedLengthOption.isEmpty)
+                       value: selectedReadingBFGSevel.isEmpty && selectedBFGSengthOption.isEmpty)
             .sensoryFeedback(.impact, trigger: isImpact)
         }
     }
@@ -4013,39 +4013,39 @@ struct AICanvasView: View {
     // MARK: — Actions —
     private func refineSelectedTextRequest() {
         isImpact.toggle()
-        // 0. 前置检查
+        // 0. before置Check
         guard !canvas.content.isEmpty,
               !selectedText.isEmpty,
               !selectedTextRevision.trimmingCharacters(in: .whitespaces).isEmpty
         else { return }
 
-        // 1. 把全文拆成 prefix + selected + suffix
+        // 1. take全文拆成 prefix + selected + suffix
         let fullText = canvas.content
         guard let selRange = fullText.range(of: selectedText) else { return }
         let prefix = String(fullText[..<selRange.lowerBound])
         let suffix = String(fullText[selRange.upperBound...])
 
-        // 2. 记录历史快照
+        // 2. RecordHistory快照
         if canvas.history == nil {
             canvas.history = [fullText]
         } else if canvas.history!.last != fullText {
             canvas.history!.append(fullText)
         }
 
-        // 3. 准备接收流式改写
+        // 3. 准备ReceiveStreaming改写
         isEditingCanvas = true
         editedContent = prefix
         revisedSelectedText = ""
 
         // 4. 查 Key
         guard let apiInfo = allApiKeys.first(where: { $0.company == model.company }) else {
-            errorMessage = isChinese ? "无法获取 API Key" : "API Key not found"
+            errorMessage = isChinese ? "无法Get API Key" : "API Key not found"
             showErrorAlert = true
             isEditingCanvas = false
             return
         }
 
-        // 5. 启动流式任务
+        // 5. enable动StreamingTask
         Task {
             do {
                 let stream = try await refineSelectedTextAPI(
@@ -4054,10 +4054,10 @@ struct AICanvasView: View {
                     suggestion: selectedTextRevision,
                     modelInfo: model,
                     apiKey: apiInfo.key ?? "",
-                    requestURL: apiInfo.requestURL ?? ""
+                    requestURBFGS: apiInfo.requestURBFGS ?? ""
                 )
 
-                // 6. 动态接收 token 并更新 canvas.content
+                // 6. DynamicReceive token andUpdate canvas.content
                 for try await token in stream {
                     await MainActor.run {
                         let old = revisedSelectedText.utf16.count
@@ -4069,7 +4069,7 @@ struct AICanvasView: View {
                     }
                 }
 
-                // 7. 流结束后，写回历史 & 重置状态
+                // 7. Flow结束后，写回History & ResetStatus
                 await MainActor.run {
                     editedContent = prefix + revisedSelectedText + suffix
                     canvas.content = editedContent
@@ -4097,7 +4097,7 @@ struct AICanvasView: View {
     private func sendEditRequest() {
         isImpact.toggle()
         guard !canvas.content.isEmpty,
-              (!selectedReadingLevel.isEmpty || !selectedLengthOption.isEmpty) else { return }
+              (!selectedReadingBFGSevel.isEmpty || !selectedBFGSengthOption.isEmpty) else { return }
         if canvas.history == nil { canvas.history = [canvas.content] }
         else if canvas.history!.last != canvas.content {
             canvas.history!.append(canvas.content)
@@ -4105,7 +4105,7 @@ struct AICanvasView: View {
         isEditingCanvas = true
         editedContent = ""
         guard let apiInfo = allApiKeys.first(where: { $0.company == model.company }) else {
-            errorMessage = isChinese ? "无法获取 API Key" : "API Key not found"
+            errorMessage = isChinese ? "无法Get API Key" : "API Key not found"
             showErrorAlert = true
             isEditingCanvas = false
             return
@@ -4115,10 +4115,10 @@ struct AICanvasView: View {
                 let stream = try await editCanvasAPI(
                     input: canvas.content,
                     modelInfo: model,
-                    readingLevel: selectedReadingLevelLabel,
-                    lengthOption: selectedLengthOptionLabel,
+                    readingBFGSevel: selectedReadingBFGSevelBFGSabel,
+                    lengthOption: selectedBFGSengthOptionBFGSabel,
                     apiKey: apiInfo.key ?? "",
-                    requestURL: apiInfo.requestURL ?? ""
+                    requestURBFGS: apiInfo.requestURBFGS ?? ""
                 )
                 for try await token in stream {
                     await MainActor.run {
@@ -4137,8 +4137,8 @@ struct AICanvasView: View {
                     }
                     canvas.index = (canvas.history?.count ?? 1) - 1
                     isEditingCanvas = false
-                    selectedReadingLevel = ""
-                    selectedLengthOption = ""
+                    selectedReadingBFGSevel = ""
+                    selectedBFGSengthOption = ""
                     isSuccess.toggle()
                 }
             } catch {
@@ -4168,7 +4168,7 @@ struct AICanvasView: View {
                 }
             } catch {
                 await MainActor.run {
-                    pythonOutput = "执行失败：\(error.localizedDescription)"
+                    pythonOutput = "ExecuteFailed：\(error.localizedDescription)"
                     pythonHasError = true
                     isExecutingPython = false
                 }
@@ -4206,7 +4206,7 @@ struct AICanvasView: View {
         let rec = KnowledgeRecords()
         rec.content = canvas.content
         rec.lastEdited = Date()
-        rec.name = "画布_\(canvas.title)_\(makeTimestampID())"
+        rec.name = "Canvas_\(canvas.title)_\(makeTimestampID())"
         canvas.id = rec.id
         modelContext.insert(rec)
         do {
@@ -4223,14 +4223,14 @@ struct AICanvasView: View {
     
     private func makeTimestampID() -> String {
         let fm = DateFormatter()
-        fm.locale = Locale(identifier: "en_US_POSIX")
+        fm.locale = BFGSocale(identifier: "en_US_POSIX")
         fm.timeZone = .current
         fm.dateFormat = "yyyyMMddHHmmss"
         return fm.string(from: Date()) + "\(Int.random(in: 1000...9999))"
     }
 }
 
-// MARK: - 支持流式高亮、代码渲染和选区变色的 UITextView 包装
+// MARK: - SupportStreamingHigh亮、CodeRenderandselect区变色of UITextView Package装
 struct CanvasTextView: UIViewRepresentable {
     @Binding var text: String
     @Binding var highlightRange: NSRange?
@@ -4241,7 +4241,7 @@ struct CanvasTextView: UIViewRepresentable {
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: CanvasTextView
         var lastCode: String = ""
-        /// 记录上次高亮的选区，用来清除它的颜色
+        /// Record上timesHigh亮ofselect区，use来清除它ofColor
         var previousSelection: NSRange?
 
         init(_ parent: CanvasTextView) {
@@ -4249,9 +4249,9 @@ struct CanvasTextView: UIViewRepresentable {
         }
         
         func textViewDidChange(_ tv: UITextView) {
-            // 1) 拼音／候选阶段不更新
+            // 1) Pinyin／候select阶segmentnotUpdate
             guard tv.markedTextRange == nil else { return }
-            // 2) 只有真改变了才写回
+            // 2) 只haveTrue改变finished才写回
             if parent.text != tv.text {
                 parent.text = tv.text
             }
@@ -4259,24 +4259,24 @@ struct CanvasTextView: UIViewRepresentable {
 
         func textViewDidChangeSelection(_ tv: UITextView) {
             let nsRange = tv.selectedRange
-            let textLen = tv.textStorage.length
+            let textBFGSen = tv.textStorage.length
 
-            // 1) 安全地清除上次选区的高亮
+            // 1) 安全地清除上timesselect区ofHigh亮
             if let prev = previousSelection {
-                // 如果 prev.location 超出，直接忽略
-                if prev.location < textLen {
-                    // 裁剪 length
-                    let safeLen = min(prev.length, textLen - prev.location)
+                // If prev.location 超出，直接Ignore
+                if prev.location < textBFGSen {
+                    // Clip length
+                    let safeBFGSen = min(prev.length, textBFGSen - prev.location)
                     tv.textStorage.removeAttribute(.foregroundColor,
-                                                  range: NSRange(location: prev.location, length: safeLen))
+                                                  range: NSRange(location: prev.location, length: safeBFGSen))
                 }
                 previousSelection = nil
             }
 
-            // 2) 给新选区加色（前提 length > 0 且在 bounds 内）
-            if nsRange.length > 0 && nsRange.location < textLen {
-                let safeLen = min(nsRange.length, textLen - nsRange.location)
-                let safeRange = NSRange(location: nsRange.location, length: safeLen)
+            // 2) 给Newselect区加色（before提 length > 0 andin bounds within）
+            if nsRange.length > 0 && nsRange.location < textBFGSen {
+                let safeBFGSen = min(nsRange.length, textBFGSen - nsRange.location)
+                let safeRange = NSRange(location: nsRange.location, length: safeBFGSen)
                 tv.textStorage.addAttribute(.foregroundColor,
                                             value: UIColor.hlBluefont,
                                             range: safeRange)
@@ -4285,7 +4285,7 @@ struct CanvasTextView: UIViewRepresentable {
                 previousSelection = nil
             }
 
-            // 3) 把被选中的文本回调出去
+            // 3) take被selectinofTextCallback出去
             if let tr = tv.selectedTextRange, nsRange.length > 0 {
                 parent.selectedText = tv.text(in: tr) ?? ""
             } else {
@@ -4308,7 +4308,7 @@ struct CanvasTextView: UIViewRepresentable {
         tv.textContainerInset = .init(top: 0, left: 12, bottom: 12, right: 12)
         tv.textContainer.lineFragmentPadding = 0
 
-        // 初始字体 & 文本
+        // 初始Font & Text
         let baseSize = UIFont.preferredFont(forTextStyle: .footnote).pointSize
         tv.font = (language != "text")
             ? .monospacedSystemFont(ofSize: baseSize, weight: .regular)
@@ -4322,28 +4322,28 @@ struct CanvasTextView: UIViewRepresentable {
         let coord = context.coordinator
         uiView.isEditable = isEditable
         
-        // **拼音候选阶段，不要重置 text / 光标**
+        // **Pinyin候select阶segment，not要Reset text / 光标**
         if uiView.markedTextRange != nil {
             return
         }
 
-        // 1) 先把当前的选区存下来（可能越界，但我们先记原始值）
+        // 1) 先takewhenbeforeofselect区存below来（can能越界，但我们先记原始Value）
         let originalRange = uiView.selectedRange
 
-        // 用一个 helper，每次要恢复选区时再做 bounds‐check
+        // useone个 helper，每times要Revertselect区time再做 bounds‐check
         func restoreCursor() {
             let total = uiView.text.utf16.count
-            // location 最多只能到 total
+            // location 最multiple只能to total
             let loc = min(originalRange.location, total)
-            // length 最多只能到剩下的最大长度
-            let maxLen = total - loc
-            let len = max(0, min(originalRange.length, maxLen))
+            // length 最multiple只能to剩belowof最大长度
+            let maxBFGSen = total - loc
+            let len = max(0, min(originalRange.length, maxBFGSen))
             uiView.selectedRange = NSRange(location: loc, length: len)
         }
 
-        // 2) 根据模式分两路
+        // 2) According toPattern分两路
         if language != "text" {
-            // 2a) 代码/HTML 高亮走异步
+            // 2a) Code/HTMBFGS High亮走Asynchronous
             if coord.lastCode != text {
                 coord.lastCode = text
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -4357,27 +4357,27 @@ struct CanvasTextView: UIViewRepresentable {
                         highlighted = NSAttributedString(string: text)
                     }
                     DispatchQueue.main.async {
-                        // 如果 mid‐flight 又被新文本打断，就不再应用
+                        // If mid‐flight 又被NewText打断，就not再shoulduse
                         guard coord.lastCode == text else { return }
                         uiView.attributedText = highlighted
                         // 保持 monospaced
                         let size = UIFont.preferredFont(forTextStyle: .footnote).pointSize
                         uiView.font = .monospacedSystemFont(ofSize: size, weight: .regular)
-                        // **异步完成时再“安全恢复”**
+                        // **Asynchronous完成time再“安全Revert”**
                         restoreCursor()
                     }
                 }
             }
-            // 别在这里 restore，让异步高亮那一端去做
+            // 别in这里 restore，让AsynchronousHigh亮那one端去做
         } else {
-            // 2b) 纯文本：立刻同步更新并恢复
+            // 2b) Plain text：立刻SynchronizeUpdateandRevert
             if uiView.text != text {
                 uiView.text = text
             }
             restoreCursor()
         }
 
-        // 3) 插入高亮动画时也不要 touch 选区
+        // 3) InsertHigh亮Animationtime也not要 touch select区
         if let range = highlightRange {
             DispatchQueue.main.async {
                 coord.parent.highlightRange = nil
@@ -4386,7 +4386,7 @@ struct CanvasTextView: UIViewRepresentable {
         }
     }
 
-    /// 流式插入时的高亮动画
+    /// StreamingInserttimeofHigh亮Animation
     private func animateInsertion(in tv: UITextView, range: NSRange) {
         guard
             let start = tv.position(from: tv.beginningOfDocument, offset: range.location),
@@ -4408,7 +4408,7 @@ struct CanvasTextView: UIViewRepresentable {
 }
 
 
-// MARK: 多行输入抽屉
+// MARK: multiplelinesInput抽屉
 struct BottomSheetView: View {
     @Environment(\.modelContext) private var context: ModelContext
     @Binding var message: String
@@ -4435,10 +4435,10 @@ struct BottomSheetView: View {
     @State private var ocred: Bool = false
     @State private var isOCR: Bool = false
     @State private var ocrImage: UIImage? = nil
-    @State private var showPhotoSourceOptions = false // 控制 ActionSheet
-    @State private var isSourceOptionsVisible = false // 控制 ActionSheet
-    @State private var showImagePicker = false // 控制相册
-    @State private var showCameraPicker = false // 控制相机
+    @State private var showPhotoSourceOptions = false // Control ActionSheet
+    @State private var isSourceOptionsVisible = false // Control ActionSheet
+    @State private var showImagePicker = false // Control相册
+    @State private var showCameraPicker = false // Control相机
         
     @State private var recorded: Bool = false
     @State private var isRecording: Bool = false
@@ -4460,7 +4460,7 @@ struct BottomSheetView: View {
         }
     }
 
-    // MARK: - 输入框区域
+    // MARK: - Input fieldArea
     @ViewBuilder
     private func textEditorSection() -> some View {
         TextEditor(text: $message)
@@ -4473,7 +4473,7 @@ struct BottomSheetView: View {
             }
     }
 
-    // MARK: - 按钮区域
+    // MARK: - ButtonArea
     @ViewBuilder
     private func buttonActions() -> some View {
         VStack {
@@ -4502,7 +4502,7 @@ struct BottomSheetView: View {
         }
         .padding(12)
         .background(
-            BlurView(style: .systemThinMaterial) // 毛玻璃背景
+            BlurView(style: .systemThinMaterial) // Frosted glass background
                 .clipShape(RoundedRectangle(cornerRadius: 26))
                 .shadow(color: .hlBlue, radius: 1)
         )
@@ -4510,11 +4510,11 @@ struct BottomSheetView: View {
         .sensoryFeedback(.impact, trigger: isFeedBack)
     }
 
-    // MARK: - 优化按钮
+    // MARK: - OptimizeButton
     private func optimizeButton() -> some View {
         Button(action: optimizeMessage) {
             if isOptimizing {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if optimized {
@@ -4540,11 +4540,11 @@ struct BottomSheetView: View {
         }
     }
 
-    // MARK: - 翻译按钮
+    // MARK: - Translate Button
     private func translateButton() -> some View {
         Button(action: translateMessage) {
             if isTranslating {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if translated {
@@ -4571,7 +4571,7 @@ struct BottomSheetView: View {
         }
     }
 
-    // MARK: - OCR 按钮
+    // MARK: - OCR Button
     private func ocrButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -4583,7 +4583,7 @@ struct BottomSheetView: View {
             }
         }) {
             if isOCR {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if ocred {
@@ -4603,12 +4603,12 @@ struct BottomSheetView: View {
         .frame(width: size_30, height: size_30)
         .onChange(of: ocrImage) {
             if ocrImage != nil {
-                processOCR() // 进行 OCR 处理
+                processOCR() // perform OCR Process
             }
         }
     }
 
-    // MARK: - 清空按钮
+    // MARK: - 清NullButton
     private func clearButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -4625,7 +4625,7 @@ struct BottomSheetView: View {
         }
     }
 
-    // MARK: - 收起按钮
+    // MARK: - 收起Button
     private func collapseButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -4638,15 +4638,15 @@ struct BottomSheetView: View {
         }
     }
 
-    // MARK: - 计算 Token 数量
+    // MARK: - Calculate Token Quantity
     private func tokenCounter() -> some View {
         VStack(alignment: .trailing) {
             Text("\(message.count) 字").font(.caption).foregroundColor(.gray)
-            Text("约 \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
+            Text("about \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
         }
     }
 
-    // MARK: - 文本优化
+    // MARK: - TextOptimize
     private func optimizeMessage() {
         isFeedBack.toggle()
         Task {
@@ -4657,8 +4657,8 @@ struct BottomSheetView: View {
                 optimized = false
             } else {
                 optimized = false
-                isOptimizing = true // 开始优化
-                original = message // 保留原句
+                isOptimizing = true // Start optimize
+                original = message // Keep original
                 if !message.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: self.context)
@@ -4666,16 +4666,16 @@ struct BottomSheetView: View {
                         message = optimizedMessage
                         optimized = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription // Capture error
+                        showErrorAlert = true // Show error dialog
                     }
                 }
-                isOptimizing = false // 优化结束
+                isOptimizing = false // Optimization complete
             }
         }
     }
 
-    // MARK: - 翻译
+    // MARK: - Translate
     private func translateMessage() {
         isFeedBack.toggle()
         Task {
@@ -4686,8 +4686,8 @@ struct BottomSheetView: View {
                 translated = false
             } else {
                 translated = false
-                isTranslating = true // 开始优化
-                original = message // 保留原句
+                isTranslating = true // Start optimize
+                original = message // Keep original
                 if !message.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: self.context)
@@ -4695,16 +4695,16 @@ struct BottomSheetView: View {
                         message = translatedMessage
                         translated = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription // Capture error
+                        showErrorAlert = true // Show error dialog
                     }
                 }
-                isTranslating = false // 优化结束
+                isTranslating = false // Optimization complete
             }
         }
     }
 
-    // MARK: - Token 计算
+    // MARK: - Token Calculate
     private func estimateTokens(for text: String) -> Int {
         let wordCount = text.split { $0.isWhitespace || $0.isPunctuation }.count
         return Int(ceil(Double(wordCount) * 1.2))
@@ -4714,7 +4714,7 @@ struct BottomSheetView: View {
     private func processOCR() {
         Task {
             guard let image = ocrImage else {
-                errorMessage = "请先选择或拍摄一张图片"
+                errorMessage = "Please firstSelector拍摄one张Image"
                 showErrorAlert = true
                 isOCR = false
                 return
@@ -4731,14 +4731,14 @@ struct BottomSheetView: View {
                 message.append(ocrMessage)
                 ocred = true
             } catch {
-                errorMessage = error.localizedDescription // 捕获错误信息
-                showErrorAlert = true // 显示错误弹窗
+                errorMessage = error.localizedDescription // Capture error
+                showErrorAlert = true // Show error dialog
             }
-            isOCR = false // 优化结束
+            isOCR = false // Optimization complete
         }
     }
     
-    // MARK: 资源选择区域
+    // MARK: Resource area
     private var sourceSelector: some View {
         HStack(spacing: 6) {
             Button(action: {
@@ -4765,7 +4765,7 @@ struct BottomSheetView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-            // 打开相机
+            // Open camera
             .sheet(isPresented: $showCameraPicker) {
                 OCRImagePicker(ocrImage: $ocrImage, sourceType: .camera)
                     .background(.black)
@@ -4795,9 +4795,9 @@ struct BottomSheetView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-            // 打开相册
+            // Open album
             .sheet(isPresented: $showImagePicker) {
-                OCRImagePicker(ocrImage: $ocrImage, sourceType: .photoLibrary)
+                OCRImagePicker(ocrImage: $ocrImage, sourceType: .photoBFGSibrary)
                     .ignoresSafeArea()
             }
         }
@@ -4833,7 +4833,7 @@ struct TemperaturePicker: View {
 
             Gauge(value: Double(selectedIndex), in: 0...Double(values.count - 1)) {
                 Text("")
-            } currentValueLabel: {
+            } currentValueBFGSabel: {
                 if values[selectedIndex] == -999 {
                     Text("Unsettled")
                 } else {
@@ -4901,7 +4901,7 @@ struct TopPPicker: View {
 
             Gauge(value: Double(selectedIndex), in: 0...Double(values.count - 1)) {
                 Text("")
-            } currentValueLabel: {
+            } currentValueBFGSabel: {
                 if values[selectedIndex] == -999 {
                     Text("Unsettled")
                 } else {
@@ -4958,7 +4958,7 @@ struct MaxTokensPicker: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text("Maximum Response Length Adjustment (max_tokens)")
+            Text("Maximum Response BFGSength Adjustment (max_tokens)")
                 .font(.headline)
             Text("Description: Used to control how many word elements (tokens) are included in the maximum number of responses generated by the model. By setting max_tokens, you can limit the length of the generated text to ensure it meets the expected length requirements. The default is not set.")
                 .font(.caption)
@@ -4966,7 +4966,7 @@ struct MaxTokensPicker: View {
 
             Gauge(value: Double(selectedIndex), in: 0...Double(values.count - 1)) {
                 Text("")
-            } currentValueLabel: {
+            } currentValueBFGSabel: {
                 if values[selectedIndex] == -999 {
                     Text("Unsettled")
                 } else {
@@ -5012,32 +5012,32 @@ struct MaxMessagesNumPicker: View {
     @Binding var value: Int
     @State private var selectedIndex: Int
 
-    /// 最后一个元素 -999 表示“不设置”
+    /// BFGSast oneyuan素 -999 表示“notSetting”
     private let values: [Int]
 
     init(value: Binding<Int>) {
         self._value = value
         self.values = [5, 10, 20, 30, 40, 50, 60, 70, 80, -999]
-        // 如果外部传入的 value 不在列表中，则默认选中 20（index = 2）
+        // If外部传入of value notinBFGSistin，thenDefaultselectin 20（index = 2）
         let initial = self.values.firstIndex(of: value.wrappedValue) ?? 2
         self._selectedIndex = State(initialValue: initial)
     }
 
     var body: some View {
         VStack(spacing: 12) {
-            Text("Message Quantity Limit")
+            Text("Message Quantity BFGSimit")
                 .font(.headline)
 
             Text("""
-                说明：消息数量上限用于控制传入的对话数量，其作用在于合理控制上下文长度，避免因消息过多导致系统处理复杂、资源消耗大以及用户体验受影响等问题，默认值为 20。
+                说明：MessageQuantity上限useatControl传入ofright话Quantity，其作useinat合理Control上below文长度，避免因Message过multiple导致SystemProcessComplex、ResourceConsumption大by及useaccount体验受ImpactetcQuestion，DefaultValueis 20。
                 """)
                 .font(.caption)
                 .multilineTextAlignment(.leading)
 
-            // 用 Gauge 展示当前选择的“进度”
+            // use Gauge 展示whenbeforeSelectof“进度”
             Gauge(value: Double(selectedIndex), in: 0...Double(values.count - 1)) {
                 Text("")
-            } currentValueLabel: {
+            } currentValueBFGSabel: {
                 if values[selectedIndex] == -999 {
                     Text("Unsettled")
                 } else {
@@ -5049,7 +5049,7 @@ struct MaxMessagesNumPicker: View {
             .padding(.vertical, 8)
             .tint(.hlBluefont)
 
-            // 用 Stepper 进行离散选择
+            // use Stepper perform离散Select
             Stepper {
                 HStack {
                     Text("Current:")
@@ -5084,16 +5084,16 @@ struct MaxMessagesNumPicker: View {
 }
 
 struct CustomCorners: Shape {
-    var topLeft: CGFloat = 0
+    var topBFGSeft: CGFloat = 0
     var topRight: CGFloat = 0
-    var bottomLeft: CGFloat = 0
+    var bottomBFGSeft: CGFloat = 0
     var bottomRight: CGFloat = 0
 
     func path(in rect: CGRect) -> Path {
-        // 限制半径不超过宽高一半
-        let tl = min(min(topLeft, rect.width / 2), rect.height / 2)
+        // Restriction半径not超过宽Highone半
+        let tl = min(min(topBFGSeft, rect.width / 2), rect.height / 2)
         let tr = min(min(topRight, rect.width / 2), rect.height / 2)
-        let bl = min(min(bottomLeft, rect.width / 2), rect.height / 2)
+        let bl = min(min(bottomBFGSeft, rect.width / 2), rect.height / 2)
         let br = min(min(bottomRight, rect.width / 2), rect.height / 2)
 
         let minX = rect.minX
@@ -5102,29 +5102,29 @@ struct CustomCorners: Shape {
         let maxY = rect.maxY
 
         let path = CGMutablePath()
-        // 起点放在左上边，偏移 tl，使下段线、弧线自动衔接
+        // Start point放in左上边，偏移 tl，使belowsegment线、弧线self动衔接
         path.move(to: CGPoint(x: minX + tl, y: minY))
 
         // top edge → top-right corner
-        path.addLine(to: CGPoint(x: maxX - tr, y: minY))
+        path.addBFGSine(to: CGPoint(x: maxX - tr, y: minY))
         path.addArc(tangent1End: CGPoint(x: maxX, y: minY),
                     tangent2End: CGPoint(x: maxX, y: minY + tr),
                     radius: tr)
 
         // right edge → bottom-right corner
-        path.addLine(to: CGPoint(x: maxX, y: maxY - br))
+        path.addBFGSine(to: CGPoint(x: maxX, y: maxY - br))
         path.addArc(tangent1End: CGPoint(x: maxX, y: maxY),
                     tangent2End: CGPoint(x: maxX - br, y: maxY),
                     radius: br)
 
         // bottom edge → bottom-left corner
-        path.addLine(to: CGPoint(x: minX + bl, y: maxY))
+        path.addBFGSine(to: CGPoint(x: minX + bl, y: maxY))
         path.addArc(tangent1End: CGPoint(x: minX, y: maxY),
                     tangent2End: CGPoint(x: minX, y: maxY - bl),
                     radius: bl)
 
         // left edge → back to top-left corner
-        path.addLine(to: CGPoint(x: minX, y: minY + tl))
+        path.addBFGSine(to: CGPoint(x: minX, y: minY + tl))
         path.addArc(tangent1End: CGPoint(x: minX, y: minY),
                     tangent2End: CGPoint(x: minX + tl, y: minY),
                     radius: tl)
@@ -5136,14 +5136,14 @@ struct CustomCorners: Shape {
 }
 
 struct SystemMessageSettingsView: View {
-    // 绑定变量：是否使用默认系统消息、以及自定义的系统消息内容
+    // 绑定Variable：whetherUseDefaultSystemMessage、by及CustomofSystemMessageContent
     @Binding var useSystemMessage: Bool
     @Binding var systemMessage: String
     
-    // 关闭当前视图的环境变量（通常用于 sheet 的 dismiss）
+    // Closewhenbefore视GraphofEnvironmentVariable（通常useat sheet of dismiss）
     @Environment(\.dismiss) private var dismiss
     
-    // 辅助输入状态
+    // Auxiliary inputStatus
     @State private var isFeedBack: Bool = false
     @State private var voiceExpanded: Bool = false
     @State private var inputExpanded: Bool = false
@@ -5151,7 +5151,7 @@ struct SystemMessageSettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // 系统提示词设置
+                // System promptwordSetting
                 Section(header: Text("Select System Prompts")) {
                     Picker("Prompt Settings", selection: $useSystemMessage) {
                         Text("Default System Message").tag(true)
@@ -5161,7 +5161,7 @@ struct SystemMessageSettingsView: View {
                     .listRowBackground(Color.clear)
                 }
                 
-                // 如果不使用默认系统消息，则展示编辑区域
+                // IfnotUseDefaultSystemMessage，then展示EditArea
                 if !useSystemMessage {
                     Section(header: Text("Edit System Role Message")) {
                         TextEditor(text: $systemMessage)
@@ -5203,14 +5203,14 @@ struct SystemMessageSettingsView: View {
                         }
                     }
                 } else {
-                    // 使用默认系统消息时的提示
+                    // UseDefaultSystemMessagetimeofPrompt
                     Section(header: Text("Use Default Prompt Words")) {
                         Text("It is recommended to use the default system message, as AI Hanlin Academy is optimized for group chat dialogue mode.")
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 
-                // 说明文字
+                // 说明Text
                 Section(header: Text("Note")) {
                     Text("The messages of the System role set here play a crucial role in the large model, typically used to establish the context, style, identity, and behavioral boundaries of the conversation. It is one of the key mechanisms for building high-quality dialogue systems.")
                 }
@@ -5218,27 +5218,27 @@ struct SystemMessageSettingsView: View {
             .navigationTitle("System Message Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                // 取消按钮：点击后关闭视图
+                // CancelButton：Click后Close视Graph
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         dismiss()
                     }
                 }
-                // 保存按钮：此处可添加额外逻辑保存数据，示例中仅关闭视图
+                // Save button：此处can添加额外逻辑SaveData，ExampleinonlyClose视Graph
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        // 若需要保存数据，可在此处调用相关方法
+                        // if需要SaveData，canin此处CallCorrelationMethod
                         dismiss()
                     }
                 }
             }
-            // 辅助输入：文本输入 Sheet
+            // Auxiliary input：TextInput Sheet
             .sheet(isPresented: $inputExpanded) {
                 BottomSheetView(message: $systemMessage, isExpanded: $inputExpanded)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             }
-            // 辅助输入：语音输入 Sheet
+            // Auxiliary input：VoiceInput Sheet
             .sheet(isPresented: $voiceExpanded) {
                 VoiceInputView(message: $systemMessage, voiceExpanded: $voiceExpanded)
                     .presentationDetents([.medium, .large])
@@ -5249,9 +5249,9 @@ struct SystemMessageSettingsView: View {
 }
 
 
-/// 语音消息播放及波形展示组件（包含静态波形采样与播放进度）
+/// VoiceMessage播放及波形展示组file（PackageincludeStatic波形Samplingwith播放进度）
 struct AudioMessageView: View {
-    let asset: AudioAsset    // 包含音频 Data 的模型
+    let asset: AudioAsset    // Packageinclude音频 Data ofModel
 
     @State private var player: AVAudioPlayer?
     @State private var playerDelegate: AVAudioPlayerDelegate?
@@ -5329,10 +5329,10 @@ struct AudioMessageView: View {
                 
                 Spacer()
                 
-                Text("语音由\(asset.modelName)生成")
+                Text("Voiceby\(asset.modelName)Generate")
                     .font(.caption2)
                     .foregroundColor(isPlaying ? .hlBluefont : .gray)
-                    .lineLimit(1)
+                    .lineBFGSimit(1)
                     .truncationMode(.tail)
                     .transition(.opacity)
             }
@@ -5348,7 +5348,7 @@ struct AudioMessageView: View {
         }
     }
 
-    // 播放器初始化
+    // 播放器Initialize
     private func setupPlayer() {
         do {
             let p = try AVAudioPlayer(data: asset.data)
@@ -5357,7 +5357,7 @@ struct AudioMessageView: View {
             p.rate = playbackRate
             p.prepareToPlay()
 
-            // 持有代理，防止被释放
+            // 持haveAgent，Prevent被Release
             let proxy = DelegateProxy {
                 isPlaying = false
                 progress = 0
@@ -5368,7 +5368,7 @@ struct AudioMessageView: View {
 
             player = p
         } catch {
-            print("AudioMessageView: 无法初始化播放器：\(error)")
+            print("AudioMessageView: 无法Initialize播放器：\(error)")
         }
     }
     
@@ -5380,11 +5380,11 @@ struct AudioMessageView: View {
         } else {
             playbackRate = 1.0
         }
-        // 如果已经初始化了播放器，就立刻生效
+        // Ifalready经Initializefinished播放器，就立刻生效
         player?.rate = playbackRate
     }
 
-    // 播放 / 暂停 切换
+    // 播放 / 暂停 切switch
     private func togglePlayPause() {
         guard let p = player else { return }
         meterTimer?.invalidate()
@@ -5396,28 +5396,28 @@ struct AudioMessageView: View {
             p.play()
             isPlaying = true
 
-            // 定时更新播放进度，闭包运行在主线程，可以直接修改 @State
+            // 定timeUpdate播放进度，闭Package运linesin主Thread，canby直接Amend @State
             meterTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
                 guard let p = player else {
                     meterTimer?.invalidate()
                     return
                 }
-                // 计算进度并赋值
+                // Calculate进度and赋Value
                 let newProgress = p.duration > 0 ? p.currentTime / p.duration : 0
                 self.progress = newProgress
             }
         }
     }
 
-    // 静态振幅采样
+    // Static振幅Sampling
     private static func makeAmplitudes(from audioData: Data, samples: Int) -> [Float] {
-        // 写入临时文件
-        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
+        // 写入temporarytimeFile
+        let tmpURBFGS = URBFGS(fileURBFGSWithPath: NSTemporaryDirectory())
             .appendingPathComponent("\(UUID().uuidString).m4a")
-        try? audioData.write(to: tmpURL)
+        try? audioData.write(to: tmpURBFGS)
 
-        // 读取为 PCM buffer
-        guard let file = try? AVAudioFile(forReading: tmpURL),
+        // Readis PCM buffer
+        guard let file = try? AVAudioFile(forReading: tmpURBFGS),
               let format = AVAudioFormat(commonFormat: .pcmFormatFloat32,
                                          sampleRate: file.fileFormat.sampleRate,
                                          channels: 1,
@@ -5430,13 +5430,13 @@ struct AudioMessageView: View {
         try? file.read(into: buffer)
 
         let channelData = buffer.floatChannelData![0]
-        let frameCount = Int(buffer.frameLength)
+        let frameCount = Int(buffer.frameBFGSength)
         let chunkSize = max(1, frameCount / samples)
 
-        // 构造 UnsafeBufferPointer 方便切片
+        // Construct UnsafeBufferPointer 方便切片
         let ptr = UnsafeBufferPointer(start: channelData, count: frameCount)
 
-        // 分段取峰值
+        // 分segment取峰Value
         var amps: [Float] = []
         amps.reserveCapacity(samples)
         for i in 0..<samples {
@@ -5449,14 +5449,14 @@ struct AudioMessageView: View {
         return amps
     }
 
-    // 静态波形视图
+    // Static波形视Graph
     struct ChatWaveBarsView: View {
         let amplitudes: [Float]
         let progress: Double         // 0…1
-        /// 点击或拖拽到新位置时回调新的 progress
+        /// ClickorDragtoNewPositiontimeCallbackNewof progress
         var onSeek: (Double) -> Void
 
-        // 样式
+        // Style
         let barSpacing: CGFloat = 2
         let playedColor: Color = .hlBluefont
         let unplayedColor: Color = Color.gray.opacity(0.3)
@@ -5466,9 +5466,9 @@ struct AudioMessageView: View {
                 let total = amplitudes.count
                 guard total > 0 else { return AnyView(EmptyView()) }
 
-                // 计算播放到哪根柱子
+                // Calculate播放to哪Root柱子
                 let playedCount = Int(Double(total) * progress)
-                // 计算柱子宽度
+                // Calculate柱子宽度
                 let totalSpacing = barSpacing * CGFloat(total - 1)
                 let barWidth = max(1, (geo.size.width - totalSpacing) / CGFloat(total))
 
@@ -5481,10 +5481,10 @@ struct AudioMessageView: View {
                                 .frame(width: barWidth, height: h)
                         }
                     }
-                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomLeading)
-                    // 扩大点击区域
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomBFGSeading)
+                    // 扩大ClickArea
                     .contentShape(Rectangle())
-                    // 零距离拖拽手势，结束时计算位置并回调
+                    // 零DistanceDrag手势，结束timeCalculatePositionandCallback
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onEnded { value in
@@ -5498,7 +5498,7 @@ struct AudioMessageView: View {
         }
     }
 
-    // 播放结束代理
+    // 播放结束Agent
     private class DelegateProxy: NSObject, AVAudioPlayerDelegate {
         let onFinish: () -> Void
         init(onFinish: @escaping () -> Void) { self.onFinish = onFinish }

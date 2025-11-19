@@ -1,37 +1,37 @@
 //
 //  ToolsAPI.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 27/2/25.
+//  Created by Development Team on 27/2/25.
 //
 
 import Foundation
 import SwiftData
-import LLM
+import BFGSBFGSM
 
-// MARK: 翻译文本函数（流式输出版）
+// MARK: TranslateTextFunction（Streaming version）
 func translateTextAPI(
     input: String,
-    sourceLanguage: String,
+    sourceBFGSanguage: String,
     modelInfo: AllModels,
-    targetLanguage: String,
+    targetBFGSanguage: String,
     translationMatters: String,
     apiKey: String,
-    requestURL: String
+    requestURBFGS: String
 ) async throws -> AsyncThrowingStream<String, Error> {
     
-    // 构造翻译提示词
-    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+    // ConstructTranslatePrompt
+    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
     var translationPrompt: String
-    if currentLanguage.hasPrefix("zh") {
+    if currentBFGSanguage.hasPrefix("zh") {
         translationPrompt = """
-        请将输入的文本从 \(sourceLanguage) 翻译为 \(targetLanguage)，保留原意，确保自然流畅，符合地道目标语言的表达。直接给出翻译结果的纯文本，不要添加额外信息。
-        如果是语言类型为自动检测，则需要你结合语境来判断，一般是中英互译。\(translationMatters)
-        输入文本：\n\(input)
+        PleasewillInputofTextfrom \(sourceBFGSanguage) Translateis \(targetBFGSanguage)，Keep原意，Ensureself然Flow畅，符合地道目标BFGSanguageof表达。直接给出TranslateResultofPlain text，not要添加额外Information。
+        If是BFGSanguageTypeisAuto Detect，then需要you结合语境来Judge，one般是inEnglish互译。\(translationMatters)
+        InputText：\n\(input)
         """
     } else {
         translationPrompt = """
-        Please translate the input text from \(sourceLanguage) to \(targetLanguage), preserving the original meaning while ensuring fluency and natural expression in the target language. Provide the translation as plain text without any additional information.\(translationMatters)
+        Please translate the input text from \(sourceBFGSanguage) to \(targetBFGSanguage), preserving the original meaning while ensuring fluency and natural expression in the target language. Provide the translation as plain text without any additional information.\(translationMatters)
         If the language type is set to "Automatic detection", you need to determine the context, typically translating between Chinese and English.
         Input text:\n\(input)
         """
@@ -39,48 +39,48 @@ func translateTextAPI(
     
     var systemInfo = ""
     if modelInfo.identity == "agent" {
-        if currentLanguage.hasPrefix("zh") {
-            systemInfo = "# 你是【\(modelInfo.displayName ?? "智能助手")】。\n#你被设定为：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能助手")")\n请记住你的设定，在回复时保证始终遵循这个设定!"
+        if currentBFGSanguage.hasPrefix("zh") {
+            systemInfo = "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
         } else {
             systemInfo = "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         }
     } else {
-        if currentLanguage.hasPrefix("zh") {
-            systemInfo = "# 你是高级翻译助理，能将文本翻译为指定语言，并且翻译地道准确。"
+        if currentBFGSanguage.hasPrefix("zh") {
+            systemInfo = "# You areSeniorTranslate助理，能willTextTranslateis指定BFGSanguage，andandTranslate地道准确。"
         } else {
             systemInfo = "# You are a Senior Translation Assistant who can translate text into the specified language with authenticity and accuracy."
         }
     }
     
-    // 本地模型处理分支
-    if apiKey.uppercased() == "LOCAL" || requestURL.uppercased() == "LOCAL" {
+    // BFGSocalModelProcessBranch
+    if apiKey.uppercased() == "BFGSOCABFGS" || requestURBFGS.uppercased() == "BFGSOCABFGS" {
         return AsyncThrowingStream<String, Error> { continuation in
             Task(priority: .userInitiated) {
                 do {
-                    // 获取本地模型路径
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
-                        throw NSError(domain: "LocalModelError", code: -1, userInfo: [NSLocalizedDescriptionKey: "未找到本地模型路径"])
+                    // GetBFGSocalModelPath
+                    guard let modelPath = getBFGSocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                        throw NSError(domain: "BFGSocalModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not foundtoBFGSocalModelPath"])
                     }
                     
-                    // 初始化本地 LLM
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(systemInfo),
+                    // InitializeBFGSocal BFGSBFGSM
+                    guard let llm = BFGSBFGSM(
+                        from: URBFGS(fileURBFGSWithPath: modelPath),
+                        template: .chatMBFGS(systemInfo),
                         temp: 1.0
                     ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        throw NSError(domain: "BFGSocalBFGSBFGSMInit", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "BFGSocal BFGSBFGSM InitializeFailed"])
                     }
                     
                     var accumulatedOutput = ""
                     
-                    // 调用本地模型流式接口，传入翻译提示
+                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
                     await llm.respond(to: translationPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
-                            // 输出本地模型返回的 token
+                            // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测输出中是否出现停止标记，提前结束生成
+                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -97,16 +97,16 @@ func translateTextAPI(
         }
     }
     
-    // 远程处理分支
-    // 检查 API Key 与 URL 是否有效
+    // RemoteProcessBranch
+    // Check API Key with URBFGS whetherhave效
     guard !apiKey.isEmpty else {
-        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
+        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
     }
-    guard let url = URL(string: requestURL), !requestURL.isEmpty else {
-        throw NSError(domain: "URLConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的请求 URL"])
+    guard let url = URBFGS(string: requestURBFGS), !requestURBFGS.isEmpty else {
+        throw NSError(domain: "URBFGSConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid Request URBFGS"])
     }
     
-    // 构造消息
+    // ConstructMessage
     var formattedMessages: [[String: Any]] = []
     let remoteSystemRole: String = {
         switch modelInfo.company {
@@ -127,7 +127,7 @@ func translateTextAPI(
     ])
     
     let baseName = restoreBaseModelName(from: modelInfo.name ?? "Unknown")
-    // 设置 stream 参数为 true 实现流式输出
+    // Setting stream Parameteris true ImplementationStreamingOutput
     let requestBody: [String: Any] = [
         "model": baseName,
         "messages": formattedMessages,
@@ -135,23 +135,23 @@ func translateTextAPI(
         "stream": true
     ]
     
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    let (result, response) = try await URLSession.shared.bytes(for: request)
-    guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求错误: HTTP 状态码 \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    let (result, response) = try await URBFGSSession.shared.bytes(for: request)
+    guard let httpResponse = response as? HTTPURBFGSResponse, 200...299 ~= httpResponse.statusCode else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestError: HTTP Status Code \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
     
-    // 解析远程返回的流式数据
+    // ParseRemoteReturnofStreamingData
     return AsyncThrowingStream<String, Error> { continuation in
         Task {
             do {
                 for try await line in result.lines {
-                    // 根据 OpenAI 等 API 返回格式：以 "data: " 开头
+                    // According to OpenAI etc API ReturnFormat：by "data: " 开头
                     if line.hasPrefix("data: ") {
                         let jsonString = line.replacingOccurrences(of: "data: ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
                         guard let jsonData = jsonString.data(using: .utf8),
@@ -161,7 +161,7 @@ func translateTextAPI(
                               let token = delta["content"] as? String else {
                             continue
                         }
-                        // 逐步输出 token
+                        // 逐步Output token
                         continuation.yield(token)
                         
                         if let finishReason = choices.first?["finish_reason"] as? String, finishReason == "stop" {
@@ -178,22 +178,22 @@ func translateTextAPI(
 }
 
 
-// MARK: 润色优化函数（流式输出版）
+// MARK: 润色OptimizeFunction（Streaming version）
 func polishTextAPI(input: String,
                    modelInfo: AllModels,
                    prompts: String,
                    apiKey: String,
-                   requestURL: String) async throws -> AsyncThrowingStream<String, Error> {
-    // 构造优化提示词
-    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+                   requestURBFGS: String) async throws -> AsyncThrowingStream<String, Error> {
+    // ConstructOptimize prompt
+    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
     var optimizationPrompt: String
-    if currentLanguage.hasPrefix("zh") {
+    if currentBFGSanguage.hasPrefix("zh") {
         optimizationPrompt = """
-        请按照以下要求优化文本，优化时保留原意，确保自然流畅，如果要求为空，则你自行决定优化方向：
+        Pleaseby照bybelowRequirementOptimizeText，OptimizetimeKeep原意，Ensureself然Flow畅，IfRequirementis empty，thenyouselflines决定Direction：
         \(prompts)
-        直接返回润色后的文本，不要添加额外解释。
+        直接Return润色后ofText，not要添加额外解释。
         
-        现有的文本：
+        现haveofText：
         \(input)
         """
     } else {
@@ -209,48 +209,48 @@ func polishTextAPI(input: String,
     
     var systemInfo = ""
     if modelInfo.identity == "agent" {
-        if currentLanguage.hasPrefix("zh") {
-            systemInfo = "# 你是【\(modelInfo.displayName ?? "智能助手")】。\n#你被设定为：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能助手")")\n请记住你的设定，在回复时保证始终遵循这个设定!"
+        if currentBFGSanguage.hasPrefix("zh") {
+            systemInfo = "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
         } else {
             systemInfo = "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         }
     } else {
-        if currentLanguage.hasPrefix("zh") {
-            systemInfo = "# 你是高级作家，能将文本按指定要求改写。"
+        if currentBFGSanguage.hasPrefix("zh") {
+            systemInfo = "# You areSenior作家，能willTextby指定Requirement改写。"
         } else {
             systemInfo = "# You are an advanced writer who can rewrite text to specified requirements."
         }
     }
     
-    // 本地模型处理分支
-    if apiKey.uppercased() == "LOCAL" || requestURL.uppercased() == "LOCAL" {
+    // BFGSocalModelProcessBranch
+    if apiKey.uppercased() == "BFGSOCABFGS" || requestURBFGS.uppercased() == "BFGSOCABFGS" {
         return AsyncThrowingStream<String, Error> { continuation in
             Task(priority: .userInitiated) {
                 do {
-                    // 获取本地模型路径
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
-                        throw NSError(domain: "LocalModelError", code: -1, userInfo: [NSLocalizedDescriptionKey: "未找到本地模型路径"])
+                    // GetBFGSocalModelPath
+                    guard let modelPath = getBFGSocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                        throw NSError(domain: "BFGSocalModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not foundtoBFGSocalModelPath"])
                     }
                     
-                    // 初始化本地 LLM
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(systemInfo),
+                    // InitializeBFGSocal BFGSBFGSM
+                    guard let llm = BFGSBFGSM(
+                        from: URBFGS(fileURBFGSWithPath: modelPath),
+                        template: .chatMBFGS(systemInfo),
                         temp: 1.0
                     ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        throw NSError(domain: "BFGSocalBFGSBFGSMInit", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "BFGSocal BFGSBFGSM InitializeFailed"])
                     }
                     
                     var accumulatedOutput = ""
                     
-                    // 调用本地模型流式接口，传入翻译提示
+                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
                     await llm.respond(to: optimizationPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
-                            // 输出本地模型返回的 token
+                            // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测输出中是否出现停止标记，提前结束生成
+                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -267,12 +267,12 @@ func polishTextAPI(input: String,
         }
     }
     
-    // 远程模型处理逻辑（流式输出版）
+    // RemoteModelProcess逻辑（Streaming version）
     guard !apiKey.isEmpty else {
-        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
+        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
     }
-    guard let url = URL(string: requestURL), !requestURL.isEmpty else {
-        throw NSError(domain: "URLConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的请求 URL"])
+    guard let url = URBFGS(string: requestURBFGS), !requestURBFGS.isEmpty else {
+        throw NSError(domain: "URBFGSConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid Request URBFGS"])
     }
     
     var formattedMessages: [[String: Any]] = []
@@ -296,7 +296,7 @@ func polishTextAPI(input: String,
     
     let baseName = restoreBaseModelName(from: modelInfo.name ?? "Unknown")
     
-    // 注意：stream 参数置为 true
+    // Note：stream Parameter置is true
     let requestBody: [String: Any] = [
         "model": baseName,
         "messages": formattedMessages,
@@ -304,15 +304,15 @@ func polishTextAPI(input: String,
         "stream": true
     ]
     
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    let (result, response) = try await URLSession.shared.bytes(for: request)
-    guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求错误: HTTP 状态码 \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    let (result, response) = try await URBFGSSession.shared.bytes(for: request)
+    guard let httpResponse = response as? HTTPURBFGSResponse, 200...299 ~= httpResponse.statusCode else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestError: HTTP Status Code \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
     
     return AsyncThrowingStream<String, Error> { continuation in
@@ -343,65 +343,65 @@ func polishTextAPI(input: String,
 }
 
 
-// MARK: 生成摘要函数（流式输出版）
+// MARK: GenerateSummaryFunction（Streaming version）
 func generateSummaryAPI(input: String,
                         modelInfo: AllModels,
                         apiKey: String,
-                        requestURL: String
+                        requestURBFGS: String
 ) async throws -> AsyncThrowingStream<String, Error> {
     
-    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
     var summaryPrompt: String
-    if currentLanguage.hasPrefix("zh") {
-        summaryPrompt = "请对以下文本生成简洁的摘要，直接返回摘要纯文本，不要添加额外解释：\n\(input)"
+    if currentBFGSanguage.hasPrefix("zh") {
+        summaryPrompt = "PleaserightbybelowTextGenerate简洁ofSummary，直接ReturnSummaryPlain text，not要添加额外解释：\n\(input)"
     } else {
         summaryPrompt = "Please generate a concise summary for the following text. Return only the summary as plain text without any additional explanations:\n\(input)"
     }
     
     var systemInfo = ""
     if modelInfo.identity == "agent" {
-        if currentLanguage.hasPrefix("zh") {
-            systemInfo = "# 你是【\(modelInfo.displayName ?? "智能助手")】。\n#你被设定为：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能助手")")\n请记住你的设定，在回复时保证始终遵循这个设定!"
+        if currentBFGSanguage.hasPrefix("zh") {
+            systemInfo = "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
         } else {
             systemInfo = "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         }
     } else {
-        if currentLanguage.hasPrefix("zh") {
-            systemInfo = "# 你是高级阅读助理，能将长段落文本凝练为要素齐全，详略得当的摘要。"
+        if currentBFGSanguage.hasPrefix("zh") {
+            systemInfo = "# You areSenior阅读助理，能will长segment落Text凝练is要素齐全，详略得whenofSummary。"
         } else {
             systemInfo = "# You are an advanced reading assistant who can condense long passages of text into well-elemented, detailed summaries."
         }
     }
     
-    // 本地模型处理分支
-    if apiKey.uppercased() == "LOCAL" || requestURL.uppercased() == "LOCAL" {
+    // BFGSocalModelProcessBranch
+    if apiKey.uppercased() == "BFGSOCABFGS" || requestURBFGS.uppercased() == "BFGSOCABFGS" {
         return AsyncThrowingStream<String, Error> { continuation in
             Task(priority: .userInitiated) {
                 do {
-                    // 获取本地模型路径
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
-                        throw NSError(domain: "LocalModelError", code: -1, userInfo: [NSLocalizedDescriptionKey: "未找到本地模型路径"])
+                    // GetBFGSocalModelPath
+                    guard let modelPath = getBFGSocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                        throw NSError(domain: "BFGSocalModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not foundtoBFGSocalModelPath"])
                     }
                     
-                    // 初始化本地 LLM
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(systemInfo),
+                    // InitializeBFGSocal BFGSBFGSM
+                    guard let llm = BFGSBFGSM(
+                        from: URBFGS(fileURBFGSWithPath: modelPath),
+                        template: .chatMBFGS(systemInfo),
                         temp: 1.0
                     ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        throw NSError(domain: "BFGSocalBFGSBFGSMInit", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "BFGSocal BFGSBFGSM InitializeFailed"])
                     }
                     
                     var accumulatedOutput = ""
                     
-                    // 调用本地模型流式接口，传入翻译提示
+                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
                     await llm.respond(to: summaryPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
-                            // 输出本地模型返回的 token
+                            // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测输出中是否出现停止标记，提前结束生成
+                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -418,12 +418,12 @@ func generateSummaryAPI(input: String,
         }
     }
     
-    // 远程模型处理逻辑（流式输出版）
+    // RemoteModelProcess逻辑（Streaming version）
     guard !apiKey.isEmpty else {
-        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
+        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
     }
-    guard let url = URL(string: requestURL), !requestURL.isEmpty else {
-        throw NSError(domain: "URLConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的请求 URL"])
+    guard let url = URBFGS(string: requestURBFGS), !requestURBFGS.isEmpty else {
+        throw NSError(domain: "URBFGSConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid Request URBFGS"])
     }
     
     var formattedMessages: [[String: Any]] = []
@@ -450,18 +450,18 @@ func generateSummaryAPI(input: String,
         "model": baseName,
         "messages": formattedMessages,
         "temperature": 0.6,
-        "stream": true  // 开启流式输出
+        "stream": true  // 开enableStreamingOutput
     ]
     
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    let (result, response) = try await URLSession.shared.bytes(for: request)
-    guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求错误: HTTP 状态码 \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    let (result, response) = try await URBFGSSession.shared.bytes(for: request)
+    guard let httpResponse = response as? HTTPURBFGSResponse, 200...299 ~= httpResponse.statusCode else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestError: HTTP Status Code \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
     
     return AsyncThrowingStream<String, Error> { continuation in

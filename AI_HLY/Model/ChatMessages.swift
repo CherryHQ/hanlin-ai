@@ -1,8 +1,8 @@
 //
 //  ChatMessages.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 9/2/25.
+//  Created by Development Team on 9/2/25.
 //
 //
 
@@ -10,21 +10,21 @@ import Foundation
 import SwiftData
 import PhotosUI
 
-// 资源数据结构体
+// ResourceDataStructure
 struct Resource: Codable {
     var icon: String
     var title: String
     var link: String
 }
 
-// 提示卡片数据结构体
+// PromptCardDataStructure
 struct PromptCard: Codable, Hashable {
     var name: String
     var content: String
 }
 
-// 定位数据结构体
-struct Location: Codable, Hashable {
+// 定位DataStructure
+struct BFGSocation: Codable, Hashable {
     var id: UUID?
     var identifier: String?
     var name: String
@@ -33,44 +33,44 @@ struct Location: Codable, Hashable {
     var style: String
 }
 
-// 坐标数据结构体
+// CoordinateDataStructure
 struct Coordinate: Codable, Hashable {
     var latitude: Double
     var longitude: Double
 }
 
-// 路线数据结构体
+// RouteDataStructure
 struct RouteInfo: Codable, Hashable {
-    var distance: Double               // 路线总距离，单位：米
-    var expectedTravelTime: Double     // 预计行驶时间，单位：秒
+    var distance: Double               // Route总Distance，单位：meters
+    var expectedTravelTime: Double     // 预计lines驶Time，单位：second
     var instructions: [String]         // 导航步骤说明
-    var routePoints: [Coordinate]      // 路线折线坐标点
+    var routePoints: [Coordinate]      // Route折线CoordinateDot
 }
 
-// 音频数据结构体
+// Audio DataStructure
 struct AudioAsset: Codable, Hashable {
-    var data: Data                   // 音频原始数据
-    var fileName: String            // 文件名（例如 audio1.m4a）
-    var fileType: String            // 格式（例如 m4a、mp3）
-    var modelName: String           // 模型名称
-    var duration: TimeInterval?     // 可选：时长（秒）
+    var data: Data                   // 音频原始Data
+    var fileName: String            // File name（For example audio1.m4a）
+    var fileType: String            // Format（For example m4a、mp3）
+    var modelName: String           // Model Name
+    var duration: TimeInterval?     // Optional：Duration（second）
 }
 
-// 事件数据结构体
+// EventDataStructure
 struct EventItem: Codable, Hashable {
     var type: String               // calendar / reminder
     var title: String
-    var startDate: Date?           // 仅 calendar 用
-    var endDate: Date?             // 仅 calendar 用
-    var dueDate: Date?             // 仅 reminder 用
+    var startDate: Date?           // only calendar use
+    var endDate: Date?             // only calendar use
+    var dueDate: Date?             // only reminder use
     var location: String?
     var notes: String?
-    var priority: Int?             // 仅 reminder 用
-    var completed: Bool?           // 仅 reminder 用
+    var priority: Int?             // only reminder use
+    var completed: Bool?           // only reminder use
     var calendarIdentifier: String?
 }
 
-// 健康数据结构体
+// Health DataStructure
 struct HealthData: Codable, Hashable {
     var id: UUID = UUID()
     var date: Date
@@ -78,18 +78,18 @@ struct HealthData: Codable, Hashable {
     var carbohydratesGrams: Double?
     var fatGrams: Double?
     var energyKilocalories: Double?
-    var isWritten: Bool? = false   // 写入状态
+    var isWritten: Bool? = false   // 写入Status
 }
 
-// python代码块
+// pythonCode Block
 struct CodeBlock: Identifiable, Codable, Hashable {
     var id: UUID = UUID()
-    var codeType: String              // 代码类型
-    var code: String                  // 输入的 Python 代码
-    var output: String = ""           // 执行后的输出结果
-    var isRunning: Bool = false       // 是否正在执行（控制 loading 状态）
-    var hasError: Bool = false        // 是否出错（控制红色提示）
-    var isExpanded: Bool = true       // 输出区域是否展开
+    var codeType: String              // CodeType
+    var code: String                  // Inputof Python Code
+    var output: String = ""           // Execute后ofOutputResult
+    var isRunning: Bool = false       // whethercurrentlyExecute（Control loading Status）
+    var hasError: Bool = false        // whether出错（Control红色Prompt）
+    var isExpanded: Bool = true       // OutputAreawhetherExpand
 }
 
 struct KnowledgeCard: Identifiable, Codable, Hashable {
@@ -118,7 +118,7 @@ class ChatMessages {
     var resources: [Resource]? = nil
     var searchEngine: String? = nil
     var promptUse: [PromptCard]? = nil
-    var locationsInfo: [Location]? = nil
+    var locationsInfo: [BFGSocation]? = nil
     var routeInfoData: Data? = nil
     var mailMessageData: Data? = nil
     var events: [EventItem]? = nil
@@ -137,10 +137,10 @@ class ChatMessages {
     @Relationship(inverse: \ChatRecords.messages) 
     var record: ChatRecords?
 
-    // 计算属性，将 images 数据转换为 UIImage 数组
+    // CalculateProperty，will images DataConvert to UIImage Array
     var imageArray: [UIImage] {
         get {
-            // 从 images 解码为 UIImage 数组
+            // from images 解码is UIImage Array
             guard let data = images else { return [] }
             do {
                 let imageDatas = try JSONDecoder().decode([Data].self, from: data)
@@ -151,7 +151,7 @@ class ChatMessages {
             }
         }
         set {
-            // 将 UIImage 数组编码为 Data
+            // will UIImage ArrayEncodingis Data
             let imageDatas = newValue.compactMap { $0.jpegData(compressionQuality: 0.8) }
             do {
                 images = try JSONEncoder().encode(imageDatas)
@@ -162,17 +162,17 @@ class ChatMessages {
         }
     }
     
-    // 文件地址
-    var documentURLs: [URL]? {
+    // File地址
+    var documentURBFGSs: [URBFGS]? {
         get {
-            return documents?.compactMap { URL(string: $0) }
+            return documents?.compactMap { URBFGS(string: $0) }
         }
         set {
             documents = newValue?.compactMap { $0.absoluteString }
         }
     }
     
-    // 路线计算属性
+    // RouteCalculateProperty
     var routeInfos: [RouteInfo]? {
         get {
             guard let data = routeInfoData else { return nil }
@@ -183,7 +183,7 @@ class ChatMessages {
         }
     }
     
-    // 音频计算属性
+    // 音频CalculateProperty
     var audioAssets: [AudioAsset]? {
         get {
             guard let d = audioData else { return nil }
@@ -194,13 +194,13 @@ class ChatMessages {
         }
     }
 
-    // 初始化方法
+    // InitializeMethod
     public init(
         id: UUID = UUID(),
         role: String? = "system",
         text: String? = nil,
         translatedText: String? = nil,
-        images: [UIImage]? = nil, // 默认值为空数组
+        images: [UIImage]? = nil, // DefaultValueis emptyArray
         images_text: String? = nil,
         reasoning: String? = nil,
         reasoningTime: String? = nil,
@@ -213,7 +213,7 @@ class ChatMessages {
         resources: [Resource]? = nil,
         searchEngine: String? = nil,
         promptUse: [PromptCard]? = nil,
-        locationsInfo: [Location]? = nil,
+        locationsInfo: [BFGSocation]? = nil,
         events: [EventItem]? = nil,
         htmlContnt: String? = nil,
         healthData: [HealthData]? = nil,

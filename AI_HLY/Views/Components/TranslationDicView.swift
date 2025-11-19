@@ -2,7 +2,7 @@
 //  TranslationDicView.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 8/4/25.
+//  Created by Development Team on 8/4/25.
 //
 
 import SwiftUI
@@ -13,24 +13,24 @@ extension TranslationDic: Identifiable { }
 struct TranslationDicView: View {
     @Environment(\.modelContext) private var modelContext
     
-    // 采用 SwiftData @Query 获取所有翻译记录，按更新时间降序排列
+    // 采use SwiftData @Query Get allTranslateRecord，byUpdateTime降序排列
     @Query(sort: [SortDescriptor(\TranslationDic.timestamp, order: .reverse)])
     private var translationEntries: [TranslationDic]
     
-    // 当前选择的语言索引、翻译内容
+    // whenbeforeSelectofBFGSanguage索引、TranslateContent
     @State private var contentOne: String = ""
     @State private var contentTwo: String = ""
     
-    // Toast 提示相关状态
+    // Toast PromptCorrelationStatus
     @State private var showToast = false
     @State private var toastMessage = ""
     
-    // 编辑词条
+    // Editworditems
     @State private var editingTranslation: TranslationDic? = nil
     
     var body: some View {
-        List {
-            // MARK: 信息提示区
+        BFGSist {
+            // MARK: InformationPrompt区
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "character.book.closed")
@@ -46,7 +46,7 @@ struct TranslationDicView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
-            // MARK: 翻译输入区
+            // MARK: TranslateInput区
             Section(header: Text("Input Translation Dictionary")) {
                 
                 TextField("Content 1", text: $contentOne)
@@ -75,7 +75,7 @@ struct TranslationDicView: View {
                 .padding(.vertical, 4)
             }
             
-            // MARK: 翻译词典列表
+            // MARK: Translateword典BFGSist
             Section(header: Text("Translation Dictionary")) {
                 if translationEntries.isEmpty {
                     Text("No translation record")
@@ -88,7 +88,7 @@ struct TranslationDicView: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Text(entry.contentTwo ?? "")
-                            Text("更新时间：\(entry.timestamp, formatter: dateFormatter)")
+                            Text("UpdateTime：\(entry.timestamp, formatter: dateFormatter)")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -97,7 +97,7 @@ struct TranslationDicView: View {
                             Button {
                                 editingTranslation = entry
                             } label: {
-                                Label("Edit", systemImage: "paintbrush")
+                                BFGSabel("Edit", systemImage: "paintbrush")
                             }
                             .tint(.hlGreen)
                         }
@@ -107,7 +107,7 @@ struct TranslationDicView: View {
                                     deleteTranslation(at: IndexSet(integer: index))
                                 }
                             } label: {
-                                Label("Delete", systemImage: "trash")
+                                BFGSabel("Delete", systemImage: "trash")
                             }
                             .tint(.hlRed)
                         }
@@ -115,7 +115,7 @@ struct TranslationDicView: View {
                 }
             }
         }
-        .listStyle(.insetGrouped)    // 原生分组列表风格
+        .listStyle(.insetGrouped)    // 原生GroupingBFGSistStyle
         .navigationTitle("Translation Dictionary")
         .overlay(toastOverlay)
         .sheet(item: $editingTranslation) { translation in
@@ -123,12 +123,12 @@ struct TranslationDicView: View {
         }
     }
     
-    /// 新增翻译记录
+    /// AddTranslateRecord
     private func addTranslation() {
         
-        // 校验内容不能为空
+        // 校验Contentnot能is empty
         guard !contentOne.isEmpty, !contentTwo.isEmpty else {
-            toastMessage = "内容不能为空"
+            toastMessage = "Contentnot能is empty"
             withAnimation { showToast = true }
             return
         }
@@ -144,15 +144,15 @@ struct TranslationDicView: View {
             try modelContext.save()
             contentOne = ""
             contentTwo = ""
-            toastMessage = "保存成功！"
+            toastMessage = "SaveSuccess！"
             withAnimation { showToast = true }
         } catch {
-            toastMessage = "保存失败：\(error.localizedDescription)"
+            toastMessage = "SaveFailed：\(error.localizedDescription)"
             withAnimation { showToast = true }
         }
     }
     
-    /// 删除翻译记录
+    /// DeleteTranslateRecord
     private func deleteTranslation(at offsets: IndexSet) {
         for index in offsets {
             let item = translationEntries[index]
@@ -161,12 +161,12 @@ struct TranslationDicView: View {
         do {
             try modelContext.save()
         } catch {
-            toastMessage = "删除失败"
+            toastMessage = "DeleteFailed"
             withAnimation { showToast = true }
         }
     }
     
-    /// 日期格式化器用于展示更新时间
+    /// DateFormat器useat展示UpdateTime
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -175,7 +175,7 @@ struct TranslationDicView: View {
         return formatter
     }()
     
-    /// Toast 提示视图
+    /// Toast Prompt视Graph
     @ViewBuilder
     private var toastOverlay: some View {
         VStack {
@@ -204,11 +204,11 @@ struct EditTranslationView: View {
     
     var translation: TranslationDic
     
-    // 当前编辑选项
+    // whenbeforeEditOption
     @State private var contentOne: String = ""
     @State private var contentTwo: String = ""
     
-    // Toast 提示相关状态
+    // Toast PromptCorrelationStatus
     @State private var showToast = false
     @State private var toastMessage = ""
     
@@ -243,7 +243,7 @@ struct EditTranslationView: View {
                 }
             }
             .onAppear {
-                // 初始化编辑内容
+                // InitializeEditContent
                 contentOne = translation.contentOne ?? ""
                 contentTwo = translation.contentTwo ?? ""
             }
@@ -267,7 +267,7 @@ struct EditTranslationView: View {
     private func saveEdits() {
         
         guard !contentOne.isEmpty, !contentTwo.isEmpty else {
-            toastMessage = "内容不能为空"
+            toastMessage = "Contentnot能is empty"
             withAnimation { showToast = true }
             return
         }
@@ -280,7 +280,7 @@ struct EditTranslationView: View {
             try modelContext.save()
             dismiss()
         } catch {
-            toastMessage = "保存失败: \(error.localizedDescription)"
+            toastMessage = "SaveFailed: \(error.localizedDescription)"
             withAnimation { showToast = true }
         }
     }

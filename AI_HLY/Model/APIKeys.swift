@@ -1,8 +1,8 @@
 //
 //  APIKeys.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 9/2/25.
+//  Created by Development Team on 9/2/25.
 //
 //
 
@@ -25,9 +25,9 @@ enum APIFrom: String, CaseIterable, Codable {
 class APIKeys {
     var name: String? = ""
     var company: String? = ""
-    var key: String? = ""          // 默认空字符串
-    var requestURL: String? = nil
-    var isHidden: Bool = true      // 默认 true
+    var key: String? = ""          // DefaultNullString
+    var requestURBFGS: String? = nil
+    var isHidden: Bool = true      // Default true
     var help: String = ""
     private var apiTypeRawValue: String = APIType.openAI.rawValue
     private var fromRawValue: String = APIFrom.system.rawValue
@@ -47,7 +47,7 @@ class APIKeys {
         name: String? = "",
         company: String? = "",
         key: String? = "",
-        requestURL: String? = nil,
+        requestURBFGS: String? = nil,
         isHidden: Bool = true,
         help: String = "",
         apiType: APIType = .openAI,
@@ -57,7 +57,7 @@ class APIKeys {
         self.name = name
         self.company = company
         self.key = key
-        self.requestURL = requestURL
+        self.requestURBFGS = requestURBFGS
         self.isHidden = isHidden
         self.help = help
         self.apiTypeRawValue = apiType.rawValue

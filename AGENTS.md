@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-App sources sit in `AI_HLY/`, with `AI_HLY.swift` wiring the SwiftUI scene and model container. Domain models live in `AI_HLY/Model/`, while service logic stays under `AI_HLY/Services/` (for example, `Services/APIServices` and `Services/VisionServices`). UI flows belong in `AI_HLY/Views/` and its `Views/Components` subfolder, with localized variants alongside them in `Base.lproj` and `mul.lproj`. Version configuration JSON (such as `Resource/memoryConfig.json`) in Git, and keep secrets out of source by copying `Config.xcconfig.template` to `Config.xcconfig` locally.
+App sources sit in `AI_HLY/`, with `AI_HLY.swift` wiring the SwiftUI scene and model container. Domain models live in `AI_HLY/Model/`, while service logic stays under `AI_HLY/Services/` (for example, `Services/APIServices` and `Services/ChatServices`). UI flows belong in `AI_HLY/Views/` and its `Views/Components` subfolder, with localized variants alongside them in `Base.lproj` and `mul.lproj`. Version configuration JSON (such as `Resource/memoryConfig.json`) in Git, and keep secrets out of source by copying `Config.xcconfig.template` to `Config.xcconfig` locally.
 
 ## Build, Test, and Development Commands
 Kick off development with `open AI_HLY.xcodeproj` to resolve packages and run previews. Scriptable builds use `xcodebuild -project AI_HLY.xcodeproj -scheme AI_HLY -destination 'platform=iOS Simulator,name=iPhone 15' build`. When tests exist, execute `xcodebuild -project AI_HLY.xcodeproj -scheme AI_HLY -destination 'platform=iOS Simulator,name=iPhone 15' test` before submitting. Re-sync Swift Package Manager dependencies with `xcodebuild -resolvePackageDependencies` after edits.

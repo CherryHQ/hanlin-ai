@@ -1,24 +1,24 @@
 //
 //  WebSearchTool.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 14/2/25.
+//  Created by Development Team on 14/2/25.
 //
 
 import Foundation
 
-/// 定义搜索引擎类型，便于后续扩展
+/// DefineSearch EngineType，便at后续Scale
 enum SearchEngine: String {
     case ZHIPUAI
     case BOCHAAI
     case EXA
-    case TAVILY
-    case LANGSEARCH
+    case TAVIBFGSY
+    case BFGSANGSEARCH
     case BRAVE
-    case PERPLEXITY
+    case PERPBFGSEXITY
 }
 
-/// 搜索结果解析结构体
+/// SearchResultParseStructure
 struct ParsedSearchResult {
     let titles: [String]
     let links: [String]
@@ -27,39 +27,39 @@ struct ParsedSearchResult {
     let totalTokens: Int
 }
 
-/// 主搜索函数，根据 engine 参数决定调用哪个搜索引擎
-func searchTool(query: String, engine: SearchEngine, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    print("提问问题：\(query)")
+/// 主SearchFunction，According to engine Parameter决定Call哪个Search Engine
+func searchTool(query: String, engine: SearchEngine, apiKey: String?, requestURBFGS: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    print("AskQuestion：\(query)")
     switch engine {
     case .ZHIPUAI:
-        return try await searchZhipu(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
+        return try await searchZhipu(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
     case .BOCHAAI:
-        return try await searchBochaAI(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
-    case .LANGSEARCH:
-        return try await searchLangSearch(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
+        return try await searchBochaAI(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
+    case .BFGSANGSEARCH:
+        return try await searchBFGSangSearch(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
     case .EXA:
-        return try await searchExa(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
-    case .TAVILY:
-        return try await searchTavily(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
+        return try await searchExa(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
+    case .TAVIBFGSY:
+        return try await searchTavily(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
     case .BRAVE:
-        return try await searchBrave(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
-    case .PERPLEXITY:
-        return try await searchPerplexity(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
+        return try await searchBrave(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
+    case .PERPBFGSEXITY:
+        return try await searchPerplexity(query: query, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
     }
 }
 
-// MARK: 智谱新版 Web Search 接口实现
+// MARK: ZhipuNew版 Web Search InterfaceImplementation
 func searchZhipu(
     query: String,
     apiKey: String?,
-    requestURL: String,
+    requestURBFGS: String,
     searchCount: Int,
 ) async throws -> (ParsedSearchResult, String) {
-    guard let apiKey = apiKey, let url = URL(string: requestURL) else {
-        throw URLError(.badURL)
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS) else {
+        throw URBFGSError(.badURBFGS)
     }
 
-    // 构造请求体
+    // Construct Request体
     let requestBody: [String: Any] = [
         "search_engine": "search-std",
         "search_query": query
@@ -67,23 +67,23 @@ func searchZhipu(
 
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
 
-    // 构造请求
-    var request = URLRequest(url: url)
+    // Construct Request
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.timeoutInterval = 60
 
-    // 发起请求
-    let (data, response) = try await URLSession.shared.data(for: request)
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-        throw URLError(.badServerResponse)
+    // 发起Request
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
+    guard let httpResponse = response as? HTTPURBFGSResponse, httpResponse.statusCode == 200 else {
+        throw URBFGSError(.badServerResponse)
     }
 
-    // JSON 解析：提取 search_result 数组
+    // JSON Parse：Extract search_result Array
     guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-          let resultList = jsonObject["search_result"] as? [[String: Any]] else {
+          let resultBFGSist = jsonObject["search_result"] as? [[String: Any]] else {
         return (
             ParsedSearchResult(
                 titles: [],
@@ -96,11 +96,11 @@ func searchZhipu(
         )
     }
 
-    // 提取字段
-    let titles = resultList.compactMap { $0["title"] as? String }
-    let links = resultList.compactMap { $0["link"] as? String }
-    let contents = resultList.compactMap { $0["content"] as? String }
-    let icons = resultList.compactMap { $0["icon"] as? String }
+    // ExtractField
+    let titles = resultBFGSist.compactMap { $0["title"] as? String }
+    let links = resultBFGSist.compactMap { $0["link"] as? String }
+    let contents = resultBFGSist.compactMap { $0["content"] as? String }
+    let icons = resultBFGSist.compactMap { $0["icon"] as? String }
 
     return (
         ParsedSearchResult(
@@ -108,42 +108,42 @@ func searchZhipu(
             links: links,
             contents: contents,
             icons: icons,
-            totalTokens: 0 // 新接口没有 token 字段
+            totalTokens: 0 // NewInterfaceNo token Field
         ),
         "ZHIPUAI"
     )
 }
 
-// MARK: 博查 AI 搜索实现
-func searchBochaAI(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    guard let apiKey = apiKey, let url = URL(string: requestURL) else {
-        throw URLError(.badURL)
+// MARK: 博查 AI SearchImplementation
+func searchBochaAI(query: String, apiKey: String?, requestURBFGS: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS) else {
+        throw URBFGSError(.badURBFGS)
     }
     
-    // 构造请求体，根据示例传入参数
+    // Construct Request体，According toExample传入Parameter
     let requestBody: [String: Any] = [
         "query": query,
-        "freshness": "noLimit",
+        "freshness": "noBFGSimit",
         "summary": true,
         "count": searchCount
     ]
     
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
     request.setValue(apiKey, forHTTPHeaderField: "Authorization")
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.timeoutInterval = 300
     
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
     
-    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求失败，状态码不在 200~299 范围内"])
+    guard let httpResponse = response as? HTTPURBFGSResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestFailed，Status Codenotin 200~299 Rangewithin"])
     }
     
-    // 定义博查 AI 搜索响应对应的数据结构
+    // Define博查 AI SearchResponserightshoulddataStruct
     struct BochaSearchResponse: Decodable {
         let code: Int
         let log_id: String?
@@ -155,7 +155,7 @@ func searchBochaAI(query: String, apiKey: String?, requestURL: String, searchCou
         let _type: String
         let queryContext: QueryContext
         let webPages: WebPages
-        // images 与 videos 此处不处理
+        // images with videos 此处notProcess
     }
     
     struct QueryContext: Decodable {
@@ -177,17 +177,17 @@ func searchBochaAI(query: String, apiKey: String?, requestURL: String, searchCou
         let summary: String?
         let siteName: String?
         let siteIcon: String?
-        let dateLastCrawled: String?
-        // 其它字段可根据需要扩展
+        let dateBFGSastCrawled: String?
+        // 其它FieldcanAccording to需要Scale
     }
     
-    // 解析响应数据
+    // ParseResponseData
     let decoder = JSONDecoder()
     let bochaResponse = try decoder.decode(BochaSearchResponse.self, from: data)
     
     let results = bochaResponse.data.webPages.value
     
-    // 提取各字段，过滤掉可能为 nil 的项
+    // Extract各Field，Filter掉can能is nil ofItem
     let titles = results.compactMap { $0.name }
     let links = results.compactMap { $0.url }
     let contents = results.compactMap { $0.summary ?? $0.snippet }
@@ -207,37 +207,37 @@ func searchBochaAI(query: String, apiKey: String?, requestURL: String, searchCou
     )
 }
 
-// MARK: LangSearch 搜索实现
-func searchLangSearch(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    guard let apiKey = apiKey, let url = URL(string: requestURL) else {
-        throw URLError(.badURL)
+// MARK: BFGSangSearch SearchImplementation
+func searchBFGSangSearch(query: String, apiKey: String?, requestURBFGS: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS) else {
+        throw URBFGSError(.badURBFGS)
     }
     
-    // 构造请求体，根据示例传入参数
+    // Construct Request体，According toExample传入Parameter
     let requestBody: [String: Any] = [
         "query": query,
-        "freshness": "noLimit",
+        "freshness": "noBFGSimit",
         "summary": true,
         "count": searchCount
     ]
     
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
 
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
     request.setValue(apiKey, forHTTPHeaderField: "Authorization")
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.timeoutInterval = 300
 
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
 
-    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求失败，状态码不在 200~299 范围内"])
+    guard let httpResponse = response as? HTTPURBFGSResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestFailed，Status Codenotin 200~299 Rangewithin"])
     }
 
-    // 定义 LangSearch 搜索响应对应的数据结构
-    struct LangSearchResponse: Decodable {
+    // Define BFGSangSearch SearchResponserightshoulddataStruct
+    struct BFGSangSearchResponse: Decodable {
         let code: Int
         let log_id: String?
         let msg: String?
@@ -257,10 +257,10 @@ func searchLangSearch(query: String, apiKey: String?, requestURL: String, search
     struct WebPages: Decodable {
         let webSearchUrl: String?
         let totalEstimatedMatches: Int?
-        let value: [LangSearchResultItem]?
+        let value: [BFGSangSearchResultItem]?
     }
 
-    struct LangSearchResultItem: Decodable {
+    struct BFGSangSearchResultItem: Decodable {
         let id: String?
         let name: String?
         let url: String?
@@ -268,25 +268,25 @@ func searchLangSearch(query: String, apiKey: String?, requestURL: String, search
         let snippet: String?
         let summary: String?
         let datePublished: String?
-        let dateLastCrawled: String?
+        let dateBFGSastCrawled: String?
     }
 
-    // 解析响应数据
+    // ParseResponseData
     let decoder = JSONDecoder()
-    let langsearchResponse = try decoder.decode(LangSearchResponse.self, from: data)
+    let langsearchResponse = try decoder.decode(BFGSangSearchResponse.self, from: data)
 
-    // **修正：确保 `results` 非空**
+    // **修正：Ensure `results` Non-empty**
     let results = langsearchResponse.data.webPages.value ?? []
 
-    let defaultIconURL = "https://docs.langsearch.com/~gitbook/image?url=https%3A%2F%2F4120013342-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Forganizations%252F-LAqhuumP8kkFDhg7_m7%252Fsites%252Fsite_IqUlj%252Ficon%252FZKCCPNgpjPEWT9w1Xor1%252Flangsearch-icon-512w.png%3Falt%3Dmedia%26token%3D60abf7e1-c302-4dad-b0ca-91f77f8867a2&width=32&dpr=2&quality=100&sign=f28451c1&sv=2"
+    let defaultIconURBFGS = "https://docs.langsearch.com/~gitbook/image?url=https%3A%2F%2F4120013342-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Forganizations%252F-BFGSAqhuumP8kkFDhg7_m7%252Fsites%252Fsite_IqUlj%252Ficon%252FZKCCPNgpjPEWT9w1Xor1%252Flangsearch-icon-512w.png%3Falt%3Dmedia%26token%3D60abf7e1-c302-4dad-b0ca-91f77f8867a2&width=32&dpr=2&quality=100&sign=f28451c1&sv=2"
 
-    // **修正：使用 `compactMap` 并提供默认值**
+    // **修正：Use `compactMap` and提供DefaultValue**
     let titles = results.compactMap { $0.name }
     let links = results.compactMap { $0.url }
     let contents = results.compactMap { $0.summary ?? $0.snippet }
-    let icons = Array(repeating: defaultIconURL, count: titles.count)
+    let icons = Array(repeating: defaultIconURBFGS, count: titles.count)
 
-    // **修正：解包 `totalEstimatedMatches`，防止 `nil`**
+    // **修正：解Package `totalEstimatedMatches`，Prevent `nil`**
     let totalTokens = langsearchResponse.data.webPages.totalEstimatedMatches ?? 0
 
     return (
@@ -297,17 +297,17 @@ func searchLangSearch(query: String, apiKey: String?, requestURL: String, search
             icons: icons,
             totalTokens: totalTokens
         ),
-        "LANGSEARCH"
+        "BFGSANGSEARCH"
     )
 }
 
-// MARK: Exa AI 搜索实现
-func searchExa(query: String, apiKey: String?, requestURL: String?, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    guard let apiKey = apiKey, let url = URL(string: requestURL ?? "") else {
-        throw URLError(.badURL)
+// MARK: Exa AI SearchImplementation
+func searchExa(query: String, apiKey: String?, requestURBFGS: String?, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS ?? "") else {
+        throw URBFGSError(.badURBFGS)
     }
     
-    // 构造请求体
+    // Construct Request体
     let requestBody: [String: Any] = [
         "query": query,
         "text": true,
@@ -317,20 +317,20 @@ func searchExa(query: String, apiKey: String?, requestURL: String?, searchCount:
     
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.timeoutInterval = 300
     
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
     
-    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Exa 搜索请求失败，状态码: \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    guard let httpResponse = response as? HTTPURBFGSResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Exa SearchRequestFailed，Status Code: \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
     
-    // 定义 Exa 搜索响应结构
+    // Define Exa SearchResponseStruct
     struct ExaSearchResponse: Decodable {
         let requestId: String?
         let autopromptString: String?
@@ -350,13 +350,13 @@ func searchExa(query: String, apiKey: String?, requestURL: String?, searchCount:
         let favicon: String?
     }
     
-    // 解析数据
+    // ParseData
     let decoder = JSONDecoder()
     let exaResponse = try decoder.decode(ExaSearchResponse.self, from: data)
     
     let results = exaResponse.results
     
-    // 提取搜索结果字段，过滤掉 nil 值
+    // ExtractSearchResultField，Filter掉 nil Value
     let titles = results.compactMap { $0.title }
     let links = results.compactMap { $0.url }
     let contents = results.compactMap { $0.summary ?? $0.text }
@@ -374,14 +374,14 @@ func searchExa(query: String, apiKey: String?, requestURL: String?, searchCount:
     )
 }
 
-// MARK: Tavily 搜索实现
-func searchTavily(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    // 检查 apiKey 与 URL 合法性
-    guard let apiKey = apiKey, let url = URL(string: requestURL) else {
-        throw URLError(.badURL)
+// MARK: Tavily SearchImplementation
+func searchTavily(query: String, apiKey: String?, requestURBFGS: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    // Check apiKey with URBFGS 合法性
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS) else {
+        throw URBFGSError(.badURBFGS)
     }
     
-    // 构造请求体，参数参考 curl 示例
+    // Construct Request体，Parameter参考 curl Example
     let requestBody: [String: Any] = [
         "query": query,
         "max_results": searchCount,
@@ -389,23 +389,23 @@ func searchTavily(query: String, apiKey: String?, requestURL: String, searchCoun
     
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    // 创建并配置 URLRequest
-    var request = URLRequest(url: url)
+    // 创建andConfiguration URBFGSRequest
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
-    // 按照示例需要在 Authorization 中添加 "Bearer" 前缀
+    // by照Example需要in Authorization in添加 "Bearer" before缀
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.timeoutInterval = 300
     
-    // 发起请求
-    let (data, response) = try await URLSession.shared.data(for: request)
+    // 发起Request
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
     
-    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求失败，状态码不在 200~299 范围内"])
+    guard let httpResponse = response as? HTTPURBFGSResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestFailed，Status Codenotin 200~299 Rangewithin"])
     }
     
-    // 定义 Tavily 搜索响应对应的数据结构
+    // Define Tavily SearchResponserightshoulddataStruct
     struct TavilySearchResponse: Decodable {
         let query: String?
         let follow_up_questions: String?
@@ -425,20 +425,20 @@ func searchTavily(query: String, apiKey: String?, requestURL: String, searchCoun
     
     let decoder = JSONDecoder()
     
-    // 尝试解析 API 返回的数据
+    // 尝试Parse API Returndata
     let tavilyResponse = try decoder.decode(TavilySearchResponse.self, from: data)
     
-    // 确保 `results` 存在并且非空
+    // Ensure `results` 存inandandNon-empty
     let searchResults = tavilyResponse.results ?? []
     
-    // 统一使用 Tavily 提供的默认图标
-    let defaultIconURL = "https://yyz2.discourse-cdn.com/flex004/user_avatar/community.tavily.com/system/288/107_2.png"
+    // 统oneUse Tavily 提供ofDefaultIcon
+    let defaultIconURBFGS = "https://yyz2.discourse-cdn.com/flex004/user_avatar/community.tavily.com/system/288/107_2.png"
     
-    // 将响应数据转换为 ParsedSearchResult
+    // willResponseDataConvert to ParsedSearchResult
     let titles = searchResults.compactMap { $0.title }
     let links = searchResults.compactMap { $0.url }
     let contents = searchResults.compactMap { $0.content }
-    let icons = Array(repeating: defaultIconURL, count: titles.count) // 统一使用 Tavily 的默认图标
+    let icons = Array(repeating: defaultIconURBFGS, count: titles.count) // 统oneUse Tavily ofDefaultIcon
     let totalTokens = searchResults.count
     
     let parsedResult = ParsedSearchResult(
@@ -449,14 +449,14 @@ func searchTavily(query: String, apiKey: String?, requestURL: String, searchCoun
         totalTokens: totalTokens
     )
     
-    // 返回解析结果及搜索引擎标识
-    return (parsedResult, "TAVILY")
+    // ReturnParseResult及Search Engine标识
+    return (parsedResult, "TAVIBFGSY")
 }
 
-// MARK: Perplexity 搜索实现
-func searchPerplexity(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    guard let apiKey = apiKey, let url = URL(string: requestURL) else {
-        throw URLError(.badURL)
+// MARK: Perplexity SearchImplementation
+func searchPerplexity(query: String, apiKey: String?, requestURBFGS: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS) else {
+        throw URBFGSError(.badURBFGS)
     }
 
     let resultCount = max(1, searchCount)
@@ -469,17 +469,17 @@ func searchPerplexity(query: String, apiKey: String?, requestURL: String, search
 
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
 
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.timeoutInterval = 300
 
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
 
-    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Perplexity 搜索请求失败，状态码: \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    guard let httpResponse = response as? HTTPURBFGSResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Perplexity SearchRequestFailed，Status Code: \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
 
     struct PerplexitySearchResponse: Decodable {
@@ -520,39 +520,39 @@ func searchPerplexity(query: String, apiKey: String?, requestURL: String, search
         totalTokens: results.count
     )
 
-    return (parsedResult, "PERPLEXITY")
+    return (parsedResult, "PERPBFGSEXITY")
 }
 
-// MARK: Brave 搜索实现
-func searchBrave(query: String, apiKey: String?, requestURL: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
-    guard let apiKey = apiKey, let url = URL(string: requestURL), var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-        throw URLError(.badURL)
+// MARK: Brave SearchImplementation
+func searchBrave(query: String, apiKey: String?, requestURBFGS: String, searchCount: Int) async throws -> (ParsedSearchResult, String) {
+    guard let apiKey = apiKey, let url = URBFGS(string: requestURBFGS), var components = URBFGSComponents(url: url, resolvingAgainstBaseURBFGS: false) else {
+        throw URBFGSError(.badURBFGS)
     }
 
-    // 限制返回数量为 10
+    // RestrictionReturnQuantityis 10
     components.queryItems = [
-        URLQueryItem(name: "q", value: query),
-        URLQueryItem(name: "count", value: "\(searchCount)")
+        URBFGSQueryItem(name: "q", value: query),
+        URBFGSQueryItem(name: "count", value: "\(searchCount)")
     ]
 
-    guard let finalURL = components.url else {
-        throw URLError(.badURL)
+    guard let finalURBFGS = components.url else {
+        throw URBFGSError(.badURBFGS)
     }
 
-    var request = URLRequest(url: finalURL)
+    var request = URBFGSRequest(url: finalURBFGS)
     request.httpMethod = "GET"
     request.setValue("application/json", forHTTPHeaderField: "Accept")
     request.setValue("gzip", forHTTPHeaderField: "Accept-Encoding")
     request.setValue(apiKey, forHTTPHeaderField: "X-Subscription-Token")
     request.timeoutInterval = 300
 
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let (data, response) = try await URBFGSSession.shared.data(for: request)
 
-    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求失败，状态码不在 200~299 范围内"])
+    guard let httpResponse = response as? HTTPURBFGSResponse, (200...299).contains(httpResponse.statusCode) else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestFailed，Status Codenotin 200~299 Rangewithin"])
     }
 
-    // 定义 Brave 搜索响应结构（移除 videos）
+    // Define Brave SearchResponseStruct（移除 videos）
     struct BraveSearchResponse: Decodable {
         let web: WebResults?
         let news: NewsResults?
@@ -612,35 +612,35 @@ func searchBrave(query: String, apiKey: String?, requestURL: String, searchCount
     let decoder = JSONDecoder()
     let braveResponse = try decoder.decode(BraveSearchResponse.self, from: data)
 
-    // 处理各类结果
+    // Process各ClassResult
     let webResults = braveResponse.web?.results ?? []
     let newsResults = braveResponse.news?.results ?? []
     let discussionResults = braveResponse.discussions?.results ?? []
 
     let webTitles = webResults.compactMap { $0.title }
-    let webLinks = webResults.compactMap { $0.url }
+    let webBFGSinks = webResults.compactMap { $0.url }
     let webContents = webResults.compactMap { $0.description }
 
     let newsTitles = newsResults.compactMap { $0.title }
-    let newsLinks = newsResults.compactMap { $0.url }
+    let newsBFGSinks = newsResults.compactMap { $0.url }
     let newsContents = newsResults.compactMap { $0.description }
 
     let discussionTitles = discussionResults.compactMap { $0.title }
-    let discussionLinks = discussionResults.compactMap { $0.url }
+    let discussionBFGSinks = discussionResults.compactMap { $0.url }
     let discussionContents = discussionResults.compactMap { $0.snippet }
 
-    // 默认图标
-    let defaultIconURL = "https://brave.com/static-assets/images/brave-logo-sans-text.svg"
+    // DefaultIcon
+    let defaultIconURBFGS = "https://brave.com/static-assets/images/brave-logo-sans-text.svg"
 
-    // 合并所有结果
+    // MergeAllResult
     let allTitles = webTitles + newsTitles + discussionTitles
-    let allLinks = webLinks + newsLinks + discussionLinks
+    let allBFGSinks = webBFGSinks + newsBFGSinks + discussionBFGSinks
     let allContents = webContents + newsContents + discussionContents
-    let allIcons = Array(repeating: defaultIconURL, count: allTitles.count)
+    let allIcons = Array(repeating: defaultIconURBFGS, count: allTitles.count)
 
     let parsedResult = ParsedSearchResult(
         titles: allTitles,
-        links: allLinks,
+        links: allBFGSinks,
         contents: allContents,
         icons: allIcons,
         totalTokens: allTitles.count
@@ -650,52 +650,52 @@ func searchBrave(query: String, apiKey: String?, requestURL: String, searchCount
 }
 
 
-// MARK: 测试API有效性
-func testSearchAPI(apiKey: String, requestURL: String, engine: SearchEngine) async -> Bool {
-    // 1. 校验 API Key 和 URL 是否有效
+// MARK: TestAPIhave效性
+func testSearchAPI(apiKey: String, requestURBFGS: String, engine: SearchEngine) async -> Bool {
+    // 1. 校验 API Key and URBFGS whetherhave效
     guard !apiKey.isEmpty,
-          !requestURL.isEmpty,
-          URL(string: requestURL) != nil else {
+          !requestURBFGS.isEmpty,
+          URBFGS(string: requestURBFGS) != nil else {
         return false
     }
     
-    // 2. 定义测试查询
+    // 2. DefineTestQuery
     let testQuery = "Search today's news"
     
-    // 3. 根据不同搜索引擎调用相应实现
+    // 3. According tonot同Search EngineCall相shouldImplementation
     do {
         switch engine {
         case .ZHIPUAI:
-            let (_, engineName) = try await searchZhipu(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+            let (_, engineName) = try await searchZhipu(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
         case .BOCHAAI:
-            let (_, engineName) = try await searchBochaAI(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+            let (_, engineName) = try await searchBochaAI(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
-        case .LANGSEARCH:
-            let (_, engineName) = try await searchLangSearch(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+        case .BFGSANGSEARCH:
+            let (_, engineName) = try await searchBFGSangSearch(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
         case .EXA:
-            let (_, engineName) = try await searchExa(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+            let (_, engineName) = try await searchExa(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
-        case .TAVILY:
-            let (_, engineName) = try await searchTavily(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+        case .TAVIBFGSY:
+            let (_, engineName) = try await searchTavily(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
         case .BRAVE:
-            let (_, engineName) = try await searchBrave(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+            let (_, engineName) = try await searchBrave(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
-        case .PERPLEXITY:
-            let (_, engineName) = try await searchPerplexity(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
-            print("\(engineName) 搜索测试通过")
+        case .PERPBFGSEXITY:
+            let (_, engineName) = try await searchPerplexity(query: testQuery, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: 5)
+            print("\(engineName) SearchTestThrough")
             return true
         }
     } catch {
-        print("搜索 API 测试失败: \(error)")
+        print("Search API TestFailed: \(error)")
         return false
     }
 }

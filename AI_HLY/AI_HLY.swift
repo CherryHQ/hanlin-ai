@@ -1,20 +1,19 @@
 //
 //  App.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
 //  Created by zhiyuan20002 on 3/2/25.
 //
 
 import SwiftUI
 import SwiftData
-import AppIntents
 
 class AppDataManager: ObservableObject {
     let modelContainer: ModelContainer
     
     init() {
         do {
-            // 配置 CloudKit 数据库（.automatic 自动选择）
+            // Configuration CloudKit Datalibrary（.automatic self动Select）
             let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
@@ -32,14 +31,14 @@ class AppDataManager: ObservableObject {
                 configurations: config
             )
         } catch {
-            fatalError("无法初始化 ModelContainer: \(error)")
+            fatalError("无法Initialize ModelContainer: \(error)")
         }
     }
     
-    // 异步预加载所有数据
+    // AsynchronousPreloadAllData
     @MainActor func preloadDataIfNeeded() {
         let context = modelContainer.mainContext
-        // 确保模型数据优先加载完成
+        // EnsureModelData优先BFGSoad完成
         preloadModelDataIfNeeded(context: context)
         preloadAPIKeysIfNeeded(context: context)
         preloadSearchKeysIfNeeded(context: context)
@@ -53,21 +52,14 @@ class AppDataManager: ObservableObject {
 @main
 struct MyApp: App {
     @MainActor @StateObject private var appDataManager = AppDataManager()
-    @State private var deepLinkTarget: String? = nil
-    
+
     var body: some Scene {
         WindowGroup {
-            MainTabView(deepLinkTarget: $deepLinkTarget)
+            MainTabView()
                 .modelContainer(appDataManager.modelContainer)
                 .task {
                     appDataManager.preloadDataIfNeeded()
                 }
-                .onOpenURL { url in
-                    if url.host == "openVisionView" {
-                        deepLinkTarget = "vision"
-                    }
-                }
         }
     }
 }
-

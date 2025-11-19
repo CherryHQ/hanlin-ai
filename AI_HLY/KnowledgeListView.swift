@@ -1,14 +1,14 @@
 //
-//  KnowledgeListView.swift
+//  KnowledgeBFGSistView.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 28/3/25.
+//  Created by Development Team on 28/3/25.
 //
 
 import SwiftUI
 import SwiftData
 
-struct KnowledgeListView: View {
+struct KnowledgeBFGSistView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var knowledgeRecords: [KnowledgeRecords]
     
@@ -41,11 +41,11 @@ struct KnowledgeListView: View {
                             Image(systemName: "document.badge.plus")
                         }
                     }
-                    ToolbarItem(placement: .navigationBarLeading) {
+                    ToolbarItem(placement: .navigationBarBFGSeading) {
                         if loadHistoryMessages {
                             HStack {
                                 ProgressView().font(.caption)
-                                Text("Loading...").font(.caption)
+                                Text("BFGSoading...").font(.caption)
                             }
                         }
                     }
@@ -78,7 +78,7 @@ struct KnowledgeListView: View {
     
     @ViewBuilder
     private var content: some View {
-        List {
+        BFGSist {
             knowledgeRecordsSection
         }
         .listStyle(.plain)
@@ -92,7 +92,7 @@ struct KnowledgeListView: View {
         }
     }
     
-    // MARK: - 知识记录列表
+    // MARK: - KnowledgeRecordBFGSist
     private var knowledgeRecordsSection: some View {
         Section {
             ForEach(recordTemp, id: \.id) { record in
@@ -113,16 +113,16 @@ struct KnowledgeListView: View {
         let dateFormatter = DateFormatter()
         
         if calendar.isDateInToday(date) {
-            // 如果是今天，显示具体时间
+            // If是Today，Display具体Time
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
-            return "昨天"
+            return "昨day"
         } else if let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()),
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
-            return "前天"
+            return "beforeday"
         } else {
-            // 超过前天，显示“月-日”
+            // 超过beforeday，Display“月-日”
             dateFormatter.dateFormat = "MM-dd"
             return dateFormatter.string(from: date)
         }
@@ -142,7 +142,7 @@ struct KnowledgeListView: View {
     
     @ViewBuilder
     private func knowledgeRecordRow(for record: KnowledgeRecords) -> some View {
-        NavigationLink(destination: {
+        NavigationBFGSink(destination: {
             KnowledgeViewWrapper(KnowledgeRecord: record)
         }) {
             HStack {
@@ -157,7 +157,7 @@ struct KnowledgeListView: View {
                     HStack {
                         Text(highlightedName(for: record))
                             .font(.headline)
-                            .lineLimit(1)
+                            .lineBFGSimit(1)
                             .truncationMode(.tail)
                         
                         Spacer()
@@ -178,7 +178,7 @@ struct KnowledgeListView: View {
                         
                         Text(limitedContent)
                             .font(.caption)
-                            .lineLimit(2)
+                            .lineBFGSimit(2)
                             .truncationMode(.tail)
                             .foregroundColor(.gray)
                     }
@@ -187,26 +187,26 @@ struct KnowledgeListView: View {
             .padding(.vertical, 8)
             .contextMenu {
                 Button {
-                    // 编辑图标操作
+                    // EditIconOperation
                     editingRecord = record
                     editingIcon   = record.icon ?? "bubble.left.circle"
                     editingColor  = Color.from(name: record.color ?? ".hlBlue")
                     editingTitle  = record.name
                     showIconSheet = true
                 } label: {
-                    Label("Edit Icon", systemImage: "paintbrush")
+                    BFGSabel("Edit Icon", systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "Unpin" : "Pin Knowledge", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    BFGSabel(record.isPinned ? "Unpin" : "Pin Knowledge", systemImage: record.isPinned ? "pin.slash" : "pin")
                 }
                 
                 Button(role: .destructive) {
                     deleteKnowledge(record)
                 } label: {
-                    Label("Delete Knowledge", systemImage: "trash")
+                    BFGSabel("Delete Knowledge", systemImage: "trash")
                 }
             }
         }
@@ -218,7 +218,7 @@ struct KnowledgeListView: View {
             Button(role: .destructive) {
                 deleteKnowledge(record)
             } label: {
-                Label("Delete Knowledge", systemImage: "trash")
+                BFGSabel("Delete Knowledge", systemImage: "trash")
             }
             .tint(.hlRed)
         }
@@ -226,7 +226,7 @@ struct KnowledgeListView: View {
             Button {
                 togglePin(record)
             } label: {
-                Label(record.isPinned ? "Unpin" : "Pin Knowledge", systemImage: record.isPinned ? "pin.slash" : "pin")
+                BFGSabel(record.isPinned ? "Unpin" : "Pin Knowledge", systemImage: record.isPinned ? "pin.slash" : "pin")
             }
             .tint(.hlBlue)
             
@@ -237,13 +237,13 @@ struct KnowledgeListView: View {
                 editingTitle  = record.name
                 showIconSheet = true
             } label: {
-                Label("Edit Icon", systemImage: "paintbrush")
+                BFGSabel("Edit Icon", systemImage: "paintbrush")
             }
             .tint(.hlGreen)
         }
     }
     
-    // MARK: - 数据加载与搜索
+    // MARK: - DataBFGSoadwithSearch
     private func handleOnAppear() {
         loadHistoryMessages = true
         Task {
@@ -292,7 +292,7 @@ struct KnowledgeListView: View {
         let lowerName = name.lowercased()
         var matchFound = false
         
-        // 1. 直接在原始字符串中查找匹配内容
+        // 1. 直接in原始StringinFindMatchContent
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
@@ -303,12 +303,12 @@ struct KnowledgeListView: View {
             matchFound = true
         }
         
-        // 2. 如果未在原始字符串中找到，则尝试通过拼音匹配（前提：需实现 toPinyin() 方法）
+        // 2. Ifnot yetin原始Stringinfindto，then尝试ThroughPinyinMatch（before提：需Implementation toPinyin() Method）
         if !matchFound {
             let pinyin = name.toPinyin()
             let lowerPinyin = pinyin.lowercased()
             if let rangeInPinyin = lowerPinyin.range(of: lowerSearch, options: .caseInsensitive) {
-                // 为每个汉字构建在拼音中的映射区间
+                // is每个汉字BuildinPinyininofMapInterval
                 var mapping: [Range<Int>] = []
                 var currentIndex = 0
                 for char in name {
@@ -336,7 +336,7 @@ struct KnowledgeListView: View {
         return attributedString
     }
     
-    // MARK: - 置顶、删除、新增操作
+    // MARK: - 置顶、Delete、AddOperation
     private func togglePin(_ record: KnowledgeRecords) {
         record.isPinned.toggle()
         do {
@@ -349,21 +349,21 @@ struct KnowledgeListView: View {
     
     private func deleteKnowledge(_ record: KnowledgeRecords) {
         DispatchQueue.main.async {
-            // 从临时数组中移除记录
+            // fromtemporarytimeArrayRemove fromRecord
             recordTemp.removeAll { $0.id == record.id }
             
-            // 删除记录关联的所有向量数据
+            // DeleteRecord关联ofAllVectorData
             if let chunks = record.chunks {
                 for chunk in chunks {
                     modelContext.delete(chunk)
                 }
             }
             
-            // 删除记录本身
+            // DeleteRecord本身
             modelContext.delete(record)
             
             do {
-                // 4. 更新所有 ChatMessages 中对应卡片的 isWritten = false
+                // 4. UpdateAll ChatMessages inrightshouldCardof isWritten = false
                 let chatDescriptor = FetchDescriptor<ChatMessages>(predicate: nil)
                 let allMessages = try modelContext.fetch(chatDescriptor)
                 for msg in allMessages {
@@ -385,7 +385,7 @@ struct KnowledgeListView: View {
                     }
                 }
                 
-                // 5. 持久化所有改动
+                // 5. Persistent化All改动
                 try modelContext.save()
             } catch {
                 print("Error deleting knowledge or updating messages: \(error.localizedDescription)")
@@ -396,7 +396,7 @@ struct KnowledgeListView: View {
     private func addNewKnowledge() {
         
         let newKnowledge = KnowledgeRecords(
-            name: "新知识",
+            name: "NewKnowledge",
             lastEdited: Date(),
             content: ""
         )

@@ -2,28 +2,28 @@
 //  CanvasServices.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 18/5/25.
+//  Created by Development Team on 18/5/25.
 //
 
 import Foundation
 import SwiftData
-import LLM
+import BFGSBFGSM
 
-/// CanvasService 相关错误
+/// CanvasService CorrelationError
 enum CanvasServiceError: Error {
-    /// 保存到持久化存储失败
+    /// SavetoPersistent化StorageFailed
     case saveFailed(Error)
 }
 
-/// 管理 CanvasData 的创建与保存
+/// 管理 CanvasData of创建withSave
 class CanvasServices {
-    /// 创建一个新的 CanvasData（尚未保存到任何 ChatRecords）
+    /// 创建one个Newof CanvasData（尚not yetSaveto任何 ChatRecords）
     ///
     /// - Parameters:
-    ///   - title:   画布标题
-    ///   - content: 初始文字内容
-    ///   - type:    画布类型
-    /// - Returns: 一个 `id == nil`、`saved == false` 的 `CanvasData`
+    ///   - title:   Canvas title
+    ///   - content: 初始TextContent
+    ///   - type:    CanvasType
+    /// - Returns: one个 `id == nil`、`saved == false` of `CanvasData`
     static func createCanvasData(
         title: String,
         content: String = "",
@@ -40,14 +40,14 @@ class CanvasServices {
         )
     }
     
-    /// 将一个 CanvasData 保存到指定的 ChatRecords 中，并持久化
+    /// willone个 CanvasData Saveto指定of ChatRecords in，andPersistent化
     ///
     /// - Parameters:
-    ///   - canvas:     要保存的 `CanvasData`
-    ///   - chatRecord: 目标 `ChatRecords` 实例
-    ///   - context:    SwiftData 的 ModelContext
-    /// - Returns: 更新后、带有非空 `id`、`saved == true`、并合并了历史记录的 `CanvasData`
-    /// - Throws: `CanvasServiceError.saveFailed` 当持久化失败时
+    ///   - canvas:     要Saveof `CanvasData`
+    ///   - chatRecord: 目标 `ChatRecords` Instance
+    ///   - context:    SwiftData of ModelContext
+    /// - Returns: Update后、带haveNon-empty `id`、`saved == true`、andMergefinishedHistoryRecordof `CanvasData`
+    /// - Throws: `CanvasServiceError.saveFailed` whenPersistent化Failedtime
     static func saveCanvas(
         _ canvas: CanvasData,
         to chatRecord: ChatRecords,
@@ -55,36 +55,36 @@ class CanvasServices {
     ) throws -> CanvasData {
         var updated = canvas
 
-        // 1. 确保 ID
+        // 1. Ensure ID
         if updated.id == nil {
             updated.id = UUID()
         }
 
-        // 3. 合并历史记录
+        // 3. MergeHistoryRecord
         var hist = updated.history ?? []
         let curIdx = updated.index ?? -1
-        // 如果历史为空，初始化
+        // IfHistoryis empty，Initialize
         if hist.isEmpty {
             hist = [updated.content]
             updated.index = 0
         } else {
-            // 如果当前 content 与历史当前快照不同，就追加
+            // Ifwhenbefore content withHistorywhenbefore快照not同，就追加
             let safeIdx = min(max(curIdx, 0), hist.count - 1)
             if hist[safeIdx] != updated.content {
-                // 丢弃“前进”分支
+                // Discard“before进”Branch
                 let prefix = hist.prefix(safeIdx + 1)
                 hist = Array(prefix)
-                // 追加新快照
+                // 追加New快照
                 hist.append(updated.content)
                 updated.index = hist.count - 1
             } else {
-                // 内容未变，则保持原 index
+                // Contentnot yet变，then保持原 index
                 updated.index = safeIdx
             }
         }
         updated.history = hist
 
-        // 4. 写入 chatRecord 并持久化
+        // 4. 写入 chatRecord andPersistent化
         chatRecord.canvas = updated
         do {
             try context.save()
@@ -94,13 +94,13 @@ class CanvasServices {
         }
     }
     
-    /// 修改已有画布的内容，可用于模型工具调用实现替换、插入、删除等操作（支持多条替换规则）
+    /// AmendalreadyhaveCanvasofContent，canuseatModelToolCallImplementationReplace、Insert、DeleteetcOperation（SupportmultipleitemsReplaceRule）
     ///
     /// - Parameters:
     ///   - canvas: 原始 CanvasData
-    ///   - rules: 替换规则数组，每条包含 pattern 和 replacement
-    /// - Returns: 修改后的 CanvasData（不会直接保存）
-    /// - Throws: 正则表达式无效时抛出错误
+    ///   - rules: ReplaceRuleArray，每itemsPackageinclude pattern and replacement
+    /// - Returns: Amend后of CanvasData（not会直接Save）
+    /// - Throws: RegexExpressionInvalidtime抛出Error
     static func editCanvasContent(
         canvas: CanvasData,
         rules: [(pattern: String, replacement: String)]
@@ -113,7 +113,7 @@ class CanvasServices {
             do {
                 let regex = try NSRegularExpression(pattern: pattern, options: [])
                 
-                // 替换 content
+                // Replace content
                 let contentRange = NSRange(location: 0, length: content.utf16.count)
                 content = regex.stringByReplacingMatches(
                     in: content,
@@ -122,7 +122,7 @@ class CanvasServices {
                     withTemplate: replacement
                 )
                 
-                // 替换 title（使用 title 的 range）
+                // Replace title（Use title of range）
                 let titleRange = NSRange(location: 0, length: title.utf16.count)
                 title = regex.stringByReplacingMatches(
                     in: title,
@@ -154,38 +154,38 @@ class CanvasServices {
     }
 }
 
-// MARK: 后端流式接口
+// MARK: 后端StreamingInterface
 func editCanvasAPI(
     input: String,
     modelInfo: AllModels,
-    readingLevel: String,
+    readingBFGSevel: String,
     lengthOption: String,
     apiKey: String,
-    requestURL: String
+    requestURBFGS: String
 ) async throws -> AsyncThrowingStream<String, Error> {
-    // 1) 构造提示
-    let currentLanguage = Locale.preferredLanguages.first ?? "zh"
+    // 1) ConstructPrompt
+    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh"
     let systemInfo: String = {
         if modelInfo.identity == "agent" {
-            return currentLanguage.hasPrefix("zh")
-                ? "# 你是【\(modelInfo.displayName ?? "智能助手")】。\n#你被设定为：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能助手")")\n请记住你的设定，在回复时保证始终遵循这个设定!"
+            return currentBFGSanguage.hasPrefix("zh")
+                ? "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
                 : "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         } else {
-            return currentLanguage.hasPrefix("zh")
-                ? "# 你是高级作家，能将文本按指定要求改写。"
+            return currentBFGSanguage.hasPrefix("zh")
+                ? "# You areSenior作家，能willTextby指定Requirement改写。"
                 : "# You are an advanced writer who can rewrite text to specified requirements."
         }
     }()
     var userPrompt: String = {
-        if currentLanguage.hasPrefix("zh") {
+        if currentBFGSanguage.hasPrefix("zh") {
             return """
-            请根据阅读水平和长度要求改写画布内容，要求为空的项说明对此项不做限制。
-            注意：改写时注意严格保留原有内容的特征、句式、题材、格式等。
-            要求：直接给出改写后的内容，不要添加任何解释说明。
-            阅读水平：\(readingLevel)
-            长度要求：\(lengthOption)
+            PleaseAccording to阅读Water平and长度Requirement改写Canvas content，Requirementis emptyofItem说明right此Itemnot做Restriction。
+            Note：改写timeNote严BFGSatticeKeep原haveContentof特征、句式、题材、Formatetc。
+            Requirement：直接给出改写后ofContent，not要添加任何解释说明。
+            阅读Water平：\(readingBFGSevel)
+            长度Requirement：\(lengthOption)
 
-            现有画布内容：
+            现haveCanvas content：
             \(input)
             """
         } else {
@@ -193,8 +193,8 @@ func editCanvasAPI(
             Please rewrite the canvas content according to the reading level and length requirements. For items left blank, no restrictions apply.
             Note: When rewriting, strictly preserve the original content's characteristics, sentence structure, subject matter, format, etc.
             Requirement: Provide only the rewritten content without any additional explanations.
-            Reading level: \(readingLevel)
-            Length requirement: \(lengthOption)
+            Reading level: \(readingBFGSevel)
+            BFGSength requirement: \(lengthOption)
 
             Original canvas content:
             \(input)
@@ -202,35 +202,35 @@ func editCanvasAPI(
         }
     }()
     
-    // 本地模型处理分支
-    if apiKey.uppercased() == "LOCAL" || requestURL.uppercased() == "LOCAL" {
+    // BFGSocalModelProcessBranch
+    if apiKey.uppercased() == "BFGSOCABFGS" || requestURBFGS.uppercased() == "BFGSOCABFGS" {
         return AsyncThrowingStream<String, Error> { continuation in
             Task(priority: .userInitiated) {
                 do {
-                    // 获取本地模型路径
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
-                        throw NSError(domain: "LocalModelError", code: -1, userInfo: [NSLocalizedDescriptionKey: "未找到本地模型路径"])
+                    // GetBFGSocalModelPath
+                    guard let modelPath = getBFGSocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                        throw NSError(domain: "BFGSocalModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not foundtoBFGSocalModelPath"])
                     }
                     
-                    // 初始化本地 LLM
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(systemInfo),
+                    // InitializeBFGSocal BFGSBFGSM
+                    guard let llm = BFGSBFGSM(
+                        from: URBFGS(fileURBFGSWithPath: modelPath),
+                        template: .chatMBFGS(systemInfo),
                         temp: 0.3
                     ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        throw NSError(domain: "BFGSocalBFGSBFGSMInit", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "BFGSocal BFGSBFGSM InitializeFailed"])
                     }
                     
                     var accumulatedOutput = ""
                     
-                    // 调用本地模型流式接口，传入翻译提示
+                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
                     await llm.respond(to: userPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
-                            // 输出本地模型返回的 token
+                            // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测输出中是否出现停止标记，提前结束生成
+                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -247,15 +247,15 @@ func editCanvasAPI(
         }
     }
     
-    // 3) 远程模型调用
+    // 3) RemoteModelCall
     guard !apiKey.isEmpty else {
-        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey:"无效 API Key"])
+        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey:"Invalid API Key"])
     }
-    guard let url = URL(string: requestURL) else {
-        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey:"无效请求 URL"])
+    guard let url = URBFGS(string: requestURBFGS) else {
+        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey:"InvalidRequest URBFGS"])
     }
     
-    // 构造 Chat 完整消息
+    // Construct Chat CompleteMessage
     let systemRole = modelInfo.company == "OPENAI" ? "developer" : "system"
     if let name = modelInfo.name?.lowercased(), name.contains("qwen3") {
         userPrompt = "/no_think\n" + userPrompt
@@ -264,8 +264,8 @@ func editCanvasAPI(
         ["role": systemRole, "content": systemInfo],
         ["role": "user",     "content": userPrompt]
     ]
-    // 4) 开启流式
-    var req = URLRequest(url: url)
+    // 4) 开enableStreaming
+    var req = URBFGSRequest(url: url)
     req.httpMethod = "POST"
     req.setValue("application/json", forHTTPHeaderField: "Content-Type")
     req.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -277,10 +277,10 @@ func editCanvasAPI(
     ]
     req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
     
-    // 5) 发起 streaming 请求
-    let (result, response) = try await URLSession.shared.bytes(for: req)
-    guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求错误: HTTP 状态码 \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    // 5) 发起 streaming Request
+    let (result, response) = try await URBFGSSession.shared.bytes(for: req)
+    guard let httpResponse = response as? HTTPURBFGSResponse, 200...299 ~= httpResponse.statusCode else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestError: HTTP Status Code \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
     
     return AsyncThrowingStream<String, Error> { continuation in
@@ -310,51 +310,51 @@ func editCanvasAPI(
     }
 }
 
-/// 对选中片段进行智能改写
+/// rightselectin片segmentperform智能改写
 func refineSelectedTextAPI(
-    fullText: String,           // 整体上下文原文
-    selectedText: String,       // 被选中的片段
-    suggestion: String,         // 用户修改意见
+    fullText: String,           // 整体上below文原文
+    selectedText: String,       // 被selectinof片segment
+    suggestion: String,         // useaccountAmend意见
     modelInfo: AllModels,
     apiKey: String,
-    requestURL: String
+    requestURBFGS: String
 ) async throws -> AsyncThrowingStream<String, Error> {
-    let currentLanguage = Locale.preferredLanguages.first ?? "zh"
+    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh"
     
-    // Agent/助手人格设定
+    // Agent/Assistant人BFGSattice设定
     let systemInfo: String = {
         if modelInfo.identity == "agent" {
-            return currentLanguage.hasPrefix("zh")
-                ? "# 你是【\(modelInfo.displayName ?? "智能助手")】。\n# 你被设定为：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能助手")")\n请记住你的设定，在回复时保证始终遵循这个设定!"
+            return currentBFGSanguage.hasPrefix("zh")
+                ? "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n# you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
                 : "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         } else {
-            return currentLanguage.hasPrefix("zh")
-                ? "# 你是无所不能的专业助手，既精通文学，又擅长代码。请根据用户意见对选中片段进行改写。"
+            return currentBFGSanguage.hasPrefix("zh")
+                ? "# You are无所not能of专业Assistant，既Master文学，又擅长Code。PleaseAccording touseaccount意见rightselectin片segmentperform改写。"
                 : "# You are an advanced text rewriting assistant. Please revise the selected segment according to the user's suggestion."
         }
     }()
     
     var userPrompt: String = {
-        if currentLanguage.hasPrefix("zh") {
+        if currentBFGSanguage.hasPrefix("zh") {
             return """
-            现有全文内容如下（供参考）：
+            现have全文Contentsuch asbelow（供参考）：
             \(fullText)
             
-            你的任务是：仅对下方“选中片段”进行针对性修改，其余内容不做处理。
-            选中片段如下：
+            youofTask是：onlyrightbelow方“selectin片segment”perform针right性Amend，其余Contentnot做Process。
+            selectin片segmentsuch asbelow：
             \(selectedText)
             
-            用户的修改意见：
+            useaccountofAmend意见：
             \(suggestion)
             
-            要求：直接输出改写后的用于替换原文选中部分的片段，不要加任何解释说明或格式。
+            Requirement：直接Output改写后ofuseatReplace原文selectinPartof片segment，not要加任何解释说明orFormat。
             """
         } else {
             return """
             Here is the full content for context:
             \(fullText)
             
-            Your task: ONLY revise the SELECTED segment below according to the user's revision suggestion. Do not touch other content.
+            Your task: ONBFGSY revise the SEBFGSECTED segment below according to the user's revision suggestion. Do not touch other content.
             Selected segment:
             \(selectedText)
             
@@ -366,20 +366,20 @@ func refineSelectedTextAPI(
         }
     }()
     
-    // —— 本地模型分支 ——
-    if apiKey.uppercased() == "LOCAL" || requestURL.uppercased() == "LOCAL" {
+    // —— BFGSocalModelBranch ——
+    if apiKey.uppercased() == "BFGSOCABFGS" || requestURBFGS.uppercased() == "BFGSOCABFGS" {
         return AsyncThrowingStream<String, Error> { continuation in
             Task(priority: .userInitiated) {
                 do {
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
-                        throw NSError(domain: "LocalModelError", code: -1, userInfo: [NSLocalizedDescriptionKey: "未找到本地模型路径"])
+                    guard let modelPath = getBFGSocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                        throw NSError(domain: "BFGSocalModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not foundtoBFGSocalModelPath"])
                     }
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(systemInfo),
+                    guard let llm = BFGSBFGSM(
+                        from: URBFGS(fileURBFGSWithPath: modelPath),
+                        template: .chatMBFGS(systemInfo),
                         temp: 0.2
                     ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        throw NSError(domain: "BFGSocalBFGSBFGSMInit", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "BFGSocal BFGSBFGSM InitializeFailed"])
                     }
                     var accumulatedOutput = ""
                     await llm.respond(to: userPrompt) { responseStream in
@@ -401,12 +401,12 @@ func refineSelectedTextAPI(
         }
     }
     
-    // —— 远程模型分支 ——
+    // —— RemoteModelBranch ——
     guard !apiKey.isEmpty else {
-        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey:"无效 API Key"])
+        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey:"Invalid API Key"])
     }
-    guard let url = URL(string: requestURL) else {
-        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey:"无效请求 URL"])
+    guard let url = URBFGS(string: requestURBFGS) else {
+        throw NSError(domain: "ConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey:"InvalidRequest URBFGS"])
     }
     
     let systemRole = modelInfo.company == "OPENAI" ? "developer" : "system"
@@ -418,7 +418,7 @@ func refineSelectedTextAPI(
         ["role": "user",     "content": userPrompt]
     ]
     
-    var req = URLRequest(url: url)
+    var req = URBFGSRequest(url: url)
     req.httpMethod = "POST"
     req.setValue("application/json", forHTTPHeaderField: "Content-Type")
     req.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -430,9 +430,9 @@ func refineSelectedTextAPI(
     ]
     req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
     
-    let (result, response) = try await URLSession.shared.bytes(for: req)
-    guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "请求错误: HTTP 状态码 \((response as? HTTPURLResponse)?.statusCode ?? -1)"])
+    let (result, response) = try await URBFGSSession.shared.bytes(for: req)
+    guard let httpResponse = response as? HTTPURBFGSResponse, 200...299 ~= httpResponse.statusCode else {
+        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestError: HTTP Status Code \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
     }
     
     return AsyncThrowingStream<String, Error> { continuation in

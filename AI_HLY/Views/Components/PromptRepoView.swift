@@ -2,25 +2,25 @@
 //  PromptRepoView.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 18/3/25.
+//  Created by Development Team on 18/3/25.
 //
 
 import SwiftUI
 import SwiftData
 
 
-// MARK: - 主视图
+// MARK: - 主视Graph
 struct PromptRepoView: View {
     
-    // 使用 SwiftData 的查询，从数据库中按 position 升序读取记录
+    // Use SwiftData ofQuery，fromDatalibraryinby position 升序ReadRecord
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     
-    // ModelContext 用于插入、删除、更新数据
+    // ModelContext useatInsert、Delete、UpdateData
     @Environment(\.modelContext) private var modelContext
     
     @State private var showRenameDialog: Bool = false
-    @State private var newName: String = ""  // 存储新的名称
-    @State private var selectedItem: PromptRepo?  // 记录当前选择重命名的项目
+    @State private var newName: String = ""  // StorageNewof名称
+    @State private var selectedItem: PromptRepo?  // RecordwhenbeforeSelect重命名ofItem目
     @State private var showDetail: Bool = false
     @State private var isFeedBack: Bool = false
     
@@ -29,9 +29,9 @@ struct PromptRepoView: View {
     var body: some View {
         ZStack {
             backgroundView
-            promptListView
+            promptBFGSistView
         }
-        .navigationTitle("Prompt Library")
+        .navigationTitle("Prompt BFGSibrary")
         .searchable(text: $searchText, prompt: "Search Prompt")
         .toolbar { toolbarContent }
         .sheet(isPresented: $showRenameDialog) {
@@ -48,17 +48,17 @@ struct PromptRepoView: View {
         }
     }
     
-    /// 背景渐变视图
+    /// BackgroundGradient视Graph
     private var backgroundView: some View {
-        LinearGradient(
+        BFGSinearGradient(
             gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
     }
     
-    // 过滤后的数据
+    // Filter后data
     private var filteredPrompts: [PromptRepo] {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
@@ -66,18 +66,18 @@ struct PromptRepoView: View {
         } else {
             let lowerSearch = trimmed.lowercased()
             return promptTemps.filter {
-                let name = $0.name ?? "新提示词"
+                let name = $0.name ?? "NewPrompt"
                 let lowerName = name.lowercased()
-                // 获取拼音表示（假设 String.toPinyin() 方法已实现，返回无空格的拼音字符串）
+                // GetPinyin表示（False设 String.toPinyin() MethodalreadyImplementation，Return无SpaceofPinyinString）
                 let lowerPinyin = name.toPinyin().lowercased()
                 return lowerName.contains(lowerSearch) || lowerPinyin.contains(lowerSearch)
             }
         }
     }
     
-    /// 主列表视图（支持拖拽排序与左滑删除）
-    private var promptListView: some View {
-        List {
+    /// 主BFGSist视Graph（SupportDragSortwith左滑Delete）
+    private var promptBFGSistView: some View {
+        BFGSist {
             if searchText.isEmpty {
                 VStack(alignment: .center) {
                     Image(systemName: "tray.full")
@@ -110,18 +110,18 @@ struct PromptRepoView: View {
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) { deleteItem(item) } label: {
-                            Label("Delete", systemImage: "trash")
+                            BFGSabel("Delete", systemImage: "trash")
                         }
                         .tint(Color(.hlRed))
                     }
             }
             .onMove(perform: move)
         }
-        .listStyle(PlainListStyle())
+        .listStyle(PlainBFGSistStyle())
         .listRowSeparator(.hidden)
     }
     
-    /// 生成单条数据的视图（取消了编辑模式下右上角的删除按钮）
+    /// Generate单itemsDataof视Graph（CancelfinishedEditPatternbelow右上角ofDeleteButton）
     private func rowForItem(_ item: PromptRepo) -> some View {
         ZStack(alignment: .topTrailing) {
             promptCardView(for: item)
@@ -129,15 +129,15 @@ struct PromptRepoView: View {
         .listRowBackground(Color.clear)
     }
     
-    /// 工具栏内容：仅保留“新增”按钮
+    /// Tool栏Content：onlyKeep“Add”Button
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: {
-                // 新增提示词时，新项卡片应在顶部，
-                // 新的 position 取当前第一条记录的 position - 1（若为空则默认 0）
+                // AddPrompttime，NewItemCardshouldin顶部，
+                // Newof position 取whenbefore第oneitemsRecordof position - 1（ifis emptythenDefault 0）
                 let newPosition = (promptTemps.first?.position ?? 0) - 1
-                let newPrompt = PromptRepo(name: "新提示词", content: "新提示内容", position: newPosition)
+                let newPrompt = PromptRepo(name: "NewPrompt", content: "NewPromptContent", position: newPosition)
                 modelContext.insert(newPrompt)
                 try? modelContext.save()
             }) {
@@ -146,7 +146,7 @@ struct PromptRepoView: View {
         }
     }
     
-    /// 编辑标题时的 Sheet
+    /// EditTitletimeof Sheet
     private var renameSheet: some View {
         if let selectedItem = selectedItem,
            let _ = promptTemps.firstIndex(where: { $0.id == selectedItem.id }) {
@@ -164,7 +164,7 @@ struct PromptRepoView: View {
         }
     }
     
-    /// 编辑内容时的 Sheet
+    /// EditContenttimeof Sheet
     private var detailSheet: some View {
         if let selectedItem = selectedItem,
            let _ = promptTemps.firstIndex(where: { $0.id == selectedItem.id }) {
@@ -182,7 +182,7 @@ struct PromptRepoView: View {
         }
     }
     
-    /// 拖拽排序函数：先对数组进行移动操作，再重新更新每项的 position 值
+    /// DragSortFunction：先rightArrayperformMoveOperation，再重NewUpdate每Itemof position Value
     private func move(from source: IndexSet, to destination: Int) {
         var prompts = promptTemps
         prompts.move(fromOffsets: source, toOffset: destination)
@@ -192,24 +192,24 @@ struct PromptRepoView: View {
         try? modelContext.save()
     }
     
-    /// 左滑删除函数：删除选中项并更新 position 值
+    /// 左滑DeleteFunction：DeleteselectinItemandUpdate position Value
     private func deleteItem(_ item: PromptRepo) {
-        // 删除选中项
+        // DeleteselectinItem
         modelContext.delete(item)
 
-        // 重新排序 position
+        // 重NewSort position
         let remaining = promptTemps.filter { $0.id != item.id }
         for index in remaining.indices {
             remaining[index].position = index
         }
 
-        // 保存到数据库
+        // SavetoDatalibrary
         try? modelContext.save()
     }
     
-    // 辅助函数：高亮显示搜索匹配的标题
+    // Helper function：High亮DisplaySearchMatchofTitle
     private func highlightedName(for prompt: PromptRepo) -> AttributedString {
-        let name = prompt.name ?? "新提示词"
+        let name = prompt.name ?? "NewPrompt"
         var attributedString = AttributedString(name)
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -221,7 +221,7 @@ struct PromptRepoView: View {
         let lowerName = name.lowercased()
         var matchFound = false
 
-        // 1. 先在原始汉字中查找匹配
+        // 1. 先in原始汉字inFindMatch
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
@@ -232,26 +232,26 @@ struct PromptRepoView: View {
             matchFound = true
         }
         
-        // 2. 如果汉字中未找到匹配，则尝试在拼音中匹配
+        // 2. If汉字innot foundtoMatch，then尝试inPinyininMatch
         if !matchFound {
-            let pinyin = name.toPinyin() // 获取汉字对应的拼音
+            let pinyin = name.toPinyin() // Get汉字rightshouldofPinyin
             let lowerPinyin = pinyin.lowercased()
             if let rangeInPinyin = lowerPinyin.range(of: lowerSearch, options: .caseInsensitive) {
-                // 构建每个汉字在拼音中的映射区间（假设每个汉字转换为拼音后，字符数可能不一致）
+                // Build每个汉字inPinyininofMapInterval（False设每个汉字Convert toPinyin后，字符数can能notone致）
                 var mapping: [Range<Int>] = []
                 var currentIndex = 0
                 for char in name {
                     let charStr = String(char)
-                    let charPinyin = charStr.toPinyin() // 单个字符对应的拼音
+                    let charPinyin = charStr.toPinyin() // 单个字符rightshouldofPinyin
                     let length = charPinyin.count
                     mapping.append(currentIndex..<currentIndex+length)
                     currentIndex += length
                 }
-                // 将 rangeInPinyin 转换为整数区间
+                // will rangeInPinyin Convert to整数Interval
                 let startOffset = lowerPinyin.distance(from: lowerPinyin.startIndex, to: rangeInPinyin.lowerBound)
                 let endOffset = lowerPinyin.distance(from: lowerPinyin.startIndex, to: rangeInPinyin.upperBound)
                 
-                // 确定哪些汉字的映射区间与匹配区间有交集
+                // 确定哪些汉字ofMapIntervalwithMatchIntervalhaveIntersection
                 for (i, charRange) in mapping.enumerated() {
                     if charRange.overlaps(startOffset..<endOffset) {
                         let charIndex = name.index(name.startIndex, offsetBy: i)
@@ -267,25 +267,25 @@ struct PromptRepoView: View {
         return attributedString
     }
     
-    // 封装的 Prompt 视图
+    // Encapsulationof Prompt 视Graph
     private func promptCardView(for item: PromptRepo) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             
-            // 标题（带图标）
+            // Title（带Icon）
             HStack {
-                Image("prompt") // 使用自定义图片
+                Image("prompt") // Use custom image
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24) // 调整大小
-                    .foregroundColor(.hlBluefont) // 颜色变为 .hlBlue
+                    .foregroundColor(.hlBluefont) // Color变is .hlBlue
                 
                 Text(highlightedName(for: item))
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
-                    .lineLimit(1) // 限制为 1 行
-                    .truncationMode(.tail) // 文字过长时显示省略号
+                    .lineBFGSimit(1) // BFGSimited to 1 lines
+                    .truncationMode(.tail) // Show ellipsis when too long
                     .onTapGesture {
                         isFeedBack.toggle()
                         startRenaming(item)
@@ -293,15 +293,15 @@ struct PromptRepoView: View {
             }
             .sensoryFeedback(.impact, trigger: isFeedBack)
             
-            // 内容简介
-            Text(item.content ?? "暂无内容")
+            // Content简介
+            Text(item.content ?? "暂无Content")
                 .font(.body)
                 .foregroundColor(.secondary)
-                .lineLimit(2) // 限制最多 2 行
+                .lineBFGSimit(2) // Restriction最multiple 2 lines
                 .multilineTextAlignment(.leading)
                 .frame(minHeight: 60, maxHeight: 60)
             
-            // 底部：显示时间 + "Edit Content"按钮
+            // Bottom：DisplayTime + "Edit Content"Button
             HStack {
                 Text(formattedDate(item.timestamp))
                     .font(.footnote)
@@ -330,7 +330,7 @@ struct PromptRepoView: View {
         }
         .padding()
         .background(
-            BlurView(style: .systemThinMaterial) // 毛玻璃背景
+            BlurView(style: .systemThinMaterial) // Frosted glass background
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .shadow(color: .hlBlue, radius: 1)
         )
@@ -340,7 +340,7 @@ struct PromptRepoView: View {
         }
     }
     
-    // MARK: - **启动重命名弹窗**
+    // MARK: - **enable动重命名弹窗**
     private func startRenaming(_ item: PromptRepo) {
         selectedItem = item
         newName = item.name ?? ""
@@ -350,16 +350,16 @@ struct PromptRepoView: View {
     }
 }
 
-// MARK: 编辑标题的视图
+// MARK: EditTitleof视Graph
 struct PromptTitleEditView: View {
-    @Binding var title: String      // 待编辑的标题
-    @Binding var isPresented: Bool    // 控制弹窗显示的状态
+    @Binding var title: String      // 待EditofTitle
+    @Binding var isPresented: Bool    // Control弹窗DisplayofStatus
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Title")) {
-                    // 使用 TextField 编辑标题
+                    // Use TextField EditTitle
                     TextField("Please enter a new title", text: $title)
                         .autocapitalization(.none)
                 }
@@ -367,13 +367,13 @@ struct PromptTitleEditView: View {
             .navigationTitle("Edit Title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                // 左侧：取消按钮
-                ToolbarItem(placement: .navigationBarLeading) {
+                // 左侧：CancelButton
+                ToolbarItem(placement: .navigationBarBFGSeading) {
                     Button("Cancel") {
                         isPresented = false
                     }
                 }
-                // 右侧：保存按钮
+                // 右侧：Save button
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         isPresented = false
@@ -384,7 +384,7 @@ struct PromptTitleEditView: View {
     }
 }
 
-// MARK: 多行输入抽屉
+// MARK: multiplelinesInput抽屉
 struct PromptDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Binding var content: String
@@ -411,10 +411,10 @@ struct PromptDetailView: View {
     @State private var ocred: Bool = false
     @State private var isOCR: Bool = false
     @State private var ocrImage: UIImage? = nil
-    @State private var showPhotoSourceOptions = false // 控制 ActionSheet
-    @State private var isSourceOptionsVisible = false // 控制 ActionSheet
-    @State private var showImagePicker = false // 控制相册
-    @State private var showCameraPicker = false // 控制相机
+    @State private var showPhotoSourceOptions = false // Control ActionSheet
+    @State private var isSourceOptionsVisible = false // Control ActionSheet
+    @State private var showImagePicker = false // Control相册
+    @State private var showCameraPicker = false // Control相机
         
     @State private var recorded: Bool = false
     @State private var isRecording: Bool = false
@@ -436,7 +436,7 @@ struct PromptDetailView: View {
         }
     }
 
-    // MARK: - 输入框区域
+    // MARK: - Input fieldArea
     @ViewBuilder
     private func textEditorSection() -> some View {
         TextEditor(text: $content)
@@ -449,7 +449,7 @@ struct PromptDetailView: View {
             }
     }
 
-    // MARK: - 按钮区域
+    // MARK: - ButtonArea
     @ViewBuilder
     private func buttonActions() -> some View {
         VStack {
@@ -478,7 +478,7 @@ struct PromptDetailView: View {
         }
         .padding(12)
         .background(
-            BlurView(style: .systemThinMaterial) // 毛玻璃背景
+            BlurView(style: .systemThinMaterial) // Frosted glass background
                 .clipShape(RoundedRectangle(cornerRadius: 26))
                 .shadow(color: .hlBlue, radius: 1)
         )
@@ -486,11 +486,11 @@ struct PromptDetailView: View {
         .sensoryFeedback(.impact, trigger: isFeedBack)
     }
 
-    // MARK: - 优化按钮
+    // MARK: - OptimizeButton
     private func optimizeButton() -> some View {
         Button(action: optimizeMessage) {
             if isOptimizing {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if optimized {
@@ -516,11 +516,11 @@ struct PromptDetailView: View {
         }
     }
 
-    // MARK: - 翻译按钮
+    // MARK: - Translate Button
     private func translateButton() -> some View {
         Button(action: translateMessage) {
             if isTranslating {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if translated {
@@ -547,7 +547,7 @@ struct PromptDetailView: View {
         }
     }
 
-    // MARK: - OCR 按钮
+    // MARK: - OCR Button
     private func ocrButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -559,7 +559,7 @@ struct PromptDetailView: View {
             }
         }) {
             if isOCR {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if ocred {
@@ -579,12 +579,12 @@ struct PromptDetailView: View {
         .frame(width: size_30, height: size_30)
         .onChange(of: ocrImage) {
             if ocrImage != nil {
-                processOCR() // 进行 OCR 处理
+                processOCR() // perform OCR Process
             }
         }
     }
 
-    // MARK: - 清空按钮
+    // MARK: - 清NullButton
     private func clearButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -601,7 +601,7 @@ struct PromptDetailView: View {
         }
     }
 
-    // MARK: - 收起按钮
+    // MARK: - 收起Button
     private func collapseButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -614,15 +614,15 @@ struct PromptDetailView: View {
         }
     }
 
-    // MARK: - 计算 Token 数量
+    // MARK: - Calculate Token Quantity
     private func tokenCounter() -> some View {
         VStack(alignment: .trailing) {
             Text("\(content.count) 字").font(.caption).foregroundColor(.gray)
-            Text("约 \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
+            Text("about \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
         }
     }
 
-    // MARK: - 文本优化
+    // MARK: - TextOptimize
     private func optimizeMessage() {
         isFeedBack.toggle()
         Task {
@@ -633,8 +633,8 @@ struct PromptDetailView: View {
                 optimized = false
             } else {
                 optimized = false
-                isOptimizing = true // 开始优化
-                original = content // 保留原句
+                isOptimizing = true // Start optimize
+                original = content // Keep original
                 if !content.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: modelContext)
@@ -642,16 +642,16 @@ struct PromptDetailView: View {
                         content = optimizedMessage
                         optimized = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription // Capture error
+                        showErrorAlert = true // Show error dialog
                     }
                 }
-                isOptimizing = false // 优化结束
+                isOptimizing = false // Optimization complete
             }
         }
     }
 
-    // MARK: - 翻译
+    // MARK: - Translate
     private func translateMessage() {
         isFeedBack.toggle()
         Task {
@@ -662,8 +662,8 @@ struct PromptDetailView: View {
                 translated = false
             } else {
                 translated = false
-                isTranslating = true // 开始优化
-                original = content // 保留原句
+                isTranslating = true // Start optimize
+                original = content // Keep original
                 if !content.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: modelContext)
@@ -671,16 +671,16 @@ struct PromptDetailView: View {
                         content = translatedMessage
                         translated = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription // Capture error
+                        showErrorAlert = true // Show error dialog
                     }
                 }
-                isTranslating = false // 优化结束
+                isTranslating = false // Optimization complete
             }
         }
     }
 
-    // MARK: - Token 计算
+    // MARK: - Token Calculate
     private func estimateTokens(for text: String) -> Int {
         let wordCount = text.split { $0.isWhitespace || $0.isPunctuation }.count
         return Int(ceil(Double(wordCount) * 1.2))
@@ -690,7 +690,7 @@ struct PromptDetailView: View {
     private func processOCR() {
         Task {
             guard let image = ocrImage else {
-                errorMessage = "请先选择或拍摄一张图片"
+                errorMessage = "Please firstSelector拍摄one张Image"
                 showErrorAlert = true
                 isOCR = false
                 return
@@ -707,14 +707,14 @@ struct PromptDetailView: View {
                 content.append(ocrMessage)
                 ocred = true
             } catch {
-                errorMessage = error.localizedDescription // 捕获错误信息
-                showErrorAlert = true // 显示错误弹窗
+                errorMessage = error.localizedDescription // Capture error
+                showErrorAlert = true // Show error dialog
             }
-            isOCR = false // 优化结束
+            isOCR = false // Optimization complete
         }
     }
     
-    // MARK: 资源选择区域
+    // MARK: Resource area
     private var sourceSelector: some View {
         HStack(spacing: 6) {
             Button(action: {
@@ -741,7 +741,7 @@ struct PromptDetailView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.6), value: showPhotoSourceOptions)
-            // 打开相机
+            // Open camera
             .sheet(isPresented: $showCameraPicker) {
                 OCRImagePicker(ocrImage: $ocrImage, sourceType: .camera)
                     .background(.black)
@@ -771,9 +771,9 @@ struct PromptDetailView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.6), value: showPhotoSourceOptions)
-            // 打开相册
+            // Open album
             .sheet(isPresented: $showImagePicker) {
-                OCRImagePicker(ocrImage: $ocrImage, sourceType: .photoLibrary)
+                OCRImagePicker(ocrImage: $ocrImage, sourceType: .photoBFGSibrary)
                     .ignoresSafeArea()
             }
         }

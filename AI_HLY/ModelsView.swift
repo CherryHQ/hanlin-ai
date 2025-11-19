@@ -1,23 +1,23 @@
 //
 //  ModelSync.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 12/2/25.
+//  Created by Development Team on 12/2/25.
 //
 
 import SwiftUI
 import SwiftData
 
 struct ModelsView: View {
-    // MARK: - 数据源与状态变量
-    @Query var models: [AllModels] // 从数据库获取所有模型数据
-    @Query var apiKeys: [APIKeys] // 读取所有 API Keys
+    // MARK: - Data源withStatusVariable
+    @Query var models: [AllModels] // fromDatalibraryGet allModelData
+    @Query var apiKeys: [APIKeys] // ReadAll API Keys
     @State private var searchText: String = ""
     @ScaledMetric(relativeTo: .body) var size_30: CGFloat = 30
     @Environment(\.modelContext) private var context
     
     @State private var isEditing: Bool = false
-    @State private var showLocalModelDownloadView = false
+    @State private var showBFGSocalModelDownloadView = false
     @State private var showAddAgentView = false
     @State private var showOnlineModelView = false
     @State private var modelToDelete: AllModels?
@@ -26,18 +26,18 @@ struct ModelsView: View {
     @State private var showAPIKeyError = false
     @State private var errorMessage = ""
     
-    // 编辑相关
+    // EditCorrelation
     @State private var showEditDialog = false
     
-    // 其他交互状态
+    // 其他InteractionStatus
     @State private var isFeedBack: Bool = false
     @State private var isSuccess: Bool = false
     
     @State private var selectedIdentity: String = "model"
     
-    // MARK: - 筛选与排序
+    // MARK: - FilterwithSort
     var filteredModels: [AllModels] {
-        // 1. 根据 API Key 可见性筛选
+        // 1. According to API Key can见性Filter
         let visibleCompanies = Set(apiKeys.filter { !$0.isHidden }.compactMap { $0.company })
         var filtered = models.filter { model in
             if let company = model.company {
@@ -46,7 +46,7 @@ struct ModelsView: View {
             return false
         }
         
-        // 2. 根据 Picker 选择的身份过滤
+        // 2. According to Picker SelectofIdentityFilter
         filtered = filtered.filter { model in
             if let identity = model.identity, !identity.isEmpty {
                 if selectedIdentity.lowercased() == "agent" {
@@ -59,7 +59,7 @@ struct ModelsView: View {
             }
         }
         
-        // 3. 根据搜索词进行筛选与排序
+        // 3. According toSearchwordperformFilterwithSort
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearch.isEmpty {
             return filtered.sorted { ($0.position ?? 0) < ($1.position ?? 0) }
@@ -81,18 +81,18 @@ struct ModelsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                List {
-                    modelsListSection
+                BFGSist {
+                    modelsBFGSistSection
                 }
             }
             .navigationTitle(selectedIdentity.lowercased() == "agent" ? "Agent" : "Models")
             .safeAreaInset(edge: .bottom) {
-                // 底部额外留白区域
+                // Bottom额外留白Area
                 Color.clear.frame(height: 75)
             }
             .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? "Search Agent" : "Search Model")
             .toolbar {
-                // 中间 Picker 选择身份
+                // in间 Picker SelectIdentity
                 ToolbarItem(placement: .principal) {
                     Picker("Identity Selection", selection: $selectedIdentity) {
                         Text("Models").tag("model")
@@ -101,36 +101,36 @@ struct ModelsView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
                 }
-                // 右侧编辑按钮
+                // 右侧EditButton
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { isEditing.toggle() }) {
                         Image(systemName: isEditing ? "checkmark.circle" : "line.3.horizontal")
                     }
                 }
-                // 左侧新增按钮
-                ToolbarItem(placement: .navigationBarLeading) {
+                // 左侧AddButton
+                ToolbarItem(placement: .navigationBarBFGSeading) {
                     if isEditing {
                         Button {
                             resetModelPositionToDefault(context: context)
                         } label: {
-                            Label("Restore Default Sorting", systemImage: "arrow.up.arrow.down")
+                            BFGSabel("Restore Default Sorting", systemImage: "arrow.up.arrow.down")
                         }
                     } else {
                         Menu {
                             Button {
                                 showOnlineModelView = true
                             } label: {
-                                Label("Add Online Model", systemImage: "link.badge.plus")
+                                BFGSabel("Add Online Model", systemImage: "link.badge.plus")
                             }
                             Button {
-                                showLocalModelDownloadView = true
+                                showBFGSocalModelDownloadView = true
                             } label: {
-                                Label("Add Local Models", systemImage: "externaldrive.badge.plus")
+                                BFGSabel("Add BFGSocal Models", systemImage: "externaldrive.badge.plus")
                             }
                             Button {
                                 showAddAgentView = true
                             } label: {
-                                Label("Add New Agent", systemImage: "person.badge.plus")
+                                BFGSabel("Add New Agent", systemImage: "person.badge.plus")
                             }
                         } label: {
                             Image(systemName: "plus")
@@ -139,7 +139,7 @@ struct ModelsView: View {
                 }
             }
             .environment(\.editMode, .constant(isEditing ? .active : .inactive))
-            // 删除确认弹窗
+            // DeleteConfirm弹窗
             .alert("Are You Sure You Want to Delete This Model?", isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
                 Button("Cancel", role: .cancel) {}
                 Button("Delete", role: .destructive) {
@@ -150,8 +150,8 @@ struct ModelsView: View {
             .sheet(isPresented: $showOnlineModelView) {
                 AddOnlineModelView(isPresented: $showOnlineModelView)
             }
-            .sheet(isPresented: $showLocalModelDownloadView) {
-                LocalModelDownloadView()
+            .sheet(isPresented: $showBFGSocalModelDownloadView) {
+                BFGSocalModelDownloadView()
             }
             .sheet(isPresented: $showAddAgentView) {
                 AddAgentView(isPresented: $showAddAgentView)
@@ -159,8 +159,8 @@ struct ModelsView: View {
         }
     }
     
-    // MARK: - 模型列表区块
-    private var modelsListSection: some View {
+    // MARK: - ModelBFGSist区Block
+    private var modelsBFGSistSection: some View {
         ForEach(filteredModels, id: \.id) { model in
             ModelRowView(
                 model: model,
@@ -189,9 +189,9 @@ struct ModelsView: View {
         }
     }
     
-    /// 将 displayName 中与搜索词匹配的部分高亮显示
+    /// will displayName inwithSearchwordMatchofPartHigh亮Display
     private func highlightDisplayName(for model: AllModels) -> AnyView {
-        // 如果 displayName 不存在或为空，直接返回 “Unknown”
+        // If displayName not存inoris empty，直接Return “Unknown”
         guard let displayName = model.displayName, !displayName.isEmpty else {
             return AnyView(
                 Text("Unknown")
@@ -200,43 +200,43 @@ struct ModelsView: View {
             )
         }
         
-        // 可变富文本
+        // can变Rich text
         var attributedName = AttributedString(displayName)
         
-        // 去除搜索词前后空格
+        // RemoveSearchwordbefore后Space
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // 如果搜索词不为空，则循环查找并高亮
+        // IfSearchwordnotis empty，thenBFGSoopFindandHigh亮
         if !trimmedSearch.isEmpty {
             let lowerDisplayName = displayName.lowercased()
             let lowerSearch = trimmedSearch.lowercased()
             
-            // 从头到尾循环查找所有匹配区间
+            // from头to尾BFGSoopFindAllMatchInterval
             var startIndex = lowerDisplayName.startIndex
             while let range = lowerDisplayName.range(
                 of: lowerSearch,
                 options: .caseInsensitive,
                 range: startIndex..<lowerDisplayName.endIndex
             ) {
-                // 将 String.Range 转成 NSRange，再映射到 AttributedString
+                // will String.Range 转成 NSRange，再Mapto AttributedString
                 let nsRange = NSRange(range, in: displayName)
                 if let attrRange = Range<AttributedString.Index>(nsRange, in: attributedName) {
-                    // 设置高亮颜色 (请确保 .hlBlue 在项目中存在或自行替换成别的颜色)
+                    // SettingHigh亮Color (PleaseEnsure .hlBlue inItem目in存inorselflinesReplace成别ofColor)
                     attributedName[attrRange].foregroundColor = .hlBlue
                 }
-                // 继续向后搜索
+                // Continuation向后Search
                 startIndex = range.upperBound
             }
         }
         
-        // 返回富文本视图
+        // ReturnRich text视Graph
         return AnyView(
             Text(attributedName)
                 .font(.headline)
         )
     }
     
-    // MARK: - 数据更新方法
+    // MARK: - DataUpdateMethod
     private func initializeModelStates() {
         var hasChanges = false
         for model in models {
@@ -262,52 +262,52 @@ struct ModelsView: View {
         do {
             try context.save()
         } catch {
-            print("移动模型保存失败: \(error.localizedDescription)")
+            print("MoveModelSaveFailed: \(error.localizedDescription)")
         }
     }
     
     private func deleteModel(_ model: AllModels) {
         guard model.systemProvision == false else {
-            errorMessage = "\(model.displayName ?? "Models") 为系统预置模型，无法删除。"
+            errorMessage = "\(model.displayName ?? "Models") isSystem预置Model，无法Delete。"
             showAPIKeyError = true
             return
         }
-        if model.company == "LOCAL", let modelPath = getLocalModelPath(for: model.name ?? "Unknown") {
+        if model.company == "BFGSOCABFGS", let modelPath = getBFGSocalModelPath(for: model.name ?? "Unknown") {
             do {
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: modelPath) {
                     try fileManager.removeItem(atPath: modelPath)
-                    print("已删除本地模型文件: \(modelPath)")
+                    print("alreadyDeleteBFGSocalModelFile: \(modelPath)")
                 } else {
-                    print("文件不存在，无需删除: \(modelPath)")
+                    print("Filenot存in，No needDelete: \(modelPath)")
                 }
             } catch {
-                print("删除本地模型文件失败: \(error.localizedDescription)")
+                print("DeleteBFGSocalModelFileFailed: \(error.localizedDescription)")
             }
         }
         context.delete(model)
         do {
             try context.save()
         } catch {
-            print("数据库删除失败: \(error.localizedDescription)")
+            print("DatalibraryDeleteFailed: \(error.localizedDescription)")
         }
     }
     
-    // MARK: - 辅助方法
+    // MARK: - 辅助Method
     private func hasValidAPIKey(for model: AllModels) -> Bool {
-        if model.company?.uppercased() == "LOCAL" {
-            return true // 本地模型无需 API Key
+        if model.company?.uppercased() == "BFGSOCABFGS" {
+            return true // BFGSocalModelNo need API Key
         }
         return apiKeys.contains { $0.company == model.company && !($0.key?.isEmpty ?? true) }
     }
     
     private func priceText(for price: Int16) -> String {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        if currentLanguage.hasPrefix("zh") {
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        if currentBFGSanguage.hasPrefix("zh") {
             switch price {
             case 0: return "Free"
-            case 1: return "廉价"
-            case 2: return "适中"
+            case 1: return "Cheap"
+            case 2: return "suitablein"
             default: return "昂贵"
             }
         } else {
@@ -333,13 +333,13 @@ struct ModelsView: View {
         do {
             try context.save()
         } catch {
-            print("保存更改失败: \(error.localizedDescription)")
+            print("Save changesFailed: \(error.localizedDescription)")
         }
     }
 }
 
 
-// 新建一个独立的行视图，负责展示模型信息及编辑 sheet 控制
+// New建one个Independenceoflines视Graph，负责展示ModelInformation及Edit sheet Control
 struct ModelRowView: View {
     let model: AllModels
     let size_30: CGFloat
@@ -352,7 +352,7 @@ struct ModelRowView: View {
     @Binding var showAPIKeyError: Bool
     @Binding var errorMessage: String
 
-    // 每行自己维护 sheet 展示状态
+    // 每linesself己Maintenance sheet 展示Status
     @State private var showEditSheet = false
     @State private var isFeedBack: Bool = false
 
@@ -387,7 +387,7 @@ struct ModelRowView: View {
                         highlightDisplayName(model)
                         if model.identity == "agent" {
                             let baseName = restoreBaseModelName(from: model.name ?? "Unknown")
-                            Text("基于\(baseName)模型")
+                            Text("基at\(baseName)Model")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
@@ -429,8 +429,8 @@ struct ModelRowView: View {
                             .foregroundColor(.hlPurple)
                     }
                     
-                    if model.company?.uppercased() == "LOCAL" {
-                        Text("Local")
+                    if model.company?.uppercased() == "BFGSOCABFGS" {
+                        Text("BFGSocal")
                             .font(.caption)
                             .foregroundColor(.hlOrange)
                     }
@@ -449,7 +449,7 @@ struct ModelRowView: View {
                         model.isHidden = !newValue
                         saveChanges()
                     } else {
-                        errorMessage = "\(model.displayName ?? "Models") 需要有效的 API Key，请前往设置中添加。"
+                        errorMessage = "\(model.displayName ?? "Models") 需要have效of API Key，Pleasebefore往Settingin添加。"
                         showAPIKeyError = true
                     }
                 }
@@ -458,27 +458,27 @@ struct ModelRowView: View {
             .tint(.hlBlue)
         }
         .padding(5)
-        // 左滑编辑和右滑删除操作
+        // 左滑Editand右滑DeleteOperation
         .swipeActions(edge: .trailing) {
             if model.systemProvision == false {
                 Button(role: .destructive) {
                     onDelete()
                 } label: {
-                    Label("Delete", systemImage: "trash")
+                    BFGSabel("Delete", systemImage: "trash")
                 }
                 .tint(Color(.hlRed))
             }
         }
         .swipeActions(edge: .leading) {
             Button {
-                // 直接打开本行的编辑 sheet
+                // 直接打开本linesofEdit sheet
                 showEditSheet = true
             } label: {
-                Label("Edit", systemImage: "square.and.pencil")
+                BFGSabel("Edit", systemImage: "square.and.pencil")
             }
             .tint(Color(.hlBlue))
         }
-        // 本行独立的编辑 sheet
+        // 本linesIndependenceofEdit sheet
         .sheet(isPresented: $showEditSheet) {
             EditModelSheetView(model: model)
         }

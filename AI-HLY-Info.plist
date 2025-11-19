@@ -2,19 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleURLName</key>
-			<string>com.aihanlin.AI-HLY</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>AI-Hanlin</string>
-			</array>
-		</dict>
-	</array>
 	<key>HANLIN_API_KEY</key>
 	<string>$(HANLIN_API_KEY)</string>
 	<key>HANLIN_OPEN_API_KEY</key>

@@ -1,8 +1,8 @@
 //
-//  ListViewComponents.swift
-//  AI_HLY
+//  BFGSistViewComponents.swift
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 11/2/25.
+//  Created by Development Team on 11/2/25.
 //
 
 import SwiftUI
@@ -38,7 +38,7 @@ struct ChatRowView: View {
             VStack(alignment: .leading) {
                 HStack {
                     highlightedChatName()
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                         .truncationMode(.tail)
                     
                     Spacer()
@@ -48,25 +48,25 @@ struct ChatRowView: View {
                         .foregroundColor(.gray)
                 }
                 
-                // 如果存在匹配片段，则显示出来
+                // If existsMatch片segment，thenDisplay出来
                 if let snippet = matchedSnippet {
                     Text(snippet)
                         .font(.caption)
-                        .lineLimit(2)
+                        .lineBFGSimit(2)
                         .truncationMode(.tail)
                 } else {
                     if let highlightedDescription = highlightedText(record.infoDescription ?? "", searchText: searchText) {
                         Text(highlightedDescription)
                             .font(.caption)
                             .foregroundColor(Color(.systemGray))
-                            .lineLimit(2)
+                            .lineBFGSimit(2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     } else {
                         Text("No Messages Yet")
                             .font(.caption)
                             .foregroundColor(Color(.systemGray))
-                            .lineLimit(2)
+                            .lineBFGSimit(2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     }
@@ -81,16 +81,16 @@ struct ChatRowView: View {
         let dateFormatter = DateFormatter()
         
         if calendar.isDateInToday(date) {
-            // 如果是今天，显示具体时间
+            // If是Today，Display具体Time
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
-            return "昨天"
+            return "昨day"
         } else if let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()),
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
-            return "前天"
+            return "beforeday"
         } else {
-            // 超过前天，显示“月-日”
+            // 超过beforeday，Display“月-日”
             dateFormatter.dateFormat = "MM-dd"
             return dateFormatter.string(from: date)
         }
@@ -100,18 +100,18 @@ struct ChatRowView: View {
         var attributedString = AttributedString(text)
         attributedString.font = .caption
         
-        // 检查开头是否为 "[草稿]" 或 "[图像]" 并做颜色处理
+        // Check开头whetheris "[草稿]" or "[Image]" and做ColorProcess
         if text.hasPrefix("[草稿]") {
             if let draftRange = attributedString.range(of: "[草稿]") {
                 attributedString[draftRange].foregroundColor = .hlRed
             }
-        } else if text.hasPrefix("[图像]") {
-            if let imageRange = attributedString.range(of: "[图像]") {
+        } else if text.hasPrefix("[Image]") {
+            if let imageRange = attributedString.range(of: "[Image]") {
                 attributedString[imageRange].foregroundColor = .hlGreen
             }
         }
         
-        // 如果 searchText 非空，则对其中匹配的部分进行高亮
+        // If searchText Non-empty，thenright其inMatchofPartperformHigh亮
         if !searchText.isEmpty,
            let range = attributedString.range(of: searchText, options: .caseInsensitive) {
             attributedString[range].foregroundColor = Color(.hlBlue)
@@ -122,25 +122,25 @@ struct ChatRowView: View {
     }
     
     private func highlightedChatName() -> Text {
-        // 如果名称为空，则返回默认“Unknown”
+        // If名称is empty，thenReturnDefault“Unknown”
         guard let name = record.name, !name.isEmpty else {
             return Text("Unknown")
                 .font(.headline)
                 .foregroundColor(.primary)
         }
         
-        // 去除搜索词前后空格，并提前处理空搜索
+        // RemoveSearchwordbefore后Space，and提beforeProcessNullSearch
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearch.isEmpty {
             return Text(name).font(.headline)
         }
         
-        // 构建富文本对象
+        // BuildRich textObject
         var attributedName = AttributedString(name)
         let lowerName = name.lowercased()
         let lowerSearch = trimmedSearch.lowercased()
         
-        // 遍历查找所有匹配项，并设置高亮颜色
+        // TraverseFindAllMatchItem，andSettingHigh亮Color
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let foundRange = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(foundRange, in: name)
@@ -171,16 +171,16 @@ struct IconAndColorPicker: View {
     @Binding var selectedColor: Color
     @Binding var title: String
     
-    let availableIcons = getIconList()
-    let availableColors = getColorList()
+    let availableIcons = getIconBFGSist()
+    let availableColors = getColorBFGSist()
     
-    let iconColumns = [GridItem(.adaptive(minimum: 60), spacing: 12)]  // 图标：每行自适应
-    let colorColumns = [GridItem(.adaptive(minimum: 40), spacing: 12)] // 颜色：每行自适应，最小宽度更小
+    let iconColumns = [GridItem(.adaptive(minimum: 60), spacing: 12)]  // Icon：每linesselfsuitableshould
+    let colorColumns = [GridItem(.adaptive(minimum: 40), spacing: 12)] // Color：每linesselfsuitableshould，最小宽度更小
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                // 预览消息栏
+                // 预览Message栏
                 HStack(spacing: 12) {
                     Image(systemName: selectedIcon)
                         .resizable()
@@ -198,7 +198,7 @@ struct IconAndColorPicker: View {
                         Text("This is a Sample Message...")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                            .lineLimit(1)
+                            .lineBFGSimit(1)
                     }
                     
                     Spacer()
@@ -211,10 +211,10 @@ struct IconAndColorPicker: View {
                 )
                 .padding(.horizontal)
                 
-                // 图标选择
+                // IconSelect
                 VStack(alignment: .leading) {
                     ScrollView {
-                        LazyVGrid(columns: iconColumns, spacing: 20) {
+                        BFGSazyVGrid(columns: iconColumns, spacing: 20) {
                             ForEach(availableIcons, id: \.self) { icon in
                                 ZStack {
                                     Image(systemName: icon)
@@ -241,10 +241,10 @@ struct IconAndColorPicker: View {
                 )
                 .padding(.horizontal)
                 
-                // 颜色选择
+                // ColorSelect
                 VStack(alignment: .leading) {
                     ScrollView {
-                        LazyVGrid(columns: colorColumns, spacing: 20) {
+                        BFGSazyVGrid(columns: colorColumns, spacing: 20) {
                             ForEach(availableColors, id: \.self) { color in
                                 Circle()
                                     .fill(color)

@@ -1,8 +1,8 @@
 //
 //  ChatRecords.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 9/2/25.
+//  Created by Development Team on 9/2/25.
 //
 //
 
@@ -11,11 +11,11 @@ import SwiftData
 import SwiftUI
 
 struct CanvasData: Codable, Hashable {
-    var title: String = ""       // 画布标题
-    var content: String = ""     // 画布文字
-    var type: String = ""        // 画布类型
-    var saved: Bool = false      // 是否已经保存
-    var id: UUID? = nil          // 画布知识编号
+    var title: String = ""       // Canvas title
+    var content: String = ""     // CanvasText
+    var type: String = ""        // CanvasType
+    var saved: Bool = false      // whetheralready经Save
+    var id: UUID? = nil          // CanvasKnowledge编号
     var history: [String]? = []
     var index: Int? = 0
 }
@@ -29,21 +29,21 @@ class ChatRecords {
     var infoDescription: String?
     var lastEdited: Date = Date()
     var isPinned: Bool = false
-    var icon: String?                 // 存储图标名称
-    var color: String?                // 颜色的名称
-    var input: String? = ""           // 正在输入
-    var useModel: Int? = -1           // 正在使用的模型
-    var temperature: Double = -999    // 采样温度参数（默认 不设置）
-    var topP: Double = -999           // 累积概率参数（默认 不设置）
-    var maxTokens: Int = -999         // 最大输出参数，默认为 不设置
-    var maxMessagesNum: Int = 20      // 消息数量参数，默认为 20
-    var systemMessage: String? = ""   // 系统消息
+    var icon: String?                 // StorageIcon名称
+    var color: String?                // Colorof名称
+    var input: String? = ""           // currentlyInput
+    var useModel: Int? = -1           // currentlyUseofModel
+    var temperature: Double = -999    // SamplingTemperatureParameter（Default notSetting）
+    var topP: Double = -999           // 累积ProbabilityParameter（Default notSetting）
+    var maxTokens: Int = -999         // 最Big OutputParameter，Defaultis notSetting
+    var maxMessagesNum: Int = 20      // MessageQuantityParameter，Defaultis 20
+    var systemMessage: String? = ""   // SystemMessage
     var useSystemMessage: Bool = true
-    var canvas: CanvasData? = nil     // 画布信息
+    var canvas: CanvasData? = nil     // CanvasInformation
     @Relationship(deleteRule: .cascade)
     var messages: [ChatMessages]?
     
-    // 初始化方法
+    // InitializeMethod
     public init(
         id: UUID? = UUID(),
         name: String?,
@@ -53,12 +53,12 @@ class ChatRecords {
         isPinned: Bool = false,
         icon: String = "bubble.left.circle",
         color: String = "hlBlue",
-        input: String? = "",            // 正在输入
-        useModel: Int? = -1,            // 正在使用的模型
-        temperature: Double = -999,     // 采样温度参数（默认 不设置）
-        topP: Double = -999,            // 累积概率参数（默认 不设置）
-        maxTokens: Int = -999,          // 最大输出参数，默认为 不设置
-        maxMessagesNum: Int = 20,       // 消息数量参数，默认为 20
+        input: String? = "",            // currentlyInput
+        useModel: Int? = -1,            // currentlyUseofModel
+        temperature: Double = -999,     // SamplingTemperatureParameter（Default notSetting）
+        topP: Double = -999,            // 累积ProbabilityParameter（Default notSetting）
+        maxTokens: Int = -999,          // 最Big OutputParameter，Defaultis notSetting
+        maxMessagesNum: Int = 20,       // MessageQuantityParameter，Defaultis 20
         systemMessage: String? = "",
         useSystemMessage: Bool = true,
         canvas: CanvasData? = nil,

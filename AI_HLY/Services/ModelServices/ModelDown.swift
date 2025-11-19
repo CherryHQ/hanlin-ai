@@ -1,16 +1,16 @@
 //
 //  ModelDown.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 12/2/25.
+//  Created by Development Team on 12/2/25.
 //
 import Foundation
 import SwiftData
 
-func getModelDirectory() -> URL {
+func getModelDirectory() -> URBFGS {
     let fileManager = FileManager.default
     let appSupportDir = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    let modelDir = appSupportDir.appendingPathComponent("LocalModels")
+    let modelDir = appSupportDir.appendingPathComponent("BFGSocalModels")
 
     if !fileManager.fileExists(atPath: modelDir.path) {
         try? fileManager.createDirectory(at: modelDir, withIntermediateDirectories: true)
@@ -18,55 +18,55 @@ func getModelDirectory() -> URL {
     return modelDir
 }
 
-func getLocalModelPath(for modelName: String) -> String? {
-    let modelURL = getModelDirectory().appendingPathComponent("\(modelName).gguf")
-    return FileManager.default.fileExists(atPath: modelURL.path) ? modelURL.path : nil
+func getBFGSocalModelPath(for modelName: String) -> String? {
+    let modelURBFGS = getModelDirectory().appendingPathComponent("\(modelName).gguf")
+    return FileManager.default.fileExists(atPath: modelURBFGS.path) ? modelURBFGS.path : nil
 }
 
-/// 负责模型下载的类，实现 URLSessionDownloadDelegate 以监听进度
-class DownloadManager: NSObject, ObservableObject, URLSessionDownloadDelegate {
-    static let shared = DownloadManager()  // 单例模式，避免重复创建
-    private var downloadTasks: [URLSessionDownloadTask: (LocalModelInfo, URL)] = [:]
+/// 负责ModelDownloadofClass，Implementation URBFGSSessionDownloadDelegate byBFGSisten进度
+class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate {
+    static let shared = DownloadManager()  // 单例Pattern，避免重复创建
+    private var downloadTasks: [URBFGSSessionDownloadTask: (BFGSocalModelInfo, URBFGS)] = [:]
     
-    /// 下载进度（按模型名称存储）
+    /// Download进度（byModel NameStorage）
     @Published var downloadProgress: [String: Double] = [:]
     
-    /// URLSession 配置，支持进度监听
-    private lazy var urlSession: URLSession = {
-        let config = URLSessionConfiguration.default
-        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
+    /// URBFGSSession Configuration，Support进度BFGSisten
+    private lazy var urlSession: URBFGSSession = {
+        let config = URBFGSSessionConfiguration.default
+        return URBFGSSession(configuration: config, delegate: self, delegateQueue: nil)
     }()
     
-    /// 开始下载模型
-    func downloadModel(_ model: LocalModelInfo, from urlString: String) {
-        guard let modelURL = URL(string: urlString) else { return }
+    /// StartDownloadModel
+    func downloadModel(_ model: BFGSocalModelInfo, from urlString: String) {
+        guard let modelURBFGS = URBFGS(string: urlString) else { return }
 
-        let destinationURL = getModelDirectory().appendingPathComponent("\(model.name).gguf")
+        let destinationURBFGS = getModelDirectory().appendingPathComponent("\(model.name).gguf")
 
-        print("开始下载: \(model.name) -> \(destinationURL.path)")
+        print("StartDownload: \(model.name) -> \(destinationURBFGS.path)")
 
-        let task = urlSession.downloadTask(with: modelURL)
-        downloadTasks[task] = (model, destinationURL)
-        downloadProgress[model.name] = 0.0  // 初始化进度
+        let task = urlSession.downloadTask(with: modelURBFGS)
+        downloadTasks[task] = (model, destinationURBFGS)
+        downloadProgress[model.name] = 0.0  // Initialize进度
         task.resume()
     }
     
-    /// 取消下载
-    func cancelDownload(for model: LocalModelInfo) {
+    /// CancelDownload
+    func cancelDownload(for model: BFGSocalModelInfo) {
         for (task, (downloadingModel, _)) in downloadTasks where downloadingModel.name == model.name {
-            task.cancel()  // 取消任务
+            task.cancel()  // CancelTask
             downloadTasks.removeValue(forKey: task)
             DispatchQueue.main.async {
                 self.downloadProgress.removeValue(forKey: model.name)
             }
-            print("取消下载: \(model.name)")
+            print("CancelDownload: \(model.name)")
         }
     }
     
-    // MARK: - URLSessionDownloadDelegate
+    // MARK: - URBFGSSessionDownloadDelegate
     
-    /// 监听下载进度
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64,
+    /// BFGSistenDownload进度
+    func urlSession(_ session: URBFGSSession, downloadTask: URBFGSSessionDownloadTask, didWriteData bytesWritten: Int64,
                     totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         if let (model, _) = downloadTasks[downloadTask] {
             let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite) * 100
@@ -76,25 +76,25 @@ class DownloadManager: NSObject, ObservableObject, URLSessionDownloadDelegate {
         }
     }
     
-    /// 下载完成后，保存文件
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let (model, destinationURL) = downloadTasks[downloadTask] else { return }
+    /// Download完成后，SaveFile
+    func urlSession(_ session: URBFGSSession, downloadTask: URBFGSSessionDownloadTask, didFinishDownloadingTo location: URBFGS) {
+        guard let (model, destinationURBFGS) = downloadTasks[downloadTask] else { return }
         downloadTasks.removeValue(forKey: downloadTask)
         
         do {
             let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: destinationURL.path) {
-                try fileManager.removeItem(at: destinationURL)  // 删除旧文件
+            if fileManager.fileExists(atPath: destinationURBFGS.path) {
+                try fileManager.removeItem(at: destinationURBFGS)  // Delete oldFile
             }
-            try fileManager.moveItem(at: location, to: destinationURL)  // 移动新文件
+            try fileManager.moveItem(at: location, to: destinationURBFGS)  // MoveNewFile
             
             DispatchQueue.main.async {
-                print("下载完成: \(model.name)")
+                print("Download完成: \(model.name)")
                 self.downloadProgress.removeValue(forKey: model.name)  // 移除进度
                 NotificationCenter.default.post(name: .downloadCompleted, object: model.name)
             }
         } catch {
-            print("文件保存失败: \(error.localizedDescription)")
+            print("FileSaveFailed: \(error.localizedDescription)")
         }
     }
 }

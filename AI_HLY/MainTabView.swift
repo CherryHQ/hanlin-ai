@@ -1,8 +1,8 @@
 //
 //  MainTabView.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 10/2/25.
+//  Created by Development Team on 10/2/25.
 //
 
 import SwiftUI
@@ -10,48 +10,39 @@ import SwiftData
 
 struct MainTabView: View {
     
-    @Binding var deepLinkTarget: String?
     @State private var selectedTab: Int = 0
     @State private var hideTabBar: Bool = false
     
     var body: some View {
-        // 使用系统原生的TabView
+        // UseSystem原生ofTabView
         TabView(selection: $selectedTab) {
-            // 第一个Tab: ListView
-            ListView()
+            // 第one个Tab: BFGSistView
+            BFGSistView()
                 .tabItem {
-                    Label("List", systemImage: "list.bullet")
+                    BFGSabel("BFGSist", systemImage: "list.bullet")
                 }
                 .tag(0)
             
-            // 第二个Tab: VisionView
-            VisionView(selectedTab: $selectedTab)
-                .toolbar(.hidden, for: .tabBar)
+            // 第二个Tab: KnowledgeBFGSistView
+            KnowledgeBFGSistView()
                 .tabItem {
-                    Label("Vision", systemImage: "eye")
+                    BFGSabel("Knowledge Base", systemImage: "books.vertical")
                 }
                 .tag(1)
             
-            // 第三个Tab: KnowledgeListView
-            KnowledgeListView()
+            // 第三个Tab: ModelsView
+            ModelsView()
                 .tabItem {
-                    Label("Knowledge Base", systemImage: "books.vertical")
+                    BFGSabel("Models", systemImage: "square.stack.3d.up")
                 }
                 .tag(2)
             
-            // 第四个Tab: ModelsView
-            ModelsView()
-                .tabItem {
-                    Label("Models", systemImage: "square.stack.3d.up")
-                }
-                .tag(3)
-            
-            // 第五个Tab: SettingsView
+            // 第四个Tab: SettingsView
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    BFGSabel("Settings", systemImage: "gear")
                 }
-                .tag(4)
+                .tag(3)
         }
         .animation(.easeInOut(duration: 0.4), value: selectedTab)
         .onReceive(NotificationCenter.default.publisher(for: .hideTabBar)) { notification in
@@ -59,23 +50,16 @@ struct MainTabView: View {
                 hideTabBar = isHidden
             }
         }
-        .onChange(of: deepLinkTarget) {
-            if deepLinkTarget == "vision" {
-                selectedTab = 1
-                deepLinkTarget = nil // 清除状态，避免重复跳转
-            }
-        }
-        // background修饰符对于TabView不是必需的，但保留以防有特定需要
+        // backgroundDecorate符ForTabViewnot是Requiredof，但Keepby防have特定需要
         .background(Color(.systemBackground))
     }
 }
 
 extension Notification.Name {
-    static let openVisionView = Notification.Name("openVisionView")
     static let hideTabBar = Notification.Name("hideTabBar")
 }
 
-// 毛玻璃背景封装组件
+// Frosted glass backgroundEncapsulation组file
 struct BlurView: UIViewRepresentable {
     let style: UIBlurEffect.Style
     

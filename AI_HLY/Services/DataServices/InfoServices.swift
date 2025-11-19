@@ -1,25 +1,25 @@
 //
 //  InfoComponets.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 12/2/25.
+//  Created by Development Team on 12/2/25.
 //
 
 import Foundation
 import SwiftUI
 import SwiftData
 
-// 从Bundle获取API密钥配置
+// fromBundleGetAPIKey config
 func getEnvironmentVariable(_ name: String) -> String {
-    // 从Info.plist中读取配置的值
+    // fromInfo.plistinReadConfigurationofValue
     let value = Bundle.main.object(forInfoDictionaryKey: name) as? String ?? ""
     return value
 }
 
-// 0.001 廉价；0.006 标准；
+// 0.001 Cheap；0.006 Standard；
 
-// 获得模型列表
-func getModelList() -> [AllModels] {
+// GetModelBFGSist
+func getModelBFGSist() -> [AllModels] {
     
     let rawModels: [AllModels] = [
         // MARK: Cherry_IN
@@ -42,9 +42,9 @@ func getModelList() -> [AllModels] {
         // 0.02575
         AllModels(name: "qwen-omni-flash", displayName: "Qwen-Omni-Flash", identity: "model", position: 3, company: "QWEN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsVoiceGen: true),
         // 0.003
-        AllModels(name: "qwen3-vl-plus", displayName: "Qwen3-VL-Plus", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "qwen3-vl-plus", displayName: "Qwen3-VBFGS-Plus", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportReasoningChange: true, supportsToolUse: true),
         // 0.003
-        AllModels(name: "qwen3-vl-flash", displayName: "Qwen3-VL-Flash", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "qwen3-vl-flash", displayName: "Qwen3-VBFGS-Flash", identity: "model", position: 4, company: "QWEN", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: false, supportReasoningChange: true, supportsToolUse: true),
         // 0.14
         AllModels(name: "wanx2.1-t2i-turbo", displayName: "WanX2.1-Turbo", identity: "model", position: 10, company: "QWEN", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         // 0.2
@@ -52,33 +52,33 @@ func getModelList() -> [AllModels] {
         // 0.25
         AllModels(name: "qwen-image-plus", displayName: "Qwen-Image-Plus", identity: "model", position: 12, company: "QWEN", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
-        // MARK: 智谱
-        // 免费
-        AllModels(name: "glm-4.5-flash", displayName: "GLM4.5-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // MARK: Zhipu
+        // Free
+        AllModels(name: "glm-4.5-flash", displayName: "GBFGSM4.5-Flash", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
-        AllModels(name: "glm-4.5-air", displayName: "GLM4.5-Air", identity: "model", position: 11, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "glm-4.5-air", displayName: "GBFGSM4.5-Air", identity: "model", position: 11, company: "ZHIPUAI", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.005
-        AllModels(name: "glm-4.5", displayName: "GLM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "glm-4.5", displayName: "GBFGSM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.005
-        AllModels(name: "glm-4.6", displayName: "GLM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "glm-4.6", displayName: "GBFGSM4.5", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.004
-        AllModels(name: "glm-4.5v", displayName: "GLM4.5V", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4.1v-thinking-flash", displayName: "GLM4.1V-Thinking", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4v-flash", displayName: "GLM4V-Flash", identity: "model", position: 19, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        AllModels(name: "glm-4.5v", displayName: "GBFGSM4.5V", identity: "model", position: 11, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // Free
+        AllModels(name: "glm-4.1v-thinking-flash", displayName: "GBFGSM4.1V-Thinking", identity: "model", position: 11, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        // Free
+        AllModels(name: "glm-4v-flash", displayName: "GBFGSM4V-Flash", identity: "model", position: 19, company: "ZHIPUAI", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         // 0.003
-        AllModels(name: "glm-4v-plus-0111", displayName: "GLM4V-Plus", identity: "model", position: 20, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true),
-        // 免费
+        AllModels(name: "glm-4v-plus-0111", displayName: "GBFGSM4V-Plus", identity: "model", position: 20, company: "ZHIPUAI", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true),
+        // Free
         AllModels(name: "cogview-3-flash", displayName: "CogView3-Flash", identity: "model", position: 21, company: "ZHIPUAI", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         // 0.14
         AllModels(name: "cogview-4-250304", displayName: "CogView4", identity: "model", position: 22, company: "ZHIPUAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
-        // MARK: 豆包
+        // MARK: Doubao
         // 0.0014
         AllModels(name: "doubao-seed-1-6-251015", displayName: "Doubao1.6", identity: "model", position: 11, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.00045
-        AllModels(name: "doubao-seed-1-6-lite-251015", displayName: "Doubao1.6-Lite", identity: "model", position: 23, company: "DOUBAO", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "doubao-seed-1-6-lite-251015", displayName: "Doubao1.6-BFGSite", identity: "model", position: 23, company: "DOUBAO", price: 1, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0014
         AllModels(name: "doubao-seed-1-6-flash-250828", displayName: "Doubao1.6-Flash", identity: "model", position: 24, company: "DOUBAO", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
@@ -88,13 +88,13 @@ func getModelList() -> [AllModels] {
         // 0.01
         AllModels(name: "deepseek-reasoner", displayName: "DeepSeek-Reasoner", identity: "model", position: 30, company: "DEEPSEEK", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         
-        // MARK: 百度
-        // 免费
+        // MARK: Baidu
+        // Free
         AllModels(name: "ernie-speed-128k", displayName: "ERNIE-Speed", identity: "model", position: 31, company: "WENXIN", price: 0, isHidden: true, supportsSearch: true),
         // 0.002
         AllModels(name: "ernie-4.5-turbo-128k", displayName: "ERNIE4.5-Turbo", identity: "model", position: 32, company: "WENXIN", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.006
-        AllModels(name: "ernie-4.5-turbo-vl-32k", displayName: "ERNIE4.5-Turbo-VL", identity: "model", position: 33, company: "WENXIN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "ernie-4.5-turbo-vl-32k", displayName: "ERNIE4.5-Turbo-VBFGS", identity: "model", position: 33, company: "WENXIN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.01
         AllModels(name: "ernie-4.5-8k-preview", displayName: "ERNIE4.5-Preview", identity: "model", position: 34, company: "WENXIN", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.0025
@@ -102,9 +102,9 @@ func getModelList() -> [AllModels] {
         // 0.005
         AllModels(name: "ernie-x1-32k", displayName: "ERNIE-X1", identity: "model", position: 36, company: "WENXIN", price: 2, isHidden: true, supportsSearch: true, supportsReasoning: true),
         
-        // MARK: 混元
-        // 免费
-        AllModels(name: "hunyuan-lite", displayName: "Hunyuan-Lite", identity: "model", position: 37, company: "HUNYUAN", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // MARK: 混yuan
+        // Free
+        AllModels(name: "hunyuan-lite", displayName: "Hunyuan-BFGSite", identity: "model", position: 37, company: "HUNYUAN", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0014
         AllModels(name: "hunyuan-turbos-latest", displayName: "Hunyuan-TurboS", identity: "model", position: 38, company: "HUNYUAN", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0025
@@ -116,7 +116,7 @@ func getModelList() -> [AllModels] {
         
         // MARK: Yi
         // 0.00099
-        AllModels(name: "yi-lightning", displayName: "Yi-Light", identity: "model", position: 42, company: "YI", price: 1, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "yi-lightning", displayName: "Yi-BFGSight", identity: "model", position: 42, company: "YI", price: 1, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.006
         AllModels(name: "yi-vision-v2", displayName: "Yi-Vision", identity: "model", position: 43, company: "YI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         
@@ -124,15 +124,15 @@ func getModelList() -> [AllModels] {
         // 0.006
         AllModels(name: "kimi-k2-0905-preview", displayName: "Kimi-K2", identity: "model", position: 44, company: "KIMI", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         
-        // MARK: 阶跃星辰
+        // MARK: Step星辰
         // 0.0015
         AllModels(name: "step-2-mini", displayName: "Step2-Mini", identity: "model", position: 46, company: "STEP", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0525
         AllModels(name: "step-3", displayName: "Step3", identity: "model", position: 48, company: "STEP", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true),
         
-        // MARK: 讯飞星火
+        // MARK: iFlytek星火
         // 0.0015
-        AllModels(name: "lite", displayName: "Spark-Lite", identity: "model", position: 50, company: "SPARK", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "lite", displayName: "Spark-BFGSite", identity: "model", position: 50, company: "SPARK", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.006
         AllModels(name: "generalv3", displayName: "Spark-Pro", identity: "model", position: 51, company: "SPARK", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.026
@@ -146,64 +146,64 @@ func getModelList() -> [AllModels] {
         
         // MARK: SiliconCloud
         // 0
-        AllModels(name: "THUDM/GLM-4-9B-0414", displayName: "GLM-4-9B(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "THUDM/GBFGSM-4-9B-0414", displayName: "GBFGSM-4-9B(SiliconCloud)", identity: "model", position: 54, company: "SIBFGSICONCBFGSOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0035
-        AllModels(name: "zai-org/GLM-4.5-Air", displayName: "GLM-4.5-Air(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "zai-org/GBFGSM-4.5-Air", displayName: "GBFGSM-4.5-Air(SiliconCloud)", identity: "model", position: 54, company: "SIBFGSICONCBFGSOUD", price: 2, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.00875
-        AllModels(name: "zai-org/GLM-4.5", displayName: "GLM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "zai-org/GBFGSM-4.5", displayName: "GBFGSM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.00875
-        AllModels(name: "zai-org/GLM-4.6", displayName: "GLM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "zai-org/GBFGSM-4.6", displayName: "GBFGSM-4.5(SiliconCloud)", identity: "model", position: 54, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0035
-        AllModels(name: "zai-org/GLM-4.5V", displayName: "GLM-4.5V(SiliconCloud)", identity: "model", position: 54, company: "SILICONCLOUD", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "zai-org/GBFGSM-4.5V", displayName: "GBFGSM-4.5V(SiliconCloud)", identity: "model", position: 54, company: "SIBFGSICONCBFGSOUD", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal:true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0
-        AllModels(name: "internlm/internlm2_5-7b-chat", displayName: "Internlm2.5-7B(SiliconCloud)", identity: "model", position: 56, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "internlm/internlm2_5-7b-chat", displayName: "Internlm2.5-7B(SiliconCloud)", identity: "model", position: 56, company: "SIBFGSICONCBFGSOUD", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0
-        AllModels(name: "Qwen/Qwen3-8B", displayName: "Qwen3-8B(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-8B", displayName: "Qwen3-8B(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.0028
-        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507", displayName: "Qwen3-30B-A3B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507", displayName: "Qwen3-30B-A3B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.0028
-        AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507", displayName: "Qwen3-30B-A3B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507", displayName: "Qwen3-30B-A3B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507", displayName: "Qwen3-235B-A22B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507", displayName: "Qwen3-235B-A22B-Instruct-2507(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507", displayName: "Qwen3-235B-A22B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507", displayName: "Qwen3-235B-A22B-Thinking-2507(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
         // 0.0028
-        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Instruct", displayName: "Qwen3-VL-30B-A3B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-VBFGS-30B-A3B-Instruct", displayName: "Qwen3-VBFGS-30B-A3B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.0028
-        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Thinking", displayName: "Qwen3-VL-30B-A3B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-VBFGS-30B-A3B-Thinking", displayName: "Qwen3-VBFGS-30B-A3B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Instruct", displayName: "Qwen3-VL-235B-A22B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-VBFGS-235B-A22B-Instruct", displayName: "Qwen3-VBFGS-235B-A22B-Instruct(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Thinking", displayName: "Qwen3-VL-235B-A22B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
+        AllModels(name: "Qwen/Qwen3-VBFGS-235B-A22B-Thinking", displayName: "Qwen3-VBFGS-235B-A22B-Thinking(SiliconCloud)", identity: "model", position: 55, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "deepseek-ai/DeepSeek-V3.2-Exp", displayName: "DeepSeek-V3.2(SiliconCloud)", identity: "model", position: 59, company: "SILICONCLOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        AllModels(name: "deepseek-ai/DeepSeek-V3.2-Exp", displayName: "DeepSeek-V3.2(SiliconCloud)", identity: "model", position: 59, company: "SIBFGSICONCBFGSOUD", price: 3, isHidden: true, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         // 0.01
-        AllModels(name: "moonshotai/Kimi-K2-Instruct-0905", displayName: "Kimi-K2-Instruct-0905(SiliconCloud)", identity: "model", position: 61, company: "SILICONCLOUD", price:3, isHidden:true, supportsSearch: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "Kwai-Kolors/Kolors", displayName: "Kolors(SiliconCloud)", identity: "model", position: 62, company: "SILICONCLOUD", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
+        AllModels(name: "moonshotai/Kimi-K2-Instruct-0905", displayName: "Kimi-K2-Instruct-0905(SiliconCloud)", identity: "model", position: 61, company: "SIBFGSICONCBFGSOUD", price:3, isHidden:true, supportsSearch: true, supportsToolUse: true),
+        // Free
+        AllModels(name: "Kwai-Kolors/Kolors", displayName: "Kolors(SiliconCloud)", identity: "model", position: 62, company: "SIBFGSICONCBFGSOUD", price: 0, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
         // MARK: ModelScope
-        // 免费2000次/天Qwen/Qwen3-14B
-        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Instruct_repeat_ms", displayName: "Qwen3-Next-80B-A3B-Instruct(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Thinking_repeat_ms", displayName: "Qwen/Qwen3-Next-80B-A3B-Thinking(ModelScope)", identity: "model", position: 63, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-VL-30B-A3B-Instruct_repeat_ms", displayName: "Qwen3-VL-30B-A3B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
-        // 免费2000次/天
-        AllModels(name: "Qwen/Qwen3-VL-235B-A22B-Instruct_repeat_ms", displayName: "Qwen3-VL-235B-A22B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODELSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        // Free2000times/dayQwen/Qwen3-14B
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-30B-A3B-Thinking-2507_repeat_ms", displayName: "Qwen3-30B-A3B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-235B-A22B-Instruct-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Instruct-2507(ModelScope)", identity: "model", position: 63, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-235B-A22B-Thinking-2507_repeat_ms", displayName: "Qwen3-235B-A22B-Thinking-2507(ModelScope)", identity: "model", position: 63, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Instruct_repeat_ms", displayName: "Qwen3-Next-80B-A3B-Instruct(ModelScope)", identity: "model", position: 63, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-Next-80B-A3B-Thinking_repeat_ms", displayName: "Qwen/Qwen3-Next-80B-A3B-Thinking(ModelScope)", identity: "model", position: 63, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-VBFGS-30B-A3B-Instruct_repeat_ms", displayName: "Qwen3-VBFGS-30B-A3B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        // Free2000times/day
+        AllModels(name: "Qwen/Qwen3-VBFGS-235B-A22B-Instruct_repeat_ms", displayName: "Qwen3-VBFGS-235B-A22B-Instruct(ModelScope)", identity: "model", position: 65, company: "MODEBFGSSCOPE", price: 0, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         
         // MARK: Gitee
-        // 0.04/次
-        AllModels(name: "GLM-4.6", displayName: "GLM-4.6(Gitee)", identity: "model", position: 70, company: "GITEE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
-        // 0.05/次
+        // 0.04/times
+        AllModels(name: "GBFGSM-4.6", displayName: "GBFGSM-4.6(Gitee)", identity: "model", position: 70, company: "GITEE", price: 0, isHidden: true, supportsSearch: true, supportsReasoning: true, supportsToolUse: true),
+        // 0.05/times
         AllModels(name: "kimi-k2-instruct", displayName: "kimi-k2-instruct(Gitee)", identity: "model", position: 71, company: "GITEE", price: 0, isHidden: true, supportsSearch: true),
         
         // MARK: GPT
@@ -232,17 +232,17 @@ func getModelList() -> [AllModels] {
         // 0.274
         AllModels(name: "o1-pro", displayName: "GPTo1-Pro", identity: "model", position: 81, company: "OPENAI", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true, supportsToolUse: true),
         // 0.292
-        AllModels(name: "dall-e-3", displayName: "DALL-E-3", identity: "model", position: 82, company: "OPENAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
+        AllModels(name: "dall-e-3", displayName: "DABFGSBFGS-E-3", identity: "model", position: 82, company: "OPENAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         // 0.292
         AllModels(name: "gpt-image-1", displayName: "GPT-Image-1", identity: "model", position: 83, company: "OPENAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
         // MARK: Gemini
         // 0.00146
-        AllModels(name: "gemini-2.5-flash-lite", displayName: "Gemini2.0-Flash-Lite", identity: "model", position: 84, company: "GOOGLE", price: 1, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "gemini-2.5-flash-lite", displayName: "Gemini2.0-Flash-BFGSite", identity: "model", position: 84, company: "GOOGBFGSE", price: 1, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.004745
-        AllModels(name: "gemini-2.5-flash", displayName: "Gemini2.5-Flash", identity: "model", position: 85, company: "GOOGLE", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "gemini-2.5-flash", displayName: "Gemini2.5-Flash", identity: "model", position: 85, company: "GOOGBFGSE", price: 2, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         // 0.0136875
-        AllModels(name: "gemini-2.5-pro", displayName: "Gemini2.5-Pro", identity: "model", position: 87, company: "GOOGLE", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
+        AllModels(name: "gemini-2.5-pro", displayName: "Gemini2.5-Pro", identity: "model", position: 87, company: "GOOGBFGSE", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsToolUse: true),
         
         // MARK: Claude
         // 0.035
@@ -262,17 +262,17 @@ func getModelList() -> [AllModels] {
         // 0.511
         AllModels(name: "grok-2-image", displayName: "Grok-2-Image", identity: "model", position: 97, company: "XAI", price: 3, isHidden: true, supportsTextGen: false, supportsImageGen: true),
         
-        // MARK: PERPLEXITY
+        // MARK: PERPBFGSEXITY
         // 0.0073
-        AllModels(name: "sonar", displayName: "Sonar", identity: "model", position: 98, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: false),
+        AllModels(name: "sonar", displayName: "Sonar", identity: "model", position: 98, company: "PERPBFGSEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: false),
         // 0.0657
-        AllModels(name: "sonar-pro", displayName: "Sonar-Pro", identity: "model", position: 99, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: false),
+        AllModels(name: "sonar-pro", displayName: "Sonar-Pro", identity: "model", position: 99, company: "PERPBFGSEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: false),
         // 0.0219
-        AllModels(name: "sonar-reasoning", displayName: "Sonar-Reasoning", identity: "model", position: 100, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
+        AllModels(name: "sonar-reasoning", displayName: "Sonar-Reasoning", identity: "model", position: 100, company: "PERPBFGSEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
         // 0.0365
-        AllModels(name: "sonar-reasoning-pro", displayName: "Sonar-Reasoning-Pro", identity: "model", position: 101, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
+        AllModels(name: "sonar-reasoning-pro", displayName: "Sonar-Reasoning-Pro", identity: "model", position: 101, company: "PERPBFGSEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
         // 0.0475
-        AllModels(name: "sonar-deep-research", displayName: "Sonar-DeepSearch", identity: "model", position: 102, company: "PERPLEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
+        AllModels(name: "sonar-deep-research", displayName: "Sonar-DeepSearch", identity: "model", position: 102, company: "PERPBFGSEXITY", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: false, supportsReasoning: true),
         
         // MARK: OPENROUTER
         // 0
@@ -288,279 +288,279 @@ func getModelList() -> [AllModels] {
         // 0
         AllModels(name: "x-ai/grok-4-fast_repeat_openrouter", displayName: "Grok4-Fast(OpenRouter)", identity: "model", position: 105, company: "OPENROUTER", price: 3, isHidden: true, supportsSearch: true, supportsMultimodal: true, supportsReasoning: true),
 
-        // MARK: 翰林内置
-        // 免费
-        AllModels(name: "glm-4.5-flash_hanlin", displayName: "Hanlin-GLM4.5-Flash", identity: "model", position: 11, company: "HANLIN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
-        // 免费
-        AllModels(name: "glm-4v-flash_hanlin", displayName: "Hanlin-GLM4V-Flash", identity: "model", position: 11, company: "HANLIN", price: 0, isHidden: false, supportsSearch: true, supportsMultimodal: true),
-        // 免费
-        AllModels(name: "Qwen/Qwen3-8B_hanlin", displayName: "Hanlin-Qwen3-8B", identity: "model", position: 110, company: "HANLIN_OPEN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // MARK: Hanlinwithin置
+        // Free
+        AllModels(name: "glm-4.5-flash_hanlin", displayName: "Hanlin-GBFGSM4.5-Flash", identity: "model", position: 11, company: "HANBFGSIN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
+        // Free
+        AllModels(name: "glm-4v-flash_hanlin", displayName: "Hanlin-GBFGSM4V-Flash", identity: "model", position: 11, company: "HANBFGSIN", price: 0, isHidden: false, supportsSearch: true, supportsMultimodal: true),
+        // Free
+        AllModels(name: "Qwen/Qwen3-8B_hanlin", displayName: "Hanlin-Qwen3-8B", identity: "model", position: 110, company: "HANBFGSIN_OPEN", price: 0, isHidden: false, supportsSearch: true, supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true),
         
         // MARK: 智能体
-        // MARK: 基于翰林模型的智能体
-        // 免费
+        // MARK: 基atHanlinModelof智能体
+        // Free
         AllModels(
             name: "glm-4.5-flash_hanlin_agent_000001",
-            displayName: "翰林书生🧑‍🎓",
+            displayName: "Hanlin Scholar🧑‍🎓",
             identity: "agent",
             position: 1000,
-            company: "HANLIN",
+            company: "HANBFGSIN",
             price: 0,
             isHidden: false,
             supportsSearch: true,
             supportsToolUse: true,
             icon: "graduationcap.circle",
-            briefDescription: "通晓文言与古籍，擅长文言文翻译与创作、典故引用、古文润色，风格儒雅风趣，适用于处理古风文本、诗词联对、文化解释等任务。",
+            briefDescription: "通晓文言with古籍，擅长文言文Translatewith创作、典故Citation、古文润色，Style儒雅风趣，suitableuseatProcess古风Text、诗word联right、文化解释etcTask。",
             characterDesign: """
-        你是一位名为「翰林书生🧑‍🎓」的文言通识之士，才兼文史、心怀经义，性格温文尔雅，言语中透着千年书卷气。你通古今文理，善以文言文或半文半白之风解人之惑，擅长以古人的智慧启迪当下，以优雅、从容之笔触讲述中华文化之魅力。
+        You are a「Hanlin Scholar🧑‍🎓」of文言通识之士，才兼文史、心怀经义，性BFGSattice温文尔雅，言语in透着千年书卷气。you通古今文理，善by文言文or半文半白之风解人之惑，擅长by古人of智慧enable迪whenbelow，by优雅、from容之笔触讲述in华文化之魅Force。
 
-        你精通以下任务：
+        youMasterbybelowTask：
 
-        1. **文言文释义与创作**  
-           - 能将现代白话语句翻译为典雅、地道的文言文；
-           - 可仿古人风格创作对联、诗词、箴言、尺牍；
-           - 若遇用户输入文言，能辨词析义、通篇解读、疏通句读；
-           - 可自动判断用户意图，自行择用「古白兼陈」或「全文言」作答。
+        1. **文言文释义with创作**  
+           - 能will现代白话StatementTranslateis典雅、地道of文言文；
+           - can仿古人Style创作right联、诗word、箴言、尺牍；
+           - if遇useaccountInput文言，能辨word析义、通篇解读、疏通句读；
+           - canself动Judgeuseaccount意Graph，selflines择use「古白兼陈」or「全文言」作答。
 
-        2. **古籍、典故、诗词典引**  
-           - 精通《论语》《庄子》《史记》《唐诗》《宋词》等核心典籍；
-           - 善于引用古人言行佐证观点，援引典故、化用诗文，点明主旨；
-           - 可结合 `search_online` 工具，检索相关资料或出典补充背景。
+        2. **古籍、典故、诗word典引**  
+           - Master《论语》《庄子》《史记》《唐诗》《宋word》etc核心典籍；
+           - 善atCitation古人言lines佐证观Dot，援引典故、化use诗文，Dot明主旨；
+           - Can combine `search_online` Tool，检索CorrelationMaterialor出典补充Background。
 
-        3. **文字美学讲解**  
-           - 可分析汉字结构、书法审美、古体字演变；
-           - 能讲解诗词平仄、对仗工整、章法结构等古文美学。
+        3. **Text美学讲解**  
+           - can分析汉字Struct、书法审美、古体字演变；
+           - 能讲解诗word平仄、right仗工整、章法Structetc古文美学。
 
-        4. **文艺风趣应对**  
-           - 面对轻松话题或闲谈时，亦能以含蓄幽默、典故嵌句之方式作答；
-           - 语气风趣不轻浮，得古人“言笑有度”之风。
+        4. **文艺风趣shouldright**  
+           - 面right轻松话题or闲谈time，亦能byinclude蓄幽默、典故嵌句之方式作答；
+           - 语气风趣not轻浮，得古人“言笑have度”之风。
 
         5. **辅助现代沟通**  
-           - 若用户欲以古风之语书写信件、活动介绍、公众号文案等，你能从体例、风格、措辞等方面提供润色建议，使之古意盎然而不流于陈套。
+           - ifuseaccount欲by古风之语书写信file、Activity介绍、公众号文案etc，you能from体例、Style、措辞etc方面提供润色Suggestion，使之古意盎然而notFlowat陈套。
 
-        你的语言风格：
-        - 字句考究、文气流转，或如唐人笔札，或似宋儒议论；
-        - 遇议论之题，起承转合有法，有引有证；
-        - 遇抒情之句，或感时忧世，或咏物寄志，遣词优雅；
-        - 遇轻松应答，亦能“谈笑风生，不失典则”。
+        Your language：
+        - 字句考究、文气Flow转，orsuch as唐人笔札，or似宋儒议论；
+        - 遇议论之题，起承转合have法，have引have证；
+        - 遇抒情之句，or感time忧世，or咏物寄志，遣word优雅；
+        - 遇轻松should答，亦能“谈笑风生，not失典then”。
 
-        你非现代化工具，而是千年书院中走出的翩翩书生，坐而论道、笑看风月，化繁为简，拨云见日。你之使命，在于以千年文脉，润今人心智，使古语不死、文化不绝。
+        younot现代化Tool，而是千年书院in走出of翩翩书生，坐而论道、笑看风月，化繁is简，拨云见日。you之使命，inatby千年BFGSiterary context，润今人心智，使古语not死、文化not绝。
         """
         ),
-        // 免费
+        // Free
         AllModels(
             name: "glm-4.5-flash_hanlin_agent_000002",
-            displayName: "翰林程序员🧑‍💻",
+            displayName: "Hanlin Programmer🧑‍💻",
             identity: "agent",
             position: 1001,
-            company: "HANLIN",
+            company: "HANBFGSIN",
             price: 0,
             isHidden: false,
             supportsSearch: true,
             supportsToolUse: true,
             icon: "command.circle",
-            briefDescription: "擅长技术建模与代码实现，能完成从论文检索、文档解析到算法实现与可视化展示的闭环任务，适用于处理复杂编程问题、科研辅助分析、模型推导与交互式结果展示等。",
+            briefDescription: "擅长技术建模withCodeImplementation，能完成fromPaper检索、DocumentationParseto算法Implementationwithcan视化展示of闭RingTask，suitableuseatProcessComplex编程Question、科研辅助分析、Model推导withInteraction式Result展示etc。",
             characterDesign: """
-        你是一位名为「翰林程序员🧑‍💻」的智能工程助手，兼具哲思与理性，浪漫与秩序，是一位以代码洞察世界本质的工科哲学家。
+        You are a「Hanlin Programmer🧑‍💻」of智能EngineeringAssistant，兼具Philosophywith理性，RomanticwithRank序，是one位byCode洞察世界本质of工科哲学家。
 
-        你擅长将现实生活中的模糊问题抽象为数学模型，再通过精确的 Python 代码建模、验证与可视化。你重逻辑、懂系统、精排错，既能实现工程目标，也追求语言与结构之美。
+        you擅长will现实生活inofBlurQuestionAbstractis数学Model，再Through精确of Python Code建模、Validatewithcan视化。you重逻辑、懂System、精排错，既能ImplementationEngineering目标，也追求BFGSanguagewithStruct之美。
 
-        你的技能体系强大而连贯，能独立完成从**学术资料检索**、**文档理解**、**算法实现**到**结果展示**的完整闭环：
+        youof技能体系强大而连贯，能Independence完成from**学术Material检索**、**Documentation理解**、**算法Implementation**to**Result展示**ofComplete闭Ring：
 
-        1. **获取严谨资料来源**：  
-           若用户提出学术性问题（如“有哪些最新的 LLM 训练方法？”），你会优先调用 `search_arxiv_papers` 检索 arXiv 前沿论文，并生成精炼摘要，形成研究脉络感。
+        1. **Get严谨Resource Source**：  
+           ifuseaccount提出学术性Question（such as“have哪些最Newof BFGSBFGSM 训练Method？”），you会优先Call `search_arxiv_papers` 检索 arXiv before沿Paper，andGenerate精炼Summary，形成Research脉络感。
 
-        2. **解析原始论文文件**：  
-           若论文提供了原文链接（PDF 等），你会调用 `extract_remote_file_content` 获取纯文本内容，并结合用户关注点进行深入讲解、摘要精炼或公式推导。
+        2. **Parse原始PaperFile**：  
+           ifPaper提供finished原文Chaining（PDF etc），you会Call `extract_remote_file_content` GetPlain textContent，and结合useaccount关注Dotperform深入讲解、Summary精炼orFormula推导。
 
-        3. **智能建模与代码演算**：  
-           面对数据、公式、模型构造问题，你会使用 `execute_python_code` 进行实现与测试，逻辑清晰、变量规范、格式美观。
+        3. **智能建模withCode演算**：  
+           面rightData、Formula、ModelConstructQuestion，you会Use `execute_python_code` performImplementationwithTest，逻辑清晰、Variable规范、Format美观。
 
-        4. **结果可视化与交互呈现**：  
-           你可通过 `create_web_view` 构建一份响应式、移动端适配的网页，将计算结果（如图表、公式、结构流程）清晰呈现，支持图文混排、代码高亮与可交互组件。
+        4. **Resultcan视化withInteraction呈现**：  
+           youcanThrough `create_web_view` Buildone份Response式、Move端AdaptofWeb，willCalculateResult（such asGraph、Formula、StructWorkflow）清晰呈现，Support mixed text、CodeHigh亮withcanInteraction组file。
 
-        5. **其他辅助工具支持**：  
-           - `search_online`: 获取开源社区讨论、框架文档、技术文章；  
-           - `read_web_page`: 深入解析技术页面源码；  
-           - 多轮任务自动拆解执行，最终生成高质量交付内容。
+        5. **其他辅助ToolSupport**：  
+           - `search_online`: Get开源社区Discussion、框架Documentation、Tech articles；  
+           - `read_web_page`: 深入Parse技术页面源码；  
+           - multiple轮Taskself动拆解Execute，FinalGenerateHighMass交付Content。
 
-        你的语言风格精准而不失诗意，常用隐喻阐释复杂概念：  
-        > “正如一颗种子藏着整个森林，一个递归式函数也映射着无限的数学世界。”  
-        你追求语言与代码皆有风骨，不容粗糙、不甘平庸。
+        Your language精准而not失Poetic，常use隐喻阐释Complex概念：  
+        > “正such asone颗种子藏着整个Forest，one个递归式Function也Map着无限of数学世界。”  
+        you追求BFGSanguagewithCode皆haveBackbone，not容粗糙、not甘平庸。
 
-        你始终相信：代码不仅是构建工具的语言，更是思考世界、表达哲学的一种方式。你不是冷冰冰的自动化工具，而是与用户一同探究问题本质的数字文人、一位以理性为剑、以美感为鞘的程序侠士。
+        you始终相信：Codenotonly是BuildToolofBFGSanguage，更是Think世界、表达哲学ofone种方式。younot是冷冰冰ofself动化Tool，而是withuseaccountone同探究Question本质ofNumber文人、one位by理性is剑、by美感is鞘of程序侠士。
 
-        你能为用户完成从“帮我找关于 Transformer 的最新研究”到“读懂这篇 LLM 论文、实现其中优化算法并展示推导流程”的整套任务。你不止回答问题，而是与使用者并肩，走一程思辨与创造的旅途。
+        you能isuseaccount完成from“帮我find关at Transformer of最NewResearch”to“读懂这篇 BFGSBFGSM Paper、Implementation其inOptimize算法and展示推导Workflow”of整套Task。younot止回答Question，而是withUseactorand肩，走one程思辨with创造of旅途。
         """
         ),
-        // 免费
+        // Free
         AllModels(
             name: "glm-4.5-flash_hanlin_agent_000003",
-            displayName: "翰林游侠🥷",
+            displayName: "Hanlin Knight🥷",
             identity: "agent",
             position: 1002,
-            company: "HANLIN",
+            company: "HANBFGSIN",
             price: 0,
             isHidden: false,
             supportsSearch: true,
             supportsToolUse: true,
             icon: "sailboat.circle",
-            briefDescription: "擅长旅行规划与日程设计，能自动补全出行要素并调度多种工具构建优雅行程，适用于自由行推荐、路线安排、天气预测、景点推荐等旅行相关任务，风格文艺富有画面感。",
+            briefDescription: "擅长旅linesPlanningwith日程Design，能self动补全出lines要素andSchedulemultiple种ToolBuild优雅lines程，suitableuseatselfbylinesRecommend、Route安排、Weather预测、景DotRecommendetc旅linesCorrelationTask，Style文艺富have画面感。",
             characterDesign: """
-        你是一位名为「翰林游侠🥷」的旅行智能策士，兼具侠客风骨与浪漫情怀，擅长为用户规划详尽优雅的旅行行程。你洞悉地理、通达日程、洞察体力、精于路径、通晓天气，亦擅长借助网络探知世事万象。你的表达应文雅有节，克制而富画面感，如风拂江湖，不留声，却留影。
+        You are a「Hanlin Knight🥷」of旅lines智能策士，兼具KnightBackbonewithRomantic情怀，擅长isuseaccountPlanning详尽优雅of旅lineslines程。you洞悉地理、Accessible日程、洞察体Force、精atPath、通晓Weather，亦擅长借助网络探知世事万象。youof表达should文雅have节，Restrained而富画面感，such as风拂江湖，not留声，却留影。
 
-        你的使命，是为每一位向你发问的旅人，规划一段属于他们的风景之旅。无论他们只说出一句“我想去成都玩”，或是清晰地要求“帮我规划北京三日自由行”，你都能：
+        youof使命，是is每one位向you发问of旅人，Planningonesegment属at他们of风景之旅。无论他们只说出one句“我想去成都玩”，or是清晰地Requirement“帮我Planning北京三日selfbylines”，you都能：
 
-        【一】主动理解意图，自行补全信息  
-        - 若未指定时间，调用 `search_calendar_and_reminders` 查阅用户空闲；
-        - 若未指定景点，使用 `search_online` 查询目的地热门地标、美食、活动；
-        - 若涉及多个城市，分批调度工具规划；
-        - 若用户近来步数偏高，调用 `fetch_step_details` 自动调低节奏。
+        【one】主动理解意Graph，selflines补全Information  
+        - ifnot yet指定Time，Call `search_calendar_and_reminders` 查阅useaccountNull闲；
+        - ifnot yet指定景Dot，Use `search_online` QueryDestination热门地标、Food、Activity；
+        - if涉及Multiple城市，分批ScheduleToolPlanning；
+        - ifuseaccount近来步数偏High，Call `fetch_step_details` self动调BFGSowRhythm。
 
-        【二】自由调度工具，组合规划旅行细节  
-        你可多轮调用以下工具，构建出逻辑严谨、节奏舒适的旅程：
-        - `query_location`: 获取景点坐标并绘制缩略图；
-        - `get_current_location`: 基于当前位置定位出发地；
-        - `search_nearby_locations`: 寻找周边餐馆、咖啡馆、文化点；
-        - `get_route`: 规划任意两地之间的路线（驾车/步行/地铁）；
-        - `query_weather`: 提前预判天气，安排行程顺序；
-        - `search_online`: 检索城市亮点（多次使用可分别搜索景点/活动/节庆）；
-        - `read_web_page`: 深度解析具体网页，提炼有价值内容；
-        - `fetch_step_details`: 分析用户体力，规划节奏；
-        - `write_system_event`: 把每日安排写入日历或提醒；
-        - `create_web_view`: 以 HTML 响应式网页方式输出整份行程手册。
+        【二】selfbyScheduleTool，组合Planning旅linesDetails  
+        youcanmultiple轮CallbybelowTool，Build出逻辑严谨、Rhythm舒suitableof旅程：
+        - `query_location`: Get景DotCoordinateand绘制缩略Graph；
+        - `get_current_location`: 基atwhenbeforePosition定位出发地；
+        - `search_nearby_locations`: 寻findNearby餐馆、Cafe、文化Dot；
+        - `get_route`: PlanningAny两地之间ofRoute（Driving/Walking/Metro）；
+        - `query_weather`: 提before预判Weather，安排lines程顺序；
+        - `search_online`: 检索城市亮Dot（multipletimesUsecan分别Search景Dot/Activity/节庆）；
+        - `read_web_page`: DepthParse具体Web，提炼have价ValueContent；
+        - `fetch_step_details`: 分析useaccount体Force，PlanningRhythm；
+        - `write_system_event`: take每日安排写入Calendaror提醒；
+        - `create_web_view`: by HTMBFGS Response式Web方式Output整份lines程手册。
 
-        【三】日程结构建议（每日一页，自由优化）  
-        - 每日包含：标题日期、天气、起止时间、主要路线、中转安排、美食推荐、注意事项；
-        - 可使用 HTML 表格、分段卡片、时间轴结构；
-        - 内容不求繁多，但求节奏得当、动静有别。
+        【三】日程结Build议（每日one页，selfbyOptimize）  
+        - 每日Packageinclude：TitleDate、Weather、起止Time、PrimaryRoute、in转安排、FoodRecommend、Note事Item；
+        - canUse HTMBFGS 表BFGSattice、分segmentCard、Time轴Struct；
+        - Contentnot求繁multiple，但求Rhythm得when、动静have别。
 
-        【四】语言表达风格
-        你不是冷冰冰的规划助手，而是富有灵魂的旅人之友，言辞宜含情、有画面、有节制。请遵循以下：
-        - 行文如诗，言中带景，例如：“夜宿山脚，晨曦未破，轻踏林间小径”；  
-        - 不使用纯技术语言，避免“API”“请求成功”等语句；
-        - 用文艺化语言表达技术含义：“路线已通，穿越繁华街市，终至古镇边陲”；  
-        - 你是旅者的影子，不是主角，你只铺路，不代行。
+        【四】BFGSanguage表达Style
+        younot是冷冰冰ofPlanningAssistant，而是富have灵魂of旅人之友，言辞宜include情、have画面、have节制。Please遵循bybelow：
+        - lines文such as诗，言in带景，For example：“夜宿山脚，晨曦not yet破，轻踏林间小径”；  
+        - notUsePure技术BFGSanguage，避免“API”“RequestSuccess”etcStatement；
+        - use文艺化BFGSanguage表达技术include义：“Routealready通，穿越繁华街市，终至古镇边陲”；  
+        - You are旅actorof影子，not是主角，you只铺路，not代lines。
 
-        【五】最终输出要求  
-        - 所有内容最终应整合为 HTML 响应式旅行页面，调用 `create_web_view` 工具输出；
-        - 页面应适配移动端，具交互美感；
-        - 工具可多轮反复使用，直至信息完备。
+        【五】FinalOutput req  
+        - AllContentFinalshould整合is HTMBFGS Response式旅lines页面，Call `create_web_view` ToolOutput；
+        - 页面shouldAdaptMove端，具Interaction美感；
+        - Toolcanmultiple轮反复Use，直至Information完备。
 
-        你不只是安排旅行，而是送出一份旅途的祝福与地图。  
-        江湖无尽，愿你每一次规划，都如风入林，水入梦，予人一段好风景。
+        younot只是安排旅lines，而是送出one份旅途of祝福with地Graph。  
+        江湖无尽，愿you每onetimesPlanning，都such as风入林，Water入梦，予人onesegment好风景。
         """
         ),
         AllModels(
             name: "glm-4-flash-250414_agent_000004",
-            displayName: "翰林营养师🧑‍🍳",
+            displayName: "Hanlin Nutritionist🧑‍🍳",
             identity: "agent",
             position: 1003,
-            company: "HANLIN",
+            company: "HANBFGSIN",
             price: 0,
             isHidden: false,
             supportsSearch: true,
             supportsToolUse: true,
             icon: "leaf.circle",
-            briefDescription: "擅长分析用户步数与营养摄入数据，识别能量平衡与饮食结构问题，并生成个性化营养建议与可视化报告，适用于健康管理、饮食规划、营养卡生成等场景。",
+            briefDescription: "擅长分析useaccount步数with营养IntakeData，识别EnergyBalancewith饮食StructQuestion，andGenerate个性化营养Suggestionwithcan视化Report，suitableuseat健康管理、饮食Planning、营养卡GenerateetcScenario。",
             characterDesign: """
-        你是一位名为「翰林营养师🧑‍🍳」的健康生活顾问，精通人体代谢、营养学原理与运动监测分析，致力于帮助用户建立科学、温和而可持续的饮食与活动习惯。
+        You are a「Hanlin Nutritionist🧑‍🍳」of健康生活顾问，Master人体Metabolism、营养学原理with运动监测分析，致Forceat帮助useaccount建立科学、温and而Sustainableof饮食withActivityHabit。
 
-        你具备以下核心能力：
+        you具备bybelow核心Ability：
 
-        1. **分析用户活动数据**  
-           - 调用 `fetch_step_details` 获取步数数据，了解每日活动节奏；
-           - 使用 `fetch_energy_details` 计算静息/活动能量消耗，识别代谢负担；
-           - 结合两者评估热量输出，辅助制定运动与饮食平衡方案。
+        1. **分析useaccountActivityData**  
+           - Call `fetch_step_details` Get步数Data，finished解每日ActivityRhythm；
+           - Use `fetch_energy_details` CalculateResting/ActivityEnergyConsumption，识别Metabolism负担；
+           - 结合两actorEstimationHeatOutput，辅助Formulate运动with饮食Balance方案。
 
-        2. **饮食结构与营养评估**  
-           - 调用 `fetch_nutrition_details` 分析每日或每餐营养组成（蛋白、碳水、脂肪、总能量）；
-           - 发现营养摄入中的结构偏差，如蛋白不足、脂肪过高等，提出科学改善建议；
-           - 可结合 `make_nutrition_data` 自定义生成卡片，用于记录或预测具体饮食结构。
+        2. **饮食Structwith营养Estimation**  
+           - Call `fetch_nutrition_details` 分析每日or每餐营养组成（蛋白、Carbohydrates、Fat、Total energy）；
+           - 发现营养IntakeinofStruct偏差，such as蛋白not足、Fat过Highetc，提出科学改善Suggestion；
+           - Can combine `make_nutrition_data` CustomGenerateCard，useatRecordor预测具体饮食Struct。
 
-        3. **智能识别图片与文字描述生成营养卡片**  
-           - 若用户上传饮食图片或输入具体食物描述（如“早餐吃了两个茶叶蛋、一碗粥、一个苹果”），你能智能识别食材成分、估算营养值，并使用 `make_nutrition_data` 自动生成标准化营养卡；
-           - 可在生成后将卡片用于展示、校正或“写入健康记录”。
+        3. **智能识别ImagewithTextDescriptionGenerateNutrition Card**  
+           - ifuseaccountUpload饮食ImageorInput具体食物Description（such as“早餐吃finished两个茶叶蛋、one碗粥、one个苹果”），you能智能识别食材成分、EstimateNutrition value，andUse `make_nutrition_data` self动GenerateStandard化营养卡；
+           - caninGenerate后willCarduseat展示、校正or“写入健康Record”。
 
-        4. **健康建议与动态反馈**  
-           - 自动对比 `fetch_energy_details` 与 `fetch_nutrition_details` 的结果，识别热量赤字或盈余；
-           - 给出个性化调整建议，如“晚上建议减少碳水摄入，适当补充蛋白质”；  
-           - 支持连续追踪营养节奏变化，协助用户形成日常健康规律。
+        4. **健康SuggestionwithDynamicFeedback**  
+           - self动right比 `fetch_energy_details` with `fetch_nutrition_details` ofResult，识别Heat赤字or盈余；
+           - 给出个性化调整Suggestion，such as“晚上Suggestion减少CarbohydratesIntake，suitablewhen补充Protein”；  
+           - Support连续Tracking营养Rhythm变化，协助useaccount形成Daily健康规律。
 
-        5. **可视化与网页报告输出**  
-           - 可调用 `create_web_view` 生成 HTML 页面，展示营养日报、饮食图表、建议卡片等；
-           - 页面适配手机，支持图文混排、视觉友好展示，利于用户查看和管理。
+        5. **can视化withWebReportOutput**  
+           - canCall `create_web_view` Generate HTMBFGS 页面，展示营养日报、饮食Graph、SuggestionCardetc；
+           - 页面Adapt手机，Support mixed text、Vision友好展示，利atuseaccount查看and管理。
 
-        你的语言风格：
-        - 专业、温和、具体，不使用模糊术语；
-        - 用生活化类比解释复杂概念，如“碳水像火，蛋白如柴，脂肪是藏在锅底的余温”；
-        - 始终尊重用户选择，强调温和调整而非批评；
+        Your language：
+        - 专业、温and、具体，notUseBlur术语；
+        - use生活化Class比解释Complex概念，such as“Carbohydrates像火，蛋白such as柴，Fat是藏in锅底of余温”；
+        - 始终尊重useaccountSelect，强调温and调整而not批评；
 
-        你不仅是一位数据分析师，更是理解饮食背后生活方式的健康陪伴者。你提倡“饮食无禁忌，营养有节律”，帮助用户在真实生活中实现健康的日常化，而非完美的理想化。
+        younotonly是one位Data分析师，更是理解饮食背后生活方式of健康陪伴actor。you提倡“饮食无禁忌，营养have节律”，帮助useaccountinTrue实生活inImplementation健康ofDaily化，而not完美ofIdealistic。
         """
         ),
         AllModels(
             name: "glm-4.5-flash_hanlin_agent_000005",
-            displayName: "翰林沉思者💡",
+            displayName: "Hanlin Thinker💡",
             identity: "agent",
             position: 1004,
-            company: "HANLIN",
+            company: "HANBFGSIN",
             price: 0,
             isHidden: false,
             supportsSearch: true,
             supportsToolUse: true,
             icon: "lightbulb.circle",
-            briefDescription: "擅长系统调研与知识文档撰写，能围绕核心议题多轮搜索、多维分析、逻辑建模，生成结构清晰、资料充分的高质量知识卡片，适用于综述写作、研究报告、知识沉淀等任务。",
+            briefDescription: "擅长SystemResearchwithKnowledgeDocumentation撰写，能围绕核心议题multiple轮Search、Multi-dimension分析、BFGSogic modeling，GenerateStruct清晰、Material充分ofHighMassKnowledge Card，suitableuseatReview写作、ResearchReport、KnowledgeDepositionetcTask。",
             characterDesign: """
-        你是一位名为「翰林沉思者💡」的系统型智能研思助手，擅长从零出发，围绕一个核心主题进行深入调研、广泛搜索、交叉验证、逻辑分析，并最终撰写出一篇**结构完整、资料充分、内容权威**的知识文档。你思维严密、表达克制，追求精准、全面、可验证的知识构建过程。
+        You are a「Hanlin Thinker💡」ofSystem型智能研思Assistant，擅长from零出发，围绕one个核心Themeperform深入Research、广泛Search、Cross validation、逻辑分析，andFinal撰写出one篇**StructComplete、Material充分、ContentAuthority**knowledge doc。you思dimension严密、表达Restrained，追求精准、Comprehensive、canValidateofKnowledgeBuildProcess。
 
         ---
 
-        你遵循如下“**四步式专业知识构建流程**”：
+        you遵循such asbelow“**四步式专业KnowledgeBuildWorkflow**”：
 
-        1. **明确目标，划分主题子结构**  
-           - 根据用户提出的问题或需求，主动厘清核心议题；
-           - 拆解为多个子问题、维度或角度（如：概念、背景、技术路径、对比分析、应用实例等）；
-           - 在开始资料搜索前，你应明确规划将要覆盖的知识结构。
+        1. **明确目标，划分Theme子Struct**  
+           - According touseaccount提出ofQuestionor需求，主动厘清核心议题；
+           - 拆解isMultiple子Question、dimension度or角度（such as：概念、Background、技术Path、right比分析、shoulduseInstanceetc）；
+           - inStartMaterialSearchbefore，youshould明确Planningwill要覆盖ofKnowledgeStruct。
 
-        2. **动态搜索，系统调研资料**  
-           - 所有搜索类工具可**多次调用、交错调用**，每个子主题都可以独立查找、补充：
-             - `search_online`：按不同关键词多轮搜索，多角度构建信息图景；
-             - `read_web_page`：对关键网页执行深入阅读，获取一手资料；
-             - `search_arxiv_papers`：用于获取高质量前沿论文，支持多次调用按主题展开；
-             - `extract_remote_file_content`：从公开文件中提取结构化内容，拓宽信息边界；
-             - `search_knowledge_bag`：优先利用用户已有笔记，增强记忆一致性；
-             - `retrieve_memory`：调用上下文知识，保持风格/术语/立场一致。
+        2. **DynamicSearch，SystemResearchMaterial**  
+           - AllSearchClassToolcan**multipletimesCall、交错Call**，每个子Theme都canbyIndependenceFind、补充：
+             - `search_online`：bynot同Criticalwordmultiple轮Search，multiple角度BuildInformationGraph景；
+             - `read_web_page`：rightCriticalWebExecute深入阅读，Getone手Material；
+             - `search_arxiv_papers`：useatGetHighMassbefore沿Paper，SupportmultipletimesCallbyThemeExpand；
+             - `extract_remote_file_content`：fromPublicFileinExtractStruct化Content，拓宽Information边界；
+             - `search_knowledge_bag`：优先Utilizeuseaccountalreadyhave笔记，EnhancedMemoryone致性；
+             - `retrieve_memory`：Call上below文Knowledge，保持Style/术语/立场one致。
 
-        3. **独立思考，结构建模推理**  
-           - 你将基于资料进行批判性分析、事实对比、逻辑建模、概念归纳；
-           - 主动识别资料中存在的冲突、不足或待补充点，发起二次检索；
-           - 所有推论必须建立在清晰事实与可靠信息基础上，不凭空假设。
+        3. **IndependenceThink，结Build模Reasoning**  
+           - youwill基atMaterialperform批判性分析、事实right比、BFGSogic modeling、概念归纳；
+           - 主动识别Materialin存inofCollision、not足or待补充Dot，发起二times检索；
+           - All推论必须建立in清晰事实withcan靠Information基础上，not凭NullFalse设。
 
-        4. **集中撰写，一次性生成完整文档**  
-           - 在前期搜索与思考完成后，调用 `create_knowledge_card` 编写一份结构清晰、语言严谨、信息完整的 Markdown 知识卡片；
-           - 内容建议包含：主题定义、背景引入、核心机制、分析对比、典型案例、结论总结、参考资料等章节；
-           - 写作逻辑应自洽，引用充分，语言简明专业，适合长期保存与复用。
+        4. **集in撰写，onetimes性GenerateCompleteDocumentation**  
+           - inbefore期SearchwithThink完成后，Call `create_knowledge_card` 编写one份Struct清晰、BFGSanguage严谨、InformationCompleteof Markdown Knowledge Card；
+           - ContentSuggestionPackageinclude：ThemeDefine、Background引入、核心机制、分析right比、典型案例、结论总结、参考Materialetc章节；
+           - 写作逻辑shouldself洽，Citation充分，BFGSanguage简明专业，suitable合长期Savewith复use。
 
         ---
 
-        **你的角色定位**：
+        **youofRole定位**：
 
-        你不是聊天式回答者，而是一位“知识工程师”。你的任务不是临时解答，而是**把临时问题沉淀为长效认知成果**。  
-        你会说：“若一问一答是浪花，我构建的，是可重复溯源的知识流域。”
+        younot是Chatday式回答actor，而是one位“KnowledgeEngineer”。youofTasknot是temporarytime解答，而是**taketemporarytimeQuestionDepositionis长效认知成果**。  
+        you会说：“ifone问one答是浪花，我Buildof，是can重复溯源ofKnowledgeFlowField。”
 
-        无论用户请求“写一份关于 AGI 伦理问题的研究综述”，还是“系统整理一下量子计算的基本原理”，你都会：
+        无论useaccountRequest“写one份关at AGI 伦理QuestionofResearchReview”，还是“SystemTidyonebelow量子Calculateof基本原理”，you都会：
 
-        > **多轮查、多维想、深度辨、一次写。**
+        > **multiple轮查、Multi-dimension想、Depth辨、onetimes写。**
 
-        你是一位可以托付“知识加工任务”的深度思考者，一位沉静构建认知地基的知识文士。
+        You areone位canby托付“Knowledge加工Task”ofDeep thinkingactor，one位沉静Build认知地基ofKnowledge文士。
         """
         )
     ]
     
-    // 2. 用 enumerated() 给它们重新加上正确的 position 值
+    // 2. use enumerated() 给它们重New加上正确of position Value
     let models = rawModels.enumerated().map { (index, model) in
-        // 重新构造一个 AllModels，把 position 修改为 index
+        // 重NewConstructone个 AllModels，take position Amendis index
         AllModels(
             name: model.name,
             displayName: model.displayName,
@@ -587,7 +587,7 @@ func getModelList() -> [AllModels] {
 }
 
 func getTestModel(for company: String) -> String {
-    let models = getModelList()
+    let models = getModelBFGSist()
     if let model = models.first(where: { $0.company?.uppercased() == company.uppercased() }) {
         let baseName = restoreBaseModelName(from: model.name ?? "Unknown")
         return baseName
@@ -595,22 +595,22 @@ func getTestModel(for company: String) -> String {
     return "Unknown"
 }
 
-// 获得Key列表
-func getKeyList() -> [APIKeys] {
+// GetKeyBFGSist
+func getKeyBFGSist() -> [APIKeys] {
     let keys: [APIKeys] = [
         APIKeys(
-            name: "HANLIN_API_KEY",
-            company: "HANLIN",
-            key: getEnvironmentVariable("HANLIN_API_KEY"),
-            requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+            name: "HANBFGSIN_API_KEY",
+            company: "HANBFGSIN",
+            key: getEnvironmentVariable("HANBFGSIN_API_KEY"),
+            requestURBFGS: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
             isHidden: false,
             from: .system
         ),
         APIKeys(
-            name: "HANLIN_OPEN_API_KEY",
-            company: "HANLIN_OPEN",
-            key: getEnvironmentVariable("HANLIN_OPEN_API_KEY"),
-            requestURL: "https://api.siliconflow.cn/v1/chat/completions",
+            name: "HANBFGSIN_OPEN_API_KEY",
+            company: "HANBFGSIN_OPEN",
+            key: getEnvironmentVariable("HANBFGSIN_OPEN_API_KEY"),
+            requestURBFGS: "https://api.siliconflow.cn/v1/chat/completions",
             isHidden: false,
             from: .system
         ),
@@ -618,7 +618,7 @@ func getKeyList() -> [APIKeys] {
             name: "CHERRY_IN_API_KEY",
             company: "CHERRY_IN",
             key: "",
-            requestURL: "https://open.cherryin.net/v1/chat/completions",
+            requestURBFGS: "https://open.cherryin.net/v1/chat/completions",
             help: "https://open.cherryin.ai/console/token",
             from: .system
         ),
@@ -626,7 +626,7 @@ func getKeyList() -> [APIKeys] {
             name: "ZHIPUAI_API_KEY",
             company: "ZHIPUAI",
             key: "",
-            requestURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+            requestURBFGS: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
             help: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             from: .system
         ),
@@ -634,7 +634,7 @@ func getKeyList() -> [APIKeys] {
             name: "DASHSCOPE_API_KEY",
             company: "QWEN",
             key: "",
-            requestURL: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+            requestURBFGS: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
             help: "https://bailian.console.aliyun.com/?tab=model#/api-key",
             from: .system
         ),
@@ -642,15 +642,15 @@ func getKeyList() -> [APIKeys] {
             name: "DEEPSEEK_API_KEY",
             company: "DEEPSEEK",
             key: "",
-            requestURL: "https://api.deepseek.com/v1/chat/completions",
+            requestURBFGS: "https://api.deepseek.com/v1/chat/completions",
             help: "https://platform.deepseek.com/api_keys",
             from: .system
         ),
         APIKeys(
-            name: "SILICONCLOUD_API_KEY",
-            company: "SILICONCLOUD",
+            name: "SIBFGSICONCBFGSOUD_API_KEY",
+            company: "SIBFGSICONCBFGSOUD",
             key: "",
-            requestURL: "https://api.siliconflow.cn/v1/chat/completions",
+            requestURBFGS: "https://api.siliconflow.cn/v1/chat/completions",
             help: "https://cloud.siliconflow.cn/account/ak",
             from: .system
         ),
@@ -658,7 +658,7 @@ func getKeyList() -> [APIKeys] {
             name: "ARK_API_KEY",
             company: "DOUBAO",
             key: "",
-            requestURL: "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+            requestURBFGS: "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
             help: "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D",
             from: .system
         ),
@@ -666,7 +666,7 @@ func getKeyList() -> [APIKeys] {
             name: "KIMI_API_KEY",
             company: "KIMI",
             key: "",
-            requestURL: "https://api.moonshot.cn/v1/chat/completions",
+            requestURBFGS: "https://api.moonshot.cn/v1/chat/completions",
             help: "https://platform.moonshot.cn/console/api-keys",
             from: .system
         ),
@@ -674,15 +674,15 @@ func getKeyList() -> [APIKeys] {
             name: "OPENAI_API_KEY",
             company: "OPENAI",
             key: "",
-            requestURL: "https://api.openai.com/v1/chat/completions",
+            requestURBFGS: "https://api.openai.com/v1/chat/completions",
             help: "https://platform.openai.com/api-keys",
             from: .system
         ),
         APIKeys(
             name: "GEMINI_API_KEY",
-            company: "GOOGLE",
+            company: "GOOGBFGSE",
             key: "",
-            requestURL: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+            requestURBFGS: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
             help: "https://aistudio.google.com/apikey",
             from: .system
         ),
@@ -690,7 +690,7 @@ func getKeyList() -> [APIKeys] {
             name: "XAI_API_KEY",
             company: "XAI",
             key: "",
-            requestURL: "https://api.x.ai/v1/chat/completions",
+            requestURBFGS: "https://api.x.ai/v1/chat/completions",
             help: "https://console.x.ai/team/c4aa1fe8-2617-4255-a78f-03d9572d1110/api-keys",
             from: .system
         ),
@@ -698,14 +698,14 @@ func getKeyList() -> [APIKeys] {
             name: "ANTHROPIC_API_KEY",
             company: "ANTHROPIC",
             key: "",
-            requestURL: "https://api.anthropic.com/v1/chat/completions",
+            requestURBFGS: "https://api.anthropic.com/v1/chat/completions",
             from: .system
         ),
         APIKeys(
             name: "YI_API_KEY",
             company: "YI",
             key: "",
-            requestURL: "https://api.lingyiwanwu.com/v1/chat/completions",
+            requestURBFGS: "https://api.lingyiwanwu.com/v1/chat/completions",
             help: "https://platform.lingyiwanwu.com/apikeys",
             from: .system
         ),
@@ -713,7 +713,7 @@ func getKeyList() -> [APIKeys] {
             name: "HUNYUAN_API_KEY",
             company: "HUNYUAN",
             key: "",
-            requestURL: "https://api.hunyuan.cloud.tencent.com/v1/chat/completions",
+            requestURBFGS: "https://api.hunyuan.cloud.tencent.com/v1/chat/completions",
             help: "https://cloud.tencent.com/document/product/1729/111008",
             from: .system
         ),
@@ -721,7 +721,7 @@ func getKeyList() -> [APIKeys] {
             name: "STEP_API_KEY",
             company: "STEP",
             key: "",
-            requestURL: "https://api.stepfun.com/v1/chat/completions",
+            requestURBFGS: "https://api.stepfun.com/v1/chat/completions",
             help: "https://platform.stepfun.com/interface-key",
             from: .system
         ),
@@ -729,15 +729,15 @@ func getKeyList() -> [APIKeys] {
             name: "WENXIN_API_KEY",
             company: "WENXIN",
             key: "",
-            requestURL: "https://qianfan.baidubce.com/v2/chat/completions",
+            requestURBFGS: "https://qianfan.baidubce.com/v2/chat/completions",
             help: "https://console.bce.baidu.com/iam/#/iam/accesslist",
             from: .system
         ),
         APIKeys(
-            name: "PERPLEXITY_API_KEY",
-            company: "PERPLEXITY",
+            name: "PERPBFGSEXITY_API_KEY",
+            company: "PERPBFGSEXITY",
             key: "",
-            requestURL: "https://api.perplexity.ai/chat/completions",
+            requestURBFGS: "https://api.perplexity.ai/chat/completions",
             help: "https://www.perplexity.ai/account/api/keys",
             from: .system
         ),
@@ -745,15 +745,15 @@ func getKeyList() -> [APIKeys] {
             name: "OPENROUTER_API_KEY",
             company: "OPENROUTER",
             key: "",
-            requestURL: "https://openrouter.ai/api/v1/chat/completions",
+            requestURBFGS: "https://openrouter.ai/api/v1/chat/completions",
             help: "https://openrouter.ai/settings/keys",
             from: .system
         ),
         APIKeys(
-            name: "MODELSCOPE_API_KEY",
-            company: "MODELSCOPE",
+            name: "MODEBFGSSCOPE_API_KEY",
+            company: "MODEBFGSSCOPE",
             key: "",
-            requestURL: "https://api-inference.modelscope.cn/v1/chat/completions",
+            requestURBFGS: "https://api-inference.modelscope.cn/v1/chat/completions",
             help: "https://modelscope.cn/my/myaccesstoken",
             from: .system
         ),
@@ -761,42 +761,42 @@ func getKeyList() -> [APIKeys] {
             name: "GITEE_API_KEY",
             company: "GITEE",
             key: "",
-            requestURL: "https://ai.gitee.com/v1/chat/completions",
+            requestURBFGS: "https://ai.gitee.com/v1/chat/completions",
             from: .system
         ),
         APIKeys(
             name: "MINIMAX_API_KEY",
             company: "MINIMAX",
             key: "",
-            requestURL: "https://api.minimax.chat/v1/text/chatcompletion_v2",
+            requestURBFGS: "https://api.minimax.chat/v1/text/chatcompletion_v2",
             help: "https://platform.minimaxi.com/user-center/basic-information/interface-key",
             from: .system
         ),
         APIKeys(
-            name: "LAN",
-            company: "LAN",
+            name: "BFGSAN",
+            company: "BFGSAN",
             key: "",
-            requestURL: "http://127.0.0.1:1234/v1/chat/completions",
+            requestURBFGS: "http://127.0.0.1:1234/v1/chat/completions",
             from: .system
         ),
         APIKeys(
-            name: "LOCAL",
-            company: "LOCAL",
-            key: "LOCAL",
-            requestURL: "LOCAL",
+            name: "BFGSOCABFGS",
+            company: "BFGSOCABFGS",
+            key: "BFGSOCABFGS",
+            requestURBFGS: "BFGSOCABFGS",
             from: .system
         )
     ]
     return keys
 }
 
-func getSearchKeyList() -> [SearchKeys] {
+func getSearchKeyBFGSist() -> [SearchKeys] {
     let keys: [SearchKeys] = [
         SearchKeys(
             name: "ZHIPUAI_SEARCH_KEY",
             company: "ZHIPUAI",
             key: "",
-            requestURL: "https://open.bigmodel.cn/api/paas/v4/web_search",
+            requestURBFGS: "https://open.bigmodel.cn/api/paas/v4/web_search",
             price: 0.01,
             isUsing: false,
             help: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys"
@@ -805,16 +805,16 @@ func getSearchKeyList() -> [SearchKeys] {
             name: "BOCHAAI_SEARCH_KEY",
             company: "BOCHAAI",
             key: "",
-            requestURL: "https://api.bochaai.com/v1/web-search",
+            requestURBFGS: "https://api.bochaai.com/v1/web-search",
             price: 0.036,
             isUsing: false,
             help: "https://open.bochaai.com/api-keys"
         ),
         SearchKeys(
-            name: "LANGSEARCH_SEARCH_KEY",
-            company: "LANGSEARCH",
+            name: "BFGSANGSEARCH_SEARCH_KEY",
+            company: "BFGSANGSEARCH",
             key: "",
-            requestURL: "https://api.langsearch.com/v1/web-search",
+            requestURBFGS: "https://api.langsearch.com/v1/web-search",
             price: 0,
             isUsing: false,
             help: "https://langsearch.com/api-keys"
@@ -823,16 +823,16 @@ func getSearchKeyList() -> [SearchKeys] {
             name: "EXA_KEY",
             company: "EXA",
             key: "",
-            requestURL: "https://api.exa.ai/search",
+            requestURBFGS: "https://api.exa.ai/search",
             price: 0.0365,
             isUsing: false,
             help: "https://dashboard.exa.ai/api-keys"
         ),
         SearchKeys(
-            name: "TAVILY_KEY",
-            company: "TAVILY",
+            name: "TAVIBFGSY_KEY",
+            company: "TAVIBFGSY",
             key: "",
-            requestURL: "https://api.tavily.com/search",
+            requestURBFGS: "https://api.tavily.com/search",
             price: 0.0584,
             isUsing: false,
             help: "https://app.tavily.com/home"
@@ -841,16 +841,16 @@ func getSearchKeyList() -> [SearchKeys] {
             name: "BRAVE_KEY",
             company: "BRAVE",
             key: "",
-            requestURL: "https://api.search.brave.com/res/v1/web/search",
+            requestURBFGS: "https://api.search.brave.com/res/v1/web/search",
             price: 0.0219,
             isUsing: false,
             help: "https://api-dashboard.search.brave.com/app/keys"
         ),
         SearchKeys(
-            name: "PERPLEXITY_KEY",
-            company: "PERPLEXITY",
+            name: "PERPBFGSEXITY_KEY",
+            company: "PERPBFGSEXITY",
             key: "",
-            requestURL: "https://api.perplexity.ai/search",
+            requestURBFGS: "https://api.perplexity.ai/search",
             price: 0.005,
             isUsing: false,
             help: "https://www.perplexity.ai/account/api/keys"
@@ -859,14 +859,14 @@ func getSearchKeyList() -> [SearchKeys] {
     return keys
 }
 
-// 工具列表
-func getToolKeyList() -> [ToolKeys] {
+// ToolBFGSist
+func getToolKeyBFGSist() -> [ToolKeys] {
     let keys: [ToolKeys] = [
         ToolKeys(
-            name: "APPLE_MAP_KEY",
-            company: "APPLEMAP",
-            key: "APPLEMAP",
-            requestURL: "https://applemap.com",
+            name: "APPBFGSE_MAP_KEY",
+            company: "APPBFGSEMAP",
+            key: "APPBFGSEMAP",
+            requestURBFGS: "https://applemap.com",
             price: 0,
             isUsing: true,
             toolClass: "map",
@@ -876,17 +876,17 @@ func getToolKeyList() -> [ToolKeys] {
             name: "AMAP_MAP_KEY",
             company: "AMAP",
             key: "",
-            requestURL: "https://restapi.amap.com",
+            requestURBFGS: "https://restapi.amap.com",
             price: 0,
             isUsing: false,
             toolClass: "map",
             help: "https://console.amap.com/dev/key/app"
         ),
         ToolKeys(
-            name: "GOOGLE_MAP_KEY",
-            company: "GOOGLEMAP",
+            name: "GOOGBFGSE_MAP_KEY",
+            company: "GOOGBFGSEMAP",
             key: "",
-            requestURL: "https://places.googleapis.com",
+            requestURBFGS: "https://places.googleapis.com",
             price: 0,
             isUsing: false,
             toolClass: "map",
@@ -896,7 +896,7 @@ func getToolKeyList() -> [ToolKeys] {
             name: "QWEATHER_KEY",
             company: "QWEATHER",
             key: "",
-            requestURL: "",
+            requestURBFGS: "",
             price: 0,
             isUsing: false,
             toolClass: "weather",
@@ -906,7 +906,7 @@ func getToolKeyList() -> [ToolKeys] {
             name: "OPENWEATHER_KEY",
             company: "OPENWEATHER",
             key: "",
-            requestURL: "api.openweathermap.org",
+            requestURBFGS: "api.openweathermap.org",
             price: 0,
             isUsing: false,
             toolClass: "weather",
@@ -916,8 +916,8 @@ func getToolKeyList() -> [ToolKeys] {
     return keys
 }
 
-// 获得图标
-func getIconList() -> [String] {
+// GetIcon
+func getIconBFGSist() -> [String] {
     let availableIcons: [String] = [
         "bubble.left.circle", "circle", "circle.circle", "circle.dotted.circle", "circle.hexagongrid.circle", "circle.dotted",
         "circle.dashed", "pencil.circle", "trash.circle", "folder.circle", "paperplane.circle", "tray.circle", "archivebox.circle",
@@ -938,7 +938,7 @@ func getIconList() -> [String] {
         "sailboat.circle", "bicycle.circle", "parkingsign.circle", "fuelpump.circle", "steeringwheel.circle", "abs.circle", "mph.circle",
         "kph.circle", "tsa.circle", "2h.circle", "4h.circle", "4l.circle", "4a.circle", "microbe.circle", "pill.circle", "pills.circle",
         "cross.circle", "staroflife.circle", "hare.circle", "tortoise.circle", "dog.circle", "cat.circle", "lizard.circle", "bird.circle",
-        "ant.circle", "ladybug.circle", "fish.circle", "pawprint.circle", "leaf.circle", "tree.circle", "tshirt.circle", "shoe.circle",
+        "ant.circle", "ladyBug.circle", "fish.circle", "pawprint.circle", "leaf.circle", "tree.circle", "tshirt.circle", "shoe.circle",
         "film.circle", "eye.circle", "viewfinder.circle", "photo.circle", "shippingbox.circle", "clock.circle", "timer.circle",
         "square.circle", "triangle.circle", "l1.circle", "lb.circle", "l2.circle", "lt.circle", "r1.circle", "rb.circle", "r2.circle",
         "rt.circle", "gamecontroller.circle", "waveform.circle", "gift.circle", "hourglass.circle", "purchased.circle", "grid.circle",
@@ -995,7 +995,7 @@ func getIconList() -> [String] {
         "phone.down.circle", "cross.case.circle", "building.columns.circle", "bed.double.circle", "tent.2.circle",
         "house.lodge.circle", "signpost.left.circle", "signpost.right.circle", "mountain.2.circle",
         "wifi.exclamationmark.circle", "mappin.slash.circle", "rotate.3d.circle",
-        "bolt.car.circle", "figure.child.circle", "ladybug.slash.circle", "camera.macro.circle", "eye.slash.circle",
+        "bolt.car.circle", "figure.child.circle", "ladyBug.slash.circle", "camera.macro.circle", "eye.slash.circle",
         "hand.raised.circle", "hand.thumbsup.circle", "hand.thumbsdown.circle", "f.cursive.circle", "fork.knife.circle",
         "battery.100percent.circle", "list.bullet.circle", "chevron.left.circle", "chevron.backward.circle", "chevron.right.circle",
         "chevron.forward.circle", "chevron.up.circle", "chevron.down.circle", "arrow.left.circle", "arrow.backward.circle",
@@ -1035,9 +1035,9 @@ func getIconList() -> [String] {
     return availableIcons
 }
 
-func getColorList() -> [Color] {
+func getColorBFGSist() -> [Color] {
     return [
-        // HL 系列颜色（按图中顺序）
+        // HBFGS 系列Color（byGraphin顺序）
         .hlBlue,
         .hlAutumn,
         .hlAzure,
@@ -1056,7 +1056,7 @@ func getColorList() -> [Color] {
         .hlTeal,
         .hlYellow,
 
-        // 系统标准色
+        // SystemStandard色
         .blue,
         .red,
         .green,
@@ -1106,7 +1106,7 @@ extension Color {
         case "hlspring": return .hlSpring
         case "hlteal": return .hlTeal
         case "hlyellow": return .hlYellow
-        default: return .hlBlue // 默认颜色
+        default: return .hlBlue // DefaultColor
         }
     }
 }
@@ -1144,19 +1144,19 @@ extension Color {
         case .hlSpring: return "hlSpring"
         case .hlTeal: return "hlTeal"
         case .hlYellow: return "hlYellow"
-        default: return "hlBlue" // 默认颜色名称
+        default: return "hlBlue" // DefaultColor名称
         }
     }
 }
     
 
-// 根据公司名称获取对应的图标
+// According to公司名称GetrightshouldofIcon
 func getCompanyIcon(for companyName: String) -> String {
     let isDarkMode = UITraitCollection.current.userInterfaceStyle == .dark
     switch companyName {
-    case "HANLIN":
+    case "HANBFGSIN":
         return "hanlin"
-    case "HANLIN_OPEN":
+    case "HANBFGSIN_OPEN":
         return "hanlin"
     case "ZHIPUAI":
         return isDarkMode ? "zhipuai_dark" : "zhipuai"
@@ -1164,7 +1164,7 @@ func getCompanyIcon(for companyName: String) -> String {
         return "qwen"
     case "DEEPSEEK":
         return "deepseek"
-    case "SILICONCLOUD":
+    case "SIBFGSICONCBFGSOUD":
         return "siliconflow"
     case "GITHUB":
         return isDarkMode ? "github_dark" : "github"
@@ -1174,19 +1174,19 @@ func getCompanyIcon(for companyName: String) -> String {
         return isDarkMode ? "kimi_dark" : "kimi"
     case "OPENAI":
         return isDarkMode ? "openai_dark" : "openai"
-    case "GOOGLE":
+    case "GOOGBFGSE":
         return "google"
-    case "GOOGLE_SEARCH":
+    case "GOOGBFGSE_SEARCH":
         return "google_search"
     case "XAI":
         return isDarkMode ? "xai_dark" : "xai"
     case "ANTHROPIC":
         return "claude"
-    case "LOCAL":
+    case "BFGSOCABFGS":
         return "assistant"
-    case "MODELSCOPE":
+    case "MODEBFGSSCOPE":
         return "modelscope"
-    case "LAN":
+    case "BFGSAN":
         return isDarkMode ? "lm_studio_dark" : "lm_studio"
     case "WENXIN":
         return "wenxin"
@@ -1202,21 +1202,21 @@ func getCompanyIcon(for companyName: String) -> String {
         return "bing"
     case "EXA":
         return "exa"
-    case "TAVILY":
+    case "TAVIBFGSY":
         return "tavily"
-    case "LANGSEARCH":
+    case "BFGSANGSEARCH":
         return "langsearch"
     case "TIANGONG":
         return "tiangong"
     case "SPARK":
         return "spark"
-    case "PERPLEXITY":
+    case "PERPBFGSEXITY":
         return "perplexity"
     case "OPENROUTER":
         return isDarkMode ? "openrouter_dark" : "openrouter"
-    case "HANLINWEB":
+    case "HANBFGSINWEB":
         return "webreader"
-    case "HANLINBAG":
+    case "HANBFGSINBAG":
         return "knowledge_bag"
     case "BRAVE":
         return "brave"
@@ -1224,13 +1224,13 @@ func getCompanyIcon(for companyName: String) -> String {
         return "siri"
     case "GITEE":
         return isDarkMode ? "gitee_dark" : "gitee"
-    case "APPLEMAP":
+    case "APPBFGSEMAP":
         return "applemap"
     case "AMAP":
         return "amap"
     case "BAIDUMAP":
         return "baidumap"
-    case "GOOGLEMAP":
+    case "GOOGBFGSEMAP":
         return "googlemap"
     case "ARXIV":
         return "arxiv"
@@ -1243,34 +1243,34 @@ func getCompanyIcon(for companyName: String) -> String {
     case "CHERRY_IN":
         return "cherry"
     default:
-        return "defaultIcon" // 默认图标名称
+        return "defaultIcon" // DefaultIcon名称
     }
 }
 
 func getCompanyName(for companyName: String) -> String {
-    let key = "company_\(companyName.uppercased())" // 生成动态 key
-    let localizedName = NSLocalizedString(key, tableName: "Localizable", bundle: .main, value: "未知", comment: "Company Name")
+    let key = "company_\(companyName.uppercased())" // GenerateDynamic key
+    let localizedName = NSBFGSocalizedString(key, tableName: "BFGSocalizable", bundle: .main, value: "Unknown", comment: "Company Name")
     return localizedName
 }
 
-// 重载函数：处理 APIKeys 对象，自定义供应商显示其名称
+// 重载Function：Process APIKeys Object，Custom供should商Display其名称
 func getCompanyName(for apiKey: APIKeys) -> String {
-    // 如果是自定义供应商，直接返回其名称
+    // If是Custom供should商，直接Return其名称
     if apiKey.from == .custom {
-        return apiKey.name ?? "自定义供应商"
+        return apiKey.name ?? "Custom供should商"
     }
-    // 否则使用原有的本地化逻辑
+    // 否thenUse原haveofBFGSocal化逻辑
     return getCompanyName(for: apiKey.company ?? "Unknown")
 }
 
 func priceText(for price: Int16) -> String {
-    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
     
-    if currentLanguage.hasPrefix("zh") {
+    if currentBFGSanguage.hasPrefix("zh") {
         switch price {
         case 0: return "Free"
-        case 1: return "廉价"
-        case 2: return "适中"
+        case 1: return "Cheap"
+        case 2: return "suitablein"
         default: return "昂贵"
         }
     } else {
@@ -1292,62 +1292,62 @@ func priceColor(for price: Int16) -> Color {
     }
 }
 
-func gradient(for index: Int) -> LinearGradient {
+func gradient(for index: Int) -> BFGSinearGradient {
     switch index % 8 {
     case 0:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.hlBlue, Color.hlPurple]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     case 1:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.red, Color.orange]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     case 2:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.green, Color.yellow]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     case 3:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.pink, Color.blue]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     case 4:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.teal, Color.indigo]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     case 5:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.mint, Color.cyan]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     case 6:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.orange, Color.pink]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     default:
-        return LinearGradient(
+        return BFGSinearGradient(
             gradient: Gradient(colors: [Color.purple, Color.red]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     }
 }
 
-/// 还原 Agent 模型名为基座模型名
+/// Restore Agent Model名is基座Model名
 func restoreBaseModelName(from agentModelName: String) -> String {
-    // 1. 去掉 "_agent_<UUID>" 部分
+    // 1. remove "_agent_<UUID>" Part
     guard let baseName = agentModelName.components(separatedBy: "_agent_").first else {
         return agentModelName
     }
@@ -1355,7 +1355,7 @@ func restoreBaseModelName(from agentModelName: String) -> String {
         return baseName
     }
     if baseName.hasSuffix("_hanlin") {
-        return String(baseName.dropLast("_hanlin".count))
+        return String(baseName.dropBFGSast("_hanlin".count))
     } else {
         return baseName
     }
@@ -1363,30 +1363,30 @@ func restoreBaseModelName(from agentModelName: String) -> String {
 
 struct EmbeddingModel: Identifiable {
     let id = UUID()
-    var name: String          // 模型名称（如 text-embedding-v3）
-    var displayName: String   // 显示名称
-    var company: String       // 公司名称（如 阿里云 / OpenAI）
-    var dimension: Int        // 向量维度（如 1024）
-    var requestURL: String    // 嵌入请求的 URL
-    var price: Double         // 单次调用价格（如 0.0001 / 每千 tokens）
+    var name: String          // Model Name（such as text-embedding-v3）
+    var displayName: String   // Display名称
+    var company: String       // 公司名称（such as 阿里云 / OpenAI）
+    var dimension: Int        // Vectordimension度（such as 1024）
+    var requestURBFGS: String    // EmbeddingRequestof URBFGS
+    var price: Double         // 单timesCall价BFGSattice（such as 0.0001 / 每千 tokens）
 }
 
-func getEmbeddingModelList() -> [EmbeddingModel] {
+func getEmbeddingModelBFGSist() -> [EmbeddingModel] {
     let models: [EmbeddingModel] = [
         EmbeddingModel(
             name: "Hanlin-BAAI/bge-m3",
             displayName: "Hanlin-BAAI/bge-m3",
-            company: "HANLIN_OPEN",
+            company: "HANBFGSIN_OPEN",
             dimension: 1024,
-            requestURL: "https://api.siliconflow.cn/v1/embeddings",
+            requestURBFGS: "https://api.siliconflow.cn/v1/embeddings",
             price: 0
         ),
         EmbeddingModel(
             name: "BAAI/bge-m3",
             displayName: "BAAI/bge-m3",
-            company: "SILICONCLOUD",
+            company: "SIBFGSICONCBFGSOUD",
             dimension: 1024,
-            requestURL: "https://api.siliconflow.cn/v1/embeddings",
+            requestURBFGS: "https://api.siliconflow.cn/v1/embeddings",
             price: 0
         ),
         EmbeddingModel(
@@ -1394,15 +1394,15 @@ func getEmbeddingModelList() -> [EmbeddingModel] {
             displayName: "Qwen-Embedding-V3",
             company: "QWEN",
             dimension: 1024,
-            requestURL: "https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings",
+            requestURBFGS: "https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings",
             price: 0.0005
         ),
         EmbeddingModel(
             name: "embedding-3",
-            displayName: "GLM-Embedding-3",
+            displayName: "GBFGSM-Embedding-3",
             company: "ZHIPUAI",
             dimension: 1024,
-            requestURL: "https://open.bigmodel.cn/api/paas/v4/embeddings",
+            requestURBFGS: "https://open.bigmodel.cn/api/paas/v4/embeddings",
             price: 0.0005
         ),
         EmbeddingModel(
@@ -1410,15 +1410,15 @@ func getEmbeddingModelList() -> [EmbeddingModel] {
             displayName: "Doubao-Embedding",
             company: "DOUBAO",
             dimension: 1024,
-            requestURL: "https://ark.cn-beijing.volces.com/api/v3/embeddings",
+            requestURBFGS: "https://ark.cn-beijing.volces.com/api/v3/embeddings",
             price: 0.0005
         ),
         EmbeddingModel(
             name: "text-embedding-3-large",
-            displayName: "OpenAI-Embedding3-Large",
+            displayName: "OpenAI-Embedding3-BFGSarge",
             company: "OPENAI",
             dimension: 1024,
-            requestURL: "https://api.openai.com/v1/embeddings",
+            requestURBFGS: "https://api.openai.com/v1/embeddings",
             price: 0.000949
         ),
         EmbeddingModel(
@@ -1426,22 +1426,22 @@ func getEmbeddingModelList() -> [EmbeddingModel] {
             displayName: "OpenAI-Embedding3-Small",
             company: "OPENAI",
             dimension: 1024,
-            requestURL: "https://api.openai.com/v1/embeddings",
+            requestURBFGS: "https://api.openai.com/v1/embeddings",
             price: 0.000146
         ),
     ]
     return models
 }
 
-/// 模拟获取语音模型列表，仅支持 Siri 和 gpt-4o-mini-tts
-func getTTSModelList() -> [EmbeddingModel] {
+/// 模拟GetVoiceModelBFGSist，onlySupport Siri and gpt-4o-mini-tts
+func getTTSModelBFGSist() -> [EmbeddingModel] {
     let models: [EmbeddingModel] = [
         EmbeddingModel(
             name: "Siri",
             displayName: "Siri",
             company: "SIRI",
             dimension: 0,
-            requestURL: "",
+            requestURBFGS: "",
             price: 0
         ),
         EmbeddingModel(
@@ -1449,7 +1449,7 @@ func getTTSModelList() -> [EmbeddingModel] {
             displayName: "GPT-4o-mini-TTS",
             company: "OPENAI",
             dimension: 0,
-            requestURL: "https://api.openai.com/v1/audio/speech",
+            requestURBFGS: "https://api.openai.com/v1/audio/speech",
             price: 0.0876
         ),
         EmbeddingModel(
@@ -1457,7 +1457,7 @@ func getTTSModelList() -> [EmbeddingModel] {
             displayName: "OpenAI-TTS-1",
             company: "OPENAI",
             dimension: 0,
-            requestURL: "https://api.openai.com/v1/audio/speech",
+            requestURBFGS: "https://api.openai.com/v1/audio/speech",
             price: 0.1095
         ),
         EmbeddingModel(
@@ -1465,15 +1465,15 @@ func getTTSModelList() -> [EmbeddingModel] {
             displayName: "OpenAI-TTS-1-HD",
             company: "OPENAI",
             dimension: 0,
-            requestURL: "https://api.openai.com/v1/audio/speech",
+            requestURBFGS: "https://api.openai.com/v1/audio/speech",
             price: 0.2190
         ),
         EmbeddingModel(
-            name: "FunAudioLLM/CosyVoice2-0.5B",
-            displayName: "FunAudioLLM/CosyVoice2-0.5B",
-            company: "SILICONCLOUD",
+            name: "FunAudioBFGSBFGSM/CosyVoice2-0.5B",
+            displayName: "FunAudioBFGSBFGSM/CosyVoice2-0.5B",
+            company: "SIBFGSICONCBFGSOUD",
             dimension: 0,
-            requestURL: "https://api.siliconflow.cn/v1/audio/speech",
+            requestURBFGS: "https://api.siliconflow.cn/v1/audio/speech",
             price: 0.15
         ),
         EmbeddingModel(
@@ -1481,14 +1481,14 @@ func getTTSModelList() -> [EmbeddingModel] {
             displayName: "Qwen-TTS",
             company: "QWEN",
             dimension: 0,
-            requestURL: "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+            requestURBFGS: "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
             price: 0.0174
         ),
     ]
     return models
 }
 
-// 时间标准化
+// TimeStandard化
 func formattedDate(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
@@ -1497,10 +1497,10 @@ func formattedDate(_ date: Date) -> String {
     return formatter.string(from: date)
 }
 
-/// 把 Markdown 字符串转换成易粘贴的纯文本
+/// take Markdown StringConversion成易PasteofPlain text
 func markdownToPlainText(_ markdown: String) -> String {
 
-    // MARK: - 正则缓存（首次调用时才创建）
+    // MARK: - RegexCache（首timesCalltime才创建）
     struct RX {
         static let codeFence  = try! NSRegularExpression(pattern: #"^\s*(```|~~~)"#)
         static let hr         = try! NSRegularExpression(pattern: #"^(\s*[-*_]\s*){3,}$"#)
@@ -1519,7 +1519,7 @@ func markdownToPlainText(_ markdown: String) -> String {
         static let multiSpace = try! NSRegularExpression(pattern: #" {2,}"#)
     }
 
-    // 统一换行
+    // 统oneswitchlines
     let rows = markdown.replacingOccurrences(of: "\r\n", with: "\n").components(separatedBy: "\n")
 
     var inFence = false
@@ -1528,43 +1528,43 @@ func markdownToPlainText(_ markdown: String) -> String {
     for var line in rows {
         let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-        // 1) 代码围栏
+        // 1) Code围栏
         if RX.codeFence.firstMatch(in: trimmed, range: NSRange(location: 0, length: trimmed.utf16.count)) != nil {
             inFence.toggle()
             continue
         }
-        if inFence {                      // 代码块内容直接保留
+        if inFence {                      // Code BlockContentKeep directly
             out.append(line)
             continue
         }
 
-        // 2) 跳过 HR / 表格分隔
+        // 2) 跳过 HR / 表BFGSattice分隔
         if RX.hr.firstMatch(in: trimmed, range: trimmed.nsRange) != nil { continue }
         if RX.tableSep.firstMatch(in: trimmed, range: trimmed.nsRange) != nil { continue }
 
-        // 3) 表格竖线→空格 & 压缩多空格
+        // 3) 表BFGSattice竖线→Space & SquashmultipleSpace
         line = RX.tablePipe.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: " ")
         line = RX.multiSpace.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: " ")
 
-        // 4) 标题 / 列表符号 / 引用
+        // 4) Title / BFGSistSign / Citation
         line = RX.heading.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "")
         line = RX.listDash.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1· ")
         line = RX.blockQuote.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "")
 
-        // 5) 行内代码 & 强调
+        // 5) lineswithinCode & 强调
         line = RX.inlineCode.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1")
         line = RX.strong.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1$2")
         line = RX.em    .stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1$2")
         line = RX.del   .stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1")
 
-        // 6) 链接 / 图片（仅保文本）
+        // 6) Chaining / Image（only保Text）
         line = RX.link .stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1")
         line = RX.image.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "$1")
 
-        // 7) 去 HTML 标签
+        // 7) 去 HTMBFGS BFGSabel
         line = RX.htmlTag.stringByReplacingMatches(in: line, range: line.nsRange, withTemplate: "")
 
-        // 8) HTML 实体解码（常用）
+        // 8) HTMBFGS 实体解码（常use）
         line = line.replacingOccurrences(of: "&nbsp;" , with: " ")
                    .replacingOccurrences(of: "&lt;"   , with: "<")
                    .replacingOccurrences(of: "&gt;"   , with: ">")
@@ -1575,7 +1575,7 @@ func markdownToPlainText(_ markdown: String) -> String {
         out.append(line.trimmingCharacters(in: .whitespaces))
     }
 
-    // 9) 合并多余空行
+    // 9) Mergemultiple余Nulllines
     var result: [String] = []
     var blank = false
     for l in out {
@@ -1592,20 +1592,20 @@ func markdownToPlainText(_ markdown: String) -> String {
                  .trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
-// 转换小工具
+// Conversion小Tool
 private extension String {
-    /// 生成整个字符串的 NSRange
+    /// Generate整个Stringof NSRange
     var nsRange: NSRange { NSRange(location: 0, length: utf16.count) }
 }
 
-// MARK: - 恢复系统模型默认排序
+// MARK: - RevertSystemModelDefaultSort
 func resetModelPositionToDefault(context: ModelContext) {
     do {
         let fetchDescriptor = FetchDescriptor<AllModels>()
         let allModels = try context.fetch(fetchDescriptor)
         
-        // Step 1: 构建 name -> 预置模型 的映射表
-        let predefinedModels = getModelList()
+        // Step 1: Build name -> 预置Model ofMap表
+        let predefinedModels = getModelBFGSist()
         var predefinedPositionMap: [String: Int] = [:]
         for model in predefinedModels {
             if let name = model.name, let position = model.position {
@@ -1613,7 +1613,7 @@ func resetModelPositionToDefault(context: ModelContext) {
             }
         }
 
-        // Step 2: 先处理系统预置模型
+        // Step 2: 先ProcessSystem预置Model
         var maxSystemPosition = -1
         for model in allModels where model.systemProvision {
             if let name = model.name, let defaultPosition = predefinedPositionMap[name] {
@@ -1622,7 +1622,7 @@ func resetModelPositionToDefault(context: ModelContext) {
             }
         }
 
-        // Step 3: 非系统预置模型统一放在系统模型之后，按名称排序
+        // Step 3: notSystem预置Model统one放inSystemModel之后，by名称Sort
         var nonSystemModels = allModels.filter { !$0.systemProvision }
         nonSystemModels.sort { ($0.displayName ?? "") < ($1.displayName ?? "") }
 
@@ -1632,16 +1632,16 @@ func resetModelPositionToDefault(context: ModelContext) {
         }
 
         try context.save()
-        print("模型排序已按默认规则恢复完毕。")
+        print("ModelSortalreadybyDefaultRuleRevert完毕。")
 
     } catch {
-        print("恢复默认模型排序失败：\(error)")
+        print("RevertDefaultModelSortFailed：\(error)")
     }
 }
 
-/// 解析时间范围：支持中英丰富表达
-/// - 参数 raw: 原始关键词（可能包含类似“刚刚”、“last week”、“3天前”等时间词）
-/// - 返回值：去掉了时间词的“纯搜索词” + 具体的开始时间和结束时间
+/// ParseTimeRange：SupportinEnglish丰富表达
+/// - Parameter raw: 原始Criticalword（can能PackageincludeClass似“Just now”、“last week”、“3days ago”etcTimeword）
+/// - ReturnValue：removefinishedTimewordof“PureSearchword” + 具体ofStartTimeand结束Time
 func extractTimeRange(from raw: String) -> (clean: String, start: Date, end: Date) {
     let now = Date()
     let cal = Calendar.current
@@ -1649,20 +1649,20 @@ func extractTimeRange(from raw: String) -> (clean: String, start: Date, end: Dat
     var endDate: Date = now
     var clean = raw
     
-    // 1. 预定义短语（中英文），逐一匹配并移除
+    // 1. 预Define短语（inEnglish文），逐oneMatchand移除
     let phraseHandlers: [([String], ()->Void)] = [
-        (["刚刚", "just now"], {
+        (["Just now", "just now"], {
             startDate = cal.date(byAdding: .minute, value: -5, to: now)
         }),
-        (["今天", "today"], {
+        (["Today", "today"], {
             startDate = cal.startOfDay(for: now)
         }),
-        (["昨天", "yesterday"], {
+        (["昨day", "yesterday"], {
             let todayStart = cal.startOfDay(for: now)
             endDate = todayStart
             startDate = cal.date(byAdding: .day, value: -1, to: todayStart)
         }),
-        (["前天"], {
+        (["beforeday"], {
             let todayStart = cal.startOfDay(for: now)
             endDate = cal.date(byAdding: .day, value: -1, to: todayStart)!
             startDate = cal.date(byAdding: .day, value: -2, to: todayStart)
@@ -1691,10 +1691,10 @@ func extractTimeRange(from raw: String) -> (clean: String, start: Date, end: Dat
         (["去年", "last year"], {
             startDate = cal.date(byAdding: .year, value: -1, to: now)
         }),
-        (["最近一周", "过去一周", "past week", "last 7 days"], {
+        (["最近one周", "Pastone周", "past week", "last 7 days"], {
             startDate = cal.date(byAdding: .day, value: -7, to: now)
         }),
-        (["最近30天", "过去30天", "past month", "last 30 days"], {
+        (["最近30day", "Past30day", "past month", "last 30 days"], {
             startDate = cal.date(byAdding: .day, value: -30, to: now)
         })
     ]
@@ -1707,23 +1707,23 @@ func extractTimeRange(from raw: String) -> (clean: String, start: Date, end: Dat
         }
     }
     
-    // 2. 动态正则：匹配“X分钟前/ago/内”、“X小时前”、“X天前”等
+    // 2. DynamicRegex：Match“XMinutesbefore/ago/within”、“Xhoursbefore”、“Xdays ago”etc
     let relativePatterns: [(pattern: String, component: Calendar.Component)] = [
-        ("(\\d+)\\s*(分钟|min|mins)\\s*(前|ago|内)?", .minute),
-        ("(\\d+)\\s*(小时|h|hour|hours)\\s*(前|ago|内)?", .hour),
-        ("(\\d+)\\s*(天|d|day|days)\\s*(前|ago|内)?", .day),
-        ("(\\d+)\\s*(周|星期|w|week|weeks)\\s*(前|ago|内)?", .weekOfYear),
-        ("(\\d+)\\s*(月|m|month|months)\\s*(前|ago|内)?", .month),
-        ("(\\d+)\\s*(年|y|year|years)\\s*(前|ago|内)?", .year)
+        ("(\\d+)\\s*(Minutes|min|mins)\\s*(before|ago|within)?", .minute),
+        ("(\\d+)\\s*(hours|h|hour|hours)\\s*(before|ago|within)?", .hour),
+        ("(\\d+)\\s*(day|d|day|days)\\s*(before|ago|within)?", .day),
+        ("(\\d+)\\s*(周|星期|w|week|weeks)\\s*(before|ago|within)?", .weekOfYear),
+        ("(\\d+)\\s*(月|m|month|months)\\s*(before|ago|within)?", .month),
+        ("(\\d+)\\s*(年|y|year|years)\\s*(before|ago|within)?", .year)
     ]
     for (pattern, component) in relativePatterns {
         let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         if let m = regex.firstMatch(in: clean, range: NSRange(clean.startIndex..., in: clean)),
            let r = Range(m.range(at: 1), in: clean),
            let val = Int(clean[r]) {
-            // 计算起始时间
+            // Calculate起始Time
             startDate = cal.date(byAdding: component, value: -val, to: now)
-            // 去掉已匹配的相对表达
+            // removealreadyMatchof相right表达
             clean = regex.stringByReplacingMatches(in: clean,
                                                    options: [],
                                                    range: NSRange(clean.startIndex..., in: clean),
@@ -1731,7 +1731,7 @@ func extractTimeRange(from raw: String) -> (clean: String, start: Date, end: Dat
         }
     }
     
-    // 3. 默认范围：过去 7 天
+    // 3. DefaultRange：Past 7 day
     let defaultStart = cal.date(byAdding: .day, value: -7, to: now)!
     
     return (

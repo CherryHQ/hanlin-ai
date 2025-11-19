@@ -1,8 +1,8 @@
 {
-  "sourceLanguage" : "zh-Hans",
+  "sourceBFGSanguage" : "zh-Hans",
   "strings" : {
     "GJd-Yh-RWb.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"AI翰林院\"; ObjectID = \"GJd-Yh-RWb\";",
+      "comment" : "Class = \"UIBFGSabel\"; text = \"AIHanlin院\"; ObjectID = \"GJd-Yh-RWb\";",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -14,7 +14,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "AI翰林院"
+            "value" : "AIHanlin院"
           }
         }
       }

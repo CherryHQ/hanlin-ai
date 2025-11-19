@@ -1,24 +1,24 @@
 //
 //  TextToSpeech.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 8/2/25.
+//  Created by Development Team on 8/2/25.
 //
 
 // TextToSpeech.swift
 import Foundation
 import AVFoundation
-import SwiftData  // 确保引入 SwiftData
+import SwiftData  // Ensure引入 SwiftData
 
 class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
     private let synthesizer = AVSpeechSynthesizer()
     @Published var isSpeaking = false
     @Published var isAsking = false
-    private var selectedModel: String = "Siri" // 默认值
+    private var selectedModel: String = "Siri" // DefaultValue
     private var messageId: UUID?
     private var context: ModelContext?
 
-    // 用于 API 播放的 AVAudioPlayer
+    // useat API 播放of AVAudioPlayer
     private var audioPlayer: AVAudioPlayer?
     
     init(context: ModelContext? = nil) {
@@ -29,33 +29,33 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
         try? AVAudioSession.sharedInstance().setActive(true)
     }
     
-    // 更新消息ID
+    // UpdateMessageID
     func setMessageId(_ id: UUID) {
         self.messageId = id
     }
     
-    // 更新 context
+    // Update context
     func setContextIfNeeded(_ context: ModelContext) {
         self.context = context
     }
     
-    // 更新 selectedModel
+    // Update selectedModel
     func updateSelectedModel() {
         let fetchDescriptor = FetchDescriptor<UserInfo>()
         do {
             let results = try context!.fetch(fetchDescriptor)
             if let userInfo = results.first {
-                // 这里假设 textToSpeechModel 可能为空，做个安全解包
+                // 这里False设 textToSpeechModel can能is empty，做个安全解Package
                 self.selectedModel = userInfo.textToSpeechModel
             }
         } catch {
-            print("查询 UserInfo 失败：\(error.localizedDescription)")
+            print("Query UserInfo Failed：\(error.localizedDescription)")
         }
     }
     
     func toggleSpeech(text: String) {
         if selectedModel.lowercased() == "siri" {
-            // Siri 模式：使用 AVSpeechSynthesizer 内建的暂停/继续功能
+            // Siri Pattern：Use AVSpeechSynthesizer within建of暂停/Continuation功能
             if synthesizer.isSpeaking {
                 if synthesizer.isPaused {
                     synthesizer.continueSpeaking()
@@ -66,14 +66,14 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 speakSiri(text: text)
             }
         } else {
-            // API 模式（如 "4o-mini-tts"）：使用 AVAudioPlayer 播放返回的音频
+            // API Pattern（such as "4o-mini-tts"）：Use AVAudioPlayer 播放Returnof音频
             if let player = audioPlayer {
                 if player.isPlaying {
-                    // 如果正在播放，则暂停
+                    // Ifcurrently播放，then暂停
                     player.pause()
                     DispatchQueue.main.async { self.isSpeaking = false }
                 } else {
-                    // 如果已开始但暂停，则恢复播放；否则重新发起 API 请求播放音频
+                    // IfalreadyStart但暂停，thenRevert播放；否then重New发起 API Request播放音频
                     if player.currentTime > 0 && player.currentTime < player.duration {
                         player.play()
                         DispatchQueue.main.async { self.isSpeaking = true }
@@ -82,7 +82,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                     }
                 }
             } else {
-                // audioPlayer 为空，直接发起播放请求
+                // audioPlayer is empty，直接发起播放Request
                 speakAPISpeech(text: text, selectedModel: selectedModel)
             }
         }
@@ -96,21 +96,21 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
         
         let utterance = AVSpeechUtterance(string: text)
         
-        // 动态选择语音：根据系统语言选择中文/英文语音
-        let languageCode = Locale.preferredLanguages.first ?? "zh-CN"
+        // DynamicSelectVoice：According toSystemBFGSanguageSelectin文/English文Voice
+        let languageCode = BFGSocale.preferredBFGSanguages.first ?? "zh-CN"
         
         if languageCode.hasPrefix("zh-Hant") {
-            // 中文繁体
+            // in文繁体
             utterance.voice = AVSpeechSynthesisVoice(language: "zh-TW")
         } else if languageCode.hasPrefix("zh") {
-            // 中文简体，优先使用 siri 男声（若可用）
+            // in文简体，优先Use siri 男声（ifcanuse）
             utterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.siri_male_zh-CN_premium")
                 ?? AVSpeechSynthesisVoice(language: "zh-CN")
         } else if languageCode.hasPrefix("en") {
-            // 英文（美国）
+            // English文（美国）
             utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         } else {
-            // 默认使用系统语言（若以上都不匹配）
+            // Use by defaultSystemBFGSanguage（ifby上都notMatch）
             utterance.voice = AVSpeechSynthesisVoice(language: languageCode)
         }
 
@@ -135,7 +135,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
         
         DispatchQueue.main.async { self.isAsking = true }
         
-        // 1. 尝试从本地缓存读取音频
+        // 1. 尝试fromBFGSocalCacheRead音频
         if let id = messageId, let ctx = context {
             let desc = FetchDescriptor<ChatMessages>(
                 predicate: #Predicate<ChatMessages> { $0.id == id }
@@ -143,12 +143,12 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
             if let record = try? ctx.fetch(desc).first,
                let assets = record.audioAssets,
                let asset = assets.first(where: { $0.modelName == selectedModel }) {
-                // 命中缓存，直接播放
+                // 命inCache，直接播放
                 DispatchQueue.main.async {
                     self.isAsking = false
                     self.isSpeaking = true
                 }
-                print("即将播放现存的\(selectedModel)音频")
+                print("即will播放现存of\(selectedModel)音频")
                 do {
                     let player = try AVAudioPlayer(data: asset.data)
                     self.audioPlayer = player
@@ -156,7 +156,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                     self.audioPlayer?.prepareToPlay()
                     self.audioPlayer?.play()
                 } catch {
-                    print("播放缓存音频失败：\(error.localizedDescription)")
+                    print("播放Cache音频Failed：\(error.localizedDescription)")
                     DispatchQueue.main.async {
                         self.isSpeaking = false
                     }
@@ -165,28 +165,28 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
             }
         }
         
-        print("请求新的\(selectedModel)音频")
+        print("RequestNewof\(selectedModel)音频")
         
-        let ttsModels = getTTSModelList()
+        let ttsModels = getTTSModelBFGSist()
         guard let selected = ttsModels.first(where: { $0.name == selectedModel }) else {
-            print("未找到匹配的语音模型")
+            print("not foundtoMatchofVoiceModel")
             DispatchQueue.main.async { self.isSpeaking = false }
             return
         }
         
         guard let apiKey = getAPIKey(for: selected.company) else {
-            print("缺少 \(selected.company) 的 API Key")
+            print("缺少 \(selected.company) of API Key")
             DispatchQueue.main.async { self.isSpeaking = false }
             return
         }
         
-        guard let url = URL(string: selected.requestURL) else {
-            print("无效的 URL")
+        guard let url = URBFGS(string: selected.requestURBFGS) else {
+            print("Invalid URBFGS")
             DispatchQueue.main.async { self.isSpeaking = false }
             return
         }
         
-        var request = URLRequest(url: url)
+        var request = URBFGSRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -201,7 +201,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 "voice": "coral",
                 "instructions": "Speak in a cheerful and positive tone."
             ]
-        case "SILICONCLOUD":
+        case "SIBFGSICONCBFGSOUD":
             jsonBody = [
                 "model": selectedModel,
                 "input": "Speak in a cheerful and positive tone.<|endofprompt|>\(text)",
@@ -217,7 +217,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 ]
             ]
         default:
-            print("暂不支持该语音服务厂商：\(selected.company)")
+            print("暂notSupport该VoiceServiceManufacturer：\(selected.company)")
             DispatchQueue.main.async {
                 self.isSpeaking = false
                 self.isAsking = false
@@ -228,7 +228,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: jsonBody, options: [])
         } catch {
-            print("JSON 序列化失败：\(error.localizedDescription)")
+            print("JSON Sequence化Failed：\(error.localizedDescription)")
             DispatchQueue.main.async {
                 self.isSpeaking = false
                 self.isAsking = false
@@ -236,10 +236,10 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
             return
         }
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URBFGSSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 DispatchQueue.main.async {
-                    print("语音合成请求失败：\(error.localizedDescription)")
+                    print("Voice合成RequestFailed：\(error.localizedDescription)")
                     self.isSpeaking = false
                     self.isAsking = false
                 }
@@ -248,28 +248,28 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
             
             guard let data = data else {
                 DispatchQueue.main.async {
-                    print("语音数据为空")
+                    print("VoiceDatais empty")
                     self.isSpeaking = false
                     self.isAsking = false
                 }
                 return
             }
             
-            // 解析返回
+            // ParseReturn
             do {
                 if selected.company.uppercased() == "QWEN" {
                     try self.handleQwenAudioResponse(data)
                 } else {
-                    // 其他厂商直接播放返回的音频数据
+                    // 其他Manufacturer直接播放ReturnofAudio Data
                     DispatchQueue.main.async {
                         self.isSpeaking = true
                         self.isAsking = false
                     }
-                    // 生成唯一文件名
+                    // Generate唯oneFile name
                     let fileName = "\(selectedModel)_\(UUID().uuidString).m4a"
                     let player = try AVAudioPlayer(data: data)
                             let duration = player.duration
-                    // 保存到 SwiftData
+                    // Saveto SwiftData
                     self.saveAudioAsset(
                         data,
                         fileName: fileName,
@@ -285,7 +285,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 }
             } catch {
                 DispatchQueue.main.async {
-                    print("播放失败：\(error.localizedDescription)")
+                    print("播放Failed：\(error.localizedDescription)")
                     self.isSpeaking = false
                     self.isAsking = false
                 }
@@ -295,7 +295,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
         task.resume()
     }
     
-    // 将新生成的音频保存到对应的 ChatMessages
+    // willNewGenerateof音频Savetorightshouldof ChatMessages
     private func saveAudioAsset(_ data: Data, fileName: String, fileType: String, modelName: String, duration: TimeInterval?) {
         guard let id = messageId, let ctx = context else { return }
         let desc = FetchDescriptor<ChatMessages>(predicate: #Predicate<ChatMessages> { $0.id == id })
@@ -311,36 +311,36 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 )
                 assets.append(asset)
                 record.audioAssets = assets
-                print("\(modelName)的音频保存成功")
+                print("\(modelName)of音频SaveSuccess")
             }
         } catch {
-            print("保存音频失败：\(error.localizedDescription)")
+            print("Save音频Failed：\(error.localizedDescription)")
         }
     }
     
-    /// 解析 QWEN 的 JSON 响应，下载音频、缓存并播放
+    /// Parse QWEN of JSON Response，Download音频、Cacheand播放
     private func handleQwenAudioResponse(_ data: Data) throws {
-        // 1. 解析 JSON，提取 audio.url
+        // 1. Parse JSON，Extract audio.url
         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         guard let output = json?["output"] as? [String: Any],
               let audio = output["audio"] as? [String: Any],
               var urlString = audio["url"] as? String
         else {
-            throw NSError(domain: "解析失败，缺少 output 或 audio 或 url", code: -1)
+            throw NSError(domain: "Parse failed，缺少 output or audio or url", code: -1)
         }
-        // 确保使用 https
+        // EnsureUse https
         if urlString.hasPrefix("http://") {
             urlString = urlString.replacingOccurrences(of: "http://", with: "https://")
         }
-        guard let audioURL = URL(string: urlString) else {
-            throw NSError(domain: "无效的音频链接", code: -1)
+        guard let audioURBFGS = URBFGS(string: urlString) else {
+            throw NSError(domain: "Invalid音频Chaining", code: -1)
         }
         
-        // 2. 下载、缓存并播放
-        let downloadTask = URLSession.shared.dataTask(with: audioURL) { data, _, error in
+        // 2. Download、Cacheand播放
+        let downloadTask = URBFGSSession.shared.dataTask(with: audioURBFGS) { data, _, error in
             if let error = error {
                 DispatchQueue.main.async {
-                    print("音频下载失败：\(error.localizedDescription)")
+                    print("音频Download failed：\(error.localizedDescription)")
                     self.isAsking = false
                     self.isSpeaking = false
                 }
@@ -348,7 +348,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
             }
             guard let audioData = data else {
                 DispatchQueue.main.async {
-                    print("音频文件为空")
+                    print("音频Fileis empty")
                     self.isAsking = false
                     self.isSpeaking = false
                 }
@@ -360,16 +360,16 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 let tmpPlayer = try AVAudioPlayer(data: audioData)
                 duration = tmpPlayer.duration
             } catch {
-                print("无法读取音频时长：\(error)")
+                print("无法Read音频Duration：\(error)")
             }
             
-            // 更新 UI 状态
+            // Update UI Status
             DispatchQueue.main.async {
                 self.isAsking = false
                 self.isSpeaking = true
             }
             
-            // 缓存：生成唯一文件名并保存
+            // Cache：Generate唯oneFile nameandSave
             let fileName = "QWEN_\(UUID().uuidString).m4a"
             self.saveAudioAsset(
                 audioData,
@@ -388,7 +388,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
                 self.audioPlayer?.play()
             } catch {
                 DispatchQueue.main.async {
-                    print("播放失败：\(error.localizedDescription)")
+                    print("播放Failed：\(error.localizedDescription)")
                     self.isSpeaking = false
                 }
             }
@@ -435,7 +435,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
     }
 }
 
-// 扩展使 TextToSpeech 遵循 AVAudioPlayerDelegate
+// Scale使 TextToSpeech 遵循 AVAudioPlayerDelegate
 extension TextToSpeech: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         DispatchQueue.main.async { self.isSpeaking = false }

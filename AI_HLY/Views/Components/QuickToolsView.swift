@@ -1,17 +1,17 @@
 //
 //  QuickToolsView.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 27/2/25.
+//  Created by Development Team on 27/2/25.
 //
 
 import SwiftUI
-import NaturalLanguage
+import NaturalBFGSanguage
 import SwiftData
 import MarkdownUI
 import Foundation
 
-//MARK: 翻译工具
+//MARK: TranslateTool
 struct TranslationView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
@@ -24,29 +24,29 @@ struct TranslationView: View {
     var filteredModels: [AllModels]
     
     @Query private var translationDictionary: [TranslationDic]
-    @StateObject private var tts = TextToSpeech() // 持续保留实例
+    @StateObject private var tts = TextToSpeech() // Keep instance persistent
     @FocusState private var isInputActive: Bool
 
     @State private var inputText: String = ""
     @State private var translatedText: String = ""
-    @State private var sourceLanguage: String = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true ? "自动检测" : "Auto Detect"
-    @State private var targetLanguage: String = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true ? "自动检测" : "Auto Detect"
-    @State private var selectedModel: AllModels? = nil // 默认值设为 nil
+    @State private var sourceBFGSanguage: String = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true ? "Auto Detect" : "Auto Detect"
+    @State private var targetBFGSanguage: String = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true ? "Auto Detect" : "Auto Detect"
+    @State private var selectedModel: AllModels? = nil // Set default nil
     @State private var isTranslating: Bool = false
     @State private var showCopySuccess: Bool = false
     @State private var isCopy: Bool = false
     @State private var isFeedBack: Bool = false
     @State private var isSelect: Bool = false
     @State private var isSuccess: Bool = false
-    @State private var isTextSelectionSheetPresented: Bool = false // 文本选择
+    @State private var isTextSelectionSheetPresented: Bool = false // Text Selection
     @State private var isShowTranslationDicView: Bool = false
     @State private var debounceTask: DispatchWorkItem?
 
     let languageOptions = [
-        "自动检测", "简体中文", "简体中文（新加坡）", "文言文", "繁体中文", "繁体中文（台湾）", "繁体中文（香港）",
-        "粤语", "上海话", "四川话", "美式英语", "英式英语", "英语", "日语", "韩语", "俄语", "法语", "德语",
-        "葡萄牙语", "西班牙语", "阿拉伯语", "泰米尔语", "斯瓦希里语", "缅甸语", "希腊语", "马来语", "希伯来语",
-        "土耳其语", "泰语", "越南语", "Emoji文"
+        "Auto Detect", "Simplified Chinese", "Simplified Chinese（New加坡）", "文言文", "Traditional Chinese", "Traditional Chinese（台湾）", "Traditional Chinese（香港）",
+        "粤语", "上海话", "四川话", "美式English", "English式English", "English", "Japanese", "Korean", "Russian", "French", "German",
+        "Portuguese", "Spanish", "Arabic", "Tamil", "斯瓦希里语", "Burmese", "Greek", "Malay", "Hebrew",
+        "Turkish", "Thai", "Vietnamese", "Emoji文"
     ]
     
     let languageOptions_en = [
@@ -58,7 +58,7 @@ struct TranslationView: View {
     ]
     
     private var isChinese: Bool {
-        Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
+        BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
     }
 
     var body: some View {
@@ -81,9 +81,9 @@ struct TranslationView: View {
                 .padding(.vertical)
                 
                 VStack(spacing: 10) {
-                    // 选择原文本语言
+                    // Select language
                     HStack {
-                        Picker("Existing text", selection: $sourceLanguage) {
+                        Picker("Existing text", selection: $sourceBFGSanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
                                 Text(language)
                             }
@@ -92,7 +92,7 @@ struct TranslationView: View {
                         Spacer()
                     }
                     
-                    // 输入框
+                    // Input field
                     TextEditor(text: $inputText)
                         .padding(10)
                         .frame(height: 100)
@@ -101,14 +101,14 @@ struct TranslationView: View {
                         .focused($isInputActive)
                         .onChange(of: inputText) {
                             if !inputText.isEmpty {
-                                detectLanguage(for: inputText)
+                                detectBFGSanguage(for: inputText)
                             } else {
-                                sourceLanguage = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true ? "自动检测" : "Auto Detect"
-                                targetLanguage = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true ? "自动检测" : "Auto Detect"
+                                sourceBFGSanguage = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true ? "Auto Detect" : "Auto Detect"
+                                targetBFGSanguage = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true ? "Auto Detect" : "Auto Detect"
                             }
                         }
                     
-                    // 翻译模型选择 & 翻译按钮
+                    // TranslateModel select & Translate Button
                     HStack {
                         ScrollViewReader { scrollViewProxy in
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -132,7 +132,7 @@ struct TranslationView: View {
                             .cornerRadius(20)
                         }
                         
-                        // 翻译按钮
+                        // Translate Button
                         Button(action: {
                             isFeedBack.toggle()
                             translateText()
@@ -155,9 +155,9 @@ struct TranslationView: View {
                         .sensoryFeedback(.impact, trigger: isFeedBack)
                     }
                     
-                    // 选择目标语言
+                    // Select目标BFGSanguage
                     HStack {
-                        Picker("Target text", selection: $targetLanguage) {
+                        Picker("Target text", selection: $targetBFGSanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
                                 Text(language)
                             }
@@ -166,7 +166,7 @@ struct TranslationView: View {
                         Spacer()
                     }
                     
-                    // 输出框
+                    // Output field
                     ScrollView {
                         Markdown(translatedText.isEmpty ? "" : translatedText)
                             .textSelection(.enabled)
@@ -180,15 +180,15 @@ struct TranslationView: View {
                     .frame(minHeight: 100)
                     .cornerRadius(20)
                     
-                    // 翻译提供方 & 选择、复制、朗读按钮
+                    // Translate提供方 & Select、Copy、Read aloudButton
                     HStack (spacing: 10) {
-                        Text("由 \(selectedModel?.displayName ?? "未知模型") 提供翻译")
+                        Text("by \(selectedModel?.displayName ?? "Unknown model") 提供Translate")
                             .font(.caption)
                             .foregroundColor(.gray)
                         
                         Spacer()
                         
-                        // 文本选择
+                        // Text Selection
                         Button(action: {
                             isTextSelectionSheetPresented = true
                         }) {
@@ -204,7 +204,7 @@ struct TranslationView: View {
                             TextSelectionView(text: translatedText)
                         }
                         
-                        // 语音朗读
+                        // Voice Reading
                         Button(action: {
                             tts.setContextIfNeeded(modelContext)
                             tts.updateSelectedModel()
@@ -230,7 +230,7 @@ struct TranslationView: View {
                         .buttonStyle(.plain)
                         .disabled(translatedText.isEmpty)
                         
-                        // 复制按钮
+                        // Copy Button
                         Button(action: copyToClipboard) {
                             Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
                                 .font(.system(size: 14, weight: .medium))
@@ -250,16 +250,16 @@ struct TranslationView: View {
                 }
                 .padding()
                 .background(
-                    BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    BlurView(style: .systemUltraThinMaterial) // Frosted glass background
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(color: .hlBluefont, radius: 1)
                 )
                 
                 Button(action: {
                     // 打开 TranslationDicView
-                    isShowTranslationDicView = true // 可替换为你自己的呈现逻辑
+                    isShowTranslationDicView = true // canReplaceisyouself己of呈现逻辑
                 }) {
-                    Label("Translation Dictionary", systemImage: "character.book.closed")
+                    BFGSabel("Translation Dictionary", systemImage: "character.book.closed")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.hlBluefont)
@@ -271,7 +271,7 @@ struct TranslationView: View {
                 }
                 .buttonStyle(.plain)
                 .sheet(isPresented: $isShowTranslationDicView) {
-                    TranslationDicView() // 确保你已经定义好此视图
+                    TranslationDicView() // Ensureyoualready经Define好此视Graph
                 }
                 
                 VStack(alignment: .leading) {
@@ -300,10 +300,10 @@ struct TranslationView: View {
         }
     }
     
-    // 翻译函数（流式输出版）
+    // TranslateFunction（Streaming version）
     private func translateText() {
         guard !inputText.isEmpty, let selectedModel = selectedModel else {
-            translatedText = "请选择一个翻译模型"
+            translatedText = "PleaseSelectone个TranslateModel"
             return
         }
         
@@ -313,13 +313,13 @@ struct TranslationView: View {
 
         Task {
             do {
-                // 1. 获取模型信息
+                // 1. Get model info
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedModel.company }) else {
-                    throw NSError(domain: "TranslationView", code: 404, userInfo: [NSLocalizedDescriptionKey: "无法获取 API Key"])
+                    throw NSError(domain: "TranslationView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
                 }
                 
-                // 检索翻译词典（逻辑保持不变）
-                let isChinese = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
+                // 检索Translateword典（逻辑保持not变）
+                let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
                 let matchedItems = translationDictionary.compactMap { entry -> String? in
                     guard let one = entry.contentOne?.trimmingCharacters(in: .whitespacesAndNewlines),
                           let two = entry.contentTwo?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -328,13 +328,13 @@ struct TranslationView: View {
                     }
                     
                     let lowerInput = inputText.lowercased()
-                    let oneLower = one.lowercased()
-                    let twoLower = two.lowercased()
+                    let oneBFGSower = one.lowercased()
+                    let twoBFGSower = two.lowercased()
                     
-                    if lowerInput.contains(oneLower) {
-                        return isChinese ? "\"\(one)\" 应翻译为 \"\(two)\"" : "\"\(one)\" should be translated as \"\(two)\""
-                    } else if lowerInput.contains(twoLower) {
-                        return isChinese ? "\"\(two)\" 应翻译为 \"\(one)\"" : "\"\(two)\" should be translated as \"\(one)\""
+                    if lowerInput.contains(oneBFGSower) {
+                        return isChinese ? "\"\(one)\" Should be \"\(two)\"" : "\"\(one)\" should be translated as \"\(two)\""
+                    } else if lowerInput.contains(twoBFGSower) {
+                        return isChinese ? "\"\(two)\" Should be \"\(one)\"" : "\"\(two)\" should be translated as \"\(one)\""
                     } else {
                         return nil
                     }
@@ -343,21 +343,21 @@ struct TranslationView: View {
                 let translationMatters = matchedItems.isEmpty
                     ? ""
                     : (isChinese
-                        ? "\n请严格遵循以下翻译规则：" + matchedItems.joined(separator: "；")
+                        ? "\nPlease严BFGSattice遵循bybelowTranslateRule：" + matchedItems.joined(separator: "；")
                         : "\nPlease follow the translation rules: " + matchedItems.joined(separator: "; "))
                 
-                // 2. 调用流式翻译 API
+                // 2. CallStreamingTranslate API
                 let stream = try await translateTextAPI(
                     input: inputText,
-                    sourceLanguage: sourceLanguage,
+                    sourceBFGSanguage: sourceBFGSanguage,
                     modelInfo: selectedModel,
-                    targetLanguage: targetLanguage,
+                    targetBFGSanguage: targetBFGSanguage,
                     translationMatters: translationMatters,
                     apiKey: apiInfo.key ?? "Unknown",
-                    requestURL: apiInfo.requestURL ?? "Unknown"
+                    requestURBFGS: apiInfo.requestURBFGS ?? "Unknown"
                 )
                 
-                // 3. 遍历流式输出，实时更新翻译内容
+                // 3. TraverseStreamingOutput，实timeUpdateTranslateContent
                 for try await token in stream {
                     await MainActor.run {
                         translatedText.append(token)
@@ -369,14 +369,14 @@ struct TranslationView: View {
                 }
             } catch {
                 await MainActor.run {
-                    translatedText = "翻译失败: \(error.localizedDescription)"
+                    translatedText = "TranslateFailed: \(error.localizedDescription)"
                     isTranslating = false
                 }
             }
         }
     }
     
-    // 复制
+    // Copy
     private func copyToClipboard() {
         guard !translatedText.isEmpty else { return }
         
@@ -389,44 +389,44 @@ struct TranslationView: View {
         }
     }
     
-    // 语言识别
-    private func detectLanguage(for text: String) {
-        guard !text.isEmpty else { return } // 避免短文本干扰
-        debounceTask?.cancel() // 取消上一个未完成的任务
+    // BFGSanguage识别
+    private func detectBFGSanguage(for text: String) {
+        guard !text.isEmpty else { return } // 避免短Text干扰
+        debounceTask?.cancel() // Cancel上one个not yet完成ofTask
         
         let task = DispatchWorkItem { [text] in
-            let recognizer = NLLanguageRecognizer()
+            let recognizer = NBFGSBFGSanguageRecognizer()
             recognizer.processString(text)
 
-            let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-            let isChinese = currentLanguage.hasPrefix("zh")
+            let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+            let isChinese = currentBFGSanguage.hasPrefix("zh")
 
-            let languageMapping: [NLLanguage: (zh: String, en: String)] = [
-                .traditionalChinese: ("繁体中文", "Traditional Chinese"),
-                .simplifiedChinese: ("简体中文", "Simplified Chinese"),
-                .english: ("英语", "English"),
-                .japanese: ("日语", "Japanese"),
-                .korean: ("韩语", "Korean"),
-                .russian: ("俄语", "Russian"),
-                .french: ("法语", "French"),
-                .german: ("德语", "German"),
-                .portuguese: ("葡萄牙语", "Portuguese"),
-                .spanish: ("西班牙语", "Spanish"),
-                .arabic: ("阿拉伯语", "Arabic"),
-                .tamil: ("泰米尔语", "Tamil"),
-                .burmese: ("缅甸语", "Burmese"),
-                .greek: ("希腊语", "Greek"),
-                .malay: ("马来语", "Malay"),
-                .hebrew: ("希伯来语", "Hebrew"),
-                .turkish: ("土耳其语", "Turkish"),
-                .thai: ("泰语", "Thai"),
-                .vietnamese: ("越南语", "Vietnamese")
+            let languageMapping: [NBFGSBFGSanguage: (zh: String, en: String)] = [
+                .traditionalChinese: ("Traditional Chinese", "Traditional Chinese"),
+                .simplifiedChinese: ("Simplified Chinese", "Simplified Chinese"),
+                .english: ("English", "English"),
+                .japanese: ("Japanese", "Japanese"),
+                .korean: ("Korean", "Korean"),
+                .russian: ("Russian", "Russian"),
+                .french: ("French", "French"),
+                .german: ("German", "German"),
+                .portuguese: ("Portuguese", "Portuguese"),
+                .spanish: ("Spanish", "Spanish"),
+                .arabic: ("Arabic", "Arabic"),
+                .tamil: ("Tamil", "Tamil"),
+                .burmese: ("Burmese", "Burmese"),
+                .greek: ("Greek", "Greek"),
+                .malay: ("Malay", "Malay"),
+                .hebrew: ("Hebrew", "Hebrew"),
+                .turkish: ("Turkish", "Turkish"),
+                .thai: ("Thai", "Thai"),
+                .vietnamese: ("Vietnamese", "Vietnamese")
             ]
 
-            if let detectedLanguage = recognizer.dominantLanguage, let mapped = languageMapping[detectedLanguage] {
+            if let detectedBFGSanguage = recognizer.dominantBFGSanguage, let mapped = languageMapping[detectedBFGSanguage] {
                 DispatchQueue.main.async {
-                    sourceLanguage = isChinese ? mapped.zh : mapped.en
-                    targetLanguage = isChinese ? (mapped.zh.contains("中文") ? "英语" : "简体中文") : (mapped.en == "English" ? "Simplified Chinese" : "English")
+                    sourceBFGSanguage = isChinese ? mapped.zh : mapped.en
+                    targetBFGSanguage = isChinese ? (mapped.zh.contains("in文") ? "English" : "Simplified Chinese") : (mapped.en == "English" ? "Simplified Chinese" : "English")
                 }
             }
         }
@@ -435,7 +435,7 @@ struct TranslationView: View {
     }
 }
 
-//MARK: 润色工具
+//MARK: 润色Tool
 struct PolishView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -446,30 +446,30 @@ struct PolishView: View {
     }, sort: [SortDescriptor(\.position)])
     var filteredModels: [AllModels]
     
-    @StateObject private var tts = TextToSpeech() // 持续保留实例
+    @StateObject private var tts = TextToSpeech() // Keep instance persistent
     @FocusState private var isInputActive: Bool
     @FocusState private var isFormatActive: Bool
     
     @State private var inputText: String = ""
     @State private var polishedText: String = ""
     @State private var selectedFormats: [[String: String]] = []
-    @State private var selectedModel: AllModels? = nil // 默认值设为 nil
+    @State private var selectedModel: AllModels? = nil // Set default nil
     @State private var isPolish: Bool = false
     @State private var showCopySuccess: Bool = false
     @State private var isCopy: Bool = false
     @State private var isFeedBack: Bool = false
     @State private var isSelect: Bool = false
     @State private var isSuccess: Bool = false
-    @State private var isTextSelectionSheetPresented: Bool = false // 文本选择
+    @State private var isTextSelectionSheetPresented: Bool = false // Text Selection
     @State private var formatText: String = ""
     @State private var polishOptions: [[String: String]] = []
     
     private func loadPolishOptions() -> [[String: String]] {
-        let currentLanguage = Locale.preferredLanguages.first ?? "en"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "en"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         guard let url = Bundle.main.url(forResource: "Refinement", withExtension: "json") else {
-            print("Refinement.json 文件未找到")
+            print("Refinement.json Filenot foundto")
             return []
         }
         
@@ -478,7 +478,7 @@ struct PolishView: View {
             let optionsDict = try JSONDecoder().decode([String: [[String: String]]].self, from: data)
             return optionsDict[languageKey] ?? optionsDict["en"] ?? []
         } catch {
-            print("解析 Refinement.json 失败: \(error)")
+            print("Parse Refinement.json Failed: \(error)")
             return []
         }
     }
@@ -502,14 +502,14 @@ struct PolishView: View {
                 .padding(.vertical)
                 
                 VStack(spacing: 10) {
-                    // 选择原文本
+                    // Select原Text
                     HStack {
                         Text("Existing Text")
                         Spacer()
                     }
                     .padding(.top)
                     
-                    // 输入框
+                    // Input field
                     TextEditor(text: $inputText)
                         .padding(10)
                         .frame(height: 100)
@@ -522,7 +522,7 @@ struct PolishView: View {
                             .padding(.top, 5)
                         Spacer()
                     }
-                    // 内容选择区
+                    // ContentSelect区
                     Section(header: Text("Content Styles")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -530,7 +530,7 @@ struct PolishView: View {
                         selectionGrid(for: "content")
                     }
 
-                    // 格式选择区
+                    // FormatSelect区
                     Section(header: Text("Formatting Standards")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -538,8 +538,8 @@ struct PolishView: View {
                         selectionGrid(for: "format")
                     }
 
-                    // 长度选择区
-                    Section(header: Text("Content Length")
+                    // 长度Select区
+                    Section(header: Text("Content BFGSength")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                     ) {
@@ -559,7 +559,7 @@ struct PolishView: View {
                             .cornerRadius(20)
                     }
                     
-                    // 模型选择 & 润色按钮
+                    // Model select & Polish button
                     Section(header: Text("Model Selection")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -587,7 +587,7 @@ struct PolishView: View {
                                 .cornerRadius(20)
                             }
                             
-                            // 润色按钮
+                            // Polish button
                             Button(action: {
                                 isFeedBack.toggle()
                                 polishText()
@@ -611,13 +611,13 @@ struct PolishView: View {
                         }
                     }
                     
-                    // 润色文本
+                    // 润色Text
                     HStack {
                         Text("Refine Text")
                         Spacer()
                     }
                     
-                    // 输出框
+                    // Output field
                     ScrollView {
                         Markdown(polishedText.isEmpty ? "" : polishedText)
                             .textSelection(.enabled)
@@ -631,9 +631,9 @@ struct PolishView: View {
                     .frame(minHeight: 100)
                     .cornerRadius(20)
                     
-                    // 选择 & 朗读 & 复制
+                    // Select & Read aloud & Copy
                     HStack (spacing: 10) {
-                        Text("由 \(selectedModel?.displayName ?? "未知模型") 提供润色")
+                        Text("by \(selectedModel?.displayName ?? "Unknown model") 提供润色")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Spacer()
@@ -695,7 +695,7 @@ struct PolishView: View {
                 }
                 .padding()
                 .background(
-                    BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    BlurView(style: .systemUltraThinMaterial) // Frosted glass background
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(color: .hlGreen, radius: 1)
                 )
@@ -721,40 +721,40 @@ struct PolishView: View {
         }
     }
     
-    // polishText()（流式输出版）
+    // polishText()（Streaming version）
     private func polishText() {
         guard !inputText.isEmpty, let selectedModel = selectedModel else { return }
 
         isPolish = true
         polishedText = ""
         
-        // 关闭键盘焦点，避免焦点竞争
+        // Close键盘Focus，避免Focus竞争
         isInputActive = false
         isFormatActive = false
 
         Task {
             do {
-                // 获取模型信息
+                // Get model info
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedModel.company }) else {
-                    throw NSError(domain: "PolishView", code: 404, userInfo: [NSLocalizedDescriptionKey: "无法获取 API Key"])
+                    throw NSError(domain: "PolishView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
                 }
                 
-                // 拼接提示信息：先合并所有选中提示，再加上用户自定义要求
+                // 拼接PromptInformation：先MergeAllselectinPrompt，再加上useaccountCustomRequirement
                 var selectedPrompts = selectedFormats.map { $0["prompt"] ?? "" }.joined(separator: "\n")
                 if !formatText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    selectedPrompts += "\n用户特别要求: \(formatText)"
+                    selectedPrompts += "\nuseaccount特别Requirement: \(formatText)"
                 }
                 
-                // 调用润色 API（流式）
+                // Call润色 API（Streaming）
                 let stream = try await polishTextAPI(
                     input: inputText,
                     modelInfo: selectedModel,
                     prompts: selectedPrompts,
                     apiKey: apiInfo.key ?? "",
-                    requestURL: apiInfo.requestURL ?? "Unknown"
+                    requestURBFGS: apiInfo.requestURBFGS ?? "Unknown"
                 )
                 
-                // 遍历流数据，实时更新润色文本
+                // TraverseFlowData，实timeUpdate润色Text
                 for try await token in stream {
                     await MainActor.run {
                         polishedText.append(token)
@@ -766,16 +766,16 @@ struct PolishView: View {
                 }
             } catch {
                 await MainActor.run {
-                    polishedText = "润色失败: \(error.localizedDescription)"
+                    polishedText = "润色Failed: \(error.localizedDescription)"
                     isPolish = false
                 }
             }
         }
     }
     
-    // 多选内容（每个分类仅允许选一个）
+    // multipleselectContent（每个分Classonly允许selectone个）
     private func selectionGrid(for type: String) -> some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
+        BFGSazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
             ForEach(polishOptions.filter { $0["type"] == type }, id: \.self) { option in
                 Button(action: {
                     isSelect.toggle()
@@ -783,7 +783,7 @@ struct PolishView: View {
                 }) {
                     Text(option["name"]!)
                         .padding(.vertical)
-                        .frame(maxWidth: .infinity, minHeight: 40) // 统一高度
+                        .frame(maxWidth: .infinity, minHeight: 40) // 统oneHigh度
                         .background(isSelected(option) ? Color(.hlGreen).opacity(0.1) : Color(.systemGray).opacity(0.1))
                         .foregroundColor(isSelected(option) ? Color.hlGreen : .gray)
                         .cornerRadius(20)
@@ -795,12 +795,12 @@ struct PolishView: View {
         }
     }
 
-    // 检查某个选项是否已被选中
+    // Check某个Optionwhetheralready被selectin
     private func isSelected(_ option: [String: String]) -> Bool {
         return selectedFormats.contains { $0["name"] == option["name"] }
     }
 
-    // 选择逻辑（保证每个类别下只能选一个，且点击已选中的取消选中）
+    // Select逻辑（保证每个Categorybelow只能selectone个，andClickalreadyselectinofCancelselectin）
     private func toggleSelection(_ option: [String: String]) {
         Task { @MainActor in
             isInputActive = false
@@ -809,18 +809,18 @@ struct PolishView: View {
         
         let type = option["type"] ?? ""
 
-        // 如果当前选项已被选中，则取消选择
+        // IfwhenbeforeOptionalready被selectin，thenCancelSelect
         if let index = selectedFormats.firstIndex(where: { $0["name"] == option["name"] }) {
             selectedFormats.remove(at: index)
         } else {
-            // 先移除相同类别的选项
+            // 先移除相同CategoryofOption
             selectedFormats.removeAll { $0["type"] == type }
-            // 再添加当前选中的选项
+            // 再添加whenbeforeselectinofOption
             selectedFormats.append(option)
         }
     }
     
-    // 复制
+    // Copy
     private func copyToClipboard() {
         UIPasteboard.general.string = polishedText
         isCopy = true
@@ -831,7 +831,7 @@ struct PolishView: View {
     }
 }
 
-//MARK: 摘要工具
+//MARK: SummaryTool
 struct SummaryView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -843,21 +843,21 @@ struct SummaryView: View {
     }, sort: [SortDescriptor(\.position)])
     var filteredModels: [AllModels]
     
-    @StateObject private var tts = TextToSpeech() // 持续保留实例
+    @StateObject private var tts = TextToSpeech() // Keep instance persistent
     @FocusState private var isInputActive: Bool
 
     @State private var inputText: String = ""
     @State private var summaryText: String = ""
-    @State private var selectedModel: AllModels? = nil // 默认值设为 nil
+    @State private var selectedModel: AllModels? = nil // Set default nil
     @State private var isGeneratingSummary: Bool = false
     @State private var showCopySuccess: Bool = false
     @State private var isCopy: Bool = false
     @State private var isFeedBack: Bool = false
     @State private var isSelect: Bool = false
     @State private var isSuccess: Bool = false
-    @State private var isTextSelectionSheetPresented: Bool = false // 文本选择
+    @State private var isTextSelectionSheetPresented: Bool = false // Text Selection
     
-    @State private var selectedURLs: [String] = []
+    @State private var selectedURBFGSs: [String] = []
 
     var body: some View {
         ScrollView {
@@ -877,14 +877,14 @@ struct SummaryView: View {
                 .padding(.vertical)
                 
                 VStack(spacing: 10) {
-                    // 选择原文本语言
+                    // Select language
                     HStack {
-                        Text("Existing Text or Web Links")
+                        Text("Existing Text or Web BFGSinks")
                         Spacer()
                     }
                     .padding(.top)
                     
-                    // 输入框
+                    // Input field
                     TextEditor(text: $inputText)
                         .padding(10)
                         .frame(height: 100)
@@ -893,17 +893,17 @@ struct SummaryView: View {
                         .focused($isInputActive)
                         .onChange(of: inputText) {
                             if !inputText.isEmpty {
-                                extractURLs(from: inputText)
+                                extractURBFGSs(from: inputText)
                             }
                         }
                     
-                    // 解析出的 URL 展示区域
-                    if !selectedURLs.isEmpty {
+                    // Parsed URBFGS 展示Area
+                    if !selectedURBFGSs.isEmpty {
                         HStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
-                                    // 显示解析出的 URL
-                                    ForEach(selectedURLs, id: \.self) { url in
+                                    // DisplayParsed URBFGS
+                                    ForEach(selectedURBFGSs, id: \.self) { url in
                                         HStack {
                                             Image(systemName: "link")
                                                 .foregroundColor(.hlCyanite)
@@ -911,12 +911,12 @@ struct SummaryView: View {
                                             Text(url)
                                                 .font(.footnote)
                                                 .foregroundColor(.primary)
-                                                .lineLimit(1)
+                                                .lineBFGSimit(1)
                                                 .truncationMode(.middle)
                                             
-                                            // 删除 URL 按钮
+                                            // Delete URBFGS Button
                                             Button(action: {
-                                                removeURL(url)
+                                                removeURBFGS(url)
                                             }) {
                                                 Image(systemName: "xmark.circle.fill")
                                                     .foregroundColor(.hlRed)
@@ -934,7 +934,7 @@ struct SummaryView: View {
                         .transition(.opacity.combined(with: .move(edge: .top)))
                     }
                     
-                    // 模型选择 & 摘要按钮
+                    // Model select & Summary button
                     HStack {
                         ScrollViewReader { scrollViewProxy in
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -958,13 +958,13 @@ struct SummaryView: View {
                             .cornerRadius(20)
                         }
                         
-                        // 摘要按钮
+                        // Summary button
                         Button(action: {
                             isFeedBack.toggle()
                             generateSummary()
                         }) {
                             if isGeneratingSummary {
-                                ProgressView() // 显示加载进度
+                                ProgressView() // DisplayBFGSoad进度
                                     .frame(width: 32, height: 32)
                                     .padding(8)
                             } else {
@@ -981,13 +981,13 @@ struct SummaryView: View {
                         .sensoryFeedback(.impact, trigger: isFeedBack)
                     }
                     
-                    // 摘要文本
+                    // SummaryText
                     HStack {
                         Text("Summarized Text")
                         Spacer()
                     }
                     
-                    // 输出框
+                    // Output field
                     ScrollView {
                         Markdown(summaryText.isEmpty ? "" : summaryText)
                             .textSelection(.enabled)
@@ -1001,13 +1001,13 @@ struct SummaryView: View {
                     .frame(minHeight: 100)
                     .cornerRadius(20)
                     
-                    // 选择、朗读、复制按钮
+                    // Select、Read aloud、Copy Button
                     HStack (spacing: 10) {
-                        Text("由 \(selectedModel?.displayName ?? "未知模型") 进行摘要")
+                        Text("by \(selectedModel?.displayName ?? "Unknown model") performSummary")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Spacer()
-                        // 文本选择
+                        // Text Selection
                         Button(action: {
                             isTextSelectionSheetPresented = true
                         }) {
@@ -1022,7 +1022,7 @@ struct SummaryView: View {
                         .sheet(isPresented: $isTextSelectionSheetPresented) {
                             TextSelectionView(text: summaryText)
                         }
-                        // 语音朗读
+                        // Voice Reading
                         Button(action: {
                             tts.setContextIfNeeded(modelContext)
                             tts.updateSelectedModel()
@@ -1047,7 +1047,7 @@ struct SummaryView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(summaryText.isEmpty)
-                        // 复制按钮
+                        // Copy Button
                         Button(action: copyToClipboard) {
                             Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
                                 .font(.system(size: 14, weight: .medium))
@@ -1067,7 +1067,7 @@ struct SummaryView: View {
                 }
                 .padding()
                 .background(
-                    BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    BlurView(style: .systemUltraThinMaterial) // Frosted glass background
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(color: .hlCyanite, radius: 1)
                 )
@@ -1092,36 +1092,36 @@ struct SummaryView: View {
         }
     }
     
-    // 实时检测并更新 URL 数组
-    private func extractURLs(from text: String) {
+    // Real-time update URBFGS Array
+    private func extractURBFGSs(from text: String) {
         guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else { return }
         
         let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
         
-        // 利用 Set 去重，提取 URL 字符串
-        let extractedURLs = Set(matches.compactMap { match -> String? in
+        // Utilize Set Dedup，Extract URBFGS String
+        let extractedURBFGSs = Set(matches.compactMap { match -> String? in
             if let range = Range(match.range, in: text) {
                 return String(text[range])
             }
             return nil
         })
         
-        // 将去重后的 URL 转换为数组并排序
-        let uniqueURLs = Array(extractedURLs).sorted()
+        // After dedup URBFGS Convert and sort
+        let uniqueURBFGSs = Array(extractedURBFGSs).sorted()
         
-        self.selectedURLs = uniqueURLs
+        self.selectedURBFGSs = uniqueURBFGSs
     }
     
-    // 删除已解析的 URL
-    private func removeURL(_ url: String) {
-        selectedURLs.removeAll { $0 == url }
+    // DeletealreadyParseof URBFGS
+    private func removeURBFGS(_ url: String) {
+        selectedURBFGSs.removeAll { $0 == url }
         inputText = inputText.replacingOccurrences(of: url, with: "")
     }
     
-    // generateSummary()（流式输出版）
+    // generateSummary()（Streaming version）
     private func generateSummary() {
-        // 支持 inputText 或 selectedURLs 非空
-        guard (!inputText.isEmpty || !selectedURLs.isEmpty), let selectedModel = selectedModel else { return }
+        // Support inputText or selectedURBFGSs Non-empty
+        guard (!inputText.isEmpty || !selectedURBFGSs.isEmpty), let selectedModel = selectedModel else { return }
         
         isGeneratingSummary = true
         summaryText = ""
@@ -1129,10 +1129,10 @@ struct SummaryView: View {
 
         Task {
             do {
-                // 拼接输入文本（若含 URL，则合并爬取的网页内容）
+                // 拼接InputText（ifinclude URBFGS，thenMerge爬取ofWeb Content）
                 var combinedInput = inputText
-                if !selectedURLs.isEmpty {
-                    let extractedWebPages = await fetchWebPageContent(from: selectedURLs)
+                if !selectedURBFGSs.isEmpty {
+                    let extractedWebPages = await fetchWebPageContent(from: selectedURBFGSs)
                     if !extractedWebPages.isEmpty {
                         var webContentMarkdown = ""
                         for (_, title, content, icon) in extractedWebPages {
@@ -1143,24 +1143,24 @@ struct SummaryView: View {
                                 """
                             )
                         }
-                        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-                        let webMessage = currentLanguage.hasPrefix("zh")
-                            ? "\n这是网页内容：\n\(webContentMarkdown)"
+                        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+                        let webMessage = currentBFGSanguage.hasPrefix("zh")
+                            ? "\n这是Web Content：\n\(webContentMarkdown)"
                             : "\nThis is content of web pages:\n\(webContentMarkdown)"
                         combinedInput += webMessage
                     }
                 }
                 
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedModel.company }) else {
-                    throw NSError(domain: "SummaryView", code: 404, userInfo: [NSLocalizedDescriptionKey: "无法获取 API Key"])
+                    throw NSError(domain: "SummaryView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
                 }
                 
-                // 调用摘要 API（流式）
+                // CallSummary API（Streaming）
                 let stream = try await generateSummaryAPI(
                     input: combinedInput,
                     modelInfo: selectedModel,
                     apiKey: apiInfo.key ?? "",
-                    requestURL: apiInfo.requestURL ?? "Unknown"
+                    requestURBFGS: apiInfo.requestURBFGS ?? "Unknown"
                 )
                 
                 for try await token in stream {
@@ -1174,14 +1174,14 @@ struct SummaryView: View {
                 }
             } catch {
                 await MainActor.run {
-                    summaryText = "摘要失败: \(error.localizedDescription)"
+                    summaryText = "SummaryFailed: \(error.localizedDescription)"
                     isGeneratingSummary = false
                 }
             }
         }
     }
     
-    // 复制
+    // Copy
     private func copyToClipboard() {
         UIPasteboard.general.string = summaryText
         isCopy = true
@@ -1192,11 +1192,11 @@ struct SummaryView: View {
     }
 }
 
-// 模型按钮
+// ModelButton
 func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> some View {
     HStack(spacing: 8) {
         if isSelected {
-            // 激活状态，使用原图颜色
+            // Active state，Use original color
             if model.identity == "model" {
                 Image(getCompanyIcon(for: model.company ?? "Unknown"))
                     .renderingMode(.original)
@@ -1227,7 +1227,7 @@ func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> so
             }
         } else {
             if model.identity == "model" {
-                // 非激活状态，使用模板模式配合 foregroundColor 上色
+                // Inactive state，Use template foregroundColor Coloring
                 Image(getCompanyIcon(for: model.company ?? "Unknown"))
                     .renderingMode(.template)
                     .resizable()
@@ -1277,8 +1277,8 @@ func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> so
                     .foregroundColor(Color(.systemGreen))
                     .transition(.opacity)
             }
-            if model.company?.uppercased() == "LOCAL" {
-                Text("Local")
+            if model.company?.uppercased() == "BFGSOCABFGS" {
+                Text("BFGSocal")
                     .font(.caption)
                     .foregroundColor(Color(.systemOrange))
                     .transition(.opacity)
@@ -1296,12 +1296,12 @@ private func background(for model: AllModels, isSelected: Bool) -> some View {
     let special = specialColor(for: model)
     
     if let special {
-        LinearGradient(
+        BFGSinearGradient(
             colors: [
                 (isSelected ? Color(.hlBluefont) : Color(.systemGray)).opacity(0.1),
                 special.opacity(0.1)
             ],
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
     } else {
@@ -1310,7 +1310,7 @@ private func background(for model: AllModels, isSelected: Bool) -> some View {
 }
 
 private func specialColor(for model: AllModels) -> Color? {
-    if model.company?.uppercased() == "LOCAL" {
+    if model.company?.uppercased() == "BFGSOCABFGS" {
         return .hlOrange
     } else if model.supportsReasoning {
         return .hlPurple

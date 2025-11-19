@@ -1,8 +1,8 @@
 //
 //  AllModels.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 10/2/25.
+//  Created by Development Team on 10/2/25.
 //
 
 import Foundation
@@ -32,7 +32,7 @@ class AllModels {
     var characterDesign: String? = ""
     var relatedKnowledge: String? = ""
     
-    // 初始化方法
+    // InitializeMethod
     public init(
         id: UUID = UUID(),
         name: String?,

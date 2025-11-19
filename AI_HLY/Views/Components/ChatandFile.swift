@@ -2,20 +2,20 @@
 //  ChatSavetoFile.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 19/3/25.
+//  Created by Development Team on 19/3/25.
 //
 
 import SwiftUI
 import UniformTypeIdentifiers
 
-// MARK: - 导出格式枚举（仅支持 txt 和 json）
+// MARK: - ExportFormatEnumeration（onlySupport txt and json）
 enum ExportFormat: String, CaseIterable, Identifiable {
     case txt = "Plain Text (.txt)"
-    case json = "JSON文件 (.json)"
+    case json = "JSONFile (.json)"
     
     var id: String { rawValue }
     
-    /// 对应系统的 UTType
+    /// rightshouldSystemof UTType
     var utType: UTType {
         switch self {
         case .txt:
@@ -27,9 +27,9 @@ enum ExportFormat: String, CaseIterable, Identifiable {
 }
 
 
-// MARK: - 文件文档结构
+// MARK: - FileDocumentationStruct
 struct ChatExportDocument: FileDocument {
-    // 声明可读写 plainText 和 json
+    // Declarecan读写 plainText and json
     static var readableContentTypes: [UTType] = [.plainText, .json]
     
     var text: String
@@ -39,7 +39,7 @@ struct ChatExportDocument: FileDocument {
     }
 
     init(configuration: ReadConfiguration) throws {
-        // 读取文件内容（仅为完整性，实际不会用到读取）
+        // ReadDocument Content（onlyComplete性，实际not会usetoRead）
         text = String(decoding: configuration.file.regularFileContents ?? Data(), as: UTF8.self)
     }
 
@@ -57,10 +57,10 @@ struct ExportMessage: Codable {
 struct ExportContentItem: Codable {
     let type: String
     let text: String?
-    let image_url: ImageURLItem?
+    let image_url: ImageURBFGSItem?
 }
 
-struct ImageURLItem: Codable {
+struct ImageURBFGSItem: Codable {
     let url: String
 }
 

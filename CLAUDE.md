@@ -42,7 +42,7 @@ This project currently uses manual testing on devices/simulators. No formal XCTe
 ```
 ┌─────────────────────────────────┐
 │   UI Layer (SwiftUI Views)      │
-│   ChatView, VisionView, etc.    │
+│   ChatView, KnowledgeListView, ModelsView, etc. │
 ├─────────────────────────────────┤
 │   Service Layer                 │
 │   APIManager, Tools, Services   │
@@ -56,11 +56,10 @@ This project currently uses manual testing on devices/simulators. No formal XCTe
 
 **Application Entry:**
 - [AI_HLY.swift](AI_HLY/AI_HLY.swift) - App entry point, SwiftData container setup, CloudKit configuration
-- [MainTabView.swift](AI_HLY/MainTabView.swift) - Five-tab navigation (Chat, List, Vision, Knowledge, Models, Settings), deep linking handler
+- [MainTabView.swift](AI_HLY/MainTabView.swift) - Four-tab navigation (List, Knowledge, Models, Settings)
 
 **Main Views (Large Files):**
 - [ChatView.swift](AI_HLY/ChatView.swift) (~179KB) - Main chat interface with streaming responses, tool result display
-- [VisionView.swift](AI_HLY/VisionView.swift) (~49KB) - Camera system, image analysis, OCR functionality
 - [KnowledgeListView.swift](AI_HLY/KnowledgeListView.swift) - Knowledge base management UI
 - [ModelsView.swift](AI_HLY/ModelsView.swift) - AI model catalog and selection
 - [SettingsView.swift](AI_HLY/SettingsView.swift) - Settings hub
@@ -154,9 +153,7 @@ Knowledge base workflow:
 5. Top-K chunks injected into conversation context
 
 ### 6. Deep Linking
-- URL scheme: `AI-Hanlin://`
-- Handled in `MainTabView.swift` via `.onOpenURL` modifier
-- Supports navigation to specific tabs and VisionView OCR functionality
+- Vision tab deep links and the `AI-Hanlin://` scheme were removed along with the vision flow, so no `onOpenURL` handler remains
 
 ## Development Guidelines
 
@@ -209,12 +206,6 @@ Knowledge base workflow:
 2. Verify `StreamData` struct is properly updated
 3. Test with different models/providers to isolate issue
 4. Check network logs in Console app for raw API responses
-
-### Testing Vision Features
-1. Run on physical device (camera required)
-2. Test with VisionView tab
-3. Verify multi-modal model support in `AllModels`
-4. Check image preprocessing in `VisionAPI.swift`
 
 ### Updating Model Capabilities
 1. Modify model definitions in `AllModels.swift` preload section

@@ -2,7 +2,7 @@
 //  SystemOptimizer.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 3/4/25.
+//  Created by Development Team on 3/4/25.
 //
 
 import Foundation
@@ -16,64 +16,64 @@ class SystemOptimizer {
         self.context = context
     }
     
-    /// 封装从数据库查询 API 配置和模型信息
-    /// - Parameter isVisual: 是否为视觉（多模态）模型
-    /// - Returns: (模型名称, 模型所属厂商, API Key, 请求 URL)
-    private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URL) {
-        print("[SystemOptimizer] 开始获取API配置，isVisual: \(isVisual)")
+    /// EncapsulationfromDatalibraryQuery API ConfigurationandModelInformation
+    /// - Parameter isVisual: whetherisVision（Multi-modal）Model
+    /// - Returns: (Model Name, Model vendor, API Key, Request URBFGS)
+    private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URBFGS) {
+        print("[SystemOptimizer] StartGetAPIConfiguration，isVisual: \(isVisual)")
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
         let user = try context.fetch(userFetchDescriptor).first
         
         let defaultModel = isVisual ? "glm-4v-flash_hanlin" : "glm-4.5-flash_hanlin"
         let optimizationModelName: String = isVisual ? (user?.optimizationVisualModel ?? defaultModel)
         : (user?.optimizationTextModel ?? defaultModel)
-        print("[SystemOptimizer] 使用模型：\(optimizationModelName)")
+        print("[SystemOptimizer] UseModel：\(optimizationModelName)")
 
-        // 查询模型信息，获取厂商
+        // QueryModelInformation，GetManufacturer
         let modelPredicate = #Predicate<AllModels> { $0.name == optimizationModelName }
         let modelFetch = FetchDescriptor<AllModels>(predicate: modelPredicate)
         guard let modelEntry = try context.fetch(modelFetch).first,
               let modelCompany = modelEntry.company else {
-            print("[SystemOptimizer] 错误：未能找到模型 \(optimizationModelName)")
+            print("[SystemOptimizer] Error：not yet能findtoModel \(optimizationModelName)")
             throw NSError(domain: "ModelNotFound", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取模型信息: \(optimizationModelName)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "not yet能fromDatalibraryinGet model info: \(optimizationModelName)"])
         }
-        print("[SystemOptimizer] 模型厂商：\(modelCompany)")
+        print("[SystemOptimizer] ModelManufacturer：\(modelCompany)")
         
-        // 查询 API 配置
+        // Query API Configuration
         let apiKeyPredicate = #Predicate<APIKeys> { ($0.company ?? "") == modelCompany }
         let apiKeyFetch = FetchDescriptor<APIKeys>(predicate: apiKeyPredicate)
         guard let apiKeyObj = try context.fetch(apiKeyFetch).first else {
-            print("[SystemOptimizer] 错误：未能找到厂商 \(modelCompany) 的API密钥配置")
+            print("[SystemOptimizer] Error：not yet能findtoManufacturer \(modelCompany) ofAPIKey config")
             throw NSError(domain: "APIConfigError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取厂商 \(modelCompany) 的API配置"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "not yet能fromDatalibraryinGetManufacturer \(modelCompany) ofAPIConfiguration"])
         }
 
         guard let apiKey = apiKeyObj.key, !apiKey.isEmpty else {
-            print("[SystemOptimizer] 错误：厂商 \(modelCompany) 的API密钥为空")
+            print("[SystemOptimizer] Error：Manufacturer \(modelCompany) ofAPIKeyis empty")
             throw NSError(domain: "APIConfigError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "厂商 \(modelCompany) 的API密钥未配置或为空"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Manufacturer \(modelCompany) ofAPIKeynot yetConfigurationoris empty"])
         }
 
-        guard let requestURLString = apiKeyObj.requestURL,
-              let url = URL(string: requestURLString) else {
-            print("[SystemOptimizer] 错误：厂商 \(modelCompany) 的请求URL无效: \(apiKeyObj.requestURL ?? "nil")")
+        guard let requestURBFGSString = apiKeyObj.requestURBFGS,
+              let url = URBFGS(string: requestURBFGSString) else {
+            print("[SystemOptimizer] Error：Manufacturer \(modelCompany) requestURBFGSInvalid: \(apiKeyObj.requestURBFGS ?? "nil")")
             throw NSError(domain: "APIConfigError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "厂商 \(modelCompany) 的请求URL无效"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Manufacturer \(modelCompany) requestURBFGSInvalid"])
         }
 
-        print("[SystemOptimizer] API配置获取成功 - URL: \(requestURLString)")
+        print("[SystemOptimizer] APIConfigurationGetSuccess - URBFGS: \(requestURBFGSString)")
         return (optimizationModelName, modelCompany, apiKey, url)
     }
     
-    /// 根据图片数组构造多模态请求中的图片消息（适配不同厂商）
+    /// According toImage arrayConstructMulti-modalRequestinofImageMessage（Adapt to different vendors）
     /// - Parameters:
-    ///   - images: 图片数组
-    ///   - role: 消息角色（例如 "user"）
-    ///   - company: 模型所属厂商
-    ///   - modelName: 模型名称，用于检查基础模型（如 "glm-4v-flash"）
-    ///   - languageIsChinese: 是否为中文环境
-    /// - Returns: 图片消息数组
+    ///   - images: Image array
+    ///   - role: MessageRole（For example "user"）
+    ///   - company: Model vendor
+    ///   - modelName: Model Name，useatCheck基础Model（such as "glm-4v-flash"）
+    ///   - languageIsChinese: whetherisin文Environment
+    /// - Returns: ImageMessageArray
     private func buildImageMessages(from images: [UIImage],
                                     role: String,
                                     company: String,
@@ -84,9 +84,9 @@ class SystemOptimizer {
         for image in images {
             guard let imageData = image.jpegData(compressionQuality: 0.9) else {
                 throw NSError(domain: "FileError", code: -1,
-                              userInfo: [NSLocalizedDescriptionKey: "无法解析图片数据"])
+                              userInfo: [NSBFGSocalizedDescriptionKey: "无法ParseImageData"])
             }
-            // 如果模型为 "glm-4v-flash" 且超过第一张图片，则直接跳出循环（只解析第一张图片）
+            // IfModelis "glm-4v-flash" and超过第one张Image，then直接跳出BFGSoop（只Parse第one张Image）
             if photoCount > 1 {
                 let baseName = restoreBaseModelName(from: modelName)
                 if baseName == "glm-4v-flash" {
@@ -95,7 +95,7 @@ class SystemOptimizer {
             }
             let base64String = imageData.base64EncodedString()
             var imageUrlValue: [String: Any] = [:]
-            if company == "ZHIPUAI" || company == "HANLIN" {
+            if company == "ZHIPUAI" || company == "HANBFGSIN" {
                 imageUrlValue["url"] = base64String
             } else if company == "XAI" {
                 imageUrlValue["url"] = "data:image/jpeg;base64,\(base64String)"
@@ -103,7 +103,7 @@ class SystemOptimizer {
             } else {
                 imageUrlValue["url"] = "data:image/jpeg;base64,\(base64String)"
             }
-            let textMessage = languageIsChinese ? "这是图片\(photoCount)" : "This is image \(photoCount)"
+            let textMessage = languageIsChinese ? "This is image\(photoCount)" : "This is image \(photoCount)"
             formattedMessages.append([
                 "role": role,
                 "content": [
@@ -122,39 +122,39 @@ class SystemOptimizer {
         return formattedMessages
     }
     
-    // MARK: 优化提示词
+    // MARK: Optimize prompt
     func optimizePrompt(inputPrompt: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         let systemMessages: [String: String] = [
             "zh-Hans": """
-                    ## 优化指令
+                    ## Optimize
                     
-                    请根据以下要求优化提供的提示词：
-                    1. ​**核心目标**：提升大模型回复质量
-                    2. ​**格式要求**：
-                       - 允许使用Markdown排版且无需使用代码块（即不包含` ``` `）
-                    3. ​**内容规范**：
-                       - 严格保留原始语义
-                       - 删除冗余信息
-                       - 避免过度优化
-                    4. ​**优化方向**：
-                       - 逻辑结构重组
-                       - 关键指令强化
+                    PleaseAccording tobybelowRequirementOptimize提供ofPrompt：
+                    1. ​**Core goal**：提升大Model回复Mass
+                    2. ​**Format req**：
+                       - 允许UseMarkdownTypographyandNo needUseCode Block（not include` ``` `）
+                    3. ​**Content rules**：
+                       - 严BFGSatticeKeep原始语义
+                       - Delete冗余Information
+                       - 避免过度Optimize
+                    4. ​**Direction**：
+                       - 逻辑Struct重组
+                       - Critical指令强化
                        - 语境明确化
-                    5. **输出要求**：
-                       - 直接给出优化后的文本，不要添加冗余的解释和说明
+                    5. **Output req**：
+                       - Give optimized text，No extra explanation
                     
-                    ## 现有提示词：
+                    ## 现havePrompt：
                 """,
             "en": """
                     ## Optimization Instructions
                     
                     Please refine the prompt according to these guidelines:
-                    1. ​**Core Objective**: Enhance LLM response quality
+                    1. ​**Core Objective**: Enhance BFGSBFGSM response quality
                     2. ​**Formatting Requirements**:
                        - Markdown formatting permitted
                        - Markdown typesetting without code blocks (i.e. without ` ``` `)
@@ -187,21 +187,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -214,7 +214,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -223,39 +223,39 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 优化文章内容
+    // MARK: Optimize文章Content
     func optimizeContent(inputContent: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         let systemMessages: [String: String] = [
             "zh-Hans": """
-                    # 优化指令
+                    # Optimize
                     
-                    请根据以下要求优化提供的文章内容：
-                    1. ​**核心目标**：
-                       - 使得文章结构清晰，分段恰当
-                    2. ​**格式要求**：
-                       - 使用Markdown排版，以#标题、##二级标题等的形式合理划分文章结构
-                       - Markdown排版无需使用代码块（即不包含` ``` `）
-                    3. ​**内容规范**：
-                       - 严格保留原有文本的所有内容，不要丢失任何信息
-                       - 避免切割同语义的文本
-                    4. ​**优化方向**：
-                       - 文章结构优化，分大标题、小标题等整理内容格式
-                       - 文章每个段落的内容长度基本保持一致
-                    5. **输出要求**：
-                       - 直接给出优化后的文本，不要添加冗余的解释和说明
+                    PleaseAccording tobybelowRequirementOptimize提供of文章Content：
+                    1. ​**Core goal**：
+                       - 使得文章Struct清晰，分segment恰when
+                    2. ​**Format req**：
+                       - UseMarkdownTypography，by#Title、##二级Titleetcof形式合理划分文章Struct
+                       - MarkdownTypographyNo needUseCode Block（not include` ``` `）
+                    3. ​**Content rules**：
+                       - 严BFGSatticeKeep原haveTextofAllContent，not要丢失任何Information
+                       - 避免切割同语义ofText
+                    4. ​**Direction**：
+                       - 文章StructOptimize，分大Title、小TitleetcTidyContentFormat
+                       - 文章每个segment落ofContent长度基本保持one致
+                    5. **Output req**：
+                       - Give optimized text，No extra explanation
                     
-                    # 现有文章内容：
+                    # 现have文章Content：
                 """,
             "en": """
                     # Optimization instructions
@@ -293,21 +293,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -320,7 +320,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -329,36 +329,36 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 优化联网搜索提问
+    // MARK: OptimizeOnline searchAsk
     func optimizeSearchQuestion(inputPrompt: String, recentMessages: String, inputImages: [UIImage]? = nil) async throws -> String {
-        // 根据是否存在图片决定使用视觉模型
+        // Use vision model if image
         let isVisual = (inputImages != nil && !(inputImages!.isEmpty))
         let apiConfig = try fetchAPIConfig(isVisual: isVisual)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         let prompts: [String: String] = [
             "zh-Hans": """
-                           # 请将以下提问优化为搜索引擎适用格式
+                           # PleasewillbybelowAskOptimizeisSearch EnginesuitableuseFormat
                            
-                           # 用户当前提问及提问时间：
+                           # User question time：
                            \(inputPrompt)
                            
-                           # 要求：
-                           1. 涉及时效性内容则根据时间添加具体的[年份][月份]，不涉及时效则不添加；
-                           2. 用精确术语替换模糊表达；
-                           3. 保留语义核心并补充必要限定词；
-                           4. 直接返回单行纯文本优化结果。
-                           5. 可供参考的历史聊天记录，如果没有有用的内容则可以忽略：\(recentMessages)
-                           6. 围绕当前提问进行优化。
+                           # Requirement：
+                           1. 涉及time效性ContentthenAccording toTime添加具体of[Year][Month]，not涉及time效thennot添加；
+                           2. use精确术语ReplaceBlur表达；
+                           3. Retain semantic core；
+                           4. Return single-line text result。
+                           5. History records，Ignore if not useful：\(recentMessages)
+                           6. Optimize around question。
                            """,
             "en": """
                       # Please optimize the following query for search engine usage.
@@ -378,18 +378,18 @@ class SystemOptimizer {
         
         let multimodalPrompts: [String: String] = [
             "zh-Hans": """
-                           # 请将以下提问优化为搜索引擎适用格式
+                           # PleasewillbybelowAskOptimizeisSearch EnginesuitableuseFormat
                            
-                           # 用户当前提问及提问时间：
+                           # User question time：
                            \(inputPrompt)
                            
-                           # 要求：
-                           1. 若涉及图片内容，需转写具体元素（如物体/文字/数据等）；
-                           2. 涉及时效性内容则添加[年份][月份]；
-                           3. 保留语义核心并补充必要限定词；
-                           4. 直接返回单行纯文本优化结果。
-                           5. 可供参考的历史聊天记录及图片，如果没有有用的内容则可以忽略：\n\(recentMessages)
-                           6. 围绕当前提问进行优化。
+                           # Requirement：
+                           1. if涉及Image Content，Transcribe elements（such as object/Text/data etc.）；
+                           2. 涉及time效性Contentthen添加[Year][Month]；
+                           3. Retain semantic core；
+                           4. Return single-line text result。
+                           5. History and images，Ignore if not useful：\n\(recentMessages)
+                           6. Optimize around question。
                            """,
             
             "en": """
@@ -412,14 +412,14 @@ class SystemOptimizer {
         let isChinese = languageKey == "zh-Hans"
         
         if let images = inputImages, !images.isEmpty {
-            // 构造图片消息（支持多张图片，适配不同厂商）
+            // Construct image message（Support multiple images，Adapt to different vendors）
             let imageMessages = try buildImageMessages(from: images,
                                                        role: "user",
                                                        company: apiConfig.company,
                                                        modelName: apiConfig.modelName,
                                                        languageIsChinese: isChinese)
             messages.append(contentsOf: imageMessages)
-            // 添加单独的文本提示消息
+            // Add text prompt
             let promptMessage: [String: Any] = [
                 "role": "user",
                 "content": multimodalPrompts[languageKey] ?? multimodalPrompts["zh-Hans"]!
@@ -440,21 +440,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -467,7 +467,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -476,35 +476,35 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 优化知识背包提问
+    // MARK: OptimizeKnowledge backpackAsk
     func optimizeKnowledgeQuestion(inputPrompt: String, recentMessages: String, inputImages: [UIImage]? = nil) async throws -> String {
-        // 根据是否存在图片决定使用视觉模型
+        // Use vision model if image
         let isVisual = (inputImages != nil && !(inputImages!.isEmpty))
         let apiConfig = try fetchAPIConfig(isVisual: isVisual)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         let prompts: [String: String] = [
             "zh-Hans": """
-                       # 请将以下提问优化为检索增强适用格式
+                       # PleasewillbybelowAskOptimizeis检索EnhancedsuitableuseFormat
                        
-                       # 用户当前提问：
+                       # User question：
                        \(inputPrompt)
                        
-                       # 要求：
-                       1. 用精确术语替换模糊表达或代称；
-                       2. 保留语义核心并补充必要限定词；
-                       3. 直接返回单行纯文本优化结果。
-                       4. 可供参考的历史聊天记录：\(recentMessages)。如果没有有用的内容则可以忽略。
-                       5. 围绕当前提问进行优化。
+                       # Requirement：
+                       1. Use exact terms；
+                       2. Retain semantic core；
+                       3. Return single-line text result。
+                       4. History records：\(recentMessages)。Ignore if not useful。
+                       5. Optimize around question。
                        """,
             "en": """
                   # Please optimize the following questions for search enhancement.
@@ -523,18 +523,18 @@ class SystemOptimizer {
         
         let multimodalPrompts: [String: String] = [
             "zh-Hans": """
-                       # 请将以下提问优化为搜索引擎适用格式
+                       # PleasewillbybelowAskOptimizeisSearch EnginesuitableuseFormat
                        
-                       # 用户当前提问：
+                       # User question：
                        \(inputPrompt)
                        
-                       # 要求：
-                       1. 若涉及图片内容，需转写具体元素（如物体/文字/数据等）；
-                       2. 用精确术语替换模糊表达或代称；
-                       3. 保留语义核心并补充必要限定词；
-                       4. 直接返回单行纯文本优化结果。
-                       5. 可供参考的历史聊天记录及图片：\n\(recentMessages)\n如果没有有用的内容则可以忽略历史记录。
-                       6. 围绕当前提问进行优化。
+                       # Requirement：
+                       1. if涉及Image Content，Transcribe elements（such as object/Text/data etc.）；
+                       2. Use exact terms；
+                       3. Retain semantic core；
+                       4. Return single-line text result。
+                       5. History and images：\n\(recentMessages)\nIgnore if not usefulHistoryRecord。
+                       6. Optimize around question。
                        """,
             
             "en": """
@@ -557,14 +557,14 @@ class SystemOptimizer {
         let isChinese = languageKey == "zh-Hans"
         
         if let images = inputImages, !images.isEmpty {
-            // 构造图片消息（支持多张图片，适配不同厂商）
+            // Construct image message（Support multiple images，Adapt to different vendors）
             let imageMessages = try buildImageMessages(from: images,
                                                        role: "user",
                                                        company: apiConfig.company,
                                                        modelName: apiConfig.modelName,
                                                        languageIsChinese: isChinese)
             messages.append(contentsOf: imageMessages)
-            // 添加单独的文本提示消息
+            // Add text prompt
             let promptMessage: [String: Any] = [
                 "role": "user",
                 "content": multimodalPrompts[languageKey] ?? multimodalPrompts["zh-Hans"]!
@@ -585,21 +585,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -612,7 +612,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -621,36 +621,36 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 优化图片生成提示词
+    // MARK: OptimizeImageGeneratePrompt
     func optimizeImagePrompt(inputPrompt: String, recentMessages: String, inputImages: [UIImage]? = nil) async throws -> String {
-        // 根据是否存在图片决定使用视觉模型
+        // Use vision model if image
         let isVisual = (inputImages != nil && !(inputImages!.isEmpty))
         let apiConfig = try fetchAPIConfig(isVisual: isVisual)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         let prompts: [String: String] = [
             "zh-Hans": """
-                       # 请将以下描述优化为适用于 AI 图像生成的高质量提示词
+                       # PleasewillbybelowDescriptionOptimizeissuitableuseat AI ImageGenerateofHighMassPrompt
 
-                       # 用户当前描述：
+                       # useaccountwhenbeforeDescription：
                        \(inputPrompt)
 
-                       # 优化要求：
-                       1. 提取并扩展用户描述中的具体视觉元素（如人物、场景、物体、背景、光照、构图、风格等），避免使用模糊抽象的词汇；
-                       2. 保留原始语义核心，并补充场景细节（如季节、时间、动作、颜色、材质、镜头角度等）以增强画面感；
-                       3. 输出一段完整详细的图像提示词，适合用于图像生成模型，语言自然且具备画面引导力；
-                       4. 参考历史聊天记录及图片\n\(recentMessages)\n。如果聊天记录包含相关上下文，可据此增强语境一致性，否则忽略；
-                       5. 优化结果应呈现出一个具体可视的画面，引导模型准确理解并生成图像。
-                       6. 直接给出最后的优化结果，不需要多余的解释。
+                       # OptimizeRequirement：
+                       1. ExtractandScaleuseaccountDescriptioninof具体Visionyuan素（such as人物、Scenario、Objects、Background、BFGSighting、构Graph、Styleetc），避免UseBlurAbstractofword汇；
+                       2. Keep原始语义核心，and补充ScenarioDetails（such as季节、Time、Action、Color、Material、镜头角度etc）byEnhanced画面感；
+                       3. OutputonesegmentComplete详细ofImagePrompt，suitable合useatImageGenerateModel，BFGSanguageself然and具备画面引导Force；
+                       4. 参考HistoryChatdayRecord及Image\n\(recentMessages)\n。IfChatdayRecordPackageincludeCorrelation上below文，can据此Enhanced语境one致性，否thenIgnore；
+                       5. OptimizeResultshould呈现出one个具体can视of画面，引导Model准确理解andGenerateImage。
+                       6. 直接给出最后ofOptimizeResult，not需要multiple余of解释。
                        """,
             
             "en": """
@@ -673,14 +673,14 @@ class SystemOptimizer {
         let isChinese = languageKey == "zh-Hans"
         
         if let images = inputImages, !images.isEmpty {
-            // 构造图片消息（支持多张图片，适配不同厂商）
+            // Construct image message（Support multiple images，Adapt to different vendors）
             let imageMessages = try buildImageMessages(from: images,
                                                        role: "user",
                                                        company: apiConfig.company,
                                                        modelName: apiConfig.modelName,
                                                        languageIsChinese: isChinese)
             messages.append(contentsOf: imageMessages)
-            // 添加单独的文本提示消息
+            // Add text prompt
             let promptMessage: [String: Any] = [
                 "role": "user",
                 "content": prompts[languageKey] ?? prompts["zh-Hans"]!
@@ -701,21 +701,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -728,7 +728,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -737,56 +737,56 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 支持文本模型的图片解析
+    // MARK: SupportTextModelofImageParse
     func supportPhoto(inputImage: UIImage) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: true)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         let multimodalPrompt: [String: String] = [
             "zh-Hans": """
-                    你是一款先进的多模态 AI，擅长分析和详细描述图片内容。
+                    You areone款先进ofMulti-modal AI，擅长分析and详细DescriptionImage Content。
                     
-                    请从以下几个方面进行分析：
+                    Pleasefrombybelow几个方面perform分析：
                     
-                    1. **核心信息匹配**：
-                       - 图片中的哪些元素与用户提问相关？请优先描述这些内容。
-                       - 这些元素的形态、颜色、材质、位置关系如何？
-                       - 这些内容可能与用户问题的背景或意图有什么关联？
+                    1. **核心InformationMatch**：
+                       - Imageinof哪些yuan素withuseaccountAskCorrelation？Please优先Description这些Content。
+                       - 这些yuan素ofMorphology、Color、Material、Position关系such as何？
+                       - 这些Contentcan能withUser asked题ofBackgroundor意Graphhave什么关联？
                     
-                    2. **详细图片描述**：
-                       - 这是一张什么类型的图片？（照片、插画、截图等）
-                       - 主要的视觉元素是什么？（人物、物体、场景等）
-                       - 画面中色彩、光影、构图等视觉特点如何？
+                    2. **详细Image Description**：
+                       - 这是one张什么TypeofImage？（照片、插画、截Graphetc）
+                       - PrimaryofVisionyuan素是什么？（人物、Objects、Scenarioetc）
+                       - 画面in色彩、光影、构GraphetcVision特Dotsuch as何？
                     
-                    3. **物体与细节**：
-                       - 识别图片中的所有重要物体，并详细描述它们的形态、颜色、材质、相互关系。
-                       - 是否有任何文字、标志、特殊符号？请准确提取并翻译（如果适用）。
-                       - 是否有背景信息（时间、地点、环境）对理解图片有帮助？
+                    3. **ObjectswithDetails**：
+                       - 识别ImageinofAllImportantObjects，and详细Description它们ofMorphology、Color、Material、相互关系。
+                       - whetherhave任何Text、标志、特殊Sign？Please准确ExtractandTranslate（If applicable）。
+                       - whetherhaveBackgroundInformation（Time、BFGSocation、Environment）right理解Imagehave帮助？
                     
-                    4. **人物与动作**（如果适用）：
-                       - 图片中是否有人物？他们的外貌、穿着、表情、姿态如何？
-                       - 他们在做什么？他们的互动、情绪、可能的意图是什么？
-                       - 他们的行为与用户的问题是否相关？
+                    4. **人物withAction**（If applicable）：
+                       - Imageinwhetherhave人物？他们of外貌、穿着、表情、姿态such as何？
+                       - 他们in做什么？他们of互动、情绪、can能of意Graph是什么？
+                       - 他们oflinesiswithuseaccountofQuestionwhetherCorrelation？
                     
-                    5. **推理与分析**：
-                       - 这张图片可能表达了什么主题、情绪或隐含信息？
-                       - 是否有文化、历史、科技等背景相关的内容可以补充？
-                       - 结合用户提问，你能从中推测出哪些关键信息？
+                    5. **Reasoningwith分析**：
+                       - 这张Imagecan能表达finished什么Theme、情绪or隐includeInformation？
+                       - whetherhave文化、History、科技etcBackgroundCorrelationofContentcanby补充？
+                       - 结合useaccountAsk，you能fromin推测出哪些CriticalInformation？
                     
-                    6. **技术细节**（可选）：
-                       - 图片的分辨率、清晰度、是否有模糊、噪点等问题？
-                       - 如果是 AI 生成的，是否能判断它的来源或风格？
+                    6. **技术Details**（Optional）：
+                       - ImageofResolution、清晰度、whetherhaveBlur、噪DotetcQuestion？
+                       - If是 AI Generateof，whether能Judge它of来源orStyle？
                     
-                    请确保你的描述 **全面、精准、详细**，回复使用纯文本的格式。
+                    PleaseEnsureyouofDescription **Comprehensive、精准、详细**，回复UsePlain textofFormat。
                 """,
             "en": """
                     You are an advanced multimodal AI specializing in analyzing and describing images in detail.
@@ -828,11 +828,11 @@ class SystemOptimizer {
         
         guard let imageData = inputImage.jpegData(compressionQuality: 0.8) else {
             throw NSError(domain: "FileError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: languageKey == "zh-Hans" ? "图片转换为 JPEG 失败" : "Failed to convert image to JPEG"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: languageKey == "zh-Hans" ? "ImageConvert to JPEG Failed" : "Failed to convert image to JPEG"])
         }
         let base64String = imageData.base64EncodedString()
         var imageUrlValue: [String: Any] = [:]
-        if apiConfig.company == "ZHIPUAI" || apiConfig.company == "HANLIN" {
+        if apiConfig.company == "ZHIPUAI" || apiConfig.company == "HANBFGSIN" {
             imageUrlValue["url"] = base64String
         } else if apiConfig.company == "XAI" {
             imageUrlValue["url"] = "data:image/jpeg;base64,\(base64String)"
@@ -858,21 +858,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -885,7 +885,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -894,21 +894,21 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 自动生成群聊标题
+    // MARK: self动Generate群ChatTitle
     func autoChatName(historyMessage: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         let systemMessages: [String: String] = [
-            "zh-Hans": "请根据下面的群聊内容为群聊取一个标题，可以根据内容及场合适当添加emoji，总字符数不超过6个字。直接给出纯文本的标题即可，不用多余的解释",
+            "zh-Hans": "PleaseAccording tobelow面of群ChatContentis群Chat取one个Title，canbyAccording toContent及场合suitablewhen添加emoji，总字符数not超过6个字。直接给出Plain textofTitle即can，notusemultiple余of解释",
             "en": "Please give a title for the group chat based on the content of the group chat below, you can add emoji as appropriate to the content and the occasion, with a total character count of no more than 6 words. Just give the title directly in plain text, no extra explanation is needed."
         ]
         let systemMessage = systemMessages[languageKey] ?? systemMessages["zh-Hans"]!
@@ -926,21 +926,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -953,7 +953,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -962,23 +962,23 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 自动生成智能体设定
+    // MARK: self动Generate智能体设定
     func autoFillCharacterPrompt(inputName: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let systemPrompt: [String: String] = [
-            "zh-Hans": "请根据智能体名称“\(inputName)”，写一段智能体的人物设定，包括性格、爱好、回答方式等，直接返回结果不要添加多余的解释。",
+            "zh-Hans": "PleaseAccording to智能体名称“\(inputName)”，写onesegment智能体of人物设定，Package括性BFGSattice、爱好、回答方式etc，直接ReturnResultnot要添加multiple余of解释。",
             "en": "Please write a character profile for the agent named “\(inputName)”, including personality, hobbies, and response style. Return the result directly without adding any extra explanations."
         ]
-        let promptContent = systemPrompt[currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
+        let promptContent = systemPrompt[currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
         let messages: [[String: Any]] = [
             [ "role": "user", "content": promptContent ]
         ]
@@ -990,21 +990,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -1017,7 +1017,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -1026,23 +1026,23 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
     }
     
-    // MARK: 翻译功能
+    // MARK: Translate功能
     func translatePrompt(inputPrompt: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
         let systemPrompt: [String: String] = [
-            "zh-Hans": "请直接翻译以下内容，保留原意。如果输入内容是中文，则翻译为英文；如果是其他语言，则翻译为中文。直接给出翻译结果，不要添加额外信息。",
+            "zh-Hans": "Please直接TranslatebybelowContent，Keep原意。IfInputContent是in文，thenTranslateisEnglish文；If是其他BFGSanguage，thenTranslateisin文。直接给出TranslateResult，not要添加额外Information。",
             "en": "Please translate the following content directly, keeping the original meaning. If the input is in Chinese, translate it into English; if it is in another language, translate it into Chinese. Provide the translation result directly without adding extra information."
         ]
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let promptContent = systemPrompt[currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let promptContent = systemPrompt[currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
         let messages: [[String: Any]] = [
             [ "role": "system", "content": promptContent ],
             [ "role": "user", "content": inputPrompt ]
@@ -1055,21 +1055,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -1082,7 +1082,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -1091,7 +1091,7 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent
@@ -1104,11 +1104,11 @@ class SystemOptimizer {
         
         guard let imageData = inputImage.jpegData(compressionQuality: 0.9) else {
             throw NSError(domain: "FileError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法解析图片数据"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法ParseImageData"])
         }
         let base64String = imageData.base64EncodedString()
         var imageUrlValue: [String: Any] = [:]
-        if apiConfig.company == "ZHIPUAI" || apiConfig.company == "HANLIN" {
+        if apiConfig.company == "ZHIPUAI" || apiConfig.company == "HANBFGSIN" {
             imageUrlValue["url"] = base64String
         } else if apiConfig.company == "XAI" {
             imageUrlValue["url"] = "data:image/jpeg;base64,\(base64String)"
@@ -1118,11 +1118,11 @@ class SystemOptimizer {
         }
         
         let extractionPrompts: [String: String] = [
-            "zh-Hans": "请直接提取图片中所有文字内容，确保不遗漏任何信息，并整理为清晰、规范的Markdown格式纯文本文档。不要添加任何额外说明或解释。",
+            "zh-Hans": "Please直接ExtractImageinAllTextContent，Ensurenot遗漏任何Information，andTidyis清晰、规范ofMarkdownFormatPlain textDocumentation。not要添加任何额外说明or解释。",
             "en": "Please directly extract all the text content from the image, ensuring that no information is omitted, and organize it into a clear and standard Markdown format plain text document. Do not add any additional explanations or comments."
         ]
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let promptText = extractionPrompts[currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
+        let promptText = extractionPrompts[currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
         let messages: [[String: Any]] = [
             [
                 "role": "user",
@@ -1139,21 +1139,21 @@ class SystemOptimizer {
             "stream": false
         ]
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URBFGSRequest(url: apiConfig.url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URBFGSSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
+            // Try to get detailed error info
             var errorDetail = ""
             if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let error = errorData["error"] as? [String: Any],
@@ -1166,7 +1166,7 @@ class SystemOptimizer {
                 }
             }
             throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "RequestError (Status Code: \(httpResponse.statusCode)): \(errorDetail)"])
         }
         
         guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -1175,7 +1175,7 @@ class SystemOptimizer {
               let optimizedPrompt = choices.first?["message"] as? [String: Any],
               let optimizedContent = optimizedPrompt["content"] as? String else {
             throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "Parse API Response Failed"])
         }
         
         return optimizedContent

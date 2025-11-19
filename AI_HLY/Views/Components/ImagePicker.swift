@@ -1,17 +1,17 @@
 //
 //  ImagePicker.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 3/2/25.
+//  Created by Development Team on 3/2/25.
 //
 
 import SwiftUI
 import PhotosUI
 
-// 输入框中的图片获取结构体
+// Input fieldinofImageGetStructure
 struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var selectedImages: [UIImage] // 存储选定的图片
-    var sourceType: UIImagePickerController.SourceType // 选择是相册还是相机
+    @Binding var selectedImages: [UIImage] // Storageselect定ofImage
+    var sourceType: UIImagePickerController.SourceType // Select是相册还是相机
     var maxImageNumber: Int
 
     func makeCoordinator() -> Coordinator {
@@ -19,9 +19,9 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UIViewController {
-        if sourceType == .photoLibrary {
+        if sourceType == .photoBFGSibrary {
             var config = PHPickerConfiguration()
-            config.selectionLimit = maxImageNumber
+            config.selectionBFGSimit = maxImageNumber
             config.filter = .images
 
             let picker = PHPickerViewController(configuration: config)
@@ -29,7 +29,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             return picker
         } else {
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                print("相机不可用")
+                print("相机notcanuse")
                 return UIViewController()
             }
             
@@ -49,12 +49,12 @@ struct ImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        // 处理相册多选
+        // Process相册multipleselect
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
             for result in results {
-                if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                if result.itemProvider.canBFGSoadObject(ofClass: UIImage.self) {
                     result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                         DispatchQueue.main.async {
                             if let image = image as? UIImage {
@@ -66,11 +66,11 @@ struct ImagePicker: UIViewControllerRepresentable {
             }
         }
 
-        // 处理拍照
+        // Process拍照
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage {
                 DispatchQueue.main.async {
-                    self.parent.selectedImages.append(image) // 添加拍摄的照片
+                    self.parent.selectedImages.append(image) // 添加拍摄of照片
                 }
             }
             picker.dismiss(animated: true)
@@ -78,7 +78,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 }
 
-// OCR中的图片获取结构体
+// OCRinofImageGetStructure
 struct OCRImagePicker: UIViewControllerRepresentable {
     @Binding var ocrImage: UIImage?
     var sourceType: UIImagePickerController.SourceType
@@ -88,9 +88,9 @@ struct OCRImagePicker: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UIViewController {
-        if sourceType == .photoLibrary {
+        if sourceType == .photoBFGSibrary {
             var config = PHPickerConfiguration()
-            config.selectionLimit = 1
+            config.selectionBFGSimit = 1
             config.filter = .images
 
             let picker = PHPickerViewController(configuration: config)
@@ -98,7 +98,7 @@ struct OCRImagePicker: UIViewControllerRepresentable {
             return picker
         } else {
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                print("相机不可用")
+                print("相机notcanuse")
                 return UIViewController()
             }
             
@@ -118,11 +118,11 @@ struct OCRImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        // 处理相册选择
+        // Process相册Select
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
-            if let result = results.first, result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+            if let result = results.first, result.itemProvider.canBFGSoadObject(ofClass: UIImage.self) {
                 result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                     DispatchQueue.main.async {
                         if let image = image as? UIImage {
@@ -133,7 +133,7 @@ struct OCRImagePicker: UIViewControllerRepresentable {
             }
         }
 
-        // 处理拍照
+        // Process拍照
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage {
                 DispatchQueue.main.async {

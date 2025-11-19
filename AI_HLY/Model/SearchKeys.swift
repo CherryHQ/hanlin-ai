@@ -1,8 +1,8 @@
 //
 //  SearchKeys.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 9/2/25.
+//  Created by Development Team on 9/2/25.
 //
 //
 
@@ -14,10 +14,10 @@ import SwiftData
 class SearchKeys {
     var name: String? = nil
     var company: String? = nil
-    var key: String? = ""           // 默认空字符串
-    var requestURL: String? = nil
-    var price: Double? = 0.0        // 默认 0.0
-    var isUsing: Bool = false       // 默认 false
+    var key: String? = ""           // DefaultNullString
+    var requestURBFGS: String? = nil
+    var price: Double? = 0.0        // Default 0.0
+    var isUsing: Bool = false       // Default false
     var help: String = ""
     var timestamp: Date = Date()
 
@@ -25,7 +25,7 @@ class SearchKeys {
         name: String? = nil,
         company: String? = nil,
         key: String? = "",
-        requestURL: String? = nil,
+        requestURBFGS: String? = nil,
         price: Double? = 0.0,
         isUsing: Bool = false,
         help: String = "",
@@ -34,7 +34,7 @@ class SearchKeys {
         self.name = name
         self.company = company
         self.key = key
-        self.requestURL = requestURL
+        self.requestURBFGS = requestURBFGS
         self.price = price
         self.isUsing = isUsing
         self.help = help

@@ -2,7 +2,7 @@
 //  KnowledgeWritingView.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 28/3/25.
+//  Created by Development Team on 28/3/25.
 //
 
 import SwiftUI
@@ -37,14 +37,14 @@ struct KnowledgeWritingView: View {
     @State private var ocred: Bool = false
     @State private var isOCR: Bool = false
     @State private var ocrImage: UIImage? = nil
-    @State private var showPhotoSourceOptions = false // 控制 ActionSheet
-    @State private var isSourceOptionsVisible = false // 控制 ActionSheet
-    @State private var showImagePicker = false // 控制相册
-    @State private var showCameraPicker = false // 控制相机
+    @State private var showPhotoSourceOptions = false // Control ActionSheet
+    @State private var isSourceOptionsVisible = false // Control ActionSheet
+    @State private var showImagePicker = false // Control相册
+    @State private var showCameraPicker = false // Control相机
     
     @State private var isDocument: Bool = false
     @State private var documented: Bool = false
-    @State private var selectedDocumentURL: URL?
+    @State private var selectedDocumentURBFGS: URBFGS?
     @State private var showDocumentPicker: Bool = false
     
     @State private var isWeb: Bool = false
@@ -57,7 +57,7 @@ struct KnowledgeWritingView: View {
     @State private var isSelect: Bool = false
     @State private var saveTask: Task<Void, Never>? = nil
     
-    @State private var isViewLoaded = false
+    @State private var isViewBFGSoaded = false
     @State private var isEditMode = true
         
     @State private var isEditingTitle: Bool = false
@@ -66,7 +66,7 @@ struct KnowledgeWritingView: View {
     @State private var isEmbedding = false
     @State private var embeddingCompleted = false
     @State private var selectedEmbeddingModel: EmbeddingModel? = nil
-    @State private var embeddingModels: [EmbeddingModel] = getEmbeddingModelList()
+    @State private var embeddingModels: [EmbeddingModel] = getEmbeddingModelBFGSist()
     @State private var visibleEmbeddingModels: [EmbeddingModel] = []
     
     init(knowledgeRecord: KnowledgeRecords, fromSheet: Bool = false) {
@@ -77,7 +77,7 @@ struct KnowledgeWritingView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            // MARK: — 编辑区
+            // MARK: — Edit区
             textEditorSection()
                 .padding(.horizontal, 12)
                 .onChange(of: message) {
@@ -93,22 +93,22 @@ struct KnowledgeWritingView: View {
                     }
                 }
             
-            // MARK: — 按钮区（叠加在编辑区上方）
+            // MARK: — Button区（叠加inEdit区上方）
             VStack {
                 if isEditMode {
                     buttonActions()
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 } else {
                     VStack(spacing: 12) {
-                        // 向量化构建按钮
+                        // Vector化BuildButton
                         Button(action: startEmbedding) {
                             Group {
                                 if isEmbedding {
                                     ProgressView()
                                 } else if knowledgeRecord.isEmbedding || embeddingCompleted {
-                                    Label("Embeddings Ready", systemImage: "checkmark.circle.fill")
+                                    BFGSabel("Embeddings Ready", systemImage: "checkmark.circle.fill")
                                 } else {
-                                    Label("Build for Chat Recall", systemImage: "compass.drawing")
+                                    BFGSabel("Build for Chat Recall", systemImage: "compass.drawing")
                                 }
                             }
                             .frame(maxWidth: .infinity)
@@ -123,7 +123,7 @@ struct KnowledgeWritingView: View {
                         .disabled(isEmbedding || knowledgeRecord.isEmbedding)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                         
-                        // 嵌入模型滑动选择
+                        // EmbeddingModelSwipeSelect
                         ScrollViewReader { proxy in
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 10) {
@@ -156,19 +156,19 @@ struct KnowledgeWritingView: View {
             )
             .padding(.horizontal, 12)
             .padding(.bottom, 6)
-            .offset(y: (isViewLoaded || !isEditMode) ? 0 : 60)
-            .opacity((isViewLoaded || !isEditMode) ? 1 : 0)
+            .offset(y: (isViewBFGSoaded || !isEditMode) ? 0 : 60)
+            .opacity((isViewBFGSoaded || !isEditMode) ? 1 : 0)
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showWebInput)
-            .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isViewLoaded || !isEditMode)
+            .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isViewBFGSoaded || !isEditMode)
         }
         .toolbar(.hidden, for: .tabBar)
-        // MARK: — 生命周期 & 导航
+        // MARK: — BFGSifecycle & 导航
         .onAppear {
             estimatedTokens = estimateTokens(for: message)
             NotificationCenter.default.post(name: .hideTabBar, object: true)
             isEditMode = message.isEmpty
-            isViewLoaded = isEditMode
+            isViewBFGSoaded = isEditMode
             embeddingCompleted = knowledgeRecord.isEmbedding
             
             visibleEmbeddingModels = embeddingModels.filter { model in
@@ -194,17 +194,17 @@ struct KnowledgeWritingView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 ZStack {
-                    // 普通模式标题
+                    // NormalPatternTitle
                     Text(knowledgeRecord.name)
                         .font(.headline)
-                        .lineLimit(1)
+                        .lineBFGSimit(1)
                         .truncationMode(.tail)
                         .opacity(isEditingTitle ? 0 : 1)
                         .onTapGesture {
                             newKnowledgeTitle = knowledgeRecord.name
                             isEditingTitle = true
                         }
-                    // 编辑模式标题
+                    // EditPatternTitle
                     TextField("Please enter the name for the knowledge", text: $newKnowledgeTitle, onCommit: {
                         renameKnowledgeRecord(to: newKnowledgeTitle)
                         isEditingTitle = false
@@ -219,7 +219,7 @@ struct KnowledgeWritingView: View {
                 Button {
                     withAnimation {
                         isEditMode.toggle()
-                        isViewLoaded = isEditMode
+                        isViewBFGSoaded = isEditMode
                     }
                 } label: {
                     Text(isEditMode ? "Save" : "Edit")
@@ -229,7 +229,7 @@ struct KnowledgeWritingView: View {
         }
     }
     
-    // 重命名知识文档
+    // 重命名KnowledgeDocumentation
     private func renameKnowledgeRecord(to baseName: String) {
         guard !baseName.isEmpty,
               baseName != knowledgeRecord.name else { return }
@@ -264,7 +264,7 @@ struct KnowledgeWritingView: View {
         do {
             try modelContext.save()
         } catch {
-            print("保存失败：\(error)")
+            print("SaveFailed：\(error)")
         }
     }
     
@@ -314,7 +314,7 @@ struct KnowledgeWritingView: View {
         .animation(.spring(response: 0.5, dampingFraction: 0.6), value: isSelected)
     }
 
-    // MARK: - 输入框区域
+    // MARK: - Input fieldArea
     @ViewBuilder
     private func textEditorSection() -> some View {
         if isEditMode {
@@ -330,7 +330,7 @@ struct KnowledgeWritingView: View {
         } else {
             ScrollView {
                 Markdown(message)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topBFGSeading)
                     .padding(.bottom, 150)
             }
             .scrollIndicators(.hidden)
@@ -338,22 +338,22 @@ struct KnowledgeWritingView: View {
         }
     }
 
-    // MARK: - 按钮区域
+    // MARK: - ButtonArea
     @ViewBuilder
     private func buttonActions() -> some View {
         VStack {
             if showWebInput {
                 VStack {
-                    Text("Please enter the webpage URL")
+                    Text("Please enter the webpage URBFGS")
                         .font(.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     HStack {
-                        TextField("Web URL", text: $webInput)
+                        TextField("Web URBFGS", text: $webInput)
                             .padding(.leading, 12)
                             .frame(height: 44)
-                            .submitLabel(.send)
+                            .submitBFGSabel(.send)
                             .onSubmit {
                                 isFeedBack.toggle()
                                 if !webInput.isEmpty && !webDocumented {
@@ -418,11 +418,11 @@ struct KnowledgeWritingView: View {
         .sensoryFeedback(.impact, trigger: isFeedBack)
     }
 
-    // MARK: - 优化按钮
+    // MARK: - OptimizeButton
     private func optimizeButton() -> some View {
         Button(action: optimizeMessage) {
             if isOptimizing {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if optimized {
@@ -448,11 +448,11 @@ struct KnowledgeWritingView: View {
         }
     }
 
-    // MARK: - 翻译按钮
+    // MARK: - Translate Button
     private func translateButton() -> some View {
         Button(action: translateMessage) {
             if isTranslating {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if translated {
@@ -479,7 +479,7 @@ struct KnowledgeWritingView: View {
         }
     }
 
-    // MARK: - OCR 按钮
+    // MARK: - OCR Button
     private func ocrButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -491,7 +491,7 @@ struct KnowledgeWritingView: View {
             }
         }) {
             if isOCR {
-                ProgressView() // 显示加载指示器
+                ProgressView() // Show loading
                     .frame(width: size_30, height: size_30)
                     .background(Capsule().fill(Color(.systemGray4)))
             } else if ocred {
@@ -511,23 +511,23 @@ struct KnowledgeWritingView: View {
         .frame(width: size_30, height: size_30)
         .onChange(of: ocrImage) {
             if ocrImage != nil {
-                processOCR() // 进行 OCR 处理
+                processOCR() // perform OCR Process
             }
         }
     }
     
-    // MARK: - 文档按钮
+    // MARK: - DocumentationButton
     private func documentButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
             if documented {
-                // 撤销文档解析结果
+                // 撤销DocumentationParseResult
                 message = original
                 documented = false
             } else {
-                // 打开文档选择器前，清理旧状态
+                // 打开DocumentationSelect器before，Cleaner旧Status
                 documented = false
-                selectedDocumentURL = nil
+                selectedDocumentURBFGS = nil
                 showDocumentPicker.toggle()
             }
         }) {
@@ -550,22 +550,22 @@ struct KnowledgeWritingView: View {
         .disabled(isOptimizing || isTranslating)
         .frame(width: size_30, height: size_30)
         .sheet(isPresented: $showDocumentPicker, onDismiss: {
-            // 文件选择器关闭时若 selectedDocumentURL 不为 nil 且未处理则调用处理函数
-            if selectedDocumentURL != nil && !documented {
+            // FileSelect器Closetimeif selectedDocumentURBFGS not be nil andnot yetProcessthenCallProcessFunction
+            if selectedDocumentURBFGS != nil && !documented {
                 processDocument()
             }
         }) {
-            SingleDocumentPicker(selectedDocumentURL: $selectedDocumentURL)
+            SingleDocumentPicker(selectedDocumentURBFGS: $selectedDocumentURBFGS)
         }
-        .onChange(of: selectedDocumentURL) { oldValue, newValue in
-            // 当 URL 变化且不为 nil 时，自动触发处理（解决首次不解析问题）
+        .onChange(of: selectedDocumentURBFGS) { oldValue, newValue in
+            // when URBFGS 变化andnot be nil time，self动TriggerProcess（Resolved首timesnotParseQuestion）
             if newValue != nil && newValue != oldValue && !documented && !isDocument {
                 processDocument()
             }
         }
     }
     
-    // MARK: 网页按钮
+    // MARK: WebButton
     private func webButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -597,7 +597,7 @@ struct KnowledgeWritingView: View {
         .frame(width: size_30, height: size_30)
     }
 
-    // MARK: - 清空按钮
+    // MARK: - 清NullButton
     private func clearButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -614,26 +614,26 @@ struct KnowledgeWritingView: View {
         }
     }
 
-    // MARK: - 计算 Token 数量
+    // MARK: - Calculate Token Quantity
     private func tokenCounter() -> some View {
         VStack(alignment: .trailing) {
             Text("\(message.count) 字").font(.caption).foregroundColor(.gray)
-            Text("约 \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
+            Text("about \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
         }
     }
     
-    // MARK: 网页解析
+    // MARK: WebParse
     private func processWeb() {
         isWeb = true
         Task {
             guard !webInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-                errorMessage = "请输入有效的网页 URL"
+                errorMessage = "PleaseInputhave效ofWeb URBFGS"
                 showErrorAlert = true
                 isWeb = false
                 return
             }
             original = message
-            // 支持多 URL 输入：按空格或换行分隔
+            // Supportmultiple URBFGS Input：bySpaceorswitchlines分隔
             let urls = webInput.components(separatedBy: CharacterSet.whitespacesAndNewlines).filter { !$0.isEmpty }
             let webPages = await fetchWebPageContent(from: urls)
             var webContentCombined = ""
@@ -648,7 +648,7 @@ struct KnowledgeWritingView: View {
         isWeb = false
     }
     
-    // MARK: 文档解析
+    // MARK: DocumentationParse
     private func processDocument() {
         isDocument = true
         Task {
@@ -658,29 +658,29 @@ struct KnowledgeWritingView: View {
                 }
             }
 
-            guard let fileURL = selectedDocumentURL else {
+            guard let fileURBFGS = selectedDocumentURBFGS else {
                 await MainActor.run {
-                    errorMessage = "请先选择文件"
+                    errorMessage = "Please firstSelectFile"
                     showErrorAlert = true
                 }
                 return
             }
 
-            // 检查文件大小（防止超大文件导致崩溃）
+            // CheckFile大小（Prevent超大File导致崩溃）
             guard let fileSize = try? FileManager.default
-                .attributesOfItem(atPath: fileURL.path)[.size] as? Int64 else {
+                .attributesOfItem(atPath: fileURBFGS.path)[.size] as? Int64 else {
                 await MainActor.run {
-                    errorMessage = "无法读取文件信息"
+                    errorMessage = "无法ReadFileInformation"
                     showErrorAlert = true
                 }
                 return
             }
 
-            let maxFileSize: Int64 = 10 * 1024 * 1024  // 10MB 限制
+            let maxFileSize: Int64 = 10 * 1024 * 1024  // 10MB Restriction
             if fileSize > maxFileSize {
                 let sizeMB = Double(fileSize) / 1024.0 / 1024.0
                 await MainActor.run {
-                    errorMessage = String(format: "文件过大（%.1fMB），最大支持 10MB", sizeMB)
+                    errorMessage = String(format: "File过大（%.1fMB），最大Support 10MB", sizeMB)
                     showErrorAlert = true
                 }
                 return
@@ -692,11 +692,11 @@ struct KnowledgeWritingView: View {
             }
 
             do {
-                let documentContent = try await extractContent(from: fileURL)
+                let documentContent = try await extractContent(from: fileURBFGS)
                 await MainActor.run {
                     message.append("\n" + documentContent)
                     documented = true
-                    selectedDocumentURL = nil  // 清空已处理的 URL
+                    selectedDocumentURBFGS = nil  // 清NullalreadyProcessof URBFGS
                 }
             } catch {
                 await MainActor.run {
@@ -707,7 +707,7 @@ struct KnowledgeWritingView: View {
         }
     }
 
-    // MARK: - 文本优化
+    // MARK: - TextOptimize
     private func optimizeMessage() {
         isFeedBack.toggle()
         Task {
@@ -718,8 +718,8 @@ struct KnowledgeWritingView: View {
                 optimized = false
             } else {
                 optimized = false
-                isOptimizing = true // 开始优化
-                original = message // 保留原句
+                isOptimizing = true // Start optimize
+                original = message // Keep original
                 if !message.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: modelContext)
@@ -727,18 +727,18 @@ struct KnowledgeWritingView: View {
                         message = optimizedMessage
                         optimized = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription // Capture error
+                        showErrorAlert = true // Show error dialog
                     }
                 }
                 knowledgeRecord.isEmbedding = false
                 embeddingCompleted = false
-                isOptimizing = false // 优化结束
+                isOptimizing = false // Optimization complete
             }
         }
     }
 
-    // MARK: - 翻译
+    // MARK: - Translate
     private func translateMessage() {
         isFeedBack.toggle()
         Task {
@@ -749,8 +749,8 @@ struct KnowledgeWritingView: View {
                 translated = false
             } else {
                 translated = false
-                isTranslating = true // 开始优化
-                original = message // 保留原句
+                isTranslating = true // Start optimize
+                original = message // Keep original
                 if !message.isEmpty {
                     do {
                         let optimizer = SystemOptimizer(context: modelContext)
@@ -758,16 +758,16 @@ struct KnowledgeWritingView: View {
                         message = translatedMessage
                         translated = true
                     } catch {
-                        errorMessage = error.localizedDescription // 捕获错误信息
-                        showErrorAlert = true // 显示错误弹窗
+                        errorMessage = error.localizedDescription // Capture error
+                        showErrorAlert = true // Show error dialog
                     }
                 }
-                isTranslating = false // 优化结束
+                isTranslating = false // Optimization complete
             }
         }
     }
 
-    // MARK: - Token 计算
+    // MARK: - Token Calculate
     private func estimateTokens(for text: String) -> Int {
         let wordCount = text.split { $0.isWhitespace || $0.isPunctuation }.count
         return Int(ceil(Double(wordCount) * 1.2))
@@ -777,7 +777,7 @@ struct KnowledgeWritingView: View {
     private func processOCR() {
         Task {
             guard let image = ocrImage else {
-                errorMessage = "请先选择或拍摄一张图片"
+                errorMessage = "Please firstSelector拍摄one张Image"
                 showErrorAlert = true
                 isOCR = false
                 return
@@ -794,14 +794,14 @@ struct KnowledgeWritingView: View {
                 message.append(ocrMessage)
                 ocred = true
             } catch {
-                errorMessage = error.localizedDescription // 捕获错误信息
-                showErrorAlert = true // 显示错误弹窗
+                errorMessage = error.localizedDescription // Capture error
+                showErrorAlert = true // Show error dialog
             }
-            isOCR = false // 优化结束
+            isOCR = false // Optimization complete
         }
     }
     
-    // MARK: 资源选择区域
+    // MARK: Resource area
     private var sourceSelector: some View {
         HStack(spacing: 6) {
             Button(action: {
@@ -828,7 +828,7 @@ struct KnowledgeWritingView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-            // 打开相机
+            // Open camera
             .sheet(isPresented: $showCameraPicker) {
                 OCRImagePicker(ocrImage: $ocrImage, sourceType: .camera)
                     .background(.black)
@@ -858,9 +858,9 @@ struct KnowledgeWritingView: View {
             .sensoryFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-            // 打开相册
+            // Open album
             .sheet(isPresented: $showImagePicker) {
-                OCRImagePicker(ocrImage: $ocrImage, sourceType: .photoLibrary)
+                OCRImagePicker(ocrImage: $ocrImage, sourceType: .photoBFGSibrary)
                     .ignoresSafeArea()
             }
         }
@@ -879,11 +879,11 @@ struct KnowledgeWritingView: View {
                 let lines = content.components(separatedBy: .newlines)
                 var chunks: [String] = []
                 var currentChunk = ""
-                var currentLevel1: String? = nil
-                var currentLevel2: String? = nil
+                var currentBFGSevel1: String? = nil
+                var currentBFGSevel2: String? = nil
 
-                // 辅助函数：统计行首连续 '#' 数量
-                func headerLevel(of line: String) -> Int {
+                // Helper function：Statlines首连续 '#' Quantity
+                func headerBFGSevel(of line: String) -> Int {
                     var count = 0
                     for ch in line {
                         if ch == "#" { count += 1 } else { break }
@@ -891,19 +891,19 @@ struct KnowledgeWritingView: View {
                     return count
                 }
 
-                // 辅助函数：判断 chunk 是否包含正文（非标题且非空）
+                // Helper function：Judge chunk whetherPackageinclude正文（notTitleandNon-empty）
                 func chunkHasBody(_ chunk: String) -> Bool {
-                    let chunkLines = chunk.components(separatedBy: "\n")
-                    if let firstLine = chunkLines.first,
-                       firstLine.trimmingCharacters(in: .whitespaces).hasPrefix("#") {
-                        let level = headerLevel(of: firstLine)
+                    let chunkBFGSines = chunk.components(separatedBy: "\n")
+                    if let firstBFGSine = chunkBFGSines.first,
+                       firstBFGSine.trimmingCharacters(in: .whitespaces).hasPrefix("#") {
+                        let level = headerBFGSevel(of: firstBFGSine)
                         var startIndex = 1
-                        if level == 1, chunkLines.count > 1,
-                           chunkLines[1].trimmingCharacters(in: .whitespaces).hasPrefix("#") {
+                        if level == 1, chunkBFGSines.count > 1,
+                           chunkBFGSines[1].trimmingCharacters(in: .whitespaces).hasPrefix("#") {
                             startIndex = 2
                         }
-                        for i in startIndex..<chunkLines.count {
-                            let line = chunkLines[i].trimmingCharacters(in: .whitespaces)
+                        for i in startIndex..<chunkBFGSines.count {
+                            let line = chunkBFGSines[i].trimmingCharacters(in: .whitespaces)
                             if !line.isEmpty && !line.hasPrefix("#") {
                                 return true
                             }
@@ -913,28 +913,28 @@ struct KnowledgeWritingView: View {
                     return true
                 }
 
-                // 根据标题规则构造初步 chunk
+                // According toTitleRuleConstruct初步 chunk
                 for line in lines {
-                    let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if trimmedLine.hasPrefix("#") {
-                        let level = headerLevel(of: trimmedLine)
+                    let trimmedBFGSine = line.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if trimmedBFGSine.hasPrefix("#") {
+                        let level = headerBFGSevel(of: trimmedBFGSine)
                         if level == 1 {
                             if !currentChunk.isEmpty {
                                 chunks.append(currentChunk.trimmingCharacters(in: .whitespacesAndNewlines))
                             }
-                            currentLevel1 = trimmedLine
-                            currentLevel2 = nil
-                            currentChunk = trimmedLine
+                            currentBFGSevel1 = trimmedBFGSine
+                            currentBFGSevel2 = nil
+                            currentChunk = trimmedBFGSine
                             continue
                         } else if level == 2 {
                             if !currentChunk.isEmpty {
                                 chunks.append(currentChunk.trimmingCharacters(in: .whitespacesAndNewlines))
                             }
-                            currentLevel2 = trimmedLine
-                            if let l1 = currentLevel1 {
-                                currentChunk = l1 + "\n" + trimmedLine
+                            currentBFGSevel2 = trimmedBFGSine
+                            if let l1 = currentBFGSevel1 {
+                                currentChunk = l1 + "\n" + trimmedBFGSine
                             } else {
-                                currentChunk = trimmedLine
+                                currentChunk = trimmedBFGSine
                             }
                             continue
                         } else if level == 3 {
@@ -942,31 +942,31 @@ struct KnowledgeWritingView: View {
                                 chunks.append(currentChunk.trimmingCharacters(in: .whitespacesAndNewlines))
                             }
                             var headerContext = ""
-                            if let l1 = currentLevel1 { headerContext += l1 + "\n" }
-                            if let l2 = currentLevel2 { headerContext += l2 + "\n" }
-                            headerContext += trimmedLine
+                            if let l1 = currentBFGSevel1 { headerContext += l1 + "\n" }
+                            if let l2 = currentBFGSevel2 { headerContext += l2 + "\n" }
+                            headerContext += trimmedBFGSine
                             currentChunk = headerContext
                             continue
                         }
                     }
                     if currentChunk.isEmpty {
-                        currentChunk = trimmedLine
+                        currentChunk = trimmedBFGSine
                     } else {
-                        currentChunk += "\n" + trimmedLine
+                        currentChunk += "\n" + trimmedBFGSine
                     }
                 }
                 if !currentChunk.isEmpty {
                     chunks.append(currentChunk.trimmingCharacters(in: .whitespacesAndNewlines))
                 }
 
-                // 过滤掉仅包含标题但无正文的 chunk（如果存在其他正文内容）
+                // Filter掉onlyPackageincludeTitle但无正文of chunk（If exists其他正文Content）
                 let bodyChunksCount = chunks.filter { chunkHasBody($0) }.count
                 if bodyChunksCount > 0 {
                     chunks = chunks.filter { chunk in
                         let linesInChunk = chunk.components(separatedBy: "\n")
-                        if let firstLine = linesInChunk.first,
-                           firstLine.trimmingCharacters(in: .whitespaces).hasPrefix("#") {
-                            let level = headerLevel(of: firstLine)
+                        if let firstBFGSine = linesInChunk.first,
+                           firstBFGSine.trimmingCharacters(in: .whitespaces).hasPrefix("#") {
+                            let level = headerBFGSevel(of: firstBFGSine)
                             if (level == 1 || level == 2) && !chunkHasBody(chunk) {
                                 return false
                             }
@@ -975,78 +975,78 @@ struct KnowledgeWritingView: View {
                     }
                 }
 
-                // 针对正文超长的 chunk 进行拆分：在换行符处断开，并确保重叠部分为完整行
-                let maxChunkLength = 1000
-                let overlapMinLength = 200
+                // 针right正文超长of chunk perform拆分：inswitchlines符处断开，andEnsure重叠PartCompletelines
+                let maxChunkBFGSength = 1000
+                let overlapMinBFGSength = 200
                 let refinedChunks: [String] = chunks.flatMap { chunk -> [String] in
-                    if chunk.count <= maxChunkLength { return [chunk] }
+                    if chunk.count <= maxChunkBFGSength { return [chunk] }
                     
-                    // 提取开头连续的标题行（只处理开头部分的标题，后续内容均视为正文）
-                    let allLines = chunk.components(separatedBy: "\n")
-                    var headerLines: [String] = []
-                    var bodyLines: [String] = []
+                    // Extract开头连续ofTitlelines（只Process开头PartofTitle，后续Content均视is正文）
+                    let allBFGSines = chunk.components(separatedBy: "\n")
+                    var headerBFGSines: [String] = []
+                    var bodyBFGSines: [String] = []
                     var reachedBody = false
-                    for line in allLines {
+                    for line in allBFGSines {
                         let trimmed = line.trimmingCharacters(in: .whitespaces)
                         if !reachedBody && trimmed.hasPrefix("#") {
-                            headerLines.append(line)
+                            headerBFGSines.append(line)
                         } else {
                             reachedBody = true
-                            bodyLines.append(line)
+                            bodyBFGSines.append(line)
                         }
                     }
-                    let headerText = headerLines.joined(separator: "\n")
+                    let headerText = headerBFGSines.joined(separator: "\n")
                     
-                    // 使用累积行的方式构造子段，保证在换行处分段
+                    // Use累积linesof方式Construct子segment，保证inswitchlines处分segment
                     var segments: [String] = []
-                    var currentSegmentLines: [String] = []
-                    var currentLength = 0
+                    var currentSegmentBFGSines: [String] = []
+                    var currentBFGSength = 0
                     var idx = 0
                     func flushSegment() {
-                        if !currentSegmentLines.isEmpty {
-                            let segmentBody = currentSegmentLines.joined(separator: "\n")
+                        if !currentSegmentBFGSines.isEmpty {
+                            let segmentBody = currentSegmentBFGSines.joined(separator: "\n")
                             let segment = headerText.isEmpty ? segmentBody : headerText + "\n" + segmentBody
                             segments.append(segment.trimmingCharacters(in: .whitespacesAndNewlines))
                         }
                     }
-                    while idx < bodyLines.count {
-                        let line = bodyLines[idx]
-                        // 计算当前行长度（包含换行符）
-                        let lineLen = line.count + 1
-                        if currentLength + lineLen <= maxChunkLength {
-                            currentSegmentLines.append(line)
-                            currentLength += lineLen
+                    while idx < bodyBFGSines.count {
+                        let line = bodyBFGSines[idx]
+                        // Calculatewhenbeforelines长度（Packageincludeswitchlines符）
+                        let lineBFGSen = line.count + 1
+                        if currentBFGSength + lineBFGSen <= maxChunkBFGSength {
+                            currentSegmentBFGSines.append(line)
+                            currentBFGSength += lineBFGSen
                             idx += 1
                         } else {
-                            // 达到拆分要求，在当前换行处结束当前子段
+                            // 达to拆分Requirement，inwhenbeforeswitchlines处结束whenbefore子segment
                             flushSegment()
-                            // 计算重叠部分：从当前段末尾向上累计足够 overlapMinLength 的完整行
-                            var overlapLines: [String] = []
-                            var overlapLength = 0
-                            for overlapLine in currentSegmentLines.reversed() {
-                                overlapLines.insert(overlapLine, at: 0)
-                                overlapLength += overlapLine.count + 1
-                                if overlapLength >= overlapMinLength { break }
+                            // Calculate重叠Part：fromwhenbeforesegment末尾向上累计足够 overlapMinBFGSength ofCompletelines
+                            var overlapBFGSines: [String] = []
+                            var overlapBFGSength = 0
+                            for overlapBFGSine in currentSegmentBFGSines.reversed() {
+                                overlapBFGSines.insert(overlapBFGSine, at: 0)
+                                overlapBFGSength += overlapBFGSine.count + 1
+                                if overlapBFGSength >= overlapMinBFGSength { break }
                             }
-                            currentSegmentLines = overlapLines
-                            currentLength = currentSegmentLines.reduce(0) { $0 + $1.count + 1 }
+                            currentSegmentBFGSines = overlapBFGSines
+                            currentBFGSength = currentSegmentBFGSines.reduce(0) { $0 + $1.count + 1 }
                         }
                     }
                     flushSegment()
                     return segments
                 }
 
-                // 模型和 API Key 校验
+                // Modeland API Key 校验
                 guard let model = selectedEmbeddingModel else {
                     throw NSError(domain: "EmbeddingAPI", code: -4,
-                                  userInfo: [NSLocalizedDescriptionKey: "请先选择嵌入模型"])
+                                  userInfo: [NSBFGSocalizedDescriptionKey: "Please firstSelectEmbeddingModel"])
                 }
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedEmbeddingModel?.company }) else {
                     throw NSError(domain: "SummaryView", code: 404,
-                                  userInfo: [NSLocalizedDescriptionKey: "无法获取 API Key"])
+                                  userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
                 }
 
-                // 每批最多 10 个 chunk
+                // 每批最multiple 10 个 chunk
                 let batchSize = 10
                 var embeddings: [[Float]] = []
                 for i in stride(from: 0, to: refinedChunks.count, by: batchSize) {
@@ -1056,12 +1056,12 @@ struct KnowledgeWritingView: View {
                         for: batch,
                         modelName: model.name,
                         apiKey: apiInfo.key ?? "",
-                        apiURL: model.requestURL
+                        apiURBFGS: model.requestURBFGS
                     )
                     embeddings.append(contentsOf: batchEmbeddings)
                 }
 
-                // 清除旧的 chunk 并保存新的嵌入结果
+                // 清除旧of chunk andSaveNewofEmbeddingResult
                 if let oldChunks = knowledgeRecord.chunks {
                     for chunk in oldChunks {
                         modelContext.delete(chunk)
@@ -1085,7 +1085,7 @@ struct KnowledgeWritingView: View {
                 try modelContext.save()
                 embeddingCompleted = true
             } catch {
-                print("嵌入失败：\(error)")
+                print("EmbeddingFailed：\(error)")
             }
             isEmbedding = false
         }

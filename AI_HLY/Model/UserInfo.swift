@@ -1,8 +1,8 @@
 //
 //  UserInfo.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 18/2/25.
+//  Created by Development Team on 18/2/25.
 //
 
 import Foundation
@@ -10,28 +10,28 @@ import SwiftData
 
 @Model
 class UserInfo {
-    var name: String? = ""                                         // 默认空字符串
-    var userInfo: String? = ""                                     // 默认空字符串
-    var userRequirements: String? = ""                             // 默认空字符串
-    var outPutFeedBack: Bool = true                               // 默认 true
-    var bilingualSearch: Bool = false                              // 默认 false
-    var chooseEmbeddingModel: String? = "Hanlin-BAAI/bge-m3"       // 选择的嵌入模型
-    var useMemory: Bool = true                                     // 使用记忆功能
-    var useCrossMemory: Bool = true                                // 使用跨聊天记忆
-    var useMap: Bool = true                                        // 使用地图功能
-    var useCalendar: Bool = true                                   // 使用日历功能
-    var useSearch: Bool = true                                     // 使用搜索功能
-    var useKnowledge: Bool = true                                  // 使用知识功能
-    var useCode: Bool = true                                       // 使用代码功能
-    var useHealth: Bool = true                                     // 使用健康信息
-    var useWeather: Bool = true                                    // 使用天气查询
-    var useCanvas: Bool = true                                     // 使用画布功能
-    var optimizationTextModel: String = "glm-4.5-flash_hanlin"     // 文本优化模型
-    var optimizationVisualModel: String = "glm-4v-flash_hanlin"    // 视觉优化模型
-    var textToSpeechModel: String = "Siri"                         // 语音生成模型
-    var searchCount: Int = 10                                      // 默认搜索结果数量
-    var knowledgeCount: Int = 10                                   // 默认知识数量
-    var knowledgeSimilarity: Double = 0.5                          // 默认知识相似度
+    var name: String? = ""                                         // DefaultNullString
+    var userInfo: String? = ""                                     // DefaultNullString
+    var userRequirements: String? = ""                             // DefaultNullString
+    var outPutFeedBack: Bool = true                               // Default true
+    var bilingualSearch: Bool = false                              // Default false
+    var chooseEmbeddingModel: String? = "Hanlin-BAAI/bge-m3"       // SelectofEmbeddingModel
+    var useMemory: Bool = true                                     // UseMemory功能
+    var useCrossMemory: Bool = true                                // Use跨ChatdayMemory
+    var useMap: Bool = true                                        // Use地Graph功能
+    var useCalendar: Bool = true                                   // UseCalendar功能
+    var useSearch: Bool = true                                     // UseSearch功能
+    var useKnowledge: Bool = true                                  // UseKnowledge功能
+    var useCode: Bool = true                                       // UseCode功能
+    var useHealth: Bool = true                                     // Use健康Information
+    var useWeather: Bool = true                                    // UseWeatherQuery
+    var useCanvas: Bool = true                                     // UseCanvas功能
+    var optimizationTextModel: String = "glm-4.5-flash_hanlin"     // TextOptimizeModel
+    var optimizationVisualModel: String = "glm-4v-flash_hanlin"    // VisionOptimizeModel
+    var textToSpeechModel: String = "Siri"                         // VoiceGenerateModel
+    var searchCount: Int = 10                                      // DefaultSearchResultQuantity
+    var knowledgeCount: Int = 10                                   // DefaultKnowledgeQuantity
+    var knowledgeSimilarity: Double = 0.5                          // DefaultKnowledgeSimilarity
     var timestamp: Date = Date()
 
     public init(

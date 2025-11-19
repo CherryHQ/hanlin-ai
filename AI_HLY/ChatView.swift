@@ -1,8 +1,8 @@
 //
 //  Views/ChatView.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 3/2/25.
+//  Created by Development Team on 3/2/25.
 //
 
 import SwiftUI
@@ -20,33 +20,33 @@ struct InputTextField: UIViewRepresentable {
     var placeholder: String = String(localized: "Message")
     var onPasteImage: ((UIImage) -> Void)?
     var onPasteText: ((String) -> Void)?
-    var onPasteFile: ((URL) -> Void)?
+    var onPasteFile: ((URBFGS) -> Void)?
     var onSendMessage: (() -> Void)?
     @ScaledMetric(relativeTo: .body) private var fontSize: CGFloat = 16
 
-    // 用于检测 @mention，便于整块删除；若也不需要，可连同相关代码一起删
+    // useat检测 @mention，便at整BlockDelete；if也not需要，can连同CorrelationCodeone起删
     private static let mentionRegex =
         try! NSRegularExpression(pattern: "@[^\\s]+", options: [])
 
-    // MARK: – 内部 UITextField
+    // MARK: – within部 UITextField
     final class InnerTextField: UITextField {
 
         var onPasteText: ((String) -> Void)?
         var onPasteImage: ((UIImage) -> Void)?
-        var onPasteFile: ((URL) -> Void)?
+        var onPasteFile: ((URBFGS) -> Void)?
 
         override func paste(_ sender: Any?) {
             let pasteboard = UIPasteboard.general
             
-            // 图片优先
+            // Image优先
             if let img = pasteboard.image {
                 onPasteImage?(img)
                 return
             }
             
-            // 粘贴文件 URL
-            if let fileURL = pasteboard.url {
-                onPasteFile?(fileURL)
+            // Paste file URBFGS
+            if let fileURBFGS = pasteboard.url {
+                onPasteFile?(fileURBFGS)
                 return
             }
             
@@ -55,7 +55,7 @@ struct InputTextField: UIViewRepresentable {
                 return
             }
             
-            // 粘贴文件
+            // Paste file
             let extMapping: [String: String] = [
                 UTType.pdf.identifier: "pdf",
                 UTType.commaSeparatedText.identifier: "csv",
@@ -75,21 +75,21 @@ struct InputTextField: UIViewRepresentable {
                     guard let data = value as? Data,
                           let ext = extMapping[uti] else { continue }
                     
-                    let tmpURL = FileManager.default.temporaryDirectory
+                    let tmpURBFGS = FileManager.default.temporaryDirectory
                         .appendingPathComponent("\(UUID().uuidString).\(ext)")
                     do {
-                        try data.write(to: tmpURL)
+                        try data.write(to: tmpURBFGS)
                         DispatchQueue.main.async {
-                            self.onPasteFile?(tmpURL)
+                            self.onPasteFile?(tmpURBFGS)
                         }
                     } catch {
-                        print("写入临时文件失败：\(error)")
+                        print("Failed to write temp file：\(error)")
                     }
                     return
                 }
             }
             
-            // 回退到默认粘贴
+            // FallbacktoDefaultPaste
             super.paste(sender)
         }
 
@@ -112,7 +112,7 @@ struct InputTextField: UIViewRepresentable {
         }
 
         required init?(coder: NSCoder) {
-            fatalError("InputTextField 不支持 XIB/Storyboard")
+            fatalError("InputTextField notSupport XIB/Storyboard")
         }
     }
 
@@ -124,12 +124,12 @@ struct InputTextField: UIViewRepresentable {
 
         init(parent: InputTextField) { self.parent = parent }
 
-        // 删除时整块移除 @xxx
+        // Deletetime整Block移除 @xxx
         func textField(_ tf: UITextField,
                        shouldChangeCharactersIn range: NSRange,
                        replacementString str: String) -> Bool {
 
-            guard str.isEmpty else { return true }     // 仅处理删除
+            guard str.isEmpty else { return true }     // onlyProcessDelete
 
             let raw = tf.text ?? ""
             let ns  = raw as NSString
@@ -137,15 +137,15 @@ struct InputTextField: UIViewRepresentable {
                 tf.text      = ns.replacingCharacters(in: m.range, with: "")
                 parent.text  = tf.text ?? ""
                 lastSynced   = parent.text
-                // 让系统自行维护光标，不做额外处理
+                // 让SystemselflinesMaintenance光标，not做额外Process
                 return false
             }
             return true
         }
 
-        // 普通输入同步到 @Binding
+        // NormalInputSynchronizeto @Binding
         func textFieldDidChangeSelection(_ tf: UITextField) {
-            guard tf.markedTextRange == nil else { return } // 拼音阶段忽略
+            guard tf.markedTextRange == nil else { return } // Pinyin阶segmentIgnore
             let cur = tf.text ?? ""
             if cur != lastSynced {
                 DispatchQueue.main.async {
@@ -167,7 +167,7 @@ struct InputTextField: UIViewRepresentable {
             let full = NSRange(location: 0, length: ns.length)
             return InputTextField.mentionRegex
                 .matches(in: text, options: [], range: full)
-                .first { NSLocationInRange(index, $0.range) }
+                .first { NSBFGSocationInRange(index, $0.range) }
         }
     }
 
@@ -188,13 +188,13 @@ struct InputTextField: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: InnerTextField, context: Context) {
-        // 拼音候选阶段不更新
+        // Pinyin候select阶segmentnotUpdate
         guard uiView.markedTextRange == nil else {
             uiView.placeholder = placeholder
             return
         }
 
-        // 外部 Binding 更新：仅简单同步，不再做光标位置计算
+        // 外部 Binding Update：only简单Synchronize，not再做光标PositionCalculate
         if uiView.text != text {
             uiView.text = text
             context.coordinator.lastSynced = text
@@ -204,120 +204,120 @@ struct InputTextField: UIViewRepresentable {
 }
 
 
-// 聊天界面
+// Chatday界面
 @MainActor
 struct ChatView: View {
     var chatRecord: ChatRecords
     
-    // 输入与会话状态相关
-    @State private var message = ""                        // 用户输入的消息
-    @State private var isResponding = false                // 是否处于系统响应状态
-    @State private var isCancelled = false                 // 是否被打断
-    @State private var respondIndex = 0                    // 当前响应请求的索引
-    @FocusState private var isInputActive: Bool            // 输入框是否聚焦
-    @State private var inputExpanded: Bool = false         // 输入框是否展开
-    @State private var voiceExpanded: Bool = false         // 输入框是否展开
-    @State private var isObserving = false                 // 是否处于观察模式
-    @State private var isRetry = false                     // 是否为重试请求
+    // InputwithSessionStatusCorrelation
+    @State private var message = ""                        // useaccountInputofMessage
+    @State private var isResponding = false                // whether处atSystemResponseStatus
+    @State private var isCancelled = false                 // whether被打断
+    @State private var respondIndex = 0                    // whenbeforeResponseRequestof索引
+    @FocusState private var isInputActive: Bool            // Input fieldwhether聚焦
+    @State private var inputExpanded: Bool = false         // Input expanded
+    @State private var voiceExpanded: Bool = false         // Input expanded
+    @State private var isObserving = false                 // whether处at观察Pattern
+    @State private var isRetry = false                     // whetherisRetryRequest
 
-    @State private var chatTitle = "新群聊"                 // 群聊标题
-    @State private var isEditingTitle = false              // 是否正在编辑群聊标题
-    @State private var newChatTitle = ""                   // 编辑群聊标题时的临时变量
+    @State private var chatTitle = "New群Chat"                 // 群ChatTitle
+    @State private var isEditingTitle = false              // whethercurrentlyEdit群ChatTitle
+    @State private var newChatTitle = ""                   // Edit群ChatTitletimeoftemporarytimeVariable
 
-    // 媒体与附件相关
-    @State private var selectedImages: [UIImage] = []      // 存储选定的图片
-    @State private var showPhotoSourceOptions = false      // 控制图片来源选择框的显示
-    @State private var isSourceOptionsVisible = false      // 控制 ActionSheet 显示状态
-    @State private var showImagePicker = false             // 控制相册选择器的显示
-    @State private var showCameraPicker = false            // 控制相机选择器的显示
-    @State private var showFastImagePicker = false         // 控制相册选择器的显示
-    @State private var showFastCameraPicker = false        // 控制相机选择器的显示
-    @State private var showDocumentPicker = false          // 控制文档选择器的显示
-    @State private var showCanvas = false                  // 控制显示画布
-    @State private var selectedDocumentURLs: [URL] = []    // 存储选定的文档 URL
-    @State private var selectedImageSize: String = "square"// 选定的生成画幅
-    @State private var imageReversePrompt: String = ""     // 反向提示词
+    // 媒体with附fileCorrelation
+    @State private var selectedImages: [UIImage] = []      // Storageselect定ofImage
+    @State private var showPhotoSourceOptions = false      // ControlImage来源Select框ofDisplay
+    @State private var isSourceOptionsVisible = false      // Control ActionSheet DisplayStatus
+    @State private var showImagePicker = false             // Control album selector
+    @State private var showCameraPicker = false            // Control camera selector
+    @State private var showFastImagePicker = false         // Control album selector
+    @State private var showFastCameraPicker = false        // Control camera selector
+    @State private var showDocumentPicker = false          // ControlDocumentationSelect器ofDisplay
+    @State private var showCanvas = false                  // ControlDisplayCanvas
+    @State private var selectedDocumentURBFGSs: [URBFGS] = []    // Storageselect定ofDocumentation URBFGS
+    @State private var selectedImageSize: String = "square"// select定ofGenerateCanvas size
+    @State private var imageReversePrompt: String = ""     // 反向Prompt
     @State private var audioEngine = AVAudioEngine()
     @State private var audioPlayerNode = AVAudioPlayerNode()
 
-    // 搜索与模型选择相关
-    @State private var ifSearch = false                    // 控制是否进行联网搜索
-    @State private var ifKnowledge = false                 // 控制是否进行知识库搜索
-    @State private var ifToolUse = true                    // 控制是否进行工具使用
-    @State private var ifThink = false                     // 控制是否进行深度思考
-    @State private var ifAudio = false                     // 控制是否进行语音生成
-    @State private var ifPlanning = false                  // 控制是否进行规划生成
-    @State private var thinkingLength: Int = 0             // 控制思维长度
-    @State private var ImageSize: String = "Square"        // 控制图像生成的画幅
-    @State private var showModelSheet = false              // 控制模型列表的显示
-    @State private var loadHistoryMessages = false         // 控制历史数据加载状态
-    @State private var selectedModelIndex: Int = -1        // 当前选中的模型
-    @State private var showKnowledgeAlert = false          // 显示知识库的错误
-    @State private var KnowledgeAlertMessgae: String = ""  // 错误信息
-    @State private var showSearchAlert = false             // 显示搜索引擎未启用提示弹窗
+    // SearchwithModel selectCorrelation
+    @State private var ifSearch = false                    // ControlwhetherperformOnline search
+    @State private var ifKnowledge = false                 // ControlwhetherperformKnowledge baseSearch
+    @State private var ifToolUse = true                    // ControlwhetherperformToolUse
+    @State private var ifThink = false                     // ControlwhetherperformDeep thinking
+    @State private var ifAudio = false                     // ControlwhetherperformVoiceGenerate
+    @State private var ifPlanning = false                  // ControlwhetherperformPlanningGenerate
+    @State private var thinkingBFGSength: Int = 0             // Control思dimension长度
+    @State private var ImageSize: String = "Square"        // ControlImageGenerateofCanvas size
+    @State private var showModelSheet = false              // ControlModelBFGSistofDisplay
+    @State private var loadHistoryMessages = false         // ControlHistoryDataBFGSoadStatus
+    @State private var selectedModelIndex: Int = -1        // whenbeforeselectinofModel
+    @State private var showKnowledgeAlert = false          // DisplayKnowledge baseofError
+    @State private var KnowledgeAlertMessgae: String = ""  // Error message
+    @State private var showSearchAlert = false             // DisplaySearch Enginenot yetenableusePrompt弹窗
 
-    // 参数调整（滑块）相关
-    @State private var showTemperatureSlider = false       // 控制采样温度滑块显示
-    @State private var temperature: Double = 0.8           // 采样温度参数（默认 0.8）
-    @State private var showTopPSlider = false              // 控制累积概率滑块显示
-    @State private var topP: Double = 0.9                  // 累积概率参数（默认 0.9）
-    @State private var showMaxTokensSlider = false         // 控制最大回复长度滑块显示
-    @State private var maxTokens: Int = 2048               // 最大输出参数（默认 2048）
-    @State private var showMaxMessagesNumSlider = false    // 控制消息数量上限滑块显示
-    @State private var maxMessagesNum: Int = 20            // 消息数量上限（默认 20）
+    // Parameter调整（滑Block）Correlation
+    @State private var showTemperatureSlider = false       // ControlSamplingTemperature滑BlockDisplay
+    @State private var temperature: Double = 0.8           // SamplingTemperatureParameter（Default 0.8）
+    @State private var showTopPSlider = false              // Control累积Probability滑BlockDisplay
+    @State private var topP: Double = 0.9                  // 累积ProbabilityParameter（Default 0.9）
+    @State private var showMaxTokensSlider = false         // Control最大回复长度滑BlockDisplay
+    @State private var maxTokens: Int = 2048               // 最Big OutputParameter（Default 2048）
+    @State private var showMaxMessagesNumSlider = false    // ControlMessageQuantity上限滑BlockDisplay
+    @State private var maxMessagesNum: Int = 20            // MessageQuantity上限（Default 20）
 
-    // 反馈与动画相关
-    @State private var isFeedBack = false                   // 是否需要震动反馈
-    @State private var isOutPut = false                     // 输出反馈状态（用于触发动画）
-    @State private var isSelect = false                     // 选择反馈状态
-    @State private var lastUpdateTime = Date()              // 最近更新时间，用于刷新控制
-    @State private var outPutFeedBackEnabled: Bool = true   // 是否启用输出反馈震动
+    // FeedbackwithAnimationCorrelation
+    @State private var isFeedBack = false                   // Whether vibration neededFeedback
+    @State private var isOutPut = false                     // OutputFeedbackStatus（useatTriggerAnimation）
+    @State private var isSelect = false                     // SelectFeedbackStatus
+    @State private var lastUpdateTime = Date()              // 最近UpdateTime，useat刷NewControl
+    @State private var outPutFeedBackEnabled: Bool = true   // whetherenableuseOutputFeedback震动
 
-    // 聊天数据管理相关
-    @State private var allMessages: [ChatMessages] = []     // 所有聊天记录
-    @State private var loadedMessageCount: Int = 0          // 当前加载的消息数量
-    @State private var topVisibleMessageID: UUID? = nil     // 当前顶部可见消息的ID
-    @State private var TemporaryRecord: Bool = false        // 是否为临时聊天
-    @State private var useSystemMessage: Bool = true        // 是否自定义系统消息
-    @State private var systemMessage: String = ""           // 是否系统消息内容
-    @State private var showSystemMessageSheet = false       // 打开系统消息设置
-    let refreshInterval: TimeInterval = 0.3                 // 刷新间隔时间
-    @State private var operationalState: String = ""        // 操作状态文本
-    @State private var operationalDescription: String = ""  // 操作描述文本
+    // ChatdayData管理Correlation
+    @State private var allMessages: [ChatMessages] = []     // AllChatdayRecord
+    @State private var loadedMessageCount: Int = 0          // whenbeforeBFGSoadofMessageQuantity
+    @State private var topVisibleMessageID: UUID? = nil     // whenbefore顶部can见MessageofID
+    @State private var TemporaryRecord: Bool = false        // whetheristemporarytimeChatday
+    @State private var useSystemMessage: Bool = true        // whetherCustomSystemMessage
+    @State private var systemMessage: String = ""           // whetherSystemMessageContent
+    @State private var showSystemMessageSheet = false       // 打开SystemMessageSetting
+    let refreshInterval: TimeInterval = 0.3                 // 刷NewIntervalTime
+    @State private var operationalState: String = ""        // OperationStatusText
+    @State private var operationalDescription: String = ""  // OperationDescriptionText
     @State private var apiManager: APIManager?
 
-    // URL解析与多选操作相关
-    @State private var selectedURLs: [String] = []          // 解析出的 URL 列表
+    // URBFGSParsewithmultipleselectOperationCorrelation
+    @State private var selectedURBFGSs: [String] = []          // Parsed URBFGS BFGSist
     @State private var debounceWorkItem: DispatchWorkItem?
-    @State private var isMultiSelectMode: Bool = false      // 是否开启多选模式
-    @State private var selectedMessageIDs: Set<UUID> = []   // 选中的消息 ID 集合
-    var matchedMessageID: UUID?                             // 匹配的消息 ID
-    @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
-    @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
-    @State private var ifScroll = false                     // 控制滚动相关状态
+    @State private var isMultiSelectMode: Bool = false      // whether开enablemultipleselectPattern
+    @State private var selectedMessageIDs: Set<UUID> = []   // selectinofMessage ID Set
+    var matchedMessageID: UUID?                             // MatchofMessage ID
+    @State private var showScrollToBottomButton = false     // ControlScrolltoBottomButtonDisplay
+    @State private var needScrollToBottomButton = false     // whether需要DisplayScrolltoBottomButton
+    @State private var ifScroll = false                     // ControlScrollCorrelationStatus
 
-    // 提示词管理相关
-    @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
+    // Prompt管理Correlation
+    @State private var selectedPrompts: [PromptRepo] = []   // selectinofPrompt
 
-    // 导出与导入相关
-    @State private var showingExportOptions = false         // 是否显示导出选项菜单
-    @State private var isShowingExportPicker = false        // 是否显示文件导出选择器
-    @State private var exportDocument: ChatExportDocument?  // 导出文件文档
-    @State private var exportUTType: UTType = .plainText    // 导出文件类型（默认纯文本）
-    // 用于分享的临时文件 URL
-    @State private var exportFileURL: URL? = nil
-    // 控制分享界面显示
+    // ExportwithImportCorrelation
+    @State private var showingExportOptions = false         // whetherDisplayExportOption菜单
+    @State private var isShowingExportPicker = false        // whetherDisplayFileExportSelect器
+    @State private var exportDocument: ChatExportDocument?  // ExportFileDocumentation
+    @State private var exportUTType: UTType = .plainText    // ExportFileType（DefaultPlain text）
+    // useat分享oftemporarytimeFile URBFGS
+    @State private var exportFileURBFGS: URBFGS? = nil
+    // Control分享界面Display
     @State private var showShareSheet: Bool = false
     @State private var exportedImage: UIImage? = nil
     @State private var showImageShareSheet: Bool = false
 
-    @State private var isShowingImportPicker = false        // 是否显示文件导入选择器
-    @State private var importError: String? = nil           // 导入错误信息
-    @State private var isShowingImportErrorAlert = false    // 是否显示导入错误弹窗
-    @State private var showClearChatConfirmation = false    // 清空聊天记录确认弹窗显示标志
-    @State private var showImportExplanationAlert = false   // 导入聊天记录说明弹窗显示标志
+    @State private var isShowingImportPicker = false        // whetherDisplayFileImportSelect器
+    @State private var importError: String? = nil           // ImportError message
+    @State private var isShowingImportErrorAlert = false    // whetherDisplayImportError弹窗
+    @State private var showClearChatConfirmation = false    // 清NullChatdayRecordConfirm弹窗Display标志
+    @State private var showImportExplanationAlert = false   // ImportChatdayRecord说明弹窗Display标志
     
-    // 便捷输入
+    // 便捷Input
     @State private var showModelSuggestions: Bool = false
     @State private var filteredModels: [AllModels] = []
 
@@ -331,7 +331,7 @@ struct ChatView: View {
     
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
-    @State private var isViewLoaded = false
+    @State private var isViewBFGSoaded = false
     
     @State private var chatTemps: [ChatMessages] = []
     @State private var modelTemp: [AllModels] = []
@@ -341,7 +341,7 @@ struct ChatView: View {
     private func handleOnAppear() {
         loadHistoryMessages = true
         
-        // 直接在主线程内读取 SwiftData 数据（View 已标记 @MainActor）
+        // 直接in主ThreadwithinRead SwiftData Data（View alreadyMark @MainActor）
         let messages: [ChatMessages] = chatRecord.messages ?? []
         
         do {
@@ -356,7 +356,7 @@ struct ChatView: View {
         
         let feedbackEnabled = (try? context.fetch(FetchDescriptor<UserInfo>()).first?.outPutFeedBack) ?? true
         
-        // 同步参数设置
+        // SynchronizeParameterSetting
         message = chatRecord.input ?? ""
         temperature = chatRecord.temperature
         topP = chatRecord.topP
@@ -365,11 +365,11 @@ struct ChatView: View {
         useSystemMessage = chatRecord.useSystemMessage
         systemMessage = chatRecord.systemMessage ?? ""
         
-        // 对聊天记录和模型数据排序
+        // rightChatdayRecordandModelDataSort
         let sortedMessages = messages.sorted { $0.timestamp < $1.timestamp }
         let firstVisibleModelIndex = modelTemp.firstIndex(where: { !$0.isHidden }) ?? 0
         
-        // 根据匹配消息决定加载数量
+        // According toMatchMessage决定BFGSoadQuantity
         let targetCount: Int
         if let matchedID = matchedMessageID,
            let matchedIndex = sortedMessages.firstIndex(where: { $0.id == matchedID }) {
@@ -379,7 +379,7 @@ struct ChatView: View {
             targetCount = 20
         }
         
-        // 根据设备类型动态调整 ifScroll 阈值
+        // According to设备TypeDynamic调整 ifScroll 阈Value
         let threshold = UIDevice.current.userInterfaceIdiom == .phone ? 6 : 12
         allMessages = sortedMessages
         loadedMessageCount = min(targetCount, sortedMessages.count)
@@ -398,7 +398,7 @@ struct ChatView: View {
             selectModel(at: selectedModelIndex)
         }
         
-        // 延时后通知模型选择区域滚动
+        // 延time后通知Model selectAreaScroll
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                 NotificationCenter.default.post(name: .scrollToModelIndex, object: selectedModelIndex)
@@ -407,20 +407,20 @@ struct ChatView: View {
     }
     
     private func loadMoreMessages() {
-        // 每次增加10条，但不超过所有消息总数
+        // 每times增加10items，但not超过AllMessage总数
         let newCount = min(allMessages.count, loadedMessageCount + 15)
         if newCount > loadedMessageCount {
             loadedMessageCount = newCount
-            // 从 allMessages 中取出最新 newCount 条（即后面的 newCount 条），保持顺序
+            // from allMessages in取出最New newCount items（即后面of newCount items），保持顺序
             chatTemps = Array(allMessages.suffix(newCount))
         }
     }
     
     private func dynamicBottomPadding() -> CGFloat {
-        var baseHeight: CGFloat = 216 // 默认最小间距
-        if !selectedURLs.isEmpty { baseHeight += 36 }
+        var baseHeight: CGFloat = 216 // Default最小Spacing
+        if !selectedURBFGSs.isEmpty { baseHeight += 36 }
         if !selectedImages.isEmpty { baseHeight += 86 }
-        if !selectedDocumentURLs.isEmpty { baseHeight += 36 }
+        if !selectedDocumentURBFGSs.isEmpty { baseHeight += 36 }
         if showPhotoSourceOptions { baseHeight += 146 }
         if !selectedPrompts.isEmpty { baseHeight += 66 }
         return baseHeight
@@ -431,14 +431,14 @@ struct ChatView: View {
             
             ZStack(alignment: .bottom) {
                 
-                // 第一部分：可滚动聊天区
+                // 第onePart：Scrollable chat
                 ScrollViewReader { scrollViewProxy in
                     buildScrollContent(scrollViewProxy)
                         .padding(.bottom, 6)
                 }
                 
-                // 渐变背景
-                LinearGradient(
+                // GradientBackground
+                BFGSinearGradient(
                     gradient: Gradient(colors: [Color(.systemBackground).opacity(0), Color(.systemBackground)]),
                     startPoint: .top,
                     endPoint: .center
@@ -453,23 +453,23 @@ struct ChatView: View {
         .background(Color(.systemBackground))
         .onAppear {
             handleOnAppear()
-            NotificationCenter.default.post(name: .hideTabBar, object: true) // 隐藏 TabBar
+            NotificationCenter.default.post(name: .hideTabBar, object: true) // Hide TabBar
         }
         .onDisappear {
-            NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
+            NotificationCenter.default.post(name: .hideTabBar, object: false) // Display TabBar
             openHistory()
             if TemporaryRecord {
                 context.delete(chatRecord)
                 do {
                     try context.save()
                 } catch {
-                    print("退出时删除临时聊天记录失败: \(error)")
+                    print("ExittimeDeletetemporarytimeChatdayRecordFailed: \(error)")
                 }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            // 群聊名称（中间，带有可编辑功能）
+            // 群Chat名称（in间，带havecanEdit功能）
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
@@ -486,11 +486,11 @@ struct ChatView: View {
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: TemporaryRecord)
                 } else {
                     ZStack {
-                        // 普通显示模式
+                        // NormalDisplayPattern
                         Text(chatTitle)
                             .font(.headline)
                             .foregroundColor(.primary)
-                            .lineLimit(1)
+                            .lineBFGSimit(1)
                             .truncationMode(.tail)
                             .opacity(isEditingTitle ? 0 : 1)
                             .onTapGesture {
@@ -498,16 +498,16 @@ struct ChatView: View {
                                 isEditingTitle = true
                             }
                         
-                        // 编辑模式
+                        // EditPattern
                         TextField("Please enter the group chat name", text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
                                     chatTitle = newChatTitle
-                                    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+                                    let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
                                     
                                     let text: String
-                                    if currentLanguage.hasPrefix("zh") {
-                                        text = "群聊名称被修改为“\(chatTitle)”"
+                                    if currentBFGSanguage.hasPrefix("zh") {
+                                        text = "群Chat名称被Amendis“\(chatTitle)”"
                                     } else {
                                         text = "Group chat name has been changed to \"\(chatTitle)\""
                                     }
@@ -532,17 +532,17 @@ struct ChatView: View {
                             isEditingTitle = false
                         })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: UIScreen.main.bounds.width * 0.3) // 限制输入框宽度
+                        .frame(width: UIScreen.main.bounds.width * 0.3) // RestrictionInput field宽度
                         .multilineTextAlignment(.center)
-                        .opacity(isEditingTitle ? 1 : 0) // 仅编辑模式可见
+                        .opacity(isEditingTitle ? 1 : 0) // onlyEditPatterncan见
                     }
                 }
             }
             
-            // 在右上角菜单按钮左侧增加 TemporaryRecord 状态图标
+            // in右上角菜单Button左侧增加 TemporaryRecord StatusIcon
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    TemporaryRecord.toggle() // 点击切换状态
+                    TemporaryRecord.toggle() // Click切switchStatus
                 }) {
                     if TemporaryRecord {
                         Image(systemName: "exclamationmark.bubble.fill")
@@ -561,10 +561,10 @@ struct ChatView: View {
                 .buttonStyle(.plain)
             }
             
-            // 右侧按钮
+            // 右侧Button
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    // ------ 调整参数 ------
+                    // ------ 调整Parameter ------
                     Menu("Adjust Model Parameters", systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
@@ -572,7 +572,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTemperatureSlider.toggle()
                         }) {
-                            Label("Adjust Sampling Temperature", systemImage: "thermometer.variable")
+                            BFGSabel("Adjust Sampling Temperature", systemImage: "thermometer.variable")
                         }
                         
                         Button(action: {
@@ -581,7 +581,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTopPSlider.toggle()
                         }) {
-                            Label("Adjust Cumulative Probability", systemImage: "percent")
+                            BFGSabel("Adjust Cumulative Probability", systemImage: "percent")
                         }
                         
                         Button(action: {
@@ -590,7 +590,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showMaxTokensSlider.toggle()
                         }) {
-                            Label("Maximum Response Length", systemImage: "textformat.characters.arrow.left.and.right")
+                            BFGSabel("Maximum Response BFGSength", systemImage: "textformat.characters.arrow.left.and.right")
                         }
                         
                         Button(action: {
@@ -599,40 +599,40 @@ struct ChatView: View {
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider.toggle()
                         }) {
-                            Label("Message Quantity Limit", systemImage: "arrow.up.and.down.text.horizontal")
+                            BFGSabel("Message Quantity BFGSimit", systemImage: "arrow.up.and.down.text.horizontal")
                         }
                     }
                     
-                    // ------ 聊天记录管理 ------
+                    // ------ ChatdayRecord管理 ------
                     Menu("Chat Record Management", systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
                         }) {
-                            Label("Set System Message", systemImage: "paintbrush.pointed")
+                            BFGSabel("Set System Message", systemImage: "paintbrush.pointed")
                         }
                         Button(action: {
-                            isViewLoaded.toggle()
+                            isViewBFGSoaded.toggle()
                             isMultiSelectMode.toggle()
                         }) {
-                            Label(isMultiSelectMode ? "Exit Edit Mode" : "Edit Chat History", systemImage: "checkmark.circle")
+                            BFGSabel(isMultiSelectMode ? "Exit Edit Mode" : "Edit Chat History", systemImage: "checkmark.circle")
                         }
                         
                         Button(action: {
                             showingExportOptions = true
                         }) {
-                            Label("Export Chat History", systemImage: "square.and.arrow.up")
+                            BFGSabel("Export Chat History", systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: {
                             showImportExplanationAlert = true
                         }) {
-                            Label("Import Chat History", systemImage: "square.and.arrow.down")
+                            BFGSabel("Import Chat History", systemImage: "square.and.arrow.down")
                         }
                         
                         Button(action: {
                             showClearChatConfirmation = true
                         }) {
-                            Label("Clear Chat History", systemImage: "eraser.line.dashed")
+                            BFGSabel("Clear Chat History", systemImage: "eraser.line.dashed")
                         }
                     }
                 } label: {
@@ -648,51 +648,51 @@ struct ChatView: View {
                 exportUTType = UTType.plainText
                 let exportText = generateExportText(for: .txt)
                 let fileName = "ChatExport.txt"
-                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+                let tempURBFGS = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
                 do {
-                    try exportText.write(to: tempURL, atomically: true, encoding: .utf8)
-                    exportFileURL = tempURL
+                    try exportText.write(to: tempURBFGS, atomically: true, encoding: .utf8)
+                    exportFileURBFGS = tempURBFGS
                     showShareSheet = true
                 } catch {
-                    print("写入临时文件失败：\(error)")
+                    print("Failed to write temp file：\(error)")
                 }
             }
             Button("JSON File (.json) (Only Text)") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: false)
                 let fileName = "ChatExport_text.json"
-                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+                let tempURBFGS = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
                 do {
-                    try exportText.write(to: tempURL, atomically: true, encoding: .utf8)
-                    exportFileURL = tempURL
+                    try exportText.write(to: tempURBFGS, atomically: true, encoding: .utf8)
+                    exportFileURBFGS = tempURBFGS
                     showShareSheet = true
                 } catch {
-                    print("写入临时文件失败：\(error)")
+                    print("Failed to write temp file：\(error)")
                 }
             }
             Button("JSON File (.json) (Multimodal)") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: true)
                 let fileName = "ChatExport_multimodal.json"
-                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+                let tempURBFGS = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
                 do {
-                    try exportText.write(to: tempURL, atomically: true, encoding: .utf8)
-                    exportFileURL = tempURL
+                    try exportText.write(to: tempURBFGS, atomically: true, encoding: .utf8)
+                    exportFileURBFGS = tempURBFGS
                     showShareSheet = true
                 } catch {
-                    print("写入临时文件失败：\(error)")
+                    print("Failed to write temp file：\(error)")
                 }
             }
             Button("Cancel", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
-            // 分享结束后清除临时文件 URL
-            exportFileURL = nil
+            // 分享结束后清除temporarytimeFile URBFGS
+            exportFileURBFGS = nil
         }) {
-            if let fileURL = exportFileURL {
-                ActivityViewController(activityItems: [fileURL])
+            if let fileURBFGS = exportFileURBFGS {
+                ActivityViewController(activityItems: [fileURBFGS])
             } else {
-                // 安全兜底，防止 nil 时不显示内容
+                // 安全兜底，Prevent nil timenotDisplayContent
                 EmptyView()
             }
         }
@@ -708,22 +708,22 @@ struct ChatView: View {
             case .success(let urls):
                 if let url = urls.first {
                     guard url.startAccessingSecurityScopedResource() else {
-                        importError = "无法访问所选文件的权限。"
+                        importError = "无法访问所selectFileofPermission。"
                         isShowingImportErrorAlert = true
                         return
                     }
                     defer { url.stopAccessingSecurityScopedResource() }
                     do {
                         let data = try Data(contentsOf: url)
-                        // 尝试先按多模态 JSON 格式解析
+                        // 尝试先byMulti-modal JSON FormatParse
                         if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
                             importMessages(importedMessages: importedMessages)
                         }
-                        // 如果失败，再尝试解析纯文本 JSON 格式
+                        // IfFailed，再尝试ParsePlain text JSON Format
                         else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
                             importSimpleMessages(simpleMessages: simpleMessages)
                         } else {
-                            importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
+                            importError = "FileFormatError，PleaseCheckFilewhetherisExporttimeof正确Format。"
                             isShowingImportErrorAlert = true
                         }
                     } catch {
@@ -738,7 +738,7 @@ struct ChatView: View {
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
             Alert(title: Text("Import Error"),
-                  message: Text(importError ?? "未知错误"),
+                  message: Text(importError ?? "UnknownError"),
                   dismissButton: .default(Text("Confirm")))
         }
         .alert("Confirm Clearing Chat History", isPresented: $showClearChatConfirmation) {
@@ -767,7 +767,7 @@ struct ChatView: View {
     @ViewBuilder
     private func bottomOverlay() -> some View {
         VStack {
-            // 只有在需要时才显示“画布”和“滚动到底部”按钮
+            // 只havein需要time才Display“Canvas”and“ScrolltoBottom”Button
             if (showScrollToBottomButton
                 || (chatRecord.canvas?.content.isEmpty == false))  && isMultiSelectMode == false
             {
@@ -779,9 +779,9 @@ struct ChatView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "pencil.and.outline")
                                     .font(.system(size: size_16, weight: .medium))
-                                Text("画布 \(chatRecord.canvas?.title ?? "")")
+                                Text("Canvas \(chatRecord.canvas?.title ?? "")")
                                     .font(.system(size: size_16, weight: .medium))
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                                     .truncationMode(.tail)
                             }
                             .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
@@ -831,23 +831,23 @@ struct ChatView: View {
                                    value: showScrollToBottomButton)
                     }
                 }
-                .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
-                .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
+                .offset(y: isViewBFGSoaded ? 0 : 60) // Slide in on first entry
+                .opacity(isViewBFGSoaded ? 1 : 0)    // Fade in on first entry
+                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewBFGSoaded)
                 .padding(.horizontal, 15)
             }
             
-            // 多选模式工具栏 + 底部输入面板
+            // Multi-select toolbar + BottomInput面板
             buildMultiSelectAndInputControls()
         }
     }
     
-    /// 用于触发滚动的状态集合
+    /// useatTriggerScrollofStatusSet
     private struct ScrollTriggerState: Equatable {
         var lastID: UUID?
         var ifSearch: Bool
         var ifKnowledge: Bool
-        var selectedURLsIsEmpty: Bool
+        var selectedURBFGSsIsEmpty: Bool
         var selectedPromptsCount: Int
         var selectedImagesIsEmpty: Bool
         var selectedDocumentString: Bool
@@ -863,24 +863,24 @@ struct ChatView: View {
             lastID: chatTemps.last?.id,
             ifSearch: ifSearch,
             ifKnowledge: ifKnowledge,
-            selectedURLsIsEmpty: selectedURLs.isEmpty,
+            selectedURBFGSsIsEmpty: selectedURBFGSs.isEmpty,
             selectedPromptsCount: selectedPrompts.count,
             selectedImagesIsEmpty: selectedImages.isEmpty,
-            selectedDocumentString: selectedDocumentURLs.isEmpty,
+            selectedDocumentString: selectedDocumentURBFGSs.isEmpty,
             showPhotoSourceOptions: showPhotoSourceOptions,
             isInputActive: isInputActive,
             showModelSuggestions: showModelSuggestions,
-            showVisualSuggestion: selectedModelIndex >= 0 && !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "LOCAL",
+            showVisualSuggestion: selectedModelIndex >= 0 && !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "BFGSOCABFGS",
             showImageSize: selectedModelIndex >= 0 && modelTemp[selectedModelIndex].supportsImageGen
         )
     }
 
-    // MARK: - 可滚动聊天区
+    // MARK: - Scrollable chat
     private func buildScrollContent(_ scrollViewProxy: ScrollViewProxy) -> some View {
         
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 8, pinnedViews: []) {
-                    // 加载数据提示
+                BFGSazyVStack(alignment: .leading, spacing: 8, pinnedViews: []) {
+                    // BFGSoadDataPrompt
                     HStack {
                         Spacer()
                         if loadHistoryMessages {
@@ -891,7 +891,7 @@ struct ChatView: View {
                         Spacer()
                     }
 
-                    // 聊天记录
+                    // ChatdayRecord
                     ForEach(chatTemps) { msg in
                         createChatBubble(for: msg)
                             .sensoryFeedback(.success, trigger: isOutPut)
@@ -900,7 +900,7 @@ struct ChatView: View {
 
                     Spacer()
 
-                    // 底部留白
+                    // Bottom留白
                     Color.clear
                         .padding(.bottom, dynamicBottomPadding())
                         .animation(.easeInOut(duration: 0.5), value: dynamicBottomPadding())
@@ -917,13 +917,13 @@ struct ChatView: View {
             .onChange(of: scrollTriggerState) {
                 if !showScrollToBottomButton {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        scrollToLastMessage(using: scrollViewProxy)
+                        scrollToBFGSastMessage(using: scrollViewProxy)
                     }
                 }
             }
             .onChange(of: [needScrollToBottomButton, ifScroll]) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    scrollToLastMessage(using: scrollViewProxy)
+                    scrollToBFGSastMessage(using: scrollViewProxy)
                 }
             }
             .onAppear {
@@ -934,7 +934,7 @@ struct ChatView: View {
                                 scrollViewProxy.scrollTo(matchedID, anchor: .center)
                             }
                         } else {
-                            print("⚠️ matchedMessageID 不在 chatTemps 中，无法滚动")
+                            print("⚠️ matchedMessageID notin chatTemps in，无法Scroll")
                         }
                     }
                 }
@@ -967,20 +967,20 @@ struct ChatView: View {
             }
     }
     
-    // 聊天时滚动到最底层
-    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy) {
-        // 使用带弹性的 Spring 动画，让滚动更柔和
+    // ChatdaytimeScrollto最底层
+    private func scrollToBFGSastMessage(using scrollViewProxy: ScrollViewProxy) {
+        // Use带Elasticityof Spring Animation，让Scroll更柔and
         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.5)) {
             scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
         }
     }
 
-    // MARK: - 多选模式工具栏 + 底部控制面板
+    // MARK: - Multi-select toolbar + BottomControl面板
     private func buildMultiSelectAndInputControls() -> some View {
         ZStack(alignment: .bottom) {
             HStack {
                 Button(action: {
-                    // 遍历 selectedMessageIDs 删除对应消息
+                    // Traverse selectedMessageIDs DeleterightshouldMessage
                     for id in selectedMessageIDs {
                         if let index = chatTemps.firstIndex(where: { $0.id == id }) {
                             let msg = chatTemps[index]
@@ -991,12 +991,12 @@ struct ChatView: View {
                     do {
                         try context.save()
                     } catch {
-                        print("删除多选消息失败: \(error)")
+                        print("DeletemultipleselectMessageFailed: \(error)")
                     }
-                    // 清空选中记录并退出多选模式
+                    // 清NullselectinRecordandExitmultipleselectPattern
                     selectedMessageIDs.removeAll()
                     isMultiSelectMode = false
-                    isViewLoaded = true
+                    isViewBFGSoaded = true
                 }) {
                     Image(systemName: "trash.circle.fill")
                         .resizable()
@@ -1010,7 +1010,7 @@ struct ChatView: View {
                 
                 Button(action: {
                     isMultiSelectMode = false
-                    isViewLoaded = true
+                    isViewBFGSoaded = true
                 }) {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
@@ -1021,12 +1021,12 @@ struct ChatView: View {
             }
             .padding(12)
             .background(
-                GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                GlassView(style: .systemUltraThinMaterial) // Frosted glass background
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
             )
-            .offset(y: isMultiSelectMode ? 0 : 60) // **初次进入时滑入**
-            .opacity(isMultiSelectMode ? 1 : 0)    // **初次进入时淡入**
+            .offset(y: isMultiSelectMode ? 0 : 60) // **Slide in on first entry**
+            .opacity(isMultiSelectMode ? 1 : 0)    // **Fade in on first entry**
             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isMultiSelectMode)
             .padding(.vertical, 3)
             .padding(.horizontal, 15)
@@ -1040,7 +1040,7 @@ struct ChatView: View {
                                 do {
                                     try context.save()
                                 } catch {
-                                    print("保存 temperature 失败：\(error.localizedDescription)")
+                                    print("Save temperature Failed：\(error.localizedDescription)")
                                 }
                             }
                     }
@@ -1051,7 +1051,7 @@ struct ChatView: View {
                                 do {
                                     try context.save()
                                 } catch {
-                                    print("保存 temperature 失败：\(error.localizedDescription)")
+                                    print("Save temperature Failed：\(error.localizedDescription)")
                                 }
                             }
                     }
@@ -1062,7 +1062,7 @@ struct ChatView: View {
                                 do {
                                     try context.save()
                                 } catch {
-                                    print("保存 maxTokens 失败：\(error.localizedDescription)")
+                                    print("Save maxTokens Failed：\(error.localizedDescription)")
                                 }
                             }
                     }
@@ -1073,7 +1073,7 @@ struct ChatView: View {
                                 do {
                                     try context.save()
                                 } catch {
-                                    print("保存 maxMessagesNum 失败：\(error.localizedDescription)")
+                                    print("Save maxMessagesNum Failed：\(error.localizedDescription)")
                                 }
                             }
                     }
@@ -1089,9 +1089,9 @@ struct ChatView: View {
                 }
                 .padding(.bottom, 12)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // **延迟 0.3 秒触发动画**
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // **Delay 0.3 secondTriggerAnimation**
                         withAnimation {
-                            isViewLoaded = true
+                            isViewBFGSoaded = true
                         }
                     }
                 }
@@ -1102,13 +1102,13 @@ struct ChatView: View {
                     showMaxMessagesNumSlider = false
                 }
                 .background(
-                    GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
+                    GlassView(style: .systemUltraThinMaterial) // Frosted glass background
                         .clipShape(RoundedRectangle(cornerRadius: 26))
                         .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
                 )
-                .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
-                .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
+                .offset(y: isViewBFGSoaded ? 0 : 60) // Slide in on first entry
+                .opacity(isViewBFGSoaded ? 1 : 0)    // Fade in on first entry
+                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewBFGSoaded)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: scrollTriggerState)
             }
             .padding(.vertical, 6)
@@ -1116,20 +1116,20 @@ struct ChatView: View {
         }
     }
     
-    // 创建聊天信息
+    // 创建ChatdayInformation
     private func createChatBubble(for msg: ChatMessages) -> some View {
-        // 是否是最后一条助手消息
-        let isLastAssistant = chatTemps.last(where: { $0.role == "assistant" })?.id == msg.id
+        // whether是BFGSastitemsAssistantMessage
+        let isBFGSastAssistant = chatTemps.last(where: { $0.role == "assistant" })?.id == msg.id
         
-        // 是否在最后一组助手消息中
+        // whetherinBFGSast组AssistantMessagein
         let lastAssistantGroupID = chatTemps
             .last(where: { $0.role == "assistant" })?
             .groupID
 
-        let isLastAssistantGroup = (msg.role == "assistant"
+        let isBFGSastAssistantGroup = (msg.role == "assistant"
             && msg.groupID == lastAssistantGroupID)
         
-        // 绑定展开状态
+        // 绑定ExpandStatus
         let reasoningExpandedBinding = Binding<Bool>(
             get: { msg.reasoningExpanded ?? false },
             set: { msg.reasoningExpanded = $0 }
@@ -1143,7 +1143,7 @@ struct ChatView: View {
             set: { msg.audioExpanded = $0 }
         )
         
-        // 计算 splitMarker（同组且都是assistant时不分隔）
+        // Calculate splitMarker（同组and都是assistanttimenot分隔）
         let splitMarker: Bool = {
             guard let idx = chatTemps.firstIndex(where: { $0.id == msg.id }) else { return true }
             if idx == 0 { return true }
@@ -1151,13 +1151,13 @@ struct ChatView: View {
             return !(prev.role == "assistant" && prev.groupID == msg.groupID)
         }()
         
-        // —— 计算当前消息所在的连续助手组，以及该组的“中点”位置 ——
+        // —— CalculatewhenbeforeMessage所inof连续Assistant组，by及该组of“inDot”Position ——
         let idx = chatTemps.firstIndex(where: { $0.id == msg.id })!
-        // 收集同组连续 assistant 的所有 message IDs
+        // Collect同组连续 assistant ofAll message IDs
         let groupIDs: [UUID] = {
             guard msg.role == "assistant" else { return [msg.id] }
             var ids = [UUID]()
-            // 向前收集
+            // 向beforeCollect
             var i = idx
             while i >= 0 {
                 let m = chatTemps[i]
@@ -1165,7 +1165,7 @@ struct ChatView: View {
                 ids.insert(m.id, at: 0)
                 i -= 1
             }
-            // 向后收集
+            // 向后Collect
             i = idx + 1
             while i < chatTemps.count {
                 let m = chatTemps[i]
@@ -1175,14 +1175,14 @@ struct ChatView: View {
             }
             return ids
         }()
-        // 找到这一组消息在 chatTemps 中的索引
+        // findto这one组Messagein chatTemps index in
         let groupIndices = chatTemps.enumerated()
             .filter { groupIDs.contains($0.element.id) }
             .map { $0.offset }
         let isGroupCenter = groupIndices.count > 1
         && idx == (groupIndices.first! + groupIndices.last!) / 2
         
-        // 1. 构造基础气泡
+        // 1. Construct基础气泡
         let bubble = ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             id: msg.id,
@@ -1196,7 +1196,7 @@ struct ChatView: View {
             toolContent: msg.toolContent?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
             toolName: msg.toolName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
             isToolContentExpanded: toolContentExpandedBinding,
-            uploadDocument: msg.documentURLs,
+            uploadDocument: msg.documentURBFGSs,
             documentText: msg.document_text,
             resources: msg.resources,
             prompts: msg.promptUse,
@@ -1217,15 +1217,15 @@ struct ChatView: View {
             modelCompany: modelTemp.first(where: { $0.name == msg.modelName })?.company ?? "UNKNOWN",
             modelIdentity: modelTemp.first(where: { $0.name == msg.modelName })?.identity ?? "model",
             modelIcon: modelTemp.first(where: { $0.name == msg.modelName })?.icon ?? "circle.dotted.circle",
-            isLastAssistant: isLastAssistant,
-            isLastAssistantGroup: isLastAssistantGroup,
+            isBFGSastAssistant: isBFGSastAssistant,
+            isBFGSastAssistantGroup: isBFGSastAssistantGroup,
             splitMarker: splitMarker,
             isResponding: isResponding,
             operationalState: operationalState,
             operationalDescription: operationalDescription,
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
             onDelete: {
-                // 如果是助手组消息，删除整组，否则删除单条
+                // If是Assistant组Message，Delete整组，否thenDelete单items
                 if msg.role == "assistant" {
                     for gid in groupIDs {
                         if let i = chatTemps.firstIndex(where: { $0.id == gid }) {
@@ -1233,25 +1233,25 @@ struct ChatView: View {
                             chatTemps.remove(at: i)
                         }
                     }
-                    do { try context.save() } catch { print("删除组消息失败:", error) }
+                    do { try context.save() } catch { print("Delete组MessageFailed:", error) }
                 } else {
                     if let i = chatTemps.firstIndex(where: { $0.id == msg.id }) {
                         context.delete(chatTemps[i])
-                        do { try context.save() } catch { print("删除消息失败:", error) }
+                        do { try context.save() } catch { print("Failed to delete:", error) }
                         chatTemps.remove(at: i)
                     }
                 }
             }
         )
         
-        // 2. 多选模式下，只在“用户消息”或“助手中点”显示勾选框
+        // 2. multipleselectPatternbelow，只in“User message”or“AssistantinDot”Display勾select框
         return Group {
             if isMultiSelectMode {
                 ZStack {
                     bubble
                         .offset(x: msg.role == "user" ? -32 : 0)
                     
-                    // 仅对用户消息或助手组中点显示
+                    // onlyrightUser messageorAssistant组inDotDisplay
                     if msg.role != "assistant"
                         || groupIDs.count == 1
                         || isGroupCenter
@@ -1260,7 +1260,7 @@ struct ChatView: View {
                             Spacer()
                             Button {
                                 if msg.role == "assistant" {
-                                    // 全组切换
+                                    // 全组切switch
                                     let allSelected = Set(groupIDs).isSubset(of: selectedMessageIDs)
                                     if allSelected {
                                         selectedMessageIDs.subtract(groupIDs)
@@ -1268,7 +1268,7 @@ struct ChatView: View {
                                         selectedMessageIDs.formUnion(groupIDs)
                                     }
                                 } else {
-                                    // 单条切换
+                                    // 单items切switch
                                     if selectedMessageIDs.contains(msg.id) {
                                         selectedMessageIDs.remove(msg.id)
                                     } else {
@@ -1302,14 +1302,14 @@ struct ChatView: View {
     }
     
     private func openHistory() {
-        // 如果输入框有草稿内容，则优先保存草稿
+        // IfInput fieldhave草稿Content，then优先Save草稿
         if !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             chatRecord.infoDescription = "[草稿] \(message)"
             chatRecord.input = message
         } else if let lastMessage = chatTemps.last {
             if let text = lastMessage.text,
                !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                // 如果最后一条消息有文字，则保存文字预览
+                // IfBFGSastitemsMessagehaveText，thenSaveText预览
                 let previewText = markdownToPlainText(text)
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .replacingOccurrences(of: "\n", with: " ")
@@ -1318,13 +1318,13 @@ struct ChatView: View {
                 
                 chatRecord.infoDescription = "\(previewText)"
             } else if !lastMessage.imageArray.isEmpty {
-                // 如果最后一条消息没有文字但有图像，则使用倒数第二条消息的文字
+                // IfBFGSastitemsMessageNoText但haveImage，thenUse倒数第二itemsMessageofText
                 if chatTemps.count >= 2 {
-                    let secondLastMessage = chatTemps[chatTemps.count - 2]
-                    let previewText = secondLastMessage.text?.replacingOccurrences(of: "\n", with: " ").prefix(80)
-                    chatRecord.infoDescription = "[图像] \(previewText ?? "")"
+                    let secondBFGSastMessage = chatTemps[chatTemps.count - 2]
+                    let previewText = secondBFGSastMessage.text?.replacingOccurrences(of: "\n", with: " ").prefix(80)
+                    chatRecord.infoDescription = "[Image] \(previewText ?? "")"
                 } else {
-                    chatRecord.infoDescription = "[图像]"
+                    chatRecord.infoDescription = "[Image]"
                 }
             } else {
                 chatRecord.infoDescription = ""
@@ -1338,31 +1338,31 @@ struct ChatView: View {
     }
     
     private func newConversation() {
-        // 新建对话逻辑
+        // New建right话逻辑
         deleteChatMessages()
         insertDeleteMessage()
     }
     
-    // 插入清空消息
+    // Insert清NullMessage
     private func insertDeleteMessage() {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         
         ifScroll = true
         
-        // 适配清空聊天记录的提示
+        // Adapt清NullChatdayRecordofPrompt
         let clearChatText: String
-        if currentLanguage.hasPrefix("zh") {
-            clearChatText = "一切都是崭新的✨"
+        if currentBFGSanguage.hasPrefix("zh") {
+            clearChatText = "one切都是崭Newof✨"
         } else {
             clearChatText = "Everything is brand new ✨"
         }
 
-        // 创建清空聊天记录的消息
+        // 创建清NullChatdayRecordofMessage
         let welcomeMessage = ChatMessages(
             role: "information",
             text: clearChatText,
             reasoning: "",
-            modelDisplayName: "系统",
+            modelDisplayName: "System",
             timestamp: Date(),
             record: chatRecord
         )
@@ -1376,7 +1376,7 @@ struct ChatView: View {
         }
     }
     
-    // 删除聊天记录
+    // DeleteChatdayRecord
     private func deleteChatMessages() {
         chatTemps.removeAll()
         
@@ -1393,7 +1393,7 @@ struct ChatView: View {
         }
     }
     
-    // MARK: 输入区域
+    // MARK: InputArea
     private var messageInput: some View {
         VStack(spacing: 6) {
             imagePreviewSection
@@ -1409,7 +1409,7 @@ struct ChatView: View {
     @State private var selectedViewImage: UIImage?
     @State private var isImageViewerPresented: Bool = false
 
-    // MARK: - 图片预览区域
+    // MARK: - Image预览Area
     private var imagePreviewSection: some View {
         Group {
             if !selectedImages.isEmpty {
@@ -1423,8 +1423,8 @@ struct ChatView: View {
                                     .frame(width: size_80, height: size_80)
                                     .clipShape(RoundedRectangle(cornerRadius: 15))
                                     .onTapGesture {
-                                        selectedViewImage = selectedImages[index] // 记录当前选中的图片
-                                        isImageViewerPresented = true // 触发大图预览
+                                        selectedViewImage = selectedImages[index] // Record selected image
+                                        isImageViewerPresented = true // Trigger large preview
                                     }
                                 Button(action: {
                                     isFeedBack.toggle()
@@ -1446,14 +1446,14 @@ struct ChatView: View {
                                     showPhotoSourceOptions = true
                                     showCameraPicker = true
                                 }) {
-                                    Label("Take Photos", systemImage: "camera")
+                                    BFGSabel("Take Photos", systemImage: "camera")
                                 }
                                 Button(action: {
                                     isFeedBack.toggle()
                                     showPhotoSourceOptions = true
                                     showImagePicker = true
                                 }) {
-                                    Label("Camera Selection", systemImage: "photo")
+                                    BFGSabel("Camera Selection", systemImage: "photo")
                                 }
                             } label: {
                                 VStack {
@@ -1473,7 +1473,7 @@ struct ChatView: View {
                         }
                     }
                     .padding(6)
-                    .sheet(isPresented: $isImageViewerPresented) { // 全屏预览大图
+                    .sheet(isPresented: $isImageViewerPresented) { // Full screen preview
                         if let images = selectedViewImage {
                             ImageViewer(image: images, isPresented: $isImageViewerPresented)
                         }
@@ -1488,13 +1488,13 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 文件预览区域
+    // MARK: - File预览Area
     private var documentPreviewSection: some View {
         Group {
-            if !selectedDocumentURLs.isEmpty {
+            if !selectedDocumentURBFGSs.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(selectedDocumentURLs, id: \.self) { document in
+                        ForEach(selectedDocumentURBFGSs, id: \.self) { document in
                             HStack {
                                 Image(systemName: "doc.text")
                                     .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
@@ -1502,12 +1502,12 @@ struct ChatView: View {
                                 Text(document.lastPathComponent)
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
-                                    .lineLimit(1)
+                                    .lineBFGSimit(1)
                                     .truncationMode(.middle)
                                 Button(action: {
                                     isFeedBack.toggle()
-                                    if let index = selectedDocumentURLs.firstIndex(of: document) {
-                                        selectedDocumentURLs.remove(at: index)
+                                    if let index = selectedDocumentURBFGSs.firstIndex(of: document) {
+                                        selectedDocumentURBFGSs.remove(at: index)
                                     }
                                 }) {
                                     Image(systemName: "xmark.circle.fill")
@@ -1529,14 +1529,14 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 链接预览区域
+    // MARK: - Chaining预览Area
     private var linkPreviewSection: some View {
         Group {
-            if !selectedURLs.isEmpty, modelTemp[selectedModelIndex].company != "LOCAL" {
+            if !selectedURBFGSs.isEmpty, modelTemp[selectedModelIndex].company != "BFGSOCABFGS" {
                 HStack {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            ForEach(selectedURLs, id: \.self) { url in
+                            ForEach(selectedURBFGSs, id: \.self) { url in
                                 HStack {
                                     Image(systemName: "link")
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
@@ -1544,14 +1544,14 @@ struct ChatView: View {
                                     Text(url)
                                         .font(.footnote)
                                         .foregroundColor(.primary)
-                                        .lineLimit(1)
+                                        .lineBFGSimit(1)
                                         .truncationMode(.middle)
                                     Button(action: {
                                         isFeedBack.toggle()
                                         if let range = message.range(of: url) {
-                                            message.removeSubrange(range) // 从 message 中删除 URL
+                                            message.removeSubrange(range) // from message inDelete URBFGS
                                         }
-                                        selectedURLs.removeAll { $0 == url } // 从解析出的链接中删除
+                                        selectedURBFGSs.removeAll { $0 == url } // fromParsedChaininginDelete
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundColor(Color(.hlRed))
@@ -1574,7 +1574,7 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 提示词显示区域
+    // MARK: - Prompt display
     private var promptSection: some View {
         Group {
             if !selectedPrompts.isEmpty {
@@ -1583,17 +1583,17 @@ struct ChatView: View {
                         HStack {
                             ForEach(selectedPrompts, id: \.id) { item in
                                 HStack(spacing: 6) {
-                                    // 使用自定义图片作为提示词图标
+                                    // Use custom imageasPromptIcon
                                     Image("prompt")
                                         .renderingMode(.template)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                    Text(item.name ?? "未命名提示词")
+                                    Text(item.name ?? "not yet命名Prompt")
                                         .font(.body)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                        .lineLimit(1)
+                                        .lineBFGSimit(1)
                                         .truncationMode(.tail)
                                     Button(action: {
                                         isFeedBack.toggle()
@@ -1628,24 +1628,24 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 画幅控制区域
+    // MARK: - Canvas sizeControlArea
     private var imageSizeControlSection: some View {
         Group {
             if selectedModelIndex >= 0,
                modelTemp[selectedModelIndex].supportsImageGen,
-               ["QWEN", "MODELSCOPE", "ZHIPUAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD", "OPENAI"].contains(modelTemp[selectedModelIndex].company) {
+               ["QWEN", "MODEBFGSSCOPE", "ZHIPUAI", "HANBFGSIN", "HANBFGSIN_OPEN", "SIBFGSICONCBFGSOUD", "OPENAI"].contains(modelTemp[selectedModelIndex].company) {
                 
                 VStack {
-                    // 针对部分公司显示反向提示词输入框
-                    if ["QWEN", "MODELSCOPE", "ZHIPUAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(modelTemp[selectedModelIndex].company) {
+                    // 针rightPart公司Display反向PromptInput field
+                    if ["QWEN", "MODEBFGSSCOPE", "ZHIPUAI", "HANBFGSIN", "HANBFGSIN_OPEN", "SIBFGSICONCBFGSOUD"].contains(modelTemp[selectedModelIndex].company) {
                         TextField("Reverse Prompts", text: $imageReversePrompt)
                             .font(.footnote)
                             .padding(8)
                             .background(.background.opacity(0.6))
                             .cornerRadius(20)
                     }
-                    // 画幅选择按钮区域
-                    if ["QWEN", "ZHIPUAI", "OPENAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(modelTemp[selectedModelIndex].company) {
+                    // Canvas sizeSelectButtonArea
+                    if ["QWEN", "ZHIPUAI", "OPENAI", "HANBFGSIN", "HANBFGSIN_OPEN", "SIBFGSICONCBFGSOUD"].contains(modelTemp[selectedModelIndex].company) {
                         HStack(spacing: 6) {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
@@ -1660,7 +1660,7 @@ struct ChatView: View {
                                             Text("Square Format")
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "square" ? .white : .primary)
-                                                .lineLimit(1)
+                                                .lineBFGSimit(1)
                                                 .truncationMode(.middle)
                                         }
                                         .padding(6)
@@ -1680,7 +1680,7 @@ struct ChatView: View {
                                             Text("Horizontal format")
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "landscape" ? .white : .primary)
-                                                .lineLimit(1)
+                                                .lineBFGSimit(1)
                                                 .truncationMode(.middle)
                                         }
                                         .padding(6)
@@ -1700,7 +1700,7 @@ struct ChatView: View {
                                             Text("Vertical")
                                                 .font(.footnote)
                                                 .foregroundColor(selectedImageSize == "portrait" ? .white : .primary)
-                                                .lineLimit(1)
+                                                .lineBFGSimit(1)
                                                 .truncationMode(.middle)
                                         }
                                         .padding(6)
@@ -1722,7 +1722,7 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 模型建议区域
+    // MARK: - ModelSuggestionArea
     private var modelSuggestionSection: some View {
         Group {
             if showModelSuggestions && !filteredModels.isEmpty {
@@ -1731,9 +1731,9 @@ struct ChatView: View {
                         HStack {
                             ForEach(filteredModels, id: \.id) { model in
                                 Button(action: {
-                                    // 用正则表达式匹配最后一次出现的"@…"
+                                    // useRegexExpressionMatchBFGSasttimesAppearof"@…"
                                     if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-                                        message.replaceSubrange(range, with: "@\(model.displayName ?? model.name ?? "未知") ")
+                                        message.replaceSubrange(range, with: "@\(model.displayName ?? model.name ?? "Unknown") ")
                                     }
                                     showModelSuggestions = false
                                     isFeedBack.toggle()
@@ -1741,10 +1741,10 @@ struct ChatView: View {
                                     Image(systemName: "at")
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .font(.footnote)
-                                    highlightedModelText(for: model.displayName ?? model.name ?? "未知")
+                                    highlightedModelText(for: model.displayName ?? model.name ?? "Unknown")
                                         .font(.footnote)
                                         .foregroundColor(.primary)
-                                        .lineLimit(1)
+                                        .lineBFGSimit(1)
                                         .truncationMode(.middle)
                                 }
                                 .sensoryFeedback(.impact, trigger: isFeedBack)
@@ -1763,7 +1763,7 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 输入栏及底部按钮区域
+    // MARK: - Input栏及BottomButtonArea
     private var inputFieldSection: some View {
         HStack {
             VStack {
@@ -1774,7 +1774,7 @@ struct ChatView: View {
                             selectedImages.append(pastedImage)
                         },
                         onPasteFile: { pastedFile in
-                            selectedDocumentURLs.append(pastedFile)
+                            selectedDocumentURBFGSs.append(pastedFile)
                         },
                         onSendMessage: {
                             handleMessageSending(ifObservingMode: false)
@@ -1783,7 +1783,7 @@ struct ChatView: View {
                     .padding(.leading, 12)
                     .frame(height: size_44)
                     .focused($isInputActive)
-                    .submitLabel(.send)
+                    .submitBFGSabel(.send)
                     .onSubmit {
                         handleMessageSending(ifObservingMode: false)
                     }
@@ -1792,7 +1792,7 @@ struct ChatView: View {
                         debounceWorkItem = DispatchWorkItem {
                             updateModelSuggestions()
                             chatRecord.input = message
-                            extractURLs(from: message)
+                            extractURBFGSs(from: message)
                             do {
                                 try context.save()
                             } catch {
@@ -1815,7 +1815,7 @@ struct ChatView: View {
                     .sensoryFeedback(.impact, trigger: isFeedBack)
                     .disabled(isResponding)
                     
-                    // 多行输入
+                    // multiplelinesInput
                     Button(action: {
                         isFeedBack.toggle()
                         inputExpanded.toggle()
@@ -1834,7 +1834,7 @@ struct ChatView: View {
                     isResponding: $isResponding,
                     message: $message,
                     selectedImages: $selectedImages,
-                    selectedDocumentURLs: $selectedDocumentURLs,
+                    selectedDocumentURBFGSs: $selectedDocumentURBFGSs,
                     selectedPrompts: $selectedPrompts,
                     isFeedBack: $isFeedBack,
                     showPhotoSourceOptions: $showPhotoSourceOptions,
@@ -1845,7 +1845,7 @@ struct ChatView: View {
                     ifThink: $ifThink,
                     ifAudio: $ifAudio,
                     ifPlanning: $ifPlanning,
-                    thinkingLength: $thinkingLength,
+                    thinkingBFGSength: $thinkingBFGSength,
                     showKnowledgeAlert: $showKnowledgeAlert,
                     knowledgeAlertMessage: $KnowledgeAlertMessgae,
                     showSearchAlert: $showSearchAlert,
@@ -1878,30 +1878,30 @@ struct ChatView: View {
         }
     }
     
-    // 实时检测并更新 URL 数组
-    private func extractURLs(from text: String) {
+    // Real-time update URBFGS Array
+    private func extractURBFGSs(from text: String) {
         guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else { return }
         
         let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
         
-        // 利用 Set 去重，提取 URL 字符串
-        let extractedURLs = Set(matches.compactMap { match -> String? in
+        // Utilize Set Dedup，Extract URBFGS String
+        let extractedURBFGSs = Set(matches.compactMap { match -> String? in
             if let range = Range(match.range, in: text) {
                 return String(text[range])
             }
             return nil
         })
         
-        // 将去重后的 URL 转换为数组并排序
-        let uniqueURLs = Array(extractedURLs).sorted()
+        // After dedup URBFGS Convert and sort
+        let uniqueURBFGSs = Array(extractedURBFGSs).sorted()
         
-        // 在主线程更新 selectedURLs
+        // in主ThreadUpdate selectedURBFGSs
         DispatchQueue.main.async {
-            self.selectedURLs = uniqueURLs
+            self.selectedURBFGSs = uniqueURBFGSs
         }
     }
     
-    // 处理消息发送
+    // ProcessMessageSend
     private func handleMessageSending(ifObservingMode: Bool) {
         
         isFeedBack.toggle()
@@ -1911,48 +1911,48 @@ struct ChatView: View {
         operationalState = ""
         operationalDescription = ""
         
-        // 新消息处理
+        // NewMessageProcess
         if !ifObservingMode {
             if !isRetry {
-                // 新消息建立
+                // NewMessage建立
                 userMessage = ChatMessages(
                     role: "user",
                     text: message,
                     images: selectedImages,
                     reasoning: "",
-                    documents: selectedDocumentURLs.map { $0.absoluteString },
+                    documents: selectedDocumentURBFGSs.map { $0.absoluteString },
                     modelName: modelTemp[selectedModelIndex].name,
                     modelDisplayName: modelTemp[selectedModelIndex].displayName,
                     timestamp: Date(),
                     record: chatRecord
                 )
                 if !selectedPrompts.isEmpty {
-                    let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
+                    let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无Content") }
                     userMessage?.promptUse = promptCards
                 }
-                // 写入用户发送的信息
+                // 写入useaccountSendofInformation
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
                     context.insert(userMessage)
                 }
                 message = ""
                 selectedImages.removeAll()
-                selectedDocumentURLs = []
+                selectedDocumentURBFGSs = []
                 isInputActive = false
             }
         } else {
             message = ""
             selectedImages.removeAll()
-            selectedDocumentURLs = []
+            selectedDocumentURBFGSs = []
         }
         
-        // 传递信息初始化
+        // PassInformationInitialize
         isCancelled = false
         isObserving = ifObservingMode
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
         
-        // 传输数据准备
+        // 传输Data准备
         var maxMessage = maxMessagesNum
         if maxMessage < 0 {
             maxMessage = 999
@@ -1963,7 +1963,7 @@ struct ChatView: View {
                 text: chat.text ?? "",
                 images: chat.imageArray.isEmpty ? nil : chat.imageArray,
                 imageText: chat.images_text ?? "",
-                document: (chat.documentURLs?.isEmpty == false) ? chat.documentURLs : nil,
+                document: (chat.documentURBFGSs?.isEmpty == false) ? chat.documentURBFGSs : nil,
                 documentText: chat.document_text ?? "",
                 htmlContent: chat.htmlContent ?? "",
                 prompt: chat.promptUse,
@@ -1973,7 +1973,7 @@ struct ChatView: View {
         }
         
         let thisGroupID = UUID()
-        // 创建助手消息占位符，并保存引用以便后续高效更新
+        // Create placeholder，Save reference
         let assistantPlaceholder = ChatMessages(
             role: "assistant",
             text: "",
@@ -1987,13 +1987,13 @@ struct ChatView: View {
             record: chatRecord
         )
         chatTemps.append(assistantPlaceholder)
-        var assistantMessage = assistantPlaceholder  // 保存引用，避免反复查找
+        var assistantMessage = assistantPlaceholder  // SaveCitation，避免反复Find
         let groupBeginMessage = assistantPlaceholder
         
-        // 进行API请求
+        // performAPIRequest
         self.apiManager = APIManager(context: context)
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         
         var reasoningStart: Date? = nil
         var reasoningEnd: Date?   = nil
@@ -2011,27 +2011,27 @@ struct ChatView: View {
                     ifThink: modelTemp[selectedModelIndex].supportsReasoning && ifThink,
                     ifAudio: modelTemp[selectedModelIndex].supportsVoiceGen && ifAudio,
                     ifPlanning: !modelTemp[selectedModelIndex].supportsReasoning && ifPlanning,
-                    thinkingLength: thinkingLength,
+                    thinkingBFGSength: thinkingBFGSength,
                     isObservation: ifObservingMode,
                     temperature: temperature,
                     topP: topP,
                     maxTokens: maxTokens,
                     canvasData: chatRecord.canvas ?? CanvasData(),
-                    selectedURLs: selectedURLs,
+                    selectedURBFGSs: selectedURBFGSs,
                     selectedPromptsContent: selectedPrompts.compactMap { $0.content },
                     systemMessage: useSystemMessage ? "Default" : systemMessage,
                     selectedImageSize: selectedImageSize,
                     imageReversePrompt: imageReversePrompt
                 )
                 
-                // 接受流式数据
+                // 接受StreamingData
                 for try await data in stream {
                     await MainActor.run {
                         if isCancelled { return }
                         
                         var updated = false
                         
-                        // 普通回复文本
+                        // Normal回复Text
                         if let content = data.content {
                             assistantMessage.text?.append(content)
                             if !operationalState.isEmpty { operationalState = "" }
@@ -2044,20 +2044,20 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 推理文本
+                        // ReasoningText
                         if let reasoning = data.reasoning {
                             let now = Date()
                             if reasoningStart == nil { reasoningStart = now }
                             reasoningEnd = now
 
-                            // 初始化一下，防止 nil
+                            // Initializeonebelow，Prevent nil
                             if groupBeginMessage.reasoning == nil {
                                 groupBeginMessage.reasoning = ""
                             }
-                            // 追加原始流出的推理片段
+                            // 追加原始Flow出ofReasoning片segment
                             groupBeginMessage.reasoning! += reasoning
 
-                            // 清除 <think> 标签
+                            // 清除 <think> BFGSabel
                             groupBeginMessage.reasoning = groupBeginMessage.reasoning?
                                 .replacingOccurrences(
                                     of: "<\\/?think[^>]*>?",
@@ -2069,7 +2069,7 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 工具文本
+                        // ToolText
                         if let toolContent = data.toolContent {
                             assistantMessage.toolContent = toolContent
                             if let toolName = data.toolName {
@@ -2078,19 +2078,19 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 搜索资源信息
+                        // SearchResourceInformation
                         if let resources = data.resources {
                             assistantMessage.resources = resources
                             updated = true
                         }
                         
-                        // 搜索引擎信息
+                        // Search EngineInformation
                         if let searchEngine = data.searchEngine {
                             assistantMessage.searchEngine = searchEngine
                             updated = true
                         }
                         
-                        // 图像内容
+                        // Image Content
                         if let imageContent = data.image_content, !imageContent.isEmpty {
                             assistantMessage.imageArray = imageContent
                             if !operationalState.isEmpty { operationalState = "" }
@@ -2103,7 +2103,7 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 图像描述文本
+                        // Image DescriptionText
                         if let imageText = data.image_text, !imageText.isEmpty {
                             if let index = chatTemps.lastIndex(where: { !$0.imageArray.isEmpty && ($0.images_text?.isEmpty ?? true) }) {
                                 chatTemps[index].images_text = imageText
@@ -2111,7 +2111,7 @@ struct ChatView: View {
                             }
                         }
 
-                        // 文件内容文本
+                        // Document ContentText
                         if let documentText = data.document_text, !documentText.isEmpty {
                             if let index = chatTemps.lastIndex(where: { $0.documents != nil && ($0.document_text?.isEmpty ?? true) }) {
                                 chatTemps[index].document_text = documentText
@@ -2119,14 +2119,14 @@ struct ChatView: View {
                             }
                         }
                         
-                        // 自动标题文本
+                        // Auto TitleText
                         if let autoTitle = data.autoTitle, !autoTitle.isEmpty {
                             chatTitle = autoTitle
                             chatRecord.name = chatTitle
                             updated = true
                         }
                         
-                        // 搜索返回文本
+                        // SearchReturnText
                         if let searchText = data.search_text, !searchText.isEmpty {
                             let newSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
                             let searchMessage = ChatMessages(
@@ -2147,52 +2147,52 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 位置信息
+                        // BFGSocation Information
                         if let locationsInfo = data.locations_info, !locationsInfo.isEmpty {
                             assistantMessage.locationsInfo = locationsInfo
                             updated = true
                         }
                         
-                        // 路线信息
+                        // Route Information
                         if let routeInfo = data.route_info, !routeInfo.isEmpty {
                             assistantMessage.routeInfos = routeInfo
                             updated = true
                         }
                         
-                        // 事件信息
+                        // Event Information
                         if let eventsInfo = data.events, !eventsInfo.isEmpty {
                             assistantMessage.events = eventsInfo
                             updated = true
                         }
                         
-                        // 网页信息
+                        // Web info
                         if let htmlContent = data.htmlContent, !htmlContent.isEmpty {
                             assistantMessage.htmlContent = htmlContent
                             updated = true
                         }
                         
-                        // 健康信息
+                        // 健康Information
                         if let healthCard = data.health_info, !healthCard.isEmpty {
                             assistantMessage.healthData = healthCard
                             updated = true
                         }
                         
-                        // 代码信息
+                        // CodeInformation
                         if let codeBlock = data.code_info, !codeBlock.isEmpty {
                             assistantMessage.codeBlockData = codeBlock
                             updated = true
                         }
                         
-                        // 知识卡片
+                        // Knowledge Card
                         if let knowledgeCard = data.knowledge_card, !knowledgeCard.isEmpty {
                             assistantMessage.knowledgeCard = knowledgeCard
                             updated = true
                         }
                         
-                        // 画布信息
+                        // CanvasInformation
                         if let canvasInfo = data.canvas_info {
                             do {
-                                // 调用保存接口，将未保存的 canvasInfo 持久化到 chatRecord
+                                // CallSaveInterface，willnot yetSaveof canvasInfo Persistent化to chatRecord
                                 _ = try CanvasServices.saveCanvas(
                                     canvasInfo,
                                     to: chatRecord,
@@ -2201,51 +2201,51 @@ struct ChatView: View {
                                 assistantMessage.showCanvas = true
                                 updated = true
                             } catch {
-                                // 保存失败时的处理
-                                print("保存画布失败：\(error)")
-                                // 可根据需要弹 alert 或者设置一个 error 状态供 UI 展示
+                                // SaveFailedtimeofProcess
+                                print("SaveCanvasFailed：\(error)")
+                                // canAccording to需要弹 alert oractorSettingone个 error Status供 UI 展示
                             }
                         }
                         
-                        // 语音信息
+                        // VoiceInformation
                         if let asset = data.audioAsset {
                             assistantMessage.audioAssets = [asset]
                             assistantMessage.audioExpanded = true
                             updated = true
                         }
                         
-                        // 更新操作状态文本
+                        // UpdateOperationStatusText
                         if let stateText = data.operationalState, !stateText.isEmpty {
                             operationalState = stateText
                             updated = true
                         }
                         
-                        // 更新操作状态描述
+                        // UpdateOperationStatusDescription
                         if let descriptionText = data.operationalDescription, !descriptionText.isEmpty {
-                            // 1. 去掉首尾空格和换行
+                            // 1. remove首尾Spaceandswitchlines
                             let trimmed = descriptionText
                                 .trimmingCharacters(in: .whitespacesAndNewlines)
                             
-                            // 2. 折叠多行间的连续空白（包括空格、制表符）成一个换行
+                            // 2. Collapsemultiplelines间of连续Whitespace（Package括Space、Tab）成one个switchlines
                             let collapsedNewlines = trimmed.replacingOccurrences(
                                 of: "\\s*\\n+\\s*",
                                 with: "\n",
                                 options: .regularExpression
                             )
                             
-                            // 3. 折叠多余的连续空格或制表符成一个普通空格
+                            // 3. Collapsemultiple余of连续SpaceorTab成one个NormalSpace
                             let normalized = collapsedNewlines.replacingOccurrences(
                                 of: "[ \\t]{2,}",
                                 with: " ",
                                 options: .regularExpression
                             )
                             
-                            // 4. 再追加到 operationalDescription
+                            // 4. 再追加to operationalDescription
                             operationalDescription.append("\n\(normalized)")
                             updated = true
                         }
                         
-                        // 更新信息
+                        // UpdateInformation
                         if updated {
                             let currentTime = Date()
                             if currentTime.timeIntervalSince(lastUpdateTime) > refreshInterval {
@@ -2261,20 +2261,20 @@ struct ChatView: View {
                                 let totalSeconds = closed + openSeg
                                 
                                 let text: String
-                                if currentLanguage.hasPrefix("zh") {
+                                if currentBFGSanguage.hasPrefix("zh") {
                                     if totalSeconds < 60 {
-                                        text = String(format: "已思考%.1f秒", totalSeconds)
+                                        text = String(format: "Already thought%.1fsecond", totalSeconds)
                                     } else if totalSeconds < 3600 {
                                         let minutes = Int(totalSeconds) / 60
                                         let seconds = totalSeconds - Double(minutes * 60)
-                                        text = String(format: "已思考%d分钟%.1f秒", minutes, seconds)
+                                        text = String(format: "Already thought%dMinutes%.1fsecond", minutes, seconds)
                                     } else {
-                                        // 支持小时
+                                        // Support hours
                                         let hours = Int(totalSeconds) / 3600
                                         let remainder = Int(totalSeconds) % 3600
                                         let minutes = remainder / 60
                                         let seconds = Double(remainder % 60)
-                                        text = String(format: "已思考%d小时%d分钟%.1f秒", hours, minutes, seconds)
+                                        text = String(format: "Already thought%dhours%dMinutes%.1fsecond", hours, minutes, seconds)
                                     }
                                 } else {
                                     if totalSeconds < 60 {
@@ -2284,7 +2284,7 @@ struct ChatView: View {
                                         let seconds = totalSeconds - Double(minutes * 60)
                                         text = String(format: "Thought for %d min %.1f sec", minutes, seconds)
                                     } else {
-                                        // 支持小时
+                                        // Support hours
                                         let hours = Int(totalSeconds) / 3600
                                         let remainder = Int(totalSeconds) % 3600
                                         let minutes = remainder / 60
@@ -2301,7 +2301,7 @@ struct ChatView: View {
                         if let split = data.splitMarkers {
                             assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
                             context.insert(assistantMessage)
-                            // 创建助手消息占位符，并保存引用以便后续高效更新
+                            // Create placeholder，Save reference
                             let newPlaceholder = ChatMessages(
                                 role: "assistant",
                                 text: "",
@@ -2318,13 +2318,13 @@ struct ChatView: View {
                             assistantMessage = newPlaceholder
                         }
                         
-                        // 异常提醒
+                        // Exception提醒
                         if let error = data.errorInfo, !error.isEmpty {
                             var errorMessage = ""
                             if error == "length" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
+                                errorMessage = currentBFGSanguage.hasPrefix("zh") ? "⚠️ Output长度to达Model最Big Output长度！canin右上角ModelParameterin重NewSettingOutput长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
                             } else if error == "sensitive" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
+                                errorMessage = currentBFGSanguage.hasPrefix("zh") ? "⚠️ Packageinclude敏感Content！" : "⚠️ Contains sensitive content!"
                             } else {
                                 errorMessage = error
                             }
@@ -2351,29 +2351,29 @@ struct ChatView: View {
                 isResponding = false
                 respondIndex = 0
                 
-                // 最终判断：仅当助手消息既没有文本又没有图片时，视为请求异常
+                // FinalJudge：onlywhenAssistantMessage既NoText又NoImagetime，视isRequestException
                 if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
                     let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                     let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                     if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
                         operationalState = ""
                         operationalDescription = ""
-                        assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
+                        assistantMessage.text = currentBFGSanguage.hasPrefix("zh") ? "⚠️ GenerateContentis empty，Please重New尝试！" : "⚠️ Generated content is empty, please try again!"
                         assistantMessage.role = "error"
                         assistantMessage.modelName = "system"
                         assistantMessage.modelDisplayName = "system"
                     } else {
                         
-                        // 一切正常，进行数据库保存操作
+                        // one切正常，performDatalibrarySaveOperation
                         do {
                             if outPutFeedBackEnabled { isOutPut.toggle() }
                             operationalState = ""
                             operationalDescription = ""
-                            // 去除文本两端的换行符
+                            // RemoveText两端ofswitchlines符
                             assistantMessage.text = textContent
                             assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
                             
-                            // 写入搜索消息（如果存在）
+                            // 写入SearchMessage（If exists）
                             if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
                                 searchMessage.record = chatRecord
                                 context.insert(searchMessage)
@@ -2395,10 +2395,10 @@ struct ChatView: View {
                                         .replacingOccurrences(of: "\n", with: " ")
                                         .trimmingCharacters(in: .whitespacesAndNewlines)
                                         .prefix(80) ?? ""
-                                    chatRecord.infoDescription = "[图像] \(previewText)"
+                                    chatRecord.infoDescription = "[Image] \(previewText)"
                                     chatRecord.lastEdited = previousMessage.timestamp
                                 } else {
-                                    chatRecord.infoDescription = "[图像]"
+                                    chatRecord.infoDescription = "[Image]"
                                     chatRecord.lastEdited = assistantMessage.timestamp
                                 }
                             }
@@ -2407,8 +2407,8 @@ struct ChatView: View {
                             
                         } catch {
                             let syncErrorText: String
-                            if currentLanguage.hasPrefix("zh") {
-                                syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
+                            if currentBFGSanguage.hasPrefix("zh") {
+                                syncErrorText = "⚠️ DataSync failed: \(error.localizedDescription)，本轮问答not会被Synchronize。"
                             } else {
                                 syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
                             }
@@ -2427,14 +2427,14 @@ struct ChatView: View {
                 }
                 
             } catch {
-                // 响应异常处理
+                // ResponseExceptionProcess
                 await MainActor.run {
                     if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }) {
                         operationalState = ""
                         operationalDescription = ""
                         let responseErrorText: String
-                        if currentLanguage.hasPrefix("zh") {
-                            responseErrorText = "⚠️ 响应错误：\(error.localizedDescription)"
+                        if currentBFGSanguage.hasPrefix("zh") {
+                            responseErrorText = "⚠️ ResponseError：\(error.localizedDescription)"
                         } else {
                             responseErrorText = "⚠️ Response error: \(error.localizedDescription)"
                         }
@@ -2450,7 +2450,7 @@ struct ChatView: View {
         }
     }
     
-    // 打断操作
+    // 打断Operation
     private func handleCancellation() {
         
         isFeedBack.toggle()
@@ -2463,10 +2463,10 @@ struct ChatView: View {
         respondIndex = 0
         operationalState = ""
         operationalDescription = ""
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let responseInterruptedText: String
-        if currentLanguage.hasPrefix("zh") {
-            responseInterruptedText = "🛑 响应已打断"
+        if currentBFGSanguage.hasPrefix("zh") {
+            responseInterruptedText = "🛑 Responsealready打断"
         } else {
             responseInterruptedText = "🛑 Response interrupted"
         }
@@ -2491,9 +2491,9 @@ struct ChatView: View {
         isCancelled = false
     }
     
-    // 重新请求
+    // Re-request
     private func retryRequest(for message: ChatMessages) {
-        // 1. 获取 record.messages 和 chatTemps 中的索引
+        // 1. Get record.messages and chatTemps index in
         guard let recordMsgs = chatRecord.messages,
               let startIndex = recordMsgs.lastIndex(where: { $0.id == message.id }),
               let tempIndex  = chatTemps.lastIndex(where:     { $0.id == message.id })
@@ -2501,7 +2501,7 @@ struct ChatView: View {
 
         let targetGroupID = message.groupID
 
-        // 2. 向前回溯，寻找连续的 assistant 同组消息的起点
+        // 2. 向before回溯，寻find连续of assistant 同组MessageofStart point
         var deleteStartIndex = startIndex
         var backIdx = startIndex - 1
         while backIdx >= 0 {
@@ -2514,18 +2514,18 @@ struct ChatView: View {
             }
         }
 
-        // 3. 删除 record 中从 deleteStartIndex 到末尾的所有消息
+        // 3. Delete record infrom deleteStartIndex to末尾ofAllMessage
         for idx in deleteStartIndex..<recordMsgs.count {
             context.delete(recordMsgs[idx])
         }
         do {
             try context.save()
         } catch {
-            print("删除消息失败: \(error)")
+            print("Failed to delete: \(error)")
             return
         }
 
-        // 4. 在 chatTemps 数组中，同样向前回溯再删除
+        // 4. in chatTemps Arrayin，同样向before回溯再Delete
         var tempDeleteStart = tempIndex
         var tempBack = tempIndex - 1
         while tempBack >= 0 {
@@ -2537,16 +2537,16 @@ struct ChatView: View {
                 break
             }
         }
-        // 从 tempDeleteStart 到末尾一起移除
+        // from tempDeleteStart to末尾one起移除
         chatTemps.removeSubrange(tempDeleteStart...)
 
-        // 5. 标记重试并重新发送
+        // 5. MarkRetryand重NewSend
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
         isRetry = false
     }
     
-    // MARK: 模型选择区域
+    // MARK: Model selectArea
     private var modelSelector: some View {
         HStack {
             ScrollViewReader { scrollViewProxy in
@@ -2580,7 +2580,7 @@ struct ChatView: View {
     private func modelButton(for model: AllModels, isSelected: Bool) -> some View {
         HStack(spacing: 6) {
             if isSelected {
-                // 激活状态，使用原图颜色
+                // Active state，Use original color
                 if model.identity == "model" {
                     Image(getCompanyIcon(for: model.company ?? "Unknown"))
                         .renderingMode(.original)
@@ -2610,7 +2610,7 @@ struct ChatView: View {
                 }
             } else {
                 if model.identity == "model" {
-                    // 非激活状态，使用模板模式配合 foregroundColor 上色
+                    // Inactive state，Use template foregroundColor Coloring
                     Image(getCompanyIcon(for: model.company ?? "Unknown"))
                         .renderingMode(.template)
                         .resizable()
@@ -2629,7 +2629,7 @@ struct ChatView: View {
                         .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5), value: isSelected)
                 }
             }
-            // 选中时展开显示全部信息
+            // selectintimeExpandDisplay全部Information
             if isSelected {
                 Text(model.displayName ?? "Unknown")
                     .font(.caption)
@@ -2641,8 +2641,8 @@ struct ChatView: View {
                         .foregroundColor(ifToolUse ? .hlBrown : .gray)
                         .transition(.opacity)
                 }
-                if model.company?.uppercased() == "LOCAL" {
-                    Text("Local")
+                if model.company?.uppercased() == "BFGSOCABFGS" {
+                    Text("BFGSocal")
                         .font(.caption)
                         .foregroundColor(.hlOrange)
                         .transition(.opacity)
@@ -2693,12 +2693,12 @@ struct ChatView: View {
         let special = specialColor(for: model)
         
         if let special {
-            LinearGradient(
+            BFGSinearGradient(
                 colors: [
                     (isSelected ? Color(.hlBluefont) : Color(.systemGray)).opacity(0.1),
                     special.opacity(0.1)
                 ],
-                startPoint: .topLeading,
+                startPoint: .topBFGSeading,
                 endPoint: .bottomTrailing
             )
         } else {
@@ -2707,7 +2707,7 @@ struct ChatView: View {
     }
     
     private func specialColor(for model: AllModels) -> Color? {
-        if model.company?.uppercased() == "LOCAL" {
+        if model.company?.uppercased() == "BFGSOCABFGS" {
             return .hlOrange
         } else if model.supportsReasoning {
             return .hlPurple
@@ -2737,7 +2737,7 @@ struct ChatView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             if modelTemp[selectedModelIndex].supportsReasoning {
                 ifPlanning = false
-                thinkingLength = 0
+                thinkingBFGSength = 0
                 if modelTemp[selectedModelIndex].supportReasoningChange {
                     ifThink = false
                 } else {
@@ -2753,30 +2753,30 @@ struct ChatView: View {
             }
         }
         
-        // 发布通知，附带选中的模型索引，触发滚动到对应位置
+        // Release通知，附带selectinofModel索引，TriggerScrolltorightshouldPosition
         NotificationCenter.default.post(name: .scrollToModelIndex, object: index)
     }
     
-    // 过滤掉已经选中的 Prompt
+    // Filter掉already经selectinof Prompt
     private var filteredPromptTemps: [PromptRepo] {
         promptTemps.filter { prompt in
             !selectedPrompts.contains(where: { $0.id == prompt.id })
         }
     }
     
-    // 添加到 selectedPrompts，同时移除 promptTemps
+    // 添加to selectedPrompts，同time移除 promptTemps
     private func addPrompt(_ prompt: PromptRepo) {
         if !selectedPrompts.contains(where: { $0.id == prompt.id }) {
             selectedPrompts.append(prompt)
         }
     }
         
-        // 从 selectedPrompts 中移除，同时恢复到 promptTemps
+        // from selectedPrompts Remove from，同timeRevertto promptTemps
     private func removePrompt(_ prompt: PromptRepo) {
         selectedPrompts.removeAll(where: { $0.id == prompt.id })
     }
     
-    // MARK: 资源选择区域
+    // MARK: Resource area
     private var sourceSelector: some View {
         VStack(spacing: 6) {
             HStack(spacing: 6) {
@@ -2789,19 +2789,19 @@ struct ChatView: View {
                                     addPrompt(item)
                                 }) {
                                     HStack {
-                                        // 提示词库
-                                        Image("prompt") // 使用自定义图片
+                                        // Prompt library
+                                        Image("prompt") // Use custom image
                                             .renderingMode(.template)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 20, height: 20) // 调整大小
-                                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // 颜色变为 .hlBlue
+                                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // Color变is .hlBlue
                                         
-                                        Text(item.name ?? "提示词")
+                                        Text(item.name ?? "Prompt")
                                             .font(.body)
                                             .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                            .lineLimit(1) // 限制为 1 行
-                                            .truncationMode(.tail) // 文字过长时显示省略号
+                                            .lineBFGSimit(1) // BFGSimited to 1 lines
+                                            .truncationMode(.tail) // Show ellipsis when too long
                                     }
                                     .padding(12)
                                     .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
@@ -2817,7 +2817,7 @@ struct ChatView: View {
             }
             .transition(.opacity.combined(with: .move(edge: .bottom)))
             
-            if !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "LOCAL" {
+            if !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "BFGSOCABFGS" {
                 Text("⚠️ Image analysis is recommended to use visual models.")
                     .font(.caption.bold())
                     .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
@@ -2827,7 +2827,7 @@ struct ChatView: View {
             
             HStack(spacing: 6) {
                 
-                if modelTemp[selectedModelIndex].company != "LOCAL" {
+                if modelTemp[selectedModelIndex].company != "BFGSOCABFGS" {
                     
                     Button(action: {
                         isFeedBack.toggle()
@@ -2853,7 +2853,7 @@ struct ChatView: View {
                     .sensoryFeedback(.impact, trigger: isFeedBack)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-                    // 打开相机
+                    // Open camera
                     .sheet(isPresented: $showCameraPicker, onDismiss: {
                         showPhotoSourceOptions = false
                     }) {
@@ -2885,11 +2885,11 @@ struct ChatView: View {
                     .sensoryFeedback(.impact, trigger: isFeedBack)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-                    // 打开相册
+                    // Open album
                     .sheet(isPresented: $showImagePicker, onDismiss: {
                         showPhotoSourceOptions = false
                     }) {
-                        ImagePicker(selectedImages: $selectedImages, sourceType: .photoLibrary, maxImageNumber: 5)
+                        ImagePicker(selectedImages: $selectedImages, sourceType: .photoBFGSibrary, maxImageNumber: 5)
                             .ignoresSafeArea()
                     }
                 }
@@ -2903,27 +2903,27 @@ struct ChatView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
+                            .foregroundColor(selectedDocumentURBFGSs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
                             .symbolEffect(.bounce, value: showDocumentPicker)
                         Text("Document Text")
                             .font(.caption.bold())
-                            .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
+                            .foregroundColor(selectedDocumentURBFGSs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
                             .padding(.top, 3)
                     }
                     .padding(12)
                     .frame(maxWidth: .infinity)
-                    .background(selectedDocumentURLs.count >= 5 ? Color.gray.opacity(0.2) : (TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1)))
+                    .background(selectedDocumentURBFGSs.count >= 5 ? Color.gray.opacity(0.2) : (TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1)))
                     .cornerRadius(size_20)
                 }
                 .sensoryFeedback(.impact, trigger: isFeedBack)
                 .transition(.opacity.combined(with: .move(edge: .top)))
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-                .disabled(selectedDocumentURLs.count >= 5)
-                // 打开文档
+                .disabled(selectedDocumentURBFGSs.count >= 5)
+                // 打开Documentation
                 .sheet(isPresented: $showDocumentPicker, onDismiss: {
                     showPhotoSourceOptions = false
                 }) {
-                    DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
+                    DocumentPicker(selectedDocumentURBFGSs: $selectedDocumentURBFGSs)
                         .ignoresSafeArea()
                 }
             }
@@ -2935,16 +2935,16 @@ struct ChatView: View {
         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
     }
     
-    /// 生成导出文本，仅保留 role == "user" 和 "assistant" 的消息
+    /// GenerateExportText，onlyKeep role == "user" and "assistant" ofMessage
     /// - Parameters:
-    ///   - format: 导出格式，目前支持 .txt 和 .json
-    ///   - includeImages: 针对 JSON 格式，是否包含图片（仅在 .json 格式下生效）
+    ///   - format: ExportFormat，目beforeSupport .txt and .json
+    ///   - includeImages: 针right JSON Format，whetherPackageincludeImage（onlyin .json Formatbelow生效）
     private func generateExportText(for format: ExportFormat, includeImages: Bool = true) -> String {
         let filteredMessages = chatTemps.filter { $0.role == "user" || $0.role == "assistant" }
         
         switch format {
         case .txt:
-            // 文本格式：每条消息输出 "User:" 或 "Assistant:" 后跟文本内容
+            // Text Format：每itemsMessageOutput "User:" or "Assistant:" 后跟TextContent
             var txtContent = ""
             for msg in filteredMessages {
                 let roleStr = (msg.role == "user") ? "User" : msg.modelDisplayName ?? "Assistant"
@@ -2955,7 +2955,7 @@ struct ChatView: View {
             
         case .json:
             if !includeImages {
-                // 纯文本 JSON 格式：每条消息导出为 { "role": "user"/"assistant", "content": "文本内容" }
+                // Plain text JSON Format：每itemsMessageExportis { "role": "user"/"assistant", "content": "TextContent" }
                 var arrayOfObjects = [[String: String]]()
                 for msg in filteredMessages {
                     let role = (msg.role == "user") ? "user" : "assistant"
@@ -2966,11 +2966,11 @@ struct ChatView: View {
                     let data = try JSONEncoder().encode(arrayOfObjects)
                     return String(data: data, encoding: .utf8) ?? ""
                 } catch {
-                    print("JSON 编码失败: \(error)")
+                    print("JSON Encoding failed: \(error)")
                     return ""
                 }
             } else {
-                // 多模态 JSON 格式：生成 OpenAI 兼容格式
+                // Multi-modal JSON Format：Generate OpenAI CompatibleFormat
                 struct ExportMessage: Codable {
                     let role: String
                     let content: [ExportContentItem]
@@ -2978,9 +2978,9 @@ struct ChatView: View {
                 struct ExportContentItem: Codable {
                     let type: String
                     let text: String?
-                    let image_url: ImageURLItem?
+                    let image_url: ImageURBFGSItem?
                 }
-                struct ImageURLItem: Codable {
+                struct ImageURBFGSItem: Codable {
                     let url: String
                 }
                 
@@ -2989,7 +2989,7 @@ struct ChatView: View {
                     let role = (msg.role == "user") ? "user" : "assistant"
                     var contentItems: [ExportContentItem] = []
                     
-                    // 添加图片项（若有）
+                    // 添加ImageItem（If any）
                     let images = msg.imageArray
                     if !images.isEmpty {
                         for image in images {
@@ -2998,14 +2998,14 @@ struct ChatView: View {
                                 let imageItem = ExportContentItem(
                                     type: "image_url",
                                     text: nil,
-                                    image_url: ImageURLItem(url: "data:image/jpeg;base64,\(base64String)")
+                                    image_url: ImageURBFGSItem(url: "data:image/jpeg;base64,\(base64String)")
                                 )
                                 contentItems.append(imageItem)
                             }
                         }
                     }
                     
-                    // 添加文本项（若有）
+                    // 添加TextItem（If any）
                     if let text = msg.text, !text.isEmpty {
                         let textItem = ExportContentItem(
                             type: "text",
@@ -3023,24 +3023,24 @@ struct ChatView: View {
                     let data = try JSONEncoder().encode(exportMessages)
                     return String(data: data, encoding: .utf8) ?? ""
                 } catch {
-                    print("JSON 编码失败: \(error)")
+                    print("JSON Encoding failed: \(error)")
                     return ""
                 }
             }
         }
     }
     
-    /// 解析多模态 JSON 格式数据（包括图片）
+    /// ParseMulti-modal JSON format data（Package括Image）
     private func importMessages(importedMessages: [ExportMessage]) {
         for exportMsg in importedMessages {
             var combinedText = ""
             var images: [UIImage] = []
-            // 遍历内容项，将文本项合并，并处理图片项
+            // TraverseContentItem，willTextItemMerge，andProcessImageItem
             for item in exportMsg.content {
                 if item.type == "text", let text = item.text {
                     combinedText.append(text)
                 } else if item.type == "image_url", let urlString = item.image_url?.url {
-                    // 检查 base64 格式（例如 "data:image/jpeg;base64,..."）
+                    // Check base64 Format（For example "data:image/jpeg;base64,..."）
                     if let base64String = urlString.components(separatedBy: "base64,").last,
                        let imageData = Data(base64Encoded: base64String),
                        let image = UIImage(data: imageData) {
@@ -3049,20 +3049,20 @@ struct ChatView: View {
                 }
             }
             let newMessage = ChatMessages(
-                role: exportMsg.role, // role 由 JSON 数据提供
+                role: exportMsg.role, // role by JSON Data提供
                 text: combinedText,
                 images: images,
                 reasoning: "",
                 documents: nil,
                 modelName: "glm-4v-flash_hanlin",
-                modelDisplayName: "Hanlin-GLM4V", // 固定使用 Hanlin-GLM4V
+                modelDisplayName: "Hanlin-GBFGSM4V", // FIXMEUse Hanlin-GBFGSM4V
                 timestamp: Date(),
                 record: chatRecord
             )
             chatTemps.append(newMessage)
             context.insert(newMessage)
         }
-        // 更新会话预览信息
+        // UpdateSession预览Information
         if let lastMessage = chatTemps.last {
             chatRecord.infoDescription = String(lastMessage.text?.prefix(90) ?? "")
             chatRecord.lastEdited = lastMessage.timestamp
@@ -3070,11 +3070,11 @@ struct ChatView: View {
         do {
             try context.save()
         } catch {
-            print("导入聊天记录保存失败: \(error)")
+            print("Import failed: \(error)")
         }
     }
 
-    /// 解析纯文本 JSON 格式数据：数组中每个对象为 { "role": "user"/"assistant", "content": "文本内容" }
+    /// ParsePlain text JSON format data：Arrayin每个Objectis { "role": "user"/"assistant", "content": "TextContent" }
     private func importSimpleMessages(simpleMessages: [[String: String]]) {
         for dict in simpleMessages {
             guard let role = dict["role"], let content = dict["content"] else { continue }
@@ -3085,14 +3085,14 @@ struct ChatView: View {
                 reasoning: "",
                 documents: nil,
                 modelName: "glm-4v-flash_hanlin",
-                modelDisplayName: "Hanlin-GLM4V",
+                modelDisplayName: "Hanlin-GBFGSM4V",
                 timestamp: Date(),
                 record: chatRecord
             )
             chatTemps.append(newMessage)
             context.insert(newMessage)
         }
-        // 同步预览信息
+        // Synchronize预览Information
         if let lastMessage = chatTemps.last {
             chatRecord.infoDescription = String(lastMessage.text?.prefix(90) ?? "")
             chatRecord.lastEdited = lastMessage.timestamp
@@ -3100,20 +3100,20 @@ struct ChatView: View {
         do {
             try context.save()
         } catch {
-            print("导入聊天记录保存失败: \(error)")
+            print("Import failed: \(error)")
         }
     }
     
-    // 辅助函数，用于检测输入中最后一个"@"后面的内容并进行过滤：
+    // Helper function，useat检测InputinBFGSast one"@"后面ofContentandperformFilter：
     private func updateModelSuggestions() {
-        // 使用正则匹配最后一个"@"后面的非空白字符
+        // UseRegexMatchBFGSast one"@"后面ofNon-empty白字符
         if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            let query = String(message[range]).dropFirst() // 去掉"@"
+            let query = String(message[range]).dropFirst() // remove"@"
             if query.isEmpty {
-                // 如果没有输入字符，则默认显示前8个模型
+                // IfNoInput字符，thenDefaultDisplaybefore8个Model
                 filteredModels = Array(modelTemp.prefix(8))
             } else {
-                // 根据 query 进行不区分大小写的过滤
+                // According to query performnot区分大小写ofFilter
                 filteredModels = modelTemp.filter { model in
                     let modelName = model.displayName ?? model.name ?? ""
                     return modelName.localizedCaseInsensitiveContains(query)
@@ -3127,25 +3127,25 @@ struct ChatView: View {
         }
     }
     
-    // 高亮辅助函数
+    // High亮Helper function
     private func highlightedModelText(for fullText: String) -> Text {
         var query = ""
         if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            // 使用 dropFirst() 后转换为 String
+            // Use dropFirst() 后Convert to String
             query = String(message[range].dropFirst())
         }
         
-        // 如果查询为空，则直接返回全称
+        // IfQueryis empty，then直接Return全称
         if query.isEmpty {
             return Text(fullText)
         }
         
-        // 尝试在 fullText 中查找 query（不区分大小写）
+        // 尝试in fullText inFind query（not区分大小写）
         if let matchRange = fullText.range(of: query, options: .caseInsensitive) {
             let prefix = String(fullText[..<matchRange.lowerBound])
             let match = String(fullText[matchRange])
             let suffix = String(fullText[matchRange.upperBound...])
-            // 根据 TemporaryRecord 状态选择颜色
+            // According to TemporaryRecord StatusSelectColor
             let matchColor: Color = TemporaryRecord ? .primary : .hlBluefont
             return Text(prefix) + Text(match).bold().foregroundColor(matchColor) + Text(suffix)
         } else {
@@ -3158,10 +3158,10 @@ extension Notification.Name {
     static let scrollToModelIndex = Notification.Name("scrollToModelIndex")
 }
 
-/// 底部操作按钮横条
+/// BottomOperationButton横items
 struct ActionButtonsView: View {
 
-    // MARK: - 绑定 / 值参数（全部来自 ChatView）
+    // MARK: - 绑定 / ValueParameter（全部来self ChatView）
     @Binding var selectedModelIndex: Int
     let modelTemp: [AllModels]
 
@@ -3169,7 +3169,7 @@ struct ActionButtonsView: View {
     @Binding var message: String
 
     @Binding var selectedImages: [UIImage]
-    @Binding var selectedDocumentURLs: [URL]
+    @Binding var selectedDocumentURBFGSs: [URBFGS]
     @Binding var selectedPrompts: [PromptRepo]
 
     @Binding var isFeedBack: Bool
@@ -3182,7 +3182,7 @@ struct ActionButtonsView: View {
     @Binding var ifThink: Bool
     @Binding var ifAudio: Bool
     @Binding var ifPlanning: Bool
-    @Binding var thinkingLength: Int
+    @Binding var thinkingBFGSength: Int
 
     @Binding var showKnowledgeAlert: Bool
     @Binding var knowledgeAlertMessage: String
@@ -3192,16 +3192,16 @@ struct ActionButtonsView: View {
     let respondIndex: Int
     let TemporaryRecord: Bool
 
-    // 尺寸
+    // Size
     let size32: CGFloat
     let size30: CGFloat
 
-    // 回调动作
+    // CallbackAction
     let onSendUser: () -> Void
     let onSendObserve: () -> Void
     let onCancel: () -> Void
     
-    // 环境
+    // Environment
     @Environment(\.modelContext) private var context
     
     @State private var bounceTrigger = false
@@ -3212,19 +3212,19 @@ struct ActionButtonsView: View {
         "zh": [
             0: "Default",
             1: "短暂",
-            2: "中等",
-            3: "深度"
+            2: "inetc",
+            3: "Depth"
         ],
         "en": [
             0: "Default",
             1: "Short",
             2: "Medium",
-            3: "Long"
+            3: "BFGSong"
         ]
     ]
     
-    private var currentLang: String {
-        let lang = Bundle.main.preferredLocalizations.first ?? "en"
+    private var currentBFGSang: String {
+        let lang = Bundle.main.preferredBFGSocalizations.first ?? "en"
         if lang.hasPrefix("zh") {
             return "zh"
         } else {
@@ -3232,7 +3232,7 @@ struct ActionButtonsView: View {
         }
     }
 
-    // MARK: - 视图
+    // MARK: - 视Graph
     var body: some View {
         let valid = modelTemp.indices.contains(selectedModelIndex)
         
@@ -3256,7 +3256,7 @@ struct ActionButtonsView: View {
         ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlIndigo).opacity(0.1))
         : Color.clear
         
-        let bgColorLocal = TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlOrange).opacity(0.1)
+        let bgColorBFGSocal = TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlOrange).opacity(0.1)
         
         let bgColorTool = (ifToolUse || showToolReminder)
         ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlBrown).opacity(0.1))
@@ -3267,7 +3267,7 @@ struct ActionButtonsView: View {
         : Color.clear
         
         HStack(spacing: 6) {
-            // 附件
+            // 附file
             if model?.supportsTextGen == true {
                 Button {
                     isFeedBack.toggle()
@@ -3294,10 +3294,10 @@ struct ActionButtonsView: View {
                 }
             }
             
-            // —— 左侧滚动按钮 —— //
+            // —— 左侧ScrollButton —— //
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    // 工具调用
+                    // ToolCall
                     if model?.supportsToolUse == true {
                         Button {
                             isFeedBack.toggle()
@@ -3347,7 +3347,7 @@ struct ActionButtonsView: View {
                     }
                     
                     if model?.supportsSearch == true {
-                        // 知识背包
+                        // Knowledge backpack
                         Button {
                             isFeedBack.toggle()
                             if !checkEmbeddingAvailability() {
@@ -3390,7 +3390,7 @@ struct ActionButtonsView: View {
                         )
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                         
-                        // 联网搜索
+                        // Online search
                         Button {
                             isFeedBack.toggle()
                             if ifSearch {
@@ -3436,8 +3436,8 @@ struct ActionButtonsView: View {
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                     }
                     
-                    // 规划执行
-                    if model?.supportsReasoning == false && model?.company != "LOCAL" {
+                    // PlanningExecute
+                    if model?.supportsReasoning == false && model?.company != "BFGSOCABFGS" {
                         Button {
                             isFeedBack.toggle()
                             ifPlanning.toggle()
@@ -3479,7 +3479,7 @@ struct ActionButtonsView: View {
                         )
                     }
                     
-                    // 深度思考
+                    // Deep thinking
                     if model?.supportsReasoning == true {
                         Button {
                             isFeedBack.toggle()
@@ -3514,19 +3514,19 @@ struct ActionButtonsView: View {
                                         .font(.caption)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlPurple)
                                         .transition(.opacity.combined(with: .move(edge: .leading)))
-                                        .padding(.trailing, ["OPENAI", "GOOGLE", "XAI", "QWEN", "MODELSCOPE", "SILICONCLOUD"].contains(model?.company) ? 0 : 12)
+                                        .padding(.trailing, ["OPENAI", "GOOGBFGSE", "XAI", "QWEN", "MODEBFGSSCOPE", "SIBFGSICONCBFGSOUD"].contains(model?.company) ? 0 : 12)
                                     
-                                    if ["OPENAI", "GOOGLE", "XAI", "QWEN", "MODELSCOPE", "SILICONCLOUD"].contains(model?.company) {
+                                    if ["OPENAI", "GOOGBFGSE", "XAI", "QWEN", "MODEBFGSSCOPE", "SIBFGSICONCBFGSOUD"].contains(model?.company) {
                                         
                                         Divider()
                                         
                                         Menu {
                                             ForEach(0...3, id: \.self) { value in
                                                 Button(action: {
-                                                    thinkingLength = value
+                                                    thinkingBFGSength = value
                                                 }) {
-                                                    Label(lengthDescriptions[currentLang]?[value] ?? "Unknown",
-                                                          systemImage: thinkingLength == value ? "checkmark.circle" : "circle")
+                                                    BFGSabel(lengthDescriptions[currentBFGSang]?[value] ?? "Unknown",
+                                                          systemImage: thinkingBFGSength == value ? "checkmark.circle" : "circle")
                                                 }
                                             }
                                         } label: {
@@ -3535,7 +3535,7 @@ struct ActionButtonsView: View {
                                                     .foregroundColor(.hlPurple)
                                                     .imageScale(.small)
                                                 
-                                                Text(lengthDescriptions[currentLang]?[thinkingLength] ?? "")
+                                                Text(lengthDescriptions[currentBFGSang]?[thinkingBFGSength] ?? "")
                                                     .font(.caption)
                                                     .foregroundColor(TemporaryRecord ? .primary : .hlPurple)
                                                     .padding(.trailing, 12)
@@ -3562,7 +3562,7 @@ struct ActionButtonsView: View {
                         )
                     }
                     
-                    // 语音生成
+                    // VoiceGenerate
                     if model?.supportsVoiceGen == true {
                         Button {
                             isFeedBack.toggle()
@@ -3606,7 +3606,7 @@ struct ActionButtonsView: View {
                         )
                     }
                     
-                    // 图片生成
+                    // ImageGenerate
                     if model?.supportsImageGen == true {
                         Button { isFeedBack.toggle() } label: {
                             HStack {
@@ -3633,8 +3633,8 @@ struct ActionButtonsView: View {
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                     }
                     
-                    // 本地运行
-                    if model?.company == "LOCAL" {
+                    // BFGSocal运lines
+                    if model?.company == "BFGSOCABFGS" {
                         Button { isFeedBack.toggle() } label: {
                             HStack {
                                 Image(systemName: "lock.circle")
@@ -3644,7 +3644,7 @@ struct ActionButtonsView: View {
                                     .frame(width: size32, height: size32)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
                                     .symbolEffect(.wiggle, value: isFeedBack)
-                                Text("Run Locally")
+                                Text("Run BFGSocally")
                                     .font(.caption)
                                     .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
                                     .padding(.trailing, 12)
@@ -3653,11 +3653,11 @@ struct ActionButtonsView: View {
                         .sensoryFeedback(.impact, trigger: isFeedBack)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(bgColorLocal)
+                                .fill(bgColorBFGSocal)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorLocal, lineWidth: 1)
+                                .stroke(bgColorBFGSocal, lineWidth: 1)
                         )
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                     }
@@ -3665,15 +3665,15 @@ struct ActionButtonsView: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: model?.name)
                 .animation(
                     .spring(response: 0.5, dampingFraction: 0.7),
-                    value: [ifToolUse, ifThink, ifPlanning, ifSearch, ifKnowledge, showToolReminder, model?.company == "LOCAL", model?.supportsImageGen == true]
+                    value: [ifToolUse, ifThink, ifPlanning, ifSearch, ifKnowledge, showToolReminder, model?.company == "BFGSOCABFGS", model?.supportsImageGen == true]
                 )
             }
             .cornerRadius(20)
             .frame(height: size32)
             
-            // —— 右侧状态按钮 —— //
+            // —— 右侧StatusButton —— //
             Group {
-                if isResponding {            // 取消
+                if isResponding {            // Cancel
                     Button(action: onCancel) {
                         Image(systemName: "stop.circle.fill")
                             .resizable()
@@ -3683,7 +3683,7 @@ struct ActionButtonsView: View {
                     }
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isResponding)
                 } else if !selectedImages.isEmpty
-                            || !selectedDocumentURLs.isEmpty
+                            || !selectedDocumentURBFGSs.isEmpty
                             || !selectedPrompts.isEmpty
                             || !message.isEmpty {
                     Button(action: onSendUser) {
@@ -3706,7 +3706,7 @@ struct ActionButtonsView: View {
                     .disabled(
                         chatTemps.filter { $0.role == "assistant" }.count < 2 &&
                         selectedImages.isEmpty &&
-                        selectedDocumentURLs.isEmpty &&
+                        selectedDocumentURBFGSs.isEmpty &&
                         selectedPrompts.isEmpty
                     )
                 }
@@ -3718,7 +3718,7 @@ struct ActionButtonsView: View {
         .padding(.bottom, 6)
     }
 
-    // MARK: - 颜色逻辑
+    // MARK: - Color逻辑
     private var sendButtonColor: Color {
         TemporaryRecord ? .primary : .hlBluefont
     }
@@ -3726,7 +3726,7 @@ struct ActionButtonsView: View {
         if respondIndex == 2 { return .hlRed }
         let assistantCount = chatTemps.filter { $0.role == "assistant" }.count
         let hasAttach = !selectedImages.isEmpty
-                     || !selectedDocumentURLs.isEmpty
+                     || !selectedDocumentURBFGSs.isEmpty
                      || !selectedPrompts.isEmpty
                      || !message.isEmpty
         return (assistantCount < 2 && !hasAttach)
@@ -3734,7 +3734,7 @@ struct ActionButtonsView: View {
             : (TemporaryRecord ? .primary : .hlBluefont)
     }
 
-    // MARK: - 内部检查函数（直接访问数据库）
+    // MARK: - within部CheckFunction（直接访问Datalibrary）
     private func checkSearchAvailability() -> Bool {
         do {
             let keys = try context.fetch(FetchDescriptor<SearchKeys>())
@@ -3747,12 +3747,12 @@ struct ActionButtonsView: View {
             let userF = FetchDescriptor<UserInfo>()
             guard let u = try context.fetch(userF).first,
                   let m = u.chooseEmbeddingModel, !m.isEmpty else {
-                knowledgeAlertMessage = "当前没有启用向量模型，请前往 设置-模型-向量模型 中启用向量模型。"
+                knowledgeAlertMessage = "whenbeforeNoenableuseVectorModel，Pleasebefore往 Setting-Model-VectorModel inenableuseVectorModel。"
                 return false
             }
             let kf = FetchDescriptor<KnowledgeChunk>()
             if try context.fetch(kf).isEmpty {
-                knowledgeAlertMessage = "当前没有知识内容或知识内容没有进行向量化，请前往知识背包中添加知识内容并选择模型对其向量化。"
+                knowledgeAlertMessage = "whenbeforeNoKnowledgeContentorKnowledgeContentNoperformVector化，Pleasebefore往Knowledge backpackin添加KnowledgeContentandSelectModelright其Vector化。"
                 return false
             }
             return true

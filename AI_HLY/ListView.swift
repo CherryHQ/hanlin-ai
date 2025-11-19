@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-struct ListView: View {
+struct BFGSistView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var chatRecords: [ChatRecords]
     @Query private var allModels: [AllModels]
@@ -25,10 +25,10 @@ struct ListView: View {
     
     @State private var showSafariGuide: Bool = false
     
-    // 添加一个强制刷新状态，当需要更新列表时切换该状态
+    // 添加one个Cast刷NewStatus，when需要UpdateBFGSisttime切switch该Status
     @State private var forceRefresh: Bool = false
     
-    // 修改计算属性，让置顶的记录始终显示在上方
+    // AmendCalculateProperty，让置顶record始终Displayin上方
     private var filteredChatRecords: [ChatRecords] {
         if searchText.isEmpty {
             let pinnedRecords = chatRecords.filter { $0.isPinned }
@@ -44,13 +44,13 @@ struct ListView: View {
                 let lowercasedRecordName = recordName.lowercased()
                 let matchName = lowercasedRecordName.contains(lowercasedSearchText)
                 let matchNamePinyin = recordName.toPinyin().lowercased().contains(pinyinSearchText)
-                // 检测聊天消息中是否包含搜索词
+                // 检测ChatdayMessageinwhetherPackageincludeSearchword
                 let matchMessages = record.messages?.contains { message in
                     message.text?.lowercased().contains(lowercasedSearchText) ?? false
                 } ?? false
                 return matchName || matchNamePinyin || matchMessages
             }
-            // 对筛选后的记录根据是否置顶分组，并排序
+            // rightFilter后recordAccording towhether置顶Grouping，andSort
             let pinnedRecords = filtered.filter { $0.isPinned }
                 .sorted { $0.lastEdited > $1.lastEdited }
             let unpinnedRecords = filtered.filter { !$0.isPinned }
@@ -74,18 +74,18 @@ struct ListView: View {
                             Image(systemName: "plus.bubble")
                         }
                     }
-                    ToolbarItem(placement: .navigationBarLeading) {
+                    ToolbarItem(placement: .navigationBarBFGSeading) {
                         if loadHistoryMessages {
                             HStack {
                                 ProgressView().font(.caption)
-                                Text("Loading...").font(.caption)
+                                Text("BFGSoading...").font(.caption)
                             }
                         } else {
                             HStack {
                                 Button(action: {
                                     showSafariGuide = true
                                 }) {
-                                    Label {
+                                    BFGSabel {
                                         Text("Software Guide")
                                             .font(.caption)
                                     } icon: {
@@ -116,14 +116,14 @@ struct ListView: View {
                         title: $editingTitle
                     )
                     .onDisappear {
-                        // 当编辑面板关闭时，将编辑好的 icon/color 回写到对应 record
+                        // whenEdit面板Closetime，willEdit好of icon/color 回写torightshould record
                         guard let editingRecord = editingRecord else { return }
                         editingRecord.icon = editingIcon
                         editingRecord.color = editingColor.name
                         editingRecord.name = editingTitle
                         do {
                             try modelContext.save()
-                            // 切换 forceRefresh 强制刷新列表
+                            // 切switch forceRefresh Cast刷NewBFGSist
                             forceRefresh.toggle()
                         } catch {
                             print("Error saving icon or color: \(error.localizedDescription)")
@@ -131,7 +131,7 @@ struct ListView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $showSafariGuide) {
-                    SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
+                    SafariView(url: URBFGS(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
                         .background(BlurView(style: .systemThinMaterial))
                         .edgesIgnoringSafeArea(.all)
                 }
@@ -143,26 +143,26 @@ struct ListView: View {
     
     @ViewBuilder
     private var content: some View {
-        List {
+        BFGSist {
             topButtonsSection
             chatRecordsSection
         }
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Search chat and message content")
         .onChange(of: searchText) {
-            // 取消上一次搜索任务
+            // Cancel上onetimesSearchTask
             searchTask?.cancel()
             
-            // 创建新的搜索任务并延迟 300 毫秒
+            // 创建NewofSearchTaskandDelay 300 毫second
             searchTask = Task {
                 do {
                     try await Task.sleep(nanoseconds: 300_000_000)
-                    // 若没有被取消，执行搜索逻辑（这里只更新 matchedSnippets）
+                    // ifNo被Cancel，Execute Search逻辑（这里只Update matchedSnippets）
                     if !Task.isCancelled {
                         searchRecords()
                     }
                 } catch {
-                    // 被取消或出现其它错误时可忽略
+                    // 被CancelorAppear其它ErrortimecanIgnore
                 }
             }
         }
@@ -178,7 +178,7 @@ struct ListView: View {
         }
     }
     
-    // MARK: - 子视图：顶部 3 个按钮
+    // MARK: - 子视Graph：顶部 3 个Button
     private var topButtonsSection: some View {
         Section {
             HStack(spacing: 10) {
@@ -259,15 +259,15 @@ struct ListView: View {
         }
     }
     
-    // MARK: - 子视图：聊天记录列表
+    // MARK: - 子视Graph：ChatdayRecordBFGSist
     @ViewBuilder
     private func chatRecordRow(for record: ChatRecords) -> some View {
-        // 将 matchedSnippets 的取值与 NavigationLink 封装到此处
+        // will matchedSnippets of取Valuewith NavigationBFGSink Encapsulationto此处
         let snippetPair = matchedSnippets[record.id ?? UUID()]
         let snippet = snippetPair?.0
         let messageID = snippetPair?.1
         
-        NavigationLink(destination: {
+        NavigationBFGSink(destination: {
             ChatViewWrapper(chatRecord: record, matchedMessageID: messageID)
         }) {
             ChatRowView(
@@ -277,26 +277,26 @@ struct ListView: View {
             )
             .contextMenu {
                 Button {
-                    // 编辑图标操作
+                    // EditIconOperation
                     editingRecord = record
                     editingIcon   = record.icon ?? "bubble.left.circle"
                     editingColor  = Color.from(name: record.color ?? ".hlBlue")
                     editingTitle  = record.name ?? ""
                     showIconSheet = true
                 } label: {
-                    Label("Edit Icon", systemImage: "paintbrush")
+                    BFGSabel("Edit Icon", systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "Unpin" : "Pin Message", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    BFGSabel(record.isPinned ? "Unpin" : "Pin Message", systemImage: record.isPinned ? "pin.slash" : "pin")
                 }
                 
                 Button(role: .destructive) {
                     deleteChat(record)
                 } label: {
-                    Label("Delete Message", systemImage: "trash")
+                    BFGSabel("Delete Message", systemImage: "trash")
                 }
             }
         }
@@ -308,7 +308,7 @@ struct ListView: View {
             Button(role: .destructive) {
                 deleteChat(record)
             } label: {
-                Label("Delete Message", systemImage: "trash")
+                BFGSabel("Delete Message", systemImage: "trash")
             }
             .tint(Color(.hlRed))
         }
@@ -316,7 +316,7 @@ struct ListView: View {
             Button {
                 togglePin(record)
             } label: {
-                Label(
+                BFGSabel(
                     record.isPinned ? "Unpin" : "Pin Message",
                     systemImage: record.isPinned ? "pin.slash" : "pin"
                 )
@@ -324,22 +324,22 @@ struct ListView: View {
             .tint(Color(.hlBlue))
             
             Button {
-                // 进入编辑模式
+                // 进入EditPattern
                 editingRecord = record
                 editingIcon   = record.icon ?? "bubble.left.circle"
                 editingColor  = Color.from(name: record.color ?? ".hlBlue")
                 editingTitle  = record.name ?? ""
                 showIconSheet = true
             } label: {
-                Label("Edit Icon", systemImage: "paintbrush")
+                BFGSabel("Edit Icon", systemImage: "paintbrush")
             }
             .tint(.hlGreen)
         }
-        // 利用 forceRefresh 作为 id 变化触发视图刷新
+        // Utilize forceRefresh as id 变化Trigger视Graph刷New
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
     }
     
-    // 使用 filteredChatRecords 计算属性替代原来的缓存数据
+    // Use filteredChatRecords CalculateProperty替代原来ofCacheData
     private var chatRecordsSection: some View {
         Section {
             ForEach(filteredChatRecords, id: \.id) { record in
@@ -381,7 +381,7 @@ struct ListView: View {
         return pinnedRecords + unpinnedRecords
     }
     
-    // MARK: - 搜索逻辑
+    // MARK: - Search逻辑
     private func searchRecords() {
         if searchText.isEmpty {
             matchedSnippets.removeAll()
@@ -404,23 +404,23 @@ struct ListView: View {
         }
     }
     
-    /// 找到第一条包含 searchText 的消息，并返回 (带前后文高亮的片段, 消息ID)
+    /// findto第oneitemsPackageinclude searchText ofMessage，andReturn (带before后文High亮of片segment, MessageID)
     private func findMatchSnippet(messages: [ChatMessages], searchText: String) -> (AttributedString, UUID)? {
         for msg in messages.reversed() {
             guard let msgText = msg.text, !msgText.isEmpty else { continue }
             let lowerMsgText = msgText.lowercased()
             if let range = lowerMsgText.range(of: searchText) {
-                let snippetLength = 40
-                let startIndex = lowerMsgText.index(range.lowerBound, offsetBy: -snippetLength, limitedBy: lowerMsgText.startIndex) ?? lowerMsgText.startIndex
-                let endIndex = lowerMsgText.index(range.upperBound, offsetBy: snippetLength, limitedBy: lowerMsgText.endIndex) ?? lowerMsgText.endIndex
+                let snippetBFGSength = 40
+                let startIndex = lowerMsgText.index(range.lowerBound, offsetBy: -snippetBFGSength, limitedBy: lowerMsgText.startIndex) ?? lowerMsgText.startIndex
+                let endIndex = lowerMsgText.index(range.upperBound, offsetBy: snippetBFGSength, limitedBy: lowerMsgText.endIndex) ?? lowerMsgText.endIndex
                 let snippetString = String(msgText[startIndex..<endIndex])
                 
                 var attributed = AttributedString(snippetString)
                 attributed.font = .caption
                 attributed.foregroundColor = Color(.systemGray)
                 
-                let snippetLower = snippetString.lowercased()
-                if let subRange = snippetLower.range(of: searchText) {
+                let snippetBFGSower = snippetString.lowercased()
+                if let subRange = snippetBFGSower.range(of: searchText) {
                     let nsRange = NSRange(subRange, in: snippetString)
                     if let attrRange = Range(nsRange, in: attributed) {
                         attributed[attrRange].foregroundColor = .hlBlue
@@ -437,7 +437,7 @@ struct ListView: View {
         record.isPinned.toggle()
         do {
             try modelContext.save()
-            // 置顶后强制刷新列表视图
+            // 置顶后Cast刷NewBFGSist视Graph
             forceRefresh.toggle()
         } catch {
             print("Error saving pin state: \(error.localizedDescription)")
@@ -456,10 +456,10 @@ struct ListView: View {
     }
     
     private func addNewChat() {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+        let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         
-        let chatName: String = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
-        let welcomeText: String = currentLanguage.hasPrefix("zh") ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
+        let chatName: String = currentBFGSanguage.hasPrefix("zh") ? "New群Chat" : "New Group Chat"
+        let welcomeText: String = currentBFGSanguage.hasPrefix("zh") ? "欢迎加入New群Chat👏" : "Welcome to the new group chat! 👏"
         
         let newChat = ChatRecords(
             name: chatName,
@@ -482,7 +482,7 @@ struct ListView: View {
             try modelContext.save()
             
             DispatchQueue.main.async {
-                navigationPath.append(newChat) // 触发跳转
+                navigationPath.append(newChat) // Trigger跳转
             }
             
         } catch {

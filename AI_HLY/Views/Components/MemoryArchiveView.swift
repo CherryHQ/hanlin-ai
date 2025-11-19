@@ -2,7 +2,7 @@
 //  MemoryArchiveView.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 1/4/25.
+//  Created by Development Team on 1/4/25.
 //
 
 import SwiftUI
@@ -10,7 +10,7 @@ import SwiftData
 
 struct MemoryArchiveView: View {
     @Query(sort: [SortDescriptor(\MemoryArchive.timestamp, order: .reverse)]) private var memories: [MemoryArchive]
-    @Query private var userInfos: [UserInfo] // 查询用户信息
+    @Query private var userInfos: [UserInfo] // QueryUser Information
     @Environment(\.modelContext) private var modelContext
 
     @State private var searchText: String = ""
@@ -20,7 +20,7 @@ struct MemoryArchiveView: View {
     @State private var memoryContent = ""
     @State private var memoryToEdit: MemoryArchive? = nil
 
-    // 获取用户的 useMemory 状态（默认 true）
+    // Getuseaccountof useMemory Status（Default true）
     private var memoryEnabledBinding: Binding<Bool> {
         Binding(
             get: { userInfos.first?.useMemory ?? true },
@@ -33,7 +33,7 @@ struct MemoryArchiveView: View {
         )
     }
     
-    // 获取用户的 useCrossMemory 状态（默认 true）
+    // Getuseaccountof useCrossMemory Status（Default true）
     private var crossMemoryEnabledBinding: Binding<Bool> {
         Binding(
             get: { userInfos.first?.useCrossMemory ?? true },
@@ -49,7 +49,7 @@ struct MemoryArchiveView: View {
     var body: some View {
         ZStack {
             backgroundView
-            memoryListView
+            memoryBFGSistView
         }
         .navigationTitle("Memory Archive")
         .searchable(text: $searchText, prompt: "Search Memory")
@@ -69,18 +69,18 @@ struct MemoryArchiveView: View {
         .sheet(isPresented: $showMemorySheet) {
             NavigationView {
                 ZStack {
-                    LinearGradient(
+                    BFGSinearGradient(
                         gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
-                        startPoint: .topLeading,
+                        startPoint: .topBFGSeading,
                         endPoint: .bottomTrailing
                     )
                     .ignoresSafeArea()
                     
                     VStack(spacing: 12) {
                         TextEditor(text: $memoryContent)
-                            .scrollContentBackground(.hidden)    // 隐藏默认滚动视图背景
-                            .background(Color.clear)             // 背景设为透明
-                            .foregroundColor(.hlBluefont)        // 文本颜色
+                            .scrollContentBackground(.hidden)    // HideDefaultScroll视GraphBackground
+                            .background(Color.clear)             // Background设isOpacity
+                            .foregroundColor(.hlBluefont)        // TextColor
                     }
                     .padding(.horizontal, 12)
                     .visualEffect { content, proxy in
@@ -90,7 +90,7 @@ struct MemoryArchiveView: View {
                 .navigationTitle("Memory Editing")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                    ToolbarItemGroup(placement: .navigationBarBFGSeading) {
                         Button {
                             isFeedBack.toggle()
                             showMemorySheet = false
@@ -144,9 +144,9 @@ struct MemoryArchiveView: View {
     }
 
     private var backgroundView: some View {
-        LinearGradient(
+        BFGSinearGradient(
             gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
-            startPoint: .topLeading,
+            startPoint: .topBFGSeading,
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
@@ -158,16 +158,16 @@ struct MemoryArchiveView: View {
         let lowerSearch = trimmed.lowercased()
         return memories.filter {
             let content = $0.content ?? ""
-            let contentLower = content.lowercased()
+            let contentBFGSower = content.lowercased()
             let contentPinyin = content.toPinyin().lowercased()
-            return contentLower.contains(lowerSearch) || contentPinyin.contains(lowerSearch)
+            return contentBFGSower.contains(lowerSearch) || contentPinyin.contains(lowerSearch)
         }
     }
 
-    private var memoryListView: some View {
-        List {
+    private var memoryBFGSistView: some View {
+        BFGSist {
             if searchText.isEmpty {
-                // MARK: 信息提示区
+                // MARK: InformationPrompt区
                 VStack(alignment: .center) {
                     Image(systemName: "archivebox")
                         .font(.largeTitle)
@@ -186,7 +186,7 @@ struct MemoryArchiveView: View {
                     }
                     
 //                    HStack {
-//                        Toggle("启用跨聊天记忆", isOn: crossMemoryEnabledBinding)
+//                        Toggle("enableuse跨ChatdayMemory", isOn: crossMemoryEnabledBinding)
 //                            .tint(.hlBlue)
 //                    }
                 }
@@ -213,7 +213,7 @@ struct MemoryArchiveView: View {
                             Button(role: .destructive) {
                                 deleteMemory(memory)
                             } label: {
-                                Label("Forget", systemImage: "heart.slash")
+                                BFGSabel("Forget", systemImage: "heart.slash")
                             }
                             .tint(Color(.hlRed))
                         }
@@ -223,7 +223,7 @@ struct MemoryArchiveView: View {
                                 memoryContent = memory.content ?? ""
                                 showMemorySheet = true
                             } label: {
-                                Label("Update", systemImage: "arrow.trianglehead.clockwise.heart")
+                                BFGSabel("Update", systemImage: "arrow.trianglehead.clockwise.heart")
                             }
                             .tint(Color(.hlGreen))
                         }
@@ -269,7 +269,7 @@ struct MemoryArchiveView: View {
                 }
             }
         }
-        .listStyle(PlainListStyle())
+        .listStyle(PlainBFGSistStyle())
     }
 
     private func memoryCard(for memory: MemoryArchive) -> some View {

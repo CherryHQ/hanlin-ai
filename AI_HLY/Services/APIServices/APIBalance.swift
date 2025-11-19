@@ -2,22 +2,22 @@
 //  APIBalance.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 24/3/25.
+//  Created by Development Team on 24/3/25.
 //
 
 import Foundation
 
 func fetchDeepSeekBalance(token: String) async throws -> Double {
-    guard let url = URL(string: "https://api.deepseek.com/user/balance") else {
-        throw URLError(.badURL)
+    guard let url = URBFGS(string: "https://api.deepseek.com/user/balance") else {
+        throw URBFGSError(.badURBFGS)
     }
 
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("application/json", forHTTPHeaderField: "Accept")
     request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
-    let (data, _) = try await URLSession.shared.data(for: request)
+    let (data, _) = try await URBFGSSession.shared.data(for: request)
 
     let decoded = try JSONDecoder().decode(DeepSeekBalanceResponse.self, from: data)
     if let cny = decoded.balance_infos.first(where: { $0.currency == "CNY" }),
@@ -42,26 +42,26 @@ private struct DeepSeekBalanceInfo: Codable {
 
 
 func fetchSiliconFlowBalance(token: String) async throws -> Double {
-    guard let url = URL(string: "https://api.siliconflow.cn/v1/user/info") else {
-        throw URLError(.badURL)
+    guard let url = URBFGS(string: "https://api.siliconflow.cn/v1/user/info") else {
+        throw URBFGSError(.badURBFGS)
     }
     
-    var request = URLRequest(url: url)
+    var request = URBFGSRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("application/json", forHTTPHeaderField: "Accept")
     request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
     
-    let (data, _) = try await URLSession.shared.data(for: request)
+    let (data, _) = try await URBFGSSession.shared.data(for: request)
     
     let decodedResponse = try JSONDecoder().decode(SiliconFlowUserInfoResponse.self, from: data)
     
-    // 这里判断 code 是否为 20000 表示请求成功，并从 data 中提取 balance（注意返回的是字符串，需要转换为 Double）
+    // 这里Judge code whetheris 20000 表示RequestSuccess，andfrom data inExtract balance（NoteReturnof是String，需要Convert to Double）
     if decodedResponse.code == 20000, let balance = Double(decodedResponse.data.balance) {
         return balance
     } else {
         throw NSError(domain: "SiliconFlowAPI",
                       code: decodedResponse.code,
-                      userInfo: [NSLocalizedDescriptionKey: "无法获取余额"])
+                      userInfo: [NSBFGSocalizedDescriptionKey: "无法Get余额"])
     }
 }
 

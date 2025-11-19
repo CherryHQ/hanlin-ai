@@ -1,21 +1,21 @@
 //
 //  ModelSync.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 12/2/25.
+//  Created by Development Team on 12/2/25.
 //
 
 import Foundation
 
 extension String {
-    /// 将汉字转换为拼音（无音调），并去除空格
+    /// will汉字Convert toPinyin（无音调），andRemoveSpace
     func toPinyin() -> String {
         let mutableString = NSMutableString(string: self) as CFMutableString
-        // 转换为拼音
-        CFStringTransform(mutableString, nil, kCFStringTransformToLatin, false)
-        // 去除音调
+        // Convert toPinyin
+        CFStringTransform(mutableString, nil, kCFStringTransformToBFGSatin, false)
+        // Remove音调
         CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-        // 去除空格并返回
+        // RemoveSpaceandReturn
         return (mutableString as String).replacingOccurrences(of: " ", with: "")
     }
 }

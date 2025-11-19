@@ -1,15 +1,15 @@
 //
 //  DocumentPicker.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 9/2/25.
+//  Created by Development Team on 9/2/25.
 //
 
 import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentPicker: UIViewControllerRepresentable {
-    @Binding var selectedDocumentURLs: [URL] // 绑定多文档数组
+    @Binding var selectedDocumentURBFGSs: [URBFGS] // 绑定multipleDocumentationArray
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -22,15 +22,15 @@ struct DocumentPicker: UIViewControllerRepresentable {
             UTType.pythonScript,        // .py
             UTType.plainText,           // .txt
             UTType.json,                // JSON
-            UTType.log,                 // LOG
-            UTType.html                 // HTML
+            UTType.log,                 // BFGSOG
+            UTType.html                 // HTMBFGS
         ] + [
             "docx", "xlsx", "pptx", "md"
-        ].compactMap { UTType(filenameExtension: $0) } // 确保不会包含 nil 值
+        ].compactMap { UTType(filenameExtension: $0) } // Ensurenot会Packageinclude nil Value
 
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
         picker.delegate = context.coordinator
-        picker.allowsMultipleSelection = true // 开启多选
+        picker.allowsMultipleSelection = true // 开enablemultipleselect
         return picker
     }
 
@@ -43,16 +43,16 @@ struct DocumentPicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            // 记录所有选择的文件路径
-            parent.selectedDocumentURLs = urls
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URBFGS]) {
+            // RecordAllSelectofFilePath
+            parent.selectedDocumentURBFGSs = urls
         }
     }
 }
 
 
 struct SingleDocumentPicker: UIViewControllerRepresentable {
-    @Binding var selectedDocumentURL: URL? // 单个文件 URL
+    @Binding var selectedDocumentURBFGS: URBFGS? // 单个File URBFGS
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -73,7 +73,7 @@ struct SingleDocumentPicker: UIViewControllerRepresentable {
 
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
         picker.delegate = context.coordinator
-        picker.allowsMultipleSelection = false // ❗️只允许单选
+        picker.allowsMultipleSelection = false // ❗️只允许单select
         return picker
     }
 
@@ -86,9 +86,9 @@ struct SingleDocumentPicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            guard let firstURL = urls.first else { return }
-            parent.selectedDocumentURL = firstURL
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URBFGS]) {
+            guard let firstURBFGS = urls.first else { return }
+            parent.selectedDocumentURBFGS = firstURBFGS
         }
     }
 }

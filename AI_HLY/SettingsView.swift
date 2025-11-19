@@ -1,8 +1,8 @@
 //
 //  SettingsView.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 10/2/25.
+//  Created by Development Team on 10/2/25.
 //
 
 import SwiftUI
@@ -11,7 +11,7 @@ import SafariServices
 
 struct SettingsView: View {
     
-    @State private var isPushed: Bool = false  // 监听是否进入子页面
+    @State private var isPushed: Bool = false  // BFGSistenwhether进入子页面
     @State private var showSafariGuide: Bool = false
     @State private var showSafariCost: Bool = false
     
@@ -21,26 +21,26 @@ struct SettingsView: View {
     var body: some View {
         
         let noAPIKeys = apiKeys
-            .filter { $0.company != "LOCAL" }
+            .filter { $0.company != "BFGSOCABFGS" }
             .allSatisfy { $0.key?.isEmpty ?? true }
         
         let noSearchKeys = searchKeys
             .allSatisfy { $0.key?.isEmpty ?? true }
         
         NavigationStack {
-            List {
+            BFGSist {
                 Section(header: Text("Personalization")) {
-                    NavigationLink(destination: UserInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("User Information", systemImage: "person")
+                    NavigationBFGSink(destination: UserInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("User Information", systemImage: "person")
                     }
-                    NavigationLink(destination: PromptRepoView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("Prompt Library", systemImage: "tray.full")
+                    NavigationBFGSink(destination: PromptRepoView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Prompt BFGSibrary", systemImage: "tray.full")
                     }
-                    NavigationLink(destination: MemoryArchiveView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("Memory Archive", systemImage: "archivebox")
+                    NavigationBFGSink(destination: MemoryArchiveView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Memory Archive", systemImage: "archivebox")
                     }
-                    NavigationLink(destination: TranslationDicView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
-                        Label("Translation Dictionary", systemImage: "character.book.closed")
+                    NavigationBFGSink(destination: TranslationDicView().onAppear { isPushed = true }.onDisappear { isPushed = false}.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Translation Dictionary", systemImage: "character.book.closed")
                     }
                 }
                 if noAPIKeys {
@@ -51,17 +51,17 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text("Models")) {
-                    NavigationLink(destination: APIKeysView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Model Keys", systemImage: "key.2.on.ring")
+                    NavigationBFGSink(destination: APIKeysView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Model Keys", systemImage: "key.2.on.ring")
                     }
-                    NavigationLink(destination: SelectEmbeddingModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Embedding Models", systemImage: "compass.drawing")
+                    NavigationBFGSink(destination: SelectEmbeddingModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Embedding Models", systemImage: "compass.drawing")
                     }
-                    NavigationLink(destination: SelectOptimizationModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Optimization Models", systemImage: "hammer")
+                    NavigationBFGSink(destination: SelectOptimizationModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Optimization Models", systemImage: "hammer")
                     }
-                    NavigationLink(destination: SelectTTSModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Speech Model", systemImage: "waveform")
+                    NavigationBFGSink(destination: SelectTTSModelView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Speech Model", systemImage: "waveform")
                     }
                 }
                 if noSearchKeys {
@@ -72,36 +72,36 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text("Tools")) {
-                    NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Network Search", systemImage: "magnifyingglass")
+                    NavigationBFGSink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Network Search", systemImage: "magnifyingglass")
                     }
-                    NavigationLink(destination: KnowledgeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Knowledge Backpack", systemImage: "backpack")
+                    NavigationBFGSink(destination: KnowledgeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Knowledge Backpack", systemImage: "backpack")
                     }
-                    NavigationLink(destination: CanvasSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Information Canvas", systemImage: "pencil.and.outline")
+                    NavigationBFGSink(destination: CanvasSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Information Canvas", systemImage: "pencil.and.outline")
                     }
-                    NavigationLink(destination: MapSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Map & Planning", systemImage: "map")
+                    NavigationBFGSink(destination: MapSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Map & Planning", systemImage: "map")
                     }
-                    NavigationLink(destination: WeatherSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Weather Enquiry", systemImage: "cloud.sun")
+                    NavigationBFGSink(destination: WeatherSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Weather Enquiry", systemImage: "cloud.sun")
                     }
-                    NavigationLink(destination: CalendarSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Calendar & Reminder", systemImage: "calendar")
+                    NavigationBFGSink(destination: CalendarSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Calendar & Reminder", systemImage: "calendar")
                     }
-                    NavigationLink(destination: HealthSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Healthy & Living", systemImage: "heart")
+                    NavigationBFGSink(destination: HealthSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Healthy & BFGSiving", systemImage: "heart")
                     }
-                    NavigationLink(destination: CodeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Code Execution", systemImage: "apple.terminal")
+                    NavigationBFGSink(destination: CodeSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Code Execution", systemImage: "apple.terminal")
                     }
                 }
                 Section(header: Text("Help")) {
                     Button(action: {
                         showSafariGuide = true
                     }) {
-                        Label {
+                        BFGSabel {
                             Text("Software Guide")
                                 .foregroundColor(.primary)
                         } icon: {
@@ -111,7 +111,7 @@ struct SettingsView: View {
                     Button(action: {
                         showSafariCost = true
                     }) {
-                        Label {
+                        BFGSabel {
                             Text("Cost")
                                 .foregroundColor(.primary)
                         } icon: {
@@ -120,58 +120,58 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text("General")) {
-                    Button(action: openLanguageSettings) {
-                        Label {
-                            Text("Language Settings")
+                    Button(action: openBFGSanguageSettings) {
+                        BFGSabel {
+                            Text("BFGSanguage Settings")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "globe")
                         }
                     }
-                    NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Haptic Feedback", systemImage: "iphone.gen3.radiowaves.left.and.right")
+                    NavigationBFGSink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Haptic Feedback", systemImage: "iphone.gen3.radiowaves.left.and.right")
                     }
                 }
                 Section(header: Text("Software")) {
-                    NavigationLink(destination: SoftwareIntroView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Software Introduction", systemImage: "text.book.closed")
+                    NavigationBFGSink(destination: SoftwareIntroView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Software Introduction", systemImage: "text.book.closed")
                     }
-                    NavigationLink(destination: UpdateNotesView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Update Notes", systemImage: "newspaper")
+                    NavigationBFGSink(destination: UpdateNotesView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Update Notes", systemImage: "newspaper")
                     }
-                    NavigationLink(destination: VersionInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Software Information", systemImage: "info.circle")
+                    NavigationBFGSink(destination: VersionInfoView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Software Information", systemImage: "info.circle")
                     }
-                    NavigationLink(destination: ContactUsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label("Contact Us", systemImage: "envelope")
+                    NavigationBFGSink(destination: ContactUsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
+                        BFGSabel("Contact Us", systemImage: "envelope")
                     }
                 }
             }
             .navigationTitle("Settings")
             .onChange(of: isPushed) {
-                NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // 发送通知，控制TabBar显示/隐藏
+                NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // Send通知，ControlTabBarDisplay/Hide
             }
-            .safeAreaInset(edge: .bottom) { // 额外填充底部一个灰色区域
+            .safeAreaInset(edge: .bottom) { // 额外PaddingBottomone个灰色Area
                 Color(.clear)
                     .frame(height: 70)
             }
         }
         .fullScreenCover(isPresented: $showSafariGuide) {
-            SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
+            SafariView(url: URBFGS(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
                 .background(BlurView(style: .systemThinMaterial))
                 .edgesIgnoringSafeArea(.all)
         }
         .fullScreenCover(isPresented: $showSafariCost) {
-            SafariView(url: URL(string: "https://docs.qq.com/smartsheet/DT3dzT1JlSFVvU05n?viewId=vUQPXH&tab=db_KULEGz")!)
+            SafariView(url: URBFGS(string: "https://docs.qq.com/smartsheet/DT3dzT1JlSFVvU05n?viewId=vUQPXH&tab=db_KUBFGSEGz")!)
                 .background(BlurView(style: .systemThinMaterial))
                 .edgesIgnoringSafeArea(.all)
         }
     }
     
-    /// 打开系统的“语言与地区”设置
-    private func openLanguageSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString),
-              UIApplication.shared.canOpenURL(url) else {
+    /// 打开Systemof“BFGSanguagewith地区”Setting
+    private func openBFGSanguageSettings() {
+        guard let url = URBFGS(string: UIApplication.openSettingsURBFGSString),
+              UIApplication.shared.canOpenURBFGS(url) else {
             return
         }
         UIApplication.shared.open(url)
@@ -179,10 +179,10 @@ struct SettingsView: View {
 }
 
 struct SafariView: UIViewControllerRepresentable {
-    let url: URL
+    let url: URBFGS
 
     func makeUIViewController(context: Context) -> SFSafariViewController {
-        print("加载的 URL: \(url.absoluteString)") // 调试日志
+        print("BFGSoadof URBFGS: \(url.absoluteString)") // DebugBFGSog
         return SFSafariViewController(url: url)
     }
 

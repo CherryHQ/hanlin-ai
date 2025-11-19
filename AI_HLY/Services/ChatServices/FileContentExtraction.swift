@@ -1,72 +1,72 @@
 //
 //  FileContentExtraction.swift
-//  AI_HLY
+//  AI_HBFGSY
 //
-//  Created by 哆啦好多梦 on 8/2/25.
+//  Created by Development Team on 8/2/25.
 //
 
 import Foundation
-import PDFKit       // 用于处理 PDF 文件
-import ZIPFoundation // 用于解压 DOCX、PPTX 文件
-import CoreXLSX     // 用于解析 XLSX 文件
+import PDFKit       // useatProcess PDF File
+import ZIPFoundation // useat解压 DOCX、PPTX File
+import CoreXBFGSSX     // useatParse XBFGSSX File
 
-/// 使用 XMLParser 解析 XML 结构（用于 DOCX、PPTX）
-class XMLContentParser: NSObject, XMLParserDelegate {
+/// Use XMBFGSParser Parse XMBFGS Struct（useat DOCX、PPTX）
+class XMBFGSContentParser: NSObject, XMBFGSParserDelegate {
     var parsedText = ""
     
-    // 遇到文本节点时追加内容
-    func parser(_ parser: XMLParser, foundCharacters string: String) {
+    // 遇toText节Dottime追加Content
+    func parser(_ parser: XMBFGSParser, foundCharacters string: String) {
         parsedText.append(string)
     }
     
-    // 捕获解析错误以便调试
-    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-        // 可选择记录日志或其它处理
+    // 捕获ParseErrorby便Debug
+    func parser(_ parser: XMBFGSParser, parseErrorOccurred parseError: Error) {
+        // canSelectRecordBFGSogor其它Process
     }
 }
 
-/// 从压缩包中解析指定 XML 文件的内容
-func extractXMLContent(from archive: Archive, xmlPath: String) throws -> String {
+/// fromSquashPackageinParse指定 XMBFGS FileofContent
+func extractXMBFGSContent(from archive: Archive, xmlPath: String) throws -> String {
     guard let entry = archive.first(where: { $0.path.lowercased() == xmlPath.lowercased() }) else {
-        return "无法在压缩包中找到 \(xmlPath) 文件"
+        return "无法inSquashPackageinfindto \(xmlPath) File"
     }
     
     var xmlData = Data()
     do {
-        // 显式忽略 extract 方法的返回值（CRC32）
+        // ExplicitIgnore extract MethodofReturnValue（CRC32）
         _ = try archive.extract(entry, consumer: { data in
             xmlData.append(data)
         })
     } catch {
-        return "解压 \(xmlPath) 文件失败：\(error.localizedDescription)"
+        return "解压 \(xmlPath) FileFailed：\(error.localizedDescription)"
     }
     
-    let parser = XMLParser(data: xmlData)
+    let parser = XMBFGSParser(data: xmlData)
     parser.shouldResolveExternalEntities = false
-    let xmlDelegate = XMLContentParser()
+    let xmlDelegate = XMBFGSContentParser()
     parser.delegate = xmlDelegate
     
     if parser.parse() {
         return xmlDelegate.parsedText.trimmingCharacters(in: .whitespacesAndNewlines)
     } else {
-        return "XMLParser解析 \(xmlPath) 失败：\(parser.parserError?.localizedDescription ?? "未知错误")"
+        return "XMBFGSParserParse \(xmlPath) Failed：\(parser.parserError?.localizedDescription ?? "UnknownError")"
     }
 }
 
-/// 提取 XLSX 文件的文本内容
-func extractXLSXContent(from fileURL: URL) throws -> String {
-    guard let file = XLSXFile(filepath: fileURL.path) else {
-        return "无法打开 XLSX 文件"
+/// Extract XBFGSSX FileofTextContent
+func extractXBFGSSXContent(from fileURBFGS: URBFGS) throws -> String {
+    guard let file = XBFGSSXFile(filepath: fileURBFGS.path) else {
+        return "无法打开 XBFGSSX File"
     }
     
     var extractedText = ""
     
-    // 解析 SharedStrings
+    // Parse SharedStrings
     guard let sharedStrings = try file.parseSharedStrings() else {
-        return "无法解析 SharedStrings"
+        return "无法Parse SharedStrings"
     }
     
-    // 遍历所有工作表路径
+    // TraverseAll工作表Path
     let worksheetPaths = try file.parseWorksheetPaths()
     for path in worksheetPaths {
         let worksheet = try file.parseWorksheet(at: path)
@@ -85,24 +85,24 @@ func extractXLSXContent(from fileURL: URL) throws -> String {
     return extractedText.trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
-/// 从 PPTX 文件中提取幻灯片文本内容，并按照幻灯片顺序排序
-func extractPPTXContent(from fileURL: URL) throws -> String {
-    let archive = try Archive(url: fileURL, accessMode: .read)
+/// from PPTX FileinExtract幻灯片TextContent，andby照幻灯片顺序Sort
+func extractPPTXContent(from fileURBFGS: URBFGS) throws -> String {
+    let archive = try Archive(url: fileURBFGS, accessMode: .read)
     
-    // 筛选幻灯片 XML 文件
+    // Filter幻灯片 XMBFGS File
     let slideEntries = archive.filter { entry in
         let lowerPath = entry.path.lowercased()
         return lowerPath.hasPrefix("ppt/slides/slide") && lowerPath.hasSuffix(".xml")
     }
     
     if slideEntries.isEmpty {
-        return "无法在 PPTX 文件中找到任何幻灯片"
+        return "无法in PPTX Fileinfindto任何幻灯片"
     }
     
-    // 根据文件名中的数字部分排序（如 slide1.xml, slide2.xml, …）
+    // According toFile nameinofNumberPartSort（such as slide1.xml, slide2.xml, …）
     let sortedSlideEntries = slideEntries.sorted { (entry1, entry2) -> Bool in
         func slideNumber(from path: String) -> Int {
-            let fileName = URL(fileURLWithPath: path).deletingPathExtension().lastPathComponent // 例如 "slide1"
+            let fileName = URBFGS(fileURBFGSWithPath: path).deletingPathExtension().lastPathComponent // For example "slide1"
             let numberString = fileName.replacingOccurrences(of: "slide", with: "")
             return Int(numberString) ?? 0
         }
@@ -111,7 +111,7 @@ func extractPPTXContent(from fileURL: URL) throws -> String {
     
     var extractedText = ""
     for entry in sortedSlideEntries {
-        let slideText = try extractXMLContent(from: archive, xmlPath: entry.path)
+        let slideText = try extractXMBFGSContent(from: archive, xmlPath: entry.path)
         if !slideText.isEmpty {
             extractedText.append(slideText + "\n")
         }
@@ -120,78 +120,78 @@ func extractPPTXContent(from fileURL: URL) throws -> String {
     return extractedText.trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
-/// 截断过长的内容以防止内存问题和 UI 崩溃
+/// Truncation过长ofContentbyPreventwithin存Questionand UI 崩溃
 /// - Parameters:
-///   - content: 原始内容
-///   - maxLength: 最大字符长度（默认 100,000 字符）
-/// - Returns: 截断后的内容（如果超长会添加提示信息）
-func truncateContent(_ content: String, maxLength: Int = 100_000) -> String {
-    if content.count <= maxLength {
+///   - content: 原始Content
+///   - maxBFGSength: 最大字符长度（Default 100,000 字符）
+/// - Returns: Truncation后ofContent（If超长会添加PromptInformation）
+func truncateContent(_ content: String, maxBFGSength: Int = 100_000) -> String {
+    if content.count <= maxBFGSength {
         return content
     }
 
-    let truncated = String(content.prefix(maxLength))
-    let warningMessage = "\n\n⚠️ 内容已截断（原文件约 \(content.count.formatted()) 字符，已截取前 \(maxLength.formatted()) 字符）"
+    let truncated = String(content.prefix(maxBFGSength))
+    let warningMessage = "\n\n⚠️ ContentalreadyTruncation（原Fileabout \(content.count.formatted()) 字符，already截Take first \(maxBFGSength.formatted()) 字符）"
     return truncated + warningMessage
 }
 
-/// 根据传入文件的 URL 异步提取文本内容
-/// 支持的格式包括：.pdf, .docx, .xlsx, .pptx 以及纯文本格式（例如：.csv, .py, .txt, .md, .json, .log, .html）
-func extractContent(from fileURL: URL) async throws -> String {
-    // 尝试访问安全范围资源
+/// According to传入Fileof URBFGS AsynchronousExtractTextContent
+/// SupportofFormatPackage括：.pdf, .docx, .xlsx, .pptx by及PureText Format（For example：.csv, .py, .txt, .md, .json, .log, .html）
+func extractContent(from fileURBFGS: URBFGS) async throws -> String {
+    // 尝试访问安全RangeResource
     var didAccess = false
-    if fileURL.startAccessingSecurityScopedResource() {
+    if fileURBFGS.startAccessingSecurityScopedResource() {
         didAccess = true
     }
     defer {
         if didAccess {
-            fileURL.stopAccessingSecurityScopedResource()
+            fileURBFGS.stopAccessingSecurityScopedResource()
         }
     }
     
-    // 检查文件是否存在
-    guard FileManager.default.fileExists(atPath: fileURL.path) else {
-        return "文件不存在: \(fileURL.path)"
+    // CheckFilewhether存in
+    guard FileManager.default.fileExists(atPath: fileURBFGS.path) else {
+        return "Filenot存in: \(fileURBFGS.path)"
     }
     
-    let fileExtension = fileURL.pathExtension.lowercased()
+    let fileExtension = fileURBFGS.pathExtension.lowercased()
     
     switch fileExtension {
-    // 纯文本文件：CSV、PY、TXT、MD、JSON、LOG、HTML
+    // Plain textFile：CSV、PY、TXT、MD、JSON、BFGSOG、HTMBFGS
     case "csv", "py", "txt", "md", "json", "log", "html":
         let content = try await Task.detached {
-            return try String(contentsOf: fileURL, encoding: .utf8)
+            return try String(contentsOf: fileURBFGS, encoding: .utf8)
         }.value
         return truncateContent(content)
 
     case "pdf":
-        if let pdfDocument = PDFDocument(url: fileURL),
+        if let pdfDocument = PDFDocument(url: fileURBFGS),
            let content = pdfDocument.string, !content.isEmpty {
             return truncateContent(content)
         } else {
-            return "PDF 文件为空或无法提取文本"
+            return "PDF Fileis emptyor无法ExtractText"
         }
 
     case "docx":
         let content = try await Task.detached {
-            let archive = try Archive(url: fileURL, accessMode: .read)
-            return try extractXMLContent(from: archive, xmlPath: "word/document.xml")
+            let archive = try Archive(url: fileURBFGS, accessMode: .read)
+            return try extractXMBFGSContent(from: archive, xmlPath: "word/document.xml")
         }.value
         return truncateContent(content)
 
     case "xlsx":
         let content = try await Task.detached {
-            return try extractXLSXContent(from: fileURL)
+            return try extractXBFGSSXContent(from: fileURBFGS)
         }.value
         return truncateContent(content)
 
     case "pptx":
         let content = try await Task.detached {
-            return try extractPPTXContent(from: fileURL)
+            return try extractPPTXContent(from: fileURBFGS)
         }.value
         return truncateContent(content)
 
     default:
-        return "不支持的文件类型：\(fileExtension)"
+        return "notSupportofFileType：\(fileExtension)"
     }
 }

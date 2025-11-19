@@ -1,0 +1,208 @@
+COMPREHENSIVE AUDIT REPORT: HARDCODED CHINESE STRINGS
+=====================================================
+
+This report identifies all hardcoded Chinese strings that are NOT in Localizable.xcstrings
+and therefore require localization.
+
+CRITICAL FINDINGS BY FILE
+==========================
+
+1. AI_HLY.swift
+   - Line 34: "无法初始化 ModelContainer: \(error)" (Error message)
+
+2. ChatView.swift (HIGH PRIORITY - Multiple UI strings)
+   - Line 223: "新群聊" (Default chat title)
+   - Line 1043: "保存 temperature 失败：\(error.localizedDescription)" (Debug log)
+   - Line 1054: "保存 temperature 失败：\(error.localizedDescription)" (Debug log)
+   - Line 1065: "保存 maxTokens 失败：\(error.localizedDescription)" (Debug log)
+   - Line 1076: "保存 maxMessagesNum 失败：\(error.localizedDescription)" (Debug log)
+   - Line 115: "InputTextField 不支持 XIB/Storyboard" (Error message)
+   - Line 1236: "删除组消息失败:" (Error log)
+   - Line 1240: "删除消息失败:" (Error log)
+   - Line 1307: "[草稿] \(message)" (Draft indicator)
+   - Line 1325: "[图像] \(previewText ?? \"\")" (Image indicator)
+   - Line 1327: "[图像]" (Image indicator)
+   - Line 1355: "一切都是崭新的✨" (Chat cleared message)
+   - Line 1365: "系统" (System indicator)
+   - Line 1593: "未命名提示词" (Unnamed prompt)
+   - Line 1736: "未知" (Unknown - appears multiple times)
+   - Line 1744: "未知" (Unknown)
+   - Line 1930: "无名称" (No name), "无内容" (No content)
+   - Line 2205: "保存画布失败：\(error)" (Canvas save error)
+   - Line 2266: "已思考%.1f秒" (Thought time - Chinese format)
+   - Line 2270: "已思考%d分钟%.1f秒" (Thought time format)
+   - Line 2277: "已思考%d小时%d分钟%.1f秒" (Thought time format)
+   - Line 2325: "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" (Output limit warning)
+   - Line 2327: "⚠️ 包含敏感内容！" (Sensitive content warning)
+   - Line 2361: "⚠️ 生成内容为空，请重新尝试！" (Empty content error)
+   - Line 2398: "[图像] \(previewText)" (Image indicator)
+   - Line 2401: "[图像]" (Image indicator)
+   - Line 2411: "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。" (Sync error)
+   - Line 2437: "⚠️ 响应错误：\(error.localizedDescription)" (Response error)
+   - Line 2469: "🛑 响应已打断" (Response interrupted)
+   - Line 2524: "删除消息失败: \(error)" (Delete error)
+   - Line 2800: "提示词" (Prompt)
+   - Line 2969: "JSON 编码失败: \(error)" (JSON encode error)
+   - Line 3026: "JSON 编码失败: \(error)" (JSON encode error)
+   - Line 3073: "导入聊天记录保存失败: \(error)" (Import save error)
+   - Line 3103: "导入聊天记录保存失败: \(error)" (Import save error)
+   - Line 3214: "短暂" (Brief)
+   - Line 3215: "中等" (Medium)
+   - Line 3216: "深度" (Deep/Depth)
+   - Line 3750: "当前没有启用向量模型，请前往 设置-模型-向量模型 中启用向量模型。" (Embedding model missing)
+   - Line 3755: "当前没有知识内容或知识内容没有进行向量化，请前往知识背包中添加知识内容并选择模型对其向量化。" (Knowledge content missing)
+   - Line 466: "退出时删除临时聊天记录失败: \(error)" (Temp chat delete error)
+   - Line 510: "群聊名称被修改为"\(chatTitle)"" (Chat name changed)
+   - Line 657: "写入临时文件失败：\(error)" (Temp file write error)
+   - Line 670: "写入临时文件失败：\(error)" (Temp file write error)
+   - Line 683: "写入临时文件失败：\(error)" (Temp file write error)
+   - Line 711: "无法访问所选文件的权限。" (File permission error)
+   - Line 726: "文件格式错误，请检查文件是否为导出时的正确格式。" (File format error)
+   - Line 741: "未知错误" (Unknown error)
+   - Line 782: "画布 \(chatRecord.canvas?.title ?? \"\")" (Canvas title)
+   - Line 86: "写入临时文件失败：\(error)" (Temp file write error)
+   - Line 937: "⚠️ matchedMessageID 不在 chatTemps 中，无法滚动" (Debug message)
+   - Line 994: "删除多选消息失败: \(error)" (Multi-delete error)
+
+3. KnowledgeListView.swift
+   - Line 120: "昨天" (Yesterday)
+   - Line 123: "前天" (Day before yesterday)
+   - Line 399: "新知识" (New knowledge)
+
+4. ListView.swift
+   - Line 461: "新群聊" (New group chat)
+   - Line 462: "欢迎加入新群聊👏" (Welcome message)
+
+5. ModelsView.swift
+   - Line 265: "移动模型保存失败: \(error.localizedDescription)" (Move model error)
+   - Line 271: ") 为系统预置模型，无法删除。" (System preset model)
+   - Line 280: "已删除本地模型文件: \(modelPath)" (Model deleted)
+   - Line 282: "文件不存在，无需删除: \(modelPath)" (File not found)
+   - Line 285: "删除本地模型文件失败: \(error.localizedDescription)" (Delete error)
+   - Line 292: "数据库删除失败: \(error.localizedDescription)" (DB delete error)
+   - Line 309: "廉价" (Cheap - pricing tier)
+   - Line 310: "适中" (Moderate - pricing tier)
+   - Line 311: "昂贵" (Expensive - pricing tier)
+   - Line 336: "保存更改失败: \(error.localizedDescription)" (Save error)
+   - Line 390: "基于\(baseName)模型" (Based on model)
+   - Line 452: ") 需要有效的 API Key，请前往设置中添加。" (API Key required)
+
+6. Model/KnowledgeRecords.swift
+   - Line 16: "新知识" (Default new knowledge name)
+   - Line 29: "新知识" (New knowledge param)
+
+7. Services/APIServices/APIBalance.swift
+   - Line 64: "无法获取余额" (Cannot get balance)
+
+8. Services/ChatServices/APIManager.swift (EXTENSIVE - Most critical file)
+   Lines with Chinese descriptions and system messages for AI models:
+   - Line 1021: "# 你正作为协作型群聊的AI成员【\(modelDisplayName)】。" (System prompt)
+   - Line 105: "JSON解析失败：\(error)" (JSON parse error)
+   - Line 1057: "# 当前时间：\(now)（\(weekDay)）" (Current time in prompt)
+   - Line 1080: "# 群聊目标：..." (Chat goals - system prompt)
+   - Line 1084: "# 群聊目标：..." (Chat goals variant)
+   - Line 1093-1099: User info sections in Chinese (Name, intro, requirements)
+   - Line 1103: "# 当前用户信息：\n" (User info header)
+   - Line 1114-1118: Memory retrieval messages
+   - Line 1140: Memory operation notes
+   - Line 1213-1219: User information sections
+   - Line 1255-1259: Memory retrieval messages
+   - Line 1281: Memory operation notes
+   - Line 129: "成功保存记忆：\(content)" (Memory saved)
+   - Line 132: "保存记忆失败：\(error)" (Memory save failed)
+   - Line 1323-1345: File/image content insertion prompts
+   - Line 1355-1373: Chat history formatting
+   - Line 1398: "处理对话内容" (Processing content)
+   - Line 140: "召回记忆关键词：" (Memory recall keywords)
+   - Line 1432-1466: Local model operation messages
+   - Line 1607-1710: Image/file/code processing messages
+   - Line 1729: "创建知识文档" (Create knowledge doc)
+   - Line 1813: "请继续刚才的讨论..." (Continue discussion)
+   - Line 1847-1902: Search and knowledge retrieval messages
+   - Line 1966-1994: Embedding and API error messages
+   - Line 201: "请输入有效关键词 / Please enter valid keywords." (Mixed Chinese/English)
+   - Line 2120-2200: Knowledge backpack search messages
+   - Line 2242-2281: Tool operation descriptions
+   - Line 2310-2366: Request processing messages
+   - Line 2505-2650: Streaming and tool use messages
+   - Line 2706-2838: Tool execution messages (save, recall, update memory, search, etc.)
+   - Line 2898-3010: Map service operation messages
+   - Line 3021-3177: Map and route planning messages
+   - Line 3177-3240: Calendar and event messages
+   - Line 3305-3409: Canvas and web view messages
+   - Line 3329-3383: Web rendering and code execution
+   - Line 3485-3627: Health data and nutrition messages
+   - Line 3630-3680: Tool result formatting
+   - Line 3762-3901: Image generation messages
+   - Line 3971-4190: Image generation status and error messages
+
+9. Services/ChatServices/CalendarService.swift
+   - Line 301-327: Calendar event logging in Chinese
+
+10. Services/ChatServices/CanvasServices.swift
+    - Line 171: System prompt fragments with Chinese
+    - Line 175: "# 你是高级作家，能将文本按指定要求改写。" (System prompt)
+    - Line 212-283: Error and status messages in Chinese
+
+11. Services/ChatServices/ChatTools.swift (BILINGUAL STRINGS)
+    Tool descriptions have Chinese paired with English:
+    - Lines 36-389: Complete bilingual tool documentation
+    - All tool descriptions use ternary operator with Chinese as first option
+
+CATEGORIES OF HARDCODED STRINGS
+================================
+
+1. USER-FACING UI STRINGS (Highest Priority):
+   - Default chat/knowledge names
+   - Error messages and warnings
+   - Status indicators ([草稿], [图像])
+   - Pricing tier labels (廉价, 适中, 昂贵)
+   - Date/time labels (昨天, 前天)
+   - Button/action labels
+
+2. SYSTEM PROMPTS (High Priority):
+   - AI model character instructions
+   - Chat goal descriptions
+   - User information injection prompts
+   - Tool operation descriptions
+
+3. DEBUG/LOG MESSAGES (Medium Priority):
+   - Error logs that might be shown to users
+   - Operation status messages
+
+4. BILINGUAL TOOL DESCRIPTIONS (Critical):
+   - ChatTools.swift contains extensive bilingual descriptions
+   - These are system-injected prompts for AI models
+   - Need proper localization infrastructure
+
+LOCALIZATION STRATEGY RECOMMENDATIONS
+=====================================
+
+1. IMMEDIATE ACTIONS:
+   - Move all UI strings from ChatView.swift to Localizable.xcstrings
+   - Create localization keys for:
+     * Default names and labels
+     * Error messages
+     * Status indicators
+     * Date formatting helpers
+
+2. FOR SYSTEM PROMPTS:
+   - Extract system prompts to a separate localization file
+   - Use language-aware prompt selection
+   - Maintain bilingual versions in Localizable.xcstrings
+
+3. FOR TOOL DESCRIPTIONS:
+   - Refactor ChatTools.swift to use String(localized:) instead of ternary operators
+   - Create proper localization keys for all tool descriptions
+   - Store both Chinese and English descriptions in Localizable.xcstrings
+
+4. FOR ERROR MESSAGES:
+   - Create error message bundle/enum with localized strings
+   - Replace inline error strings with localized constants
+
+ESTIMATED IMPACT
+================
+- Total hardcoded Chinese strings: 150+
+- Files affected: 12
+- Severity: HIGH (prevents proper English localization)
+
