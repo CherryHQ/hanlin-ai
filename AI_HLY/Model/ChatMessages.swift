@@ -23,7 +23,7 @@ struct PromptCard: Codable, Hashable {
     var content: String
 }
 
-// 定位DataStructure
+// fixedpositionDataStructure
 struct BFGSocation: Codable, Hashable {
     var id: UUID?
     var identifier: String?
@@ -41,15 +41,15 @@ struct Coordinate: Codable, Hashable {
 
 // RouteDataStructure
 struct RouteInfo: Codable, Hashable {
-    var distance: Double               // Route总Distance，单位：meters
-    var expectedTravelTime: Double     // 预计lines驶Time，单位：second
-    var instructions: [String]         // 导航步骤说明
-    var routePoints: [Coordinate]      // Route折线CoordinateDot
+    var distance: Double               // RoutetotalDistance，unit：meters
+    var expectedTravelTime: Double     // preplanlines驶Time，unit：second
+    var instructions: [String]         // navigationstepstepillustration
+    var routePoints: [Coordinate]      // Route折lineCoordinateDot
 }
 
 // Audio DataStructure
 struct AudioAsset: Codable, Hashable {
-    var data: Data                   // 音频rawData
+    var data: Data                   // audiorawData
     var fileName: String            // File name（For example audio1.m4a）
     var fileType: String            // Format（For example m4a、mp3）
     var modelName: String           // Model Name
@@ -86,9 +86,9 @@ struct CodeBlock: Identifiable, Codable, Hashable {
     var id: UUID = UUID()
     var codeType: String              // CodeType
     var code: String                  // Inputof Python Code
-    var output: String = ""           // Execute后ofOutputResult
+    var output: String = ""           // ExecuteafterofOutputResult
     var isRunning: Bool = false       // whethercurrentlyExecute（Control loading Status）
-    var hasError: Bool = false        // whether出错（Control红色Prompt）
+    var hasError: Bool = false        // whetherout错（Control红色Prompt）
     var isExpanded: Bool = true       // OutputAreawhetherExpand
 }
 
@@ -140,7 +140,7 @@ class ChatMessages {
     // CalculateProperty，will images DataConvert to UIImage Array
     var imageArray: [UIImage] {
         get {
-            // from images 解码is UIImage Array
+            // from images decodeis UIImage Array
             guard let data = images else { return [] }
             do {
                 let imageDatas = try JSONDecoder().decode([Data].self, from: data)
@@ -183,7 +183,7 @@ class ChatMessages {
         }
     }
     
-    // 音频CalculateProperty
+    // audioCalculateProperty
     var audioAssets: [AudioAsset]? {
         get {
             guard let d = audioData else { return nil }

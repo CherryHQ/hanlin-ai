@@ -2,7 +2,7 @@
 //  PromptRepo.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 18/3/25.
+//  Created by 哆啦好多dream on 18/3/25.
 //
 
 import Foundation

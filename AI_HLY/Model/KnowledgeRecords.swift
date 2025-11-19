@@ -19,7 +19,7 @@ class KnowledgeRecords {
     var icon: String? // Icon
     var color: String? // Color
     var content: String? // Content
-    var isEmbedding: Bool = false // whetheralready经Vector化
+    var isEmbedding: Bool = false // whetheralreadythroughVectorconvert
     @Relationship(deleteRule: .cascade)
     var chunks: [KnowledgeChunk]?
     

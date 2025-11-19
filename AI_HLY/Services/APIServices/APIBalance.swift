@@ -55,13 +55,13 @@ func fetchSiliconFlowBalance(token: String) async throws -> Double {
     
     let decodedResponse = try JSONDecoder().decode(SiliconFlowUserInfoResponse.self, from: data)
     
-    // 这里Judge code whetheris 20000 表示RequestSuccess，andfrom data inExtract balance（NoteReturnofisString，needConvert to Double）
+    // hereJudge code whetheris 20000 indicateRequestSuccess，andfrom data inExtract balance（NoteReturnofisString，needConvert to Double）
     if decodedResponse.code == 20000, let balance = Double(decodedResponse.data.balance) {
         return balance
     } else {
         throw NSError(domain: "SiliconFlowAPI",
                       code: decodedResponse.code,
-                      userInfo: [NSBFGSocalizedDescriptionKey: "无法Get余额"])
+                      userInfo: [NSBFGSocalizedDescriptionKey: "unableGetremaining额"])
     }
 }
 

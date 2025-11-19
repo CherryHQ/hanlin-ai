@@ -14,7 +14,7 @@ struct CanvasData: Codable, Hashable {
     var title: String = ""       // Canvas title
     var content: String = ""     // CanvasText
     var type: String = ""        // CanvasType
-    var saved: Bool = false      // whetheralready经Save
+    var saved: Bool = false      // whetheralreadythroughSave
     var id: UUID? = nil          // CanvasKnowledge编号
     var history: [String]? = []
     var index: Int? = 0
@@ -29,13 +29,13 @@ class ChatRecords {
     var infoDescription: String?
     var lastEdited: Date = Date()
     var isPinned: Bool = false
-    var icon: String?                 // StorageIcon名称
-    var color: String?                // Colorof名称
+    var icon: String?                 // StorageIconname
+    var color: String?                // Colorofname
     var input: String? = ""           // currentlyInput
     var useModel: Int? = -1           // currentlyUseofModel
     var temperature: Double = -999    // SamplingTemperatureParameter（Default notSetting）
-    var topP: Double = -999           // 累积ProbabilityParameter（Default notSetting）
-    var maxTokens: Int = -999         // 最Big OutputParameter，Defaultis notSetting
+    var topP: Double = -999           // accumulateProbabilityParameter（Default notSetting）
+    var maxTokens: Int = -999         // mostBig OutputParameter，Defaultis notSetting
     var maxMessagesNum: Int = 20      // MessageQuantityParameter，Defaultis 20
     var systemMessage: String? = ""   // SystemMessage
     var useSystemMessage: Bool = true
@@ -56,8 +56,8 @@ class ChatRecords {
         input: String? = "",            // currentlyInput
         useModel: Int? = -1,            // currentlyUseofModel
         temperature: Double = -999,     // SamplingTemperatureParameter（Default notSetting）
-        topP: Double = -999,            // 累积ProbabilityParameter（Default notSetting）
-        maxTokens: Int = -999,          // 最Big OutputParameter，Defaultis notSetting
+        topP: Double = -999,            // accumulateProbabilityParameter（Default notSetting）
+        maxTokens: Int = -999,          // mostBig OutputParameter，Defaultis notSetting
         maxMessagesNum: Int = 20,       // MessageQuantityParameter，Defaultis 20
         systemMessage: String? = "",
         useSystemMessage: Bool = true,

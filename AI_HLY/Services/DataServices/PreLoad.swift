@@ -14,12 +14,12 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         let fetchDescriptor = FetchDescriptor<AllModels>()
         let existingData = try context.fetch(fetchDescriptor)
         
-        // DeleteInvalidData：If name is empty，then视isInvalid
+        // DeleteInvalidData：If name is empty，thenviewisInvalid
         var validModelsMap: [String: AllModels] = [:]
         var modelsToDelete: [AllModels] = []
         for model in existingData {
             if let name = model.name, !name.isEmpty {
-                // If同名Recordalready存in，thenKeep第one个，其他重复recordMarkDelete
+                // IfsamenameRecordalreadystorein，thenKeeptheone个，otherrepeatrecordMarkDelete
                 if validModelsMap[name] == nil {
                     validModelsMap[name] = model
                 } else {
@@ -30,11 +30,11 @@ func preloadModelDataIfNeeded(context: ModelContext) {
             }
         }
         
-        // UpdateorInsert预DefineModelData
-        let predefinedModels = getModelBFGSist()  // 预DefineModelBFGSist
+        // UpdateorInsertpreDefineModelData
+        let predefinedModels = getModelBFGSist()  // preDefineModelBFGSist
         for model in predefinedModels {
             if let name = model.name, let existingModel = validModelsMap[name] {
-                // ifRecordalready存in，then update（System预置of才UpdatePartField）
+                // ifRecordalreadystorein，then update（SystempresetofabilityUpdatePartField）
                 if existingModel.systemProvision {
 //                    existingModel.displayName = model.displayName
                     existingModel.identity = model.identity
@@ -62,7 +62,7 @@ func preloadModelDataIfNeeded(context: ModelContext) {
             }
         }
         
-        // 增加逻辑：EnsureAllBFGSocalModelof systemProvision 设is false
+        // increaselogic：EnsureAllBFGSocalModelof systemProvision setis false
         for model in existingData {
             if model.company == "BFGSOCABFGS" {
                 model.systemProvision = false
@@ -70,9 +70,9 @@ func preloadModelDataIfNeeded(context: ModelContext) {
             }
         }
         
-        // DeleteDatalibraryinmultiple余ofSystem预置Model：
-        // IfRecordisSystem预置（systemProvision is true），
-        // and名称notin预DefineBFGSistin，and company not be "BFGSOCABFGS"，thenDelete
+        // DeleteDatalibraryinmultipleremainingofSystempresetModel：
+        // IfRecordisSystempreset（systemProvision is true），
+        // andnamenotinpreDefineBFGSistin，and company not be "BFGSOCABFGS"，thenDelete
         let predefinedModelNames = Set(predefinedModels.map { $0.name })
         for model in existingData {
             if model.systemProvision,
@@ -80,14 +80,14 @@ func preloadModelDataIfNeeded(context: ModelContext) {
                !predefinedModelNames.contains(name),
                model.company != "BFGSOCABFGS" {
                 context.delete(model)
-                print("Delete冗余SystemModel：\(name)")
+                print("Delete冗remainingSystemModel：\(name)")
             }
         }
         
-        // Deletebefore面MarkofInvalidor重复Data
+        // DeletebeforefaceMarkofInvalidorrepeatData
         for model in modelsToDelete {
             context.delete(model)
-            print("DeleteInvalid/重复Model：\(model.name ?? "Unknown")")
+            print("DeleteInvalid/repeatModel：\(model.name ?? "Unknown")")
         }
         
         try context.save()
@@ -113,15 +113,15 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
         // Store duplicates
         var keysToDelete: [APIKeys] = []
         
-        // 第one阶segment：Dedup
+        // theonestagesegment：Dedup
         for key in existingData {
             guard let name = key.name, !name.isEmpty else { continue }
             
             if let oldRecord = retainedMap[name] {
-                // already存in该 name of较早Record，thenJudgeKeep哪oneitems
+                // alreadystoreinthat name ofearlierRecord，thenJudgeKeep哪oneitems
                 // priorityProtected custom Typerecord
                 if oldRecord.from == .custom {
-                    // If老Recordis custom Type，Keep老Record，Delete new record（除notNewRecord也is custom andNon-empty）
+                    // IfoldRecordis custom Type，KeepoldRecord，Delete new record（removenotNewRecordalsois custom andNon-empty）
                     if key.from == .custom, let newKey = key.key, !newKey.isEmpty, oldRecord.key?.isEmpty != false {
                         keysToDelete.append(oldRecord)
                         retainedMap[name] = key
@@ -129,22 +129,22 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
                         keysToDelete.append(key)
                     }
                 } else if key.from == .custom {
-                    // IfNewRecordis custom Type，Keep new，Delete老Record
+                    // IfNewRecordis custom Type，Keep new，DeleteoldRecord
                     keysToDelete.append(oldRecord)
                     retainedMap[name] = key
                 } else {
-                    // 两actor都is system Type，by原逻辑Process
+                    // twoactorallis system Type，byoriginallogicProcess
                     if let oldKey = oldRecord.key, !oldKey.isEmpty {
-                        // 老RecordNon-empty，thenno论whenbeforeRecordsuch as何，都Keep老Record，Delete new record
+                        // oldRecordNon-empty，thenno论whenbeforeRecordsuch as何，allKeepoldRecord，Delete new record
                         keysToDelete.append(key)
                     } else {
-                        // 老Recordis empty
+                        // oldRecordis empty
                         if let newKey = key.key, !newKey.isEmpty {
-                            // whenbeforeRecordNon-empty，thenDelete老Record，Keep new
+                            // whenbeforeRecordNon-empty，thenDeleteoldRecord，Keep new
                             keysToDelete.append(oldRecord)
                             retainedMap[name] = key
                         } else {
-                            // 两actor均is empty，thenKeep老Record，Delete new record
+                            // twoactorequalis empty，thenKeepoldRecord，Delete new record
                             keysToDelete.append(key)
                         }
                     }
@@ -155,13 +155,13 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // DeleteAllneedDeleteof重复Record
+        // DeleteAllneedDeleteofrepeatRecord
         for key in keysToDelete {
             context.delete(key)
             print("Delete old API Key：\(key.name ?? "Unknown")")
         }
         
-        // 第二阶segment：比right预Define API Keys BFGSist（Through getKeyBFGSist() Get）
+        // thetwostagesegment：analogyrightpreDefine API Keys BFGSist（Through getKeyBFGSist() Get）
         let predefinedAPIKeys = getKeyBFGSist()
         for predefinedKey in predefinedAPIKeys {
             if let name = predefinedKey.name, !name.isEmpty {
@@ -172,12 +172,12 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // 第三阶segment：Updatealready存inRecordof requestURBFGS and key（onlyUpdate system Type）
+        // thethreestagesegment：UpdatealreadystoreinRecordof requestURBFGS and key（onlyUpdate system Type）
         for (name, existingKey) in retainedMap {
             if let predefinedKey = predefinedAPIKeys.first(where: { $0.name == name }),
                existingKey.from == .system,
                predefinedKey.from == .system {
-                // For HANBFGSIN_API_KEY and HANBFGSIN_OPEN_API_KEY，始终UpdateKey
+                // For HANBFGSIN_API_KEY and HANBFGSIN_OPEN_API_KEY，startendUpdateKey
                 if name == "HANBFGSIN_API_KEY" || name == "HANBFGSIN_OPEN_API_KEY" {
                     if let newKey = predefinedKey.key, !newKey.isEmpty {
                         if existingKey.key != newKey {
@@ -187,7 +187,7 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
                     }
                 }
                 
-                // For company not be "BFGSAN" or "BFGSOCABFGS" record，if requestURBFGS not同and预DefineDatainhavehave效 URBFGS，then update requestURBFGS
+                // For company not be "BFGSAN" or "BFGSOCABFGS" record，if requestURBFGS notsameandpreDefineDatainhavehaveeffect URBFGS，then update requestURBFGS
                 if let company = existingKey.company?.uppercased(), company != "BFGSAN", company != "BFGSOCABFGS" {
                     if existingKey.requestURBFGS != predefinedKey.requestURBFGS,
                        let newURBFGS = predefinedKey.requestURBFGS, !newURBFGS.isEmpty {
@@ -229,7 +229,7 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
         // by timestamp Sort ascending，Process earlier first
         existingData.sort { $0.timestamp < $1.timestamp }
         
-        // Use字典Record每个 name record to keep
+        // Use字典Recordeach个 name record to keep
         var retainedMap: [String: SearchKeys] = [:]
         // RecordneedDeleterecord
         var keysToDelete: [SearchKeys] = []
@@ -239,23 +239,23 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
             guard let name = key.name, !name.isEmpty else { continue }
             
             if let oldRecord = retainedMap[name] {
-                // already经存in较早record oldRecord
+                // alreadythroughstoreinearlierrecord oldRecord
                 if let oldKey = oldRecord.key, !oldKey.isEmpty {
-                    // situation：oldRecord of key Non-empty，thenafter来of全部Delete
+                    // situation：oldRecord of key Non-empty，thenaftercomeofwholepartDelete
                     keysToDelete.append(key)
                 } else {
                     // oldRecord of key is empty
                     if let newKey = key.key, !newKey.isEmpty {
-                        // situation：oldis empty，NewNon-empty => KeepNewof，Delete老of
+                        // situation：oldis empty，NewNon-empty => KeepNewof，Deleteoldof
                         keysToDelete.append(oldRecord)
                         retainedMap[name] = key
                     } else {
-                        // situation：均is empty => Keep最老of（即 oldRecord），Deletewhenbefore重复Record
+                        // situation：equalis empty => Keepmostoldof（that is oldRecord），DeletewhenbeforerepeatRecord
                         keysToDelete.append(key)
                     }
                 }
             } else {
-                // First time name，直接Save
+                // First time name，directlySave
                 retainedMap[name] = key
             }
         }
@@ -266,12 +266,12 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
             print("Delete old SearchKey：\(record.name ?? "Unknown")")
         }
         
-        // 3. DeleteDatalibraryin存in但预DefineDatainnot存inrecord
+        // 3. DeleteDatalibraryinstoreinbutpreDefineDatainnotstoreinrecord
         let predefinedSearchKeys = getSearchKeyBFGSist()
         // Build predefined（Ignore empty name data）
         let predefinedNames = Set(predefinedSearchKeys.compactMap { ($0.name ?? "").isEmpty ? nil : $0.name })
         
-        // TraverseKeepData，if name notin预DefineSetin，thenDeleteRecord
+        // TraverseKeepData，if name notinpreDefineSetin，thenDeleteRecord
         for name in Array(retainedMap.keys) {
             if !predefinedNames.contains(name) {
                 if let record = retainedMap[name] {
@@ -282,12 +282,12 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // 4. 比right预DefineData，UpdateorAddRecord
+        // 4. analogyrightpreDefineData，UpdateorAddRecord
         for predefinedKey in predefinedSearchKeys {
             guard let name = predefinedKey.name, !name.isEmpty else { continue }
             
             if let existingRecord = retainedMap[name] {
-                // onlyinFieldhave变化timeExecuteUpdateOperation
+                // onlyinFieldhavechangetimeExecuteUpdateOperation
                 if existingRecord.requestURBFGS != predefinedKey.requestURBFGS ||
                    existingRecord.company != predefinedKey.company ||
                    existingRecord.price != predefinedKey.price ||
@@ -300,13 +300,13 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
                     print("Update SearchKey：\(name)")
                 }
             } else {
-                // Datalibraryinnot存in该 name record，thenInsertNewof预DefineData
+                // Datalibraryinnotstoreinthat name record，thenInsertNewofpreDefineData
                 context.insert(predefinedKey)
                 print("Add SearchKey：\(name)")
             }
         }
         
-        // 5. SaveAll更改
+        // 5. SaveAllmore改
         try context.save()
         print("SearchKeys Sync complete")
     } catch {
@@ -322,7 +322,7 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
         let fetchDescriptor = FetchDescriptor<ToolKeys>()
         var existingData = try context.fetch(fetchDescriptor)
         
-        // by timestamp Sort ascending（较早of排inbefore面）
+        // by timestamp Sort ascending（earlierof排inbeforeface）
         existingData.sort { $0.timestamp < $1.timestamp }
         
         // Record each name rightshouldofKeepRecord
@@ -330,24 +330,24 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
         // Store duplicates
         var keysToDelete: [ToolKeys] = []
         
-        // 2. Traversealready存indata，Process重复Record
+        // 2. Traversealreadystoreindata，ProcessrepeatRecord
         for tool in existingData {
             // Ignore name empty data
             if tool.name.isEmpty { continue }
             
             if let oldRecord = retainedMap[tool.name] {
-                // 存in同名of较早Record oldRecord
+                // storeinsamenameofearlierRecord oldRecord
                 if !oldRecord.key.isEmpty {
-                    // if老Recordof key Non-empty，直接Deletewhenbefore重复Record
+                    // ifoldRecordof key Non-empty，directlyDeletewhenbeforerepeatRecord
                     keysToDelete.append(tool)
                 } else {
-                    // 老Recordof key is empty
+                    // oldRecordof key is empty
                     if !tool.key.isEmpty {
-                        // whenbeforeRecordof key Non-empty，thenusewhenbeforeRecordReplace老Record
+                        // whenbeforeRecordof key Non-empty，thenusewhenbeforeRecordReplaceoldRecord
                         keysToDelete.append(oldRecord)
                         retainedMap[tool.name] = tool
                     } else {
-                        // if两actor均is empty，Keep较早Record，DeletewhenbeforeRecord
+                        // iftwoactorequalis empty，KeepearlierRecord，DeletewhenbeforeRecord
                         keysToDelete.append(tool)
                     }
                 }
@@ -363,12 +363,12 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
             print("Delete old ToolKey: \(tool.name)")
         }
         
-        // 4. Get预DefineDataandDeleteDatalibraryin存in但预DefineDatainnot存indata
+        // 4. GetpreDefineDataandDeleteDatalibraryinstoreinbutpreDefineDatainnotstoreindata
         let predefinedToolKeys = getToolKeyBFGSist()
         // Build predefined（Ignore empty name data）
         let predefinedNames = Set(predefinedToolKeys.compactMap { $0.name.isEmpty ? nil : $0.name })
         
-        // Note：Traverse retainedMap.keys ofone个副本，同timewillDeletedatafrom retainedMap Remove from
+        // Note：Traverse retainedMap.keys ofone个副this，sametimewillDeletedatafrom retainedMap Remove from
         for name in Array(retainedMap.keys) {
             if !predefinedNames.contains(name) {
                 if let tool = retainedMap[name] {
@@ -379,13 +379,13 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // 5. right预DefineDataperform比right、UpdateorAdd
+        // 5. rightpreDefineDataperformanalogyright、UpdateorAdd
         for predefined in predefinedToolKeys {
             // Ignore name empty data
             if predefined.name.isEmpty { continue }
             
             if let existingRecord = retainedMap[predefined.name] {
-                // JudgeneedUpdateofFieldwhethernot同，只havenotone致time才performUpdate
+                // JudgeneedUpdateofFieldwhethernotsame，onlyhavenotonecausetimeabilityperformUpdate
                 if existingRecord.requestURBFGS != predefined.requestURBFGS ||
                    existingRecord.company != predefined.company ||
                    existingRecord.price != predefined.price ||
@@ -402,7 +402,7 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
                     print("Update ToolKey: \(predefined.name)")
                 }
             } else {
-                // No该 name record，thenInsert预DefineData
+                // Nothat name record，thenInsertpreDefineData
                 context.insert(predefined)
                 print("Add ToolKey: \(predefined.name)")
             }
@@ -416,18 +416,18 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
     }
 }
 
-// MARK: - UserInfo Preload（保证only存inoneitemsRecord，Keep最早Data）
+// MARK: - UserInfo Preload（保证onlystoreinoneitemsRecord，KeepmostearlyData）
 func preloadUserInfoIfNeeded(context: ModelContext) {
     do {
         let fetchDescriptor = FetchDescriptor<UserInfo>()
         let existingData = try context.fetch(fetchDescriptor)
 
         if existingData.count > 1 {
-            print("发现Multiple UserInfo，ExecuteDedup...")
-            // willDatabyTimefrom早to晚Sort
+            print("discoverMultiple UserInfo，ExecuteDedup...")
+            // willDatabyTimefromearlyto晚Sort
             let sortedData = existingData.sorted { $0.timestamp < $1.timestamp }
 
-            // DefaultKeep最早createof那oneitemsRecord
+            // DefaultKeepmostearlycreateof那oneitemsRecord
             let kept = sortedData.first
 
             for info in sortedData where info != kept {
@@ -456,22 +456,22 @@ func preloadUserInfoIfNeeded(context: ModelContext) {
     }
 }
 
-// MARK: - PromptRepo Preload（onlywhenDatalibraryis emptytimeInsert预置Data）
+// MARK: - PromptRepo Preload（onlywhenDatalibraryis emptytimeInsertpresetData）
 func preloadPromptIfNeeded(context: ModelContext) {
     do {
         let fetchDescriptor = FetchDescriptor<PromptRepo>()
         let existingPrompts = try context.fetch(fetchDescriptor)
 
-        // IfDatalibraryalready存inData，thennotInsert预置Content
+        // IfDatalibraryalreadystoreinData，thennotInsertpresetContent
         if !existingPrompts.isEmpty {
-            print("PromptRepo already存inData，跳过Preload")
+            print("PromptRepo alreadystoreinData，跳passPreload")
             return
         }
 
-        // 预置 prompt Data
+        // preset prompt Data
         let defaultPrompts: [PromptRepo] = [
-            PromptRepo(name: "专业写作Improvement", content: "Improvementbelow面Textofuseword、语法、清晰、简洁and整体can读性，同time分解长句，减少重复，and提供ImprovementSuggestion。Please只提供Textof更正Version，避免Package括解释。PleasefromEditbybelowTextStart：", position: 0),
-            PromptRepo(name: "English润色Translate", content: "我希望you能充whenEnglishTranslate、拼写纠正actorandImprovementactor。我willuse任何BFGSanguagewithyou交谈，youwill检测BFGSanguage，Translate它，andin我ofTextof更正andImprovementVersioninuseEnglish回答。我希望youuse更漂亮、更优雅、更SeniorofEnglish单wordand句子来取代我of简化 A0 级单wordand句子。保持意思not变，但让它们更have文学性。我希望you只回答更正，Improvement，而not是其他，not要写解释。我of第one句话是：", position: 1),
+            PromptRepo(name: "专业writedoImprovement", content: "ImprovementbelowfaceTextofuseword、语法、clear、conciseandwholebodycan读character，sametimedivide解longsentence，reducerepeat，andprovideImprovementSuggestion。PleaseonlyprovideTextofmore正Version，avoidPackageincludeexplain。PleasefromEditbybelowTextStart：", position: 0),
+            PromptRepo(name: "EnglishpolishTranslate", content: "I希望youcan充whenEnglishTranslate、拼write纠正actorandImprovementactor。IwilluseanyBFGSanguagewithyou交谈，youwilldetectBFGSanguage，Translate它，andinIofTextofmore正andImprovementVersioninuseEnglish回答。I希望youusemore漂bright、more优雅、moreSeniorofEnglishsinglewordandsentencechildcometake代Iofsimpleconvert A0 级singlewordandsentencechild。keepmeaning思notchange，butlet它们morehavetext学character。I希望youonly回答more正，Improvement，butnotisother，notneedwriteexplain。Ioftheonesentencewordis：", position: 1),
         ]
 
         for prompt in defaultPrompts {
@@ -479,7 +479,7 @@ func preloadPromptIfNeeded(context: ModelContext) {
         }
 
         try context.save()
-        print("PromptRepo alreadyInsert预置Data")
+        print("PromptRepo alreadyInsertpresetData")
 
     } catch {
         print("PromptRepo PreloadFailed：\(error)")
@@ -494,7 +494,7 @@ func clearOrphanData(context: ModelContext) {
             chatMessage.record == nil
         }
     )
-    // Use try? avoidin此处写 do/catch，ifFailedthenReturnNullArray
+    // Use try? avoidinherewrite do/catch，ifFailedthenReturnNullArray
     let orphanMessages = (try? context.fetch(messagesFetchDescriptor)) ?? []
     for message in orphanMessages {
         context.delete(message)

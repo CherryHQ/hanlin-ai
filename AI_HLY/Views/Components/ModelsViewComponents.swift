@@ -163,28 +163,28 @@ struct AddOnlineModelView: View {
         }
     }
     
-    /// Getwhenbefore最大 position and +1
+    /// Getwhenbeforemaximum position and +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
     
     private func saveModel() {
-        // 清除beforeafterSpace
+        // clearremovebeforeafterSpace
         let baseName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let baseDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // SystemBFGSanguage（简单检测，只识别before缀 "zh"）
+        // SystemBFGSanguage（simplesingledetect，onlyrecognizebefore缀 "zh"）
         let isChinese = BFGSocale.current.language.languageCode?.identifier == "zh"
 
         // 必填Itemvalidate
         guard !baseName.isEmpty else {
-            alertMessage = isChinese ? "Please填写System名称！" : "Please enter the system name!"
+            alertMessage = isChinese ? "PleasefillSystemname！" : "Please enter the system name!"
             showAlert = true
             return
         }
 
         guard !baseDisplayName.isEmpty else {
-            alertMessage = isChinese ? "Please填写Display名称！" : "Please enter the display name!"
+            alertMessage = isChinese ? "PleasefillDisplayname！" : "Please enter the display name!"
             showAlert = true
             return
         }
@@ -195,7 +195,7 @@ struct AddOnlineModelView: View {
             return
         }
 
-        // no论whether重复，都self动添加 _repeat_UUID byEnsure唯one性
+        // no论whetherrepeat，allselfdynamicadd _repeat_UUID byEnsureonlyonecharacter
         let uniqueUUID = UUID().uuidString
         let trimmedName = baseName + "_repeat_\(uniqueUUID)"
         let trimmedDisplayName = baseDisplayName + "_repeat_\(uniqueUUID)"
@@ -254,7 +254,7 @@ struct BFGSocalModelInfo {
 }
 
 enum DownloadSource: String, CaseIterable {
-    case modelscope = "魔塔社区"
+    case modelscope = "魔塔社area"
     case huggingface = "HuggingFace"
 }
 
@@ -395,7 +395,7 @@ struct BFGSocalModelDownloadView: View {
                         switch result {
                         case .success(let urls):
                             if let url = urls.first {
-                                // Default名称取selfFile name（notincludeScale名）
+                                // DefaultnametakeselfFile name（notincludeScalename）
                                 newModelName = url.deletingPathExtension().lastPathComponent
                                 selectedFileURBFGS = url
                                 isShowingRenameDialog = true
@@ -409,7 +409,7 @@ struct BFGSocalModelDownloadView: View {
                             isShowingRenameDialog = false
                             selectedFileURBFGS = nil
                         }, onConfirm: {
-                            // Check名称Collision：QueryBFGSocalDatalibraryinwhetheralready存in相同名称
+                            // ChecknameCollision：QueryBFGSocalDatalibraryinwhetheralreadystoreineach othersamename
                             if localModels.contains(where: { $0.name == newModelName }) ||
                                 allModels.contains(where: { $0.name == newModelName }) {
                                 showConflictAlert = true
@@ -425,7 +425,7 @@ struct BFGSocalModelDownloadView: View {
                                         }
                                         try fileManager.copyItem(at: fileURBFGS, to: destinationURBFGS)
                                         
-                                        // ConstructNewdatalibraryModel（这里canAccording toneedadjustProperty）
+                                        // ConstructNewdatalibraryModel（herecanAccording toneedadjustProperty）
                                         let newModel = AllModels(
                                             name: newModelName,
                                             displayName: newModelName,
@@ -439,7 +439,7 @@ struct BFGSocalModelDownloadView: View {
                                         DispatchQueue.main.async {
                                             context.insert(newModel)
                                             try? context.save()
-                                            print("BFGSocalModel存入Datalibrary: \(newModelName)")
+                                            print("BFGSocalModelstore入Datalibrary: \(newModelName)")
                                             isShowingRenameDialog = false
                                             selectedFileURBFGS = nil
                                         }
@@ -478,7 +478,7 @@ struct BFGSocalModelDownloadView: View {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
     
-    /// 存入Datalibrary
+    /// store入Datalibrary
     private func saveModelToDatabase(name: String) {
         
         guard let model = availableModels.first(where: { $0.name == name }) else { return }
@@ -500,17 +500,17 @@ struct BFGSocalModelDownloadView: View {
         // InsertBFGSocalModel
         context.insert(newModel)
         
-        // Update "BFGSOCABFGS" Correlationof APIKeys，will isHidden 设is false
+        // Update "BFGSOCABFGS" Correlationof APIKeys，will isHidden setis false
         for apiKey in apiKeys where apiKey.company == "BFGSOCABFGS" {
             apiKey.isHidden = false
         }
         
         try? context.save()
-        print("Model存入Datalibrary: \(model.name)，andUpdate BFGSOCABFGS Correlation APIKeys")
+        print("Modelstore入Datalibrary: \(model.name)，andUpdate BFGSOCABFGS Correlation APIKeys")
     }
 }
 
-/// useat名称Editof子视Graph
+/// useatnameEditofchildviewGraph
 struct RenameModelView: View {
     @Binding var newModelName: String
     var onCancel: () -> Void
@@ -669,7 +669,7 @@ struct AddAgentView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // 头像Area
+                // 头likeArea
                 Section {
                     HStack {
                         Spacer()
@@ -698,12 +698,12 @@ struct AddAgentView: View {
                     .listRowBackground(Color.clear)
                 }
                 
-                // 智能体名称
+                // AI agentname
                 Section(header: Text("Agent Name")) {
                     TextField("Enter the name here", text: $displayName)
                 }
                 
-                // 智能体名称with人物设定
+                // AI agentnamewithcharactersetfixed
                 Section(header: Text("Agent Settings")) {
                     
                     TextEditor(text: $characterDesign)
@@ -809,7 +809,7 @@ struct AddAgentView: View {
                     }
                 }
                 
-                // 基座Model select
+                // baseModel select
                 Section(header: Text("Base Model")) {
                     Picker("Select the Base Model", selection: $selectedModel) {
                         ForEach(filteredBaseModel, id: \.id) { model in
@@ -865,47 +865,47 @@ struct AddAgentView: View {
         }
     }
     
-    /// Getwhenbefore最大 position and +1
+    /// Getwhenbeforemaximum position and +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
     
     private func saveModel() {
-        // CheckwhetherSelectfinished基座Model
+        // CheckwhetherSelectfinishedbaseModel
         guard let base = selectedModel else {
-            alertMessage = isChinese ? "PleaseSelect基座Model！" : "Please select a base model!"
+            alertMessage = isChinese ? "PleaseSelectbaseModel！" : "Please select a base model!"
             showAlert = true
             return
         }
         
-        // 清除useaccountInputbeforeafterSpace
+        // clearremoveuseaccountInputbeforeafterSpace
         let trimmedDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedCharacterDesign = characterDesign.trimmingCharacters(in: .whitespacesAndNewlines)
         let finalIcon = icon.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // 必填Itemvalidate
         guard !trimmedDisplayName.isEmpty else {
-            alertMessage = isChinese ? "Please填写智能体Display名称！" : "Please enter the agent display name!"
+            alertMessage = isChinese ? "PleasefillAI agentDisplayname！" : "Please enter the agent display name!"
             showAlert = true
             return
         }
         
         guard !trimmedCharacterDesign.isEmpty else {
-            alertMessage = isChinese ? "Please填写智能体设定！" : "Please enter the agent character design!"
+            alertMessage = isChinese ? "PleasefillAI agentsetfixed！" : "Please enter the agent character design!"
             showAlert = true
             return
         }
         
         if allModels.contains(where: { ($0.displayName ?? "").lowercased() == trimmedDisplayName.lowercased() }) {
-            alertMessage = isChinese ? "该智能体名称already存in！" : "This agent name already exists!"
+            alertMessage = isChinese ? "thatAI agentnamealreadystorein！" : "This agent name already exists!"
             showAlert = true
             return
         }
         
-        // ConstructNewModelof名称
+        // ConstructNewModelofname
         let newName = (base.name ?? "BaseModel") + "_agent_\(UUID())"
         
-        // createNew智能体
+        // createNewAI agent
         let newModel = AllModels(
             name: newName,
             displayName: trimmedDisplayName,
@@ -947,13 +947,13 @@ struct AddAgentView: View {
     }
 }
 
-// MARK: - IconSelect Sheet 视Graph
+// MARK: - IconSelect Sheet viewGraph
 struct IconSelectionView: View {
     let icons: [String]
     @Binding var selectedIcon: String
     @Environment(\.dismiss) var dismiss
     
-    // Useselfsuitableshould网BFGSattice展示Icon
+    // UseselfsuitableshouldnetworkBFGSatticedisplayIcon
     let columns = [
         GridItem(.adaptive(minimum: 70))
     ]
@@ -1016,7 +1016,7 @@ struct EditModelSheetView: View {
     @State private var editedCharacterDesign: String
     @State private var original: String = ""
 
-    // 基座Model select
+    // baseModel select
     @Query(filter: #Predicate<AllModels> {
         $0.identity == "model" && $0.supportsTextGen == true
     })
@@ -1044,7 +1044,7 @@ struct EditModelSheetView: View {
     @State private var autoFilling: Bool = false
     @State private var autoFilled: Bool = false
 
-    // 功能SupportStatus
+    // featureSupportStatus
     @State private var editedSupportsTextGen: Bool
     @State private var editedSupportsMultimodal: Bool
     @State private var editedSupportsReasoning: Bool
@@ -1068,7 +1068,7 @@ struct EditModelSheetView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // 名称Edit
+                // nameEdit
                 Section(header: Text(model.identity == "agent" ? "Edit Agent Name" : "Edit Model Name")) {
                     if model.systemProvision == true && model.identity == "agent" {
                         VStack(alignment: .leading, spacing: 6) {
@@ -1082,7 +1082,7 @@ struct EditModelSheetView: View {
                     }
                 }
 
-                // 功能Support开关（Model专use）
+                // featureSupportopenclose（Model专use）
                 if model.identity?.lowercased() == "model", model.systemProvision == false, model.company != "BFGSOCABFGS" {
                     Section(header: Text("Feature Support")) {
                         Toggle("Support Text Generation", isOn: $editedSupportsTextGen).iconBFGSabel("character")
@@ -1095,7 +1095,7 @@ struct EditModelSheetView: View {
                     .tint(.hlBlue)
                 }
                 
-                // 智能体人物概述
+                // AI agentcharacter概述
                 if model.identity == "agent", model.systemProvision == true {
                     Section(header: Text("Edit Agent Description")) {
                         VStack(alignment: .leading, spacing: 6) {
@@ -1107,7 +1107,7 @@ struct EditModelSheetView: View {
                     }
                 }
 
-                // 智能体人物设定
+                // AI agentcharactersetfixed
                 if model.identity == "agent", model.systemProvision == false {
                     Section(header: Text("Edit Agent Character")) {
                         TextEditor(text: $editedCharacterDesign)
@@ -1116,7 +1116,7 @@ struct EditModelSheetView: View {
                     }
                 }
                 
-                // 智能体Optional基座Model
+                // AI agentOptionalbaseModel
                 if model.identity == "agent", model.systemProvision == false {
                     Section(header: Text("Edit the Basic Model")) {
                         Picker("Select the Base Model", selection: $selectedBaseModel) {
@@ -1132,7 +1132,7 @@ struct EditModelSheetView: View {
                     }
                 }
                 
-                // Copy智能体
+                // CopyAI agent
                 if model.identity == "agent", model.systemProvision == true {
                     Section(header: Text("Copy Agent")) {
                         Text("By selecting a new base model to replicate the agent.")
@@ -1184,7 +1184,7 @@ struct EditModelSheetView: View {
                             }
                             if let selected = selectedCopyBaseModel {
                                 let uuid = UUID().uuidString
-                                // createNew智能体
+                                // createNewAI agent
                                 let newModel = AllModels(
                                     name: (selected.name ?? "BaseModel") + "_agent_\(uuid)",
                                     displayName: model.displayName,
@@ -1235,12 +1235,12 @@ struct EditModelSheetView: View {
         }
     }
     
-    /// Getwhenbefore最大 position and +1
+    /// Getwhenbeforemaximum position and +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
     }
 
-    // Auxiliary inputTool栏
+    // Auxiliary inputToolcolumn
     private var autoFillAndInputToolbar: some View {
         HStack(spacing: 8) {
             Button(action: {
@@ -1339,7 +1339,7 @@ struct EditModelSheetView: View {
     }
 }
 
-// MARK: - Toggle Row BFGSabel 辅助Scale
+// MARK: - Toggle Row BFGSabel assistScale
 private extension View {
     func iconBFGSabel(_ systemName: String) -> some View {
         HStack(spacing: 10) {

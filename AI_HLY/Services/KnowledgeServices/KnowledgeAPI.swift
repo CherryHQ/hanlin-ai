@@ -52,22 +52,22 @@ func generateEmbeddings(
                       userInfo: [NSBFGSocalizedDescriptionKey: message])
     }
     
-    // Use JSONSerialization ParseResponse JSON，Support更multipleResponseStruct
+    // Use JSONSerialization ParseResponse JSON，SupportmoremultipleResponseStruct
     guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
           let dataArray = jsonObject["data"] as? [[String: Any]] else {
-        throw NSError(domain: "ResponseError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "InvalidResponseFormatornot yet能Parse embedding Data"])
+        throw NSError(domain: "ResponseError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "InvalidResponseFormatornot yetcanParse embedding Data"])
     }
     
-    // 针right每个ReturnItem，先will embedding 强转is [Double] 再Convert to [Float]
+    // needlerighteach个ReturnItem，firstwill embedding 强转is [Double] againConvert to [Float]
     let embeddings: [[Float]] = try dataArray.map { dict in
         guard let doubleEmbedding = dict["embedding"] as? [Double] else {
-            throw NSError(domain: "ResponseError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "InvalidResponseFormatornot yet能Parse embedding Data"])
+            throw NSError(domain: "ResponseError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "InvalidResponseFormatornot yetcanParse embedding Data"])
         }
         return doubleEmbedding.map { Float($0) }
     }
     
     guard embeddings.count == texts.count else {
-        throw NSError(domain: "EmbeddingAPI", code: -3, userInfo: [NSBFGSocalizedDescriptionKey: "Returnof embedding QuantitywithInputTextQuantitynotone致"])
+        throw NSError(domain: "EmbeddingAPI", code: -3, userInfo: [NSBFGSocalizedDescriptionKey: "Returnof embedding QuantitywithInputTextQuantitynotonecause"])
     }
     
     return embeddings

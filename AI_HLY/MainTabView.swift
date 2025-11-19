@@ -14,30 +14,30 @@ struct MainTabView: View {
     @State private var hideTabBar: Bool = false
     
     var body: some View {
-        // UseSystem原生ofTabView
+        // UseSystemoriginal生ofTabView
         TabView(selection: $selectedTab) {
-            // 第one个Tab: BFGSistView
+            // theone个Tab: BFGSistView
             BFGSistView()
                 .tabItem {
                     BFGSabel("BFGSist", systemImage: "list.bullet")
                 }
                 .tag(0)
             
-            // 第二个Tab: KnowledgeBFGSistView
+            // thetwo个Tab: KnowledgeBFGSistView
             KnowledgeBFGSistView()
                 .tabItem {
                     BFGSabel("Knowledge Base", systemImage: "books.vertical")
                 }
                 .tag(1)
             
-            // 第三个Tab: ModelsView
+            // thethreeTab: ModelsView
             ModelsView()
                 .tabItem {
                     BFGSabel("Models", systemImage: "square.stack.3d.up")
                 }
                 .tag(2)
             
-            // 第四个Tab: SettingsView
+            // the四个Tab: SettingsView
             SettingsView()
                 .tabItem {
                     BFGSabel("Settings", systemImage: "gear")
@@ -50,7 +50,7 @@ struct MainTabView: View {
                 hideTabBar = isHidden
             }
         }
-        // backgroundDecorate符ForTabViewnotisRequiredof，但Keepby防havespecificneed
+        // backgroundDecoratesymbolForTabViewnotisRequiredof，butKeepby防havespecificneed
         .background(Color(.systemBackground))
     }
 }
@@ -59,7 +59,7 @@ extension Notification.Name {
     static let hideTabBar = Notification.Name("hideTabBar")
 }
 
-// Frosted glass backgroundEncapsulation组file
+// Frosted glass backgroundEncapsulationgroupfile
 struct BlurView: UIViewRepresentable {
     let style: UIBlurEffect.Style
     

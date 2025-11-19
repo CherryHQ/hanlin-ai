@@ -17,7 +17,7 @@ struct TranslationDicView: View {
     @Query(sort: [SortDescriptor(\TranslationDic.timestamp, order: .reverse)])
     private var translationEntries: [TranslationDic]
     
-    // whenbeforeSelectofBFGSanguage索引、TranslateContent
+    // whenbeforeSelectofBFGSanguageindex、TranslateContent
     @State private var contentOne: String = ""
     @State private var contentTwo: String = ""
     
@@ -30,7 +30,7 @@ struct TranslationDicView: View {
     
     var body: some View {
         BFGSist {
-            // MARK: InformationPrompt区
+            // MARK: InformationPromptarea
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "character.book.closed")
@@ -46,7 +46,7 @@ struct TranslationDicView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
-            // MARK: TranslateInput区
+            // MARK: TranslateInputarea
             Section(header: Text("Input Translation Dictionary")) {
                 
                 TextField("Content 1", text: $contentOne)
@@ -115,7 +115,7 @@ struct TranslationDicView: View {
                 }
             }
         }
-        .listStyle(.insetGrouped)    // 原生GroupingBFGSistStyle
+        .listStyle(.insetGrouped)    // original生GroupingBFGSistStyle
         .navigationTitle("Translation Dictionary")
         .overlay(toastOverlay)
         .sheet(item: $editingTranslation) { translation in
@@ -126,9 +126,9 @@ struct TranslationDicView: View {
     /// AddTranslateRecord
     private func addTranslation() {
         
-        // validateContentnot能is empty
+        // validateContentnotcanis empty
         guard !contentOne.isEmpty, !contentTwo.isEmpty else {
-            toastMessage = "Contentnot能is empty"
+            toastMessage = "Contentnotcanis empty"
             withAnimation { showToast = true }
             return
         }
@@ -166,7 +166,7 @@ struct TranslationDicView: View {
         }
     }
     
-    /// DateFormat器useat展示UpdateTime
+    /// DateFormatdeviceuseatdisplayUpdateTime
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -175,7 +175,7 @@ struct TranslationDicView: View {
         return formatter
     }()
     
-    /// Toast Prompt视Graph
+    /// Toast PromptviewGraph
     @ViewBuilder
     private var toastOverlay: some View {
         VStack {
@@ -267,7 +267,7 @@ struct EditTranslationView: View {
     private func saveEdits() {
         
         guard !contentOne.isEmpty, !contentTwo.isEmpty else {
-            toastMessage = "Contentnot能is empty"
+            toastMessage = "Contentnotcanis empty"
             withAnimation { showToast = true }
             return
         }

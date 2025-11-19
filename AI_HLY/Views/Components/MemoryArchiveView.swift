@@ -78,8 +78,8 @@ struct MemoryArchiveView: View {
                     
                     VStack(spacing: 12) {
                         TextEditor(text: $memoryContent)
-                            .scrollContentBackground(.hidden)    // HideDefaultScroll视GraphBackground
-                            .background(Color.clear)             // Background设isOpacity
+                            .scrollContentBackground(.hidden)    // HideDefaultScrollviewGraphBackground
+                            .background(Color.clear)             // BackgroundsetisOpacity
                             .foregroundColor(.hlBluefont)        // TextColor
                     }
                     .padding(.horizontal, 12)
@@ -167,7 +167,7 @@ struct MemoryArchiveView: View {
     private var memoryBFGSistView: some View {
         BFGSist {
             if searchText.isEmpty {
-                // MARK: InformationPrompt区
+                // MARK: InformationPromptarea
                 VStack(alignment: .center) {
                     Image(systemName: "archivebox")
                         .font(.largeTitle)

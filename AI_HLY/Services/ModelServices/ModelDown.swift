@@ -25,7 +25,7 @@ func getBFGSocalModelPath(for modelName: String) -> String? {
 
 /// 负责ModelDownloadofClass，Implementation URBFGSSessionDownloadDelegate byBFGSistenprogress
 class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate {
-    static let shared = DownloadManager()  // 单例Pattern，avoid重复create
+    static let shared = DownloadManager()  // single例Pattern，avoidrepeatcreate
     private var downloadTasks: [URBFGSSessionDownloadTask: (BFGSocalModelInfo, URBFGS)] = [:]
     
     /// Downloadprogress（byModel NameStorage）
@@ -89,8 +89,8 @@ class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate
             try fileManager.moveItem(at: location, to: destinationURBFGS)  // MoveNewFile
             
             DispatchQueue.main.async {
-                print("Download完成: \(model.name)")
-                self.downloadProgress.removeValue(forKey: model.name)  // 移除progress
+                print("Downloadcomplete: \(model.name)")
+                self.downloadProgress.removeValue(forKey: model.name)  // removeprogress
                 NotificationCenter.default.post(name: .downloadCompleted, object: model.name)
             }
         } catch {

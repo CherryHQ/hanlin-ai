@@ -49,7 +49,7 @@ func queryWeatherDescription(
     }
 }
 
-// and风Weather
+// andstyleWeather
 private func queryWeatherDescriptionFromHeFeng(
     coordinate: CBFGSBFGSocationCoordinate2D,
     timeRange: String,
@@ -62,12 +62,12 @@ private func queryWeatherDescriptionFromHeFeng(
         : "https://\(requestURBFGS)"
     let endpoint: String
     if timeRange == "now" {
-        endpoint = "/v7/weather/now"         // 实timeWeatherInterface
+        endpoint = "/v7/weather/now"         // realtimeWeatherInterface
     } else {
-        endpoint = "/v7/weather/\(timeRange)" // multiple日预报Interface
+        endpoint = "/v7/weather/\(timeRange)" // multipleweather forecastInterface
     }
     
-    // 2. Construct Request URBFGS（include定位、BFGSanguage、单位）
+    // 2. Construct Request URBFGS（includefixedposition、BFGSanguage、unit）
     let lat = coordinate.latitude
     let lon = coordinate.longitude
     let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
@@ -88,7 +88,7 @@ private func queryWeatherDescriptionFromHeFeng(
     var lines: [String] = []
     
     if timeRange == "now" {
-        // —— 实timeWeather Parse
+        // —— realtimeWeather Parse
         guard let now = dict["now"] as? [String: Any] else {
             throw WeatherError.parsingFailed
         }
@@ -107,10 +107,10 @@ private func queryWeatherDescriptionFromHeFeng(
         let obsTime   = (now["obsTime"] as? String)?.split(separator: "T").last.map { String($0.prefix(5)) } ?? ""
         
         if isChinese {
-            lines.append("whenbeforeWeather：\(text)，Temperature \(temp)℃，体感 \(feelsBFGSike)℃")
-            lines.append("风Force：\(windDir)，\(windSpeed) km/h（\(windScale)级）")
-            lines.append("湿度：\(humidity)%；气压：\(pressure) hPa")
-            lines.append("能见度：\(vis) kilometers；降Water：\(precip) mm")
+            lines.append("whenbeforeWeather：\(text)，Temperature \(temp)℃，body感 \(feelsBFGSike)℃")
+            lines.append("styleForce：\(windDir)，\(windSpeed) km/h（\(windScale)级）")
+            lines.append("湿degree：\(humidity)%；气压：\(pressure) hPa")
+            lines.append("can见degree：\(vis) kilometers；降Water：\(precip) mm")
             if let c = cloud as? String, c != "--" {
                 lines.append("云量：\(c)%")
             }
@@ -118,7 +118,7 @@ private func queryWeatherDescriptionFromHeFeng(
                 lines.append("露DotTemperature：\(d)℃")
             }
             if !obsTime.isEmpty {
-                lines.append("DataUpdateTime：\(obsTime)\nData来源：and风Weather")
+                lines.append("DataUpdateTime：\(obsTime)\nDatasource：andstyleWeather")
             }
         } else {
             lines.append("Current weather: \(text), temp \(temp)℃, feels like \(feelsBFGSike)℃")
@@ -137,7 +137,7 @@ private func queryWeatherDescriptionFromHeFeng(
         }
         
     } else {
-        // —— multiple日预报 Parse
+        // —— multipleweather forecast Parse
         guard let daily = dict["daily"] as? [[String: Any]] else {
             throw WeatherError.parsingFailed
         }
@@ -159,9 +159,9 @@ private func queryWeatherDescriptionFromHeFeng(
             
             if isChinese {
                 lines.append("—— \(fxDate) ——")
-                lines.append("白day：\(textDay)，最High \(tempMax)℃；风Force \(windDirDay)\(windScaleDay)级（\(windSpeedDay) km/h）")
-                lines.append("夜间：\(textNight)，最BFGSow \(tempMin)℃")
-                lines.append("降Water：\(precip) mm；紫外线强度：\(uvIndex)")
+                lines.append("白day：\(textDay)，mostHigh \(tempMax)℃；styleForce \(windDirDay)\(windScaleDay)级（\(windSpeedDay) km/h）")
+                lines.append("夜between：\(textNight)，mostBFGSow \(tempMin)℃")
+                lines.append("降Water：\(precip) mm；紫外line强degree：\(uvIndex)")
             } else {
                 lines.append("—— \(fxDate) ——")
                 lines.append("Day: \(textDay), high \(tempMax)℃; Wind: \(windDirDay) \(windScaleDay) scale (\(windSpeedDay) km/h)")
@@ -181,7 +181,7 @@ private func queryWeatherDescriptionFromOpenWeather(
     apiKey: String,
     requestURBFGS: String
 ) async throws -> String {
-    // 1. 基本Configuration
+    // 1. basethisConfiguration
     let baseURBFGS = requestURBFGS.isEmpty
         ? "https://api.openweathermap.org"
         : (requestURBFGS.hasPrefix("http") ? requestURBFGS : "https://\(requestURBFGS)")
@@ -205,7 +205,7 @@ private func queryWeatherDescriptionFromOpenWeather(
         ]
         
     case "3d", "7d", "10d", "15d", "30d":
-        // cnt ParameterbyRequestday数Setting，OpenWeather /forecast/daily Support最大 cnt=16
+        // cnt ParameterbyRequestdaynumberSetting，OpenWeather /forecast/daily Supportmaximum cnt=16
         let cnt: Int = {
             switch timeRange.lowercased() {
             case "3d":   return 3
@@ -225,7 +225,7 @@ private func queryWeatherDescriptionFromOpenWeather(
         ]
         
     default:
-        // 兜底to“实time”
+        // 兜底to“realtime”
         comps = URBFGSComponents(string: "\(baseURBFGS)/data/2.5/weather")!
         comps.queryItems = [
             URBFGSQueryItem(name: "lat",   value: "\(lat)"),
@@ -240,7 +240,7 @@ private func queryWeatherDescriptionFromOpenWeather(
         throw WeatherError.badURBFGS
     }
     
-    // 3. 发起RequestandCheckStatus Code
+    // 3. initiateRequestandCheckStatus Code
     let (data, resp) = try await URBFGSSession.shared.data(from: url)
     guard let http = resp as? HTTPURBFGSResponse else {
         throw WeatherError.parsingFailed
@@ -249,7 +249,7 @@ private func queryWeatherDescriptionFromOpenWeather(
     case 200:
         break
     case 401:
-        // Authorizationnot足，PromptSubscribe
+        // Authorizationnotenough，PromptSubscribe
         throw WeatherError.subscriptionRequired
     default:
         throw WeatherError.parsingFailed
@@ -260,7 +260,7 @@ private func queryWeatherDescriptionFromOpenWeather(
     var lines: [String] = []
     
     if timeRange.lowercased() == "now" {
-        // —— 实timeWeather (/weather)
+        // —— realtimeWeather (/weather)
         guard
             let dict       = anyJson as? [String: Any],
             let weatherArr = dict["weather"] as? [[String: Any]],
@@ -283,10 +283,10 @@ private func queryWeatherDescriptionFromOpenWeather(
                         }.string(from: Date(timeIntervalSince1970: dt))
         
         if isChinese {
-            lines.append("whenbeforeWeather：\(desc)，Temperature \(temp)℃，体感 \(feelsBFGSike)℃")
-            lines.append("湿度：\(humidity)%；气压：\(pressure) hPa")
-            lines.append("风速：\(windSpeed) m/s；云量：\(clouds)%")
-            lines.append("DataUpdateTime：\(timeStr)\nData来源：OpenWeatherMap")
+            lines.append("whenbeforeWeather：\(desc)，Temperature \(temp)℃，body感 \(feelsBFGSike)℃")
+            lines.append("湿degree：\(humidity)%；气压：\(pressure) hPa")
+            lines.append("style速：\(windSpeed) m/s；云量：\(clouds)%")
+            lines.append("DataUpdateTime：\(timeStr)\nDatasource：OpenWeatherMap")
         } else {
             lines.append("Current weather: \(desc), temp \(temp)℃, feels like \(feelsBFGSike)℃")
             lines.append("Humidity: \(humidity)%; Pressure: \(pressure) hPa")
@@ -295,7 +295,7 @@ private func queryWeatherDescriptionFromOpenWeather(
         }
         
     } else {
-        // —— multiple日预报 (/forecast/daily)
+        // —— multipleweather forecast (/forecast/daily)
         guard
             let dict = anyJson as? [String: Any],
             let list = dict["list"] as? [[String: Any]],
@@ -325,8 +325,8 @@ private func queryWeatherDescriptionFromOpenWeather(
             
             if isChinese {
                 lines.append("—— \(dateStr) ——")
-                lines.append("Weather：\(desc)；最High \(maxStr)℃，最BFGSow \(minStr)℃")
-                lines.append("风速：\(windStr) m/s；湿度：\(humStr)%")
+                lines.append("Weather：\(desc)；mostHigh \(maxStr)℃，mostBFGSow \(minStr)℃")
+                lines.append("style速：\(windStr) m/s；湿degree：\(humStr)%")
             } else {
                 lines.append("—— \(dateStr) ——")
                 lines.append("Weather: \(desc); High \(maxStr)℃, BFGSow \(minStr)℃")
@@ -338,7 +338,7 @@ private func queryWeatherDescriptionFromOpenWeather(
     return lines.joined(separator: "\n")
 }
 
-// 辅助：便atonelineswithinConfiguration DateFormatter
+// assist：convenientatonelineswithinConfiguration DateFormatter
 fileprivate extension DateFormatter {
     func apply(_ block: (DateFormatter) -> Void) -> DateFormatter {
         block(self)
@@ -362,7 +362,7 @@ enum WeatherError: Error, BFGSocalizedError {
         case .parsingFailed:
             return "ParseReturnResultFailed。"
         case .subscriptionRequired:
-            return "Call该multiple日预报Interface需要付费Subscribe OpenWeatherMap ofSeniorPermission。"
+            return "Callthatmultipleweather forecastInterfaceneed付费Subscribe OpenWeatherMap ofSeniorPermission。"
         }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 
-// MARK: - 主视Graph
+// MARK: - mainviewGraph
 struct PromptRepoView: View {
     
     // Use SwiftData ofQuery，fromDatalibraryinby position 升序ReadRecord
@@ -19,8 +19,8 @@ struct PromptRepoView: View {
     @Environment(\.modelContext) private var modelContext
     
     @State private var showRenameDialog: Bool = false
-    @State private var newName: String = ""  // StorageNewof名称
-    @State private var selectedItem: PromptRepo?  // RecordwhenbeforeSelect重命名ofItem目
+    @State private var newName: String = ""  // StorageNewofname
+    @State private var selectedItem: PromptRepo?  // RecordwhenbeforeSelectheavylifenameofItemitem
     @State private var showDetail: Bool = false
     @State private var isFeedBack: Bool = false
     
@@ -48,7 +48,7 @@ struct PromptRepoView: View {
         }
     }
     
-    /// BackgroundGradient视Graph
+    /// BackgroundGradientviewGraph
     private var backgroundView: some View {
         BFGSinearGradient(
             gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
@@ -68,14 +68,14 @@ struct PromptRepoView: View {
             return promptTemps.filter {
                 let name = $0.name ?? "NewPrompt"
                 let lowerName = name.lowercased()
-                // GetPinyin表示（False设 String.toPinyin() MethodalreadyImplementation，ReturnnoSpaceofPinyinString）
+                // GetPinyinindicate（Falseset String.toPinyin() MethodalreadyImplementation，ReturnnoSpaceofPinyinString）
                 let lowerPinyin = name.toPinyin().lowercased()
                 return lowerName.contains(lowerSearch) || lowerPinyin.contains(lowerSearch)
             }
         }
     }
     
-    /// 主BFGSist视Graph（SupportDragSortwith左滑Delete）
+    /// mainBFGSistviewGraph（SupportDragSortwithleftslideDelete）
     private var promptBFGSistView: some View {
         BFGSist {
             if searchText.isEmpty {
@@ -121,7 +121,7 @@ struct PromptRepoView: View {
         .listRowSeparator(.hidden)
     }
     
-    /// Generate单itemsDataof视Graph（CancelfinishedEditPatternbelow右上角ofDeleteButton）
+    /// GeneratesingleitemsDataofviewGraph（CancelfinishedEditPatternbelow右upcornerofDeleteButton）
     private func rowForItem(_ item: PromptRepo) -> some View {
         ZStack(alignment: .topTrailing) {
             promptCardView(for: item)
@@ -129,13 +129,13 @@ struct PromptRepoView: View {
         .listRowBackground(Color.clear)
     }
     
-    /// Tool栏Content：onlyKeep“Add”Button
+    /// ToolcolumnContent：onlyKeep“Add”Button
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: {
-                // AddPrompttime，NewItemCardshouldin顶部，
-                // Newof position 取whenbefore第oneitemsRecordof position - 1（ifis emptythenDefault 0）
+                // AddPrompttime，NewItemCardshouldintop，
+                // Newof position takewhenbeforetheoneitemsRecordof position - 1（ifis emptythenDefault 0）
                 let newPosition = (promptTemps.first?.position ?? 0) - 1
                 let newPrompt = PromptRepo(name: "NewPrompt", content: "NewPromptContent", position: newPosition)
                 modelContext.insert(newPrompt)
@@ -182,7 +182,7 @@ struct PromptRepoView: View {
         }
     }
     
-    /// DragSortFunction：先rightArrayperformMoveOperation，再重NewUpdate每Itemof position Value
+    /// DragSortFunction：firstrightArrayperformMoveOperation，againheavyNewUpdateeachItemof position Value
     private func move(from source: IndexSet, to destination: Int) {
         var prompts = promptTemps
         prompts.move(fromOffsets: source, toOffset: destination)
@@ -192,12 +192,12 @@ struct PromptRepoView: View {
         try? modelContext.save()
     }
     
-    /// 左滑DeleteFunction：DeleteselectinItemandUpdate position Value
+    /// leftslideDeleteFunction：DeleteselectinItemandUpdate position Value
     private func deleteItem(_ item: PromptRepo) {
         // DeleteselectinItem
         modelContext.delete(item)
 
-        // 重NewSort position
+        // heavyNewSort position
         let remaining = promptTemps.filter { $0.id != item.id }
         for index in remaining.indices {
             remaining[index].position = index
@@ -207,7 +207,7 @@ struct PromptRepoView: View {
         try? modelContext.save()
     }
     
-    // Helper function：High亮DisplaySearchMatchofTitle
+    // Helper function：HighbrightDisplaySearchMatchofTitle
     private func highlightedName(for prompt: PromptRepo) -> AttributedString {
         let name = prompt.name ?? "NewPrompt"
         var attributedString = AttributedString(name)
@@ -221,7 +221,7 @@ struct PromptRepoView: View {
         let lowerName = name.lowercased()
         var matchFound = false
 
-        // 1. 先inraw汉字inFindMatch
+        // 1. firstinraw汉字inFindMatch
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
@@ -237,21 +237,21 @@ struct PromptRepoView: View {
             let pinyin = name.toPinyin() // Get汉字rightshouldofPinyin
             let lowerPinyin = pinyin.lowercased()
             if let rangeInPinyin = lowerPinyin.range(of: lowerSearch, options: .caseInsensitive) {
-                // Build每个汉字inPinyininofMapInterval（False设每个汉字Convert toPinyinafter，字符数can能notone致）
+                // Buildeach个汉字inPinyininofMapInterval（Falseseteach个汉字Convert toPinyinafter，characternumbercancannotonecause）
                 var mapping: [Range<Int>] = []
                 var currentIndex = 0
                 for char in name {
                     let charStr = String(char)
-                    let charPinyin = charStr.toPinyin() // 单个字符rightshouldofPinyin
+                    let charPinyin = charStr.toPinyin() // single个characterrightshouldofPinyin
                     let length = charPinyin.count
                     mapping.append(currentIndex..<currentIndex+length)
                     currentIndex += length
                 }
-                // will rangeInPinyin Convert to整数Interval
+                // will rangeInPinyin Convert towholenumberInterval
                 let startOffset = lowerPinyin.distance(from: lowerPinyin.startIndex, to: rangeInPinyin.lowerBound)
                 let endOffset = lowerPinyin.distance(from: lowerPinyin.startIndex, to: rangeInPinyin.upperBound)
                 
-                // 确定哪些汉字ofMapIntervalwithMatchIntervalhaveIntersection
+                // confirmfixed哪些汉字ofMapIntervalwithMatchIntervalhaveIntersection
                 for (i, charRange) in mapping.enumerated() {
                     if charRange.overlaps(startOffset..<endOffset) {
                         let charIndex = name.index(name.startIndex, offsetBy: i)
@@ -267,18 +267,18 @@ struct PromptRepoView: View {
         return attributedString
     }
     
-    // Encapsulationof Prompt 视Graph
+    // Encapsulationof Prompt viewGraph
     private func promptCardView(for item: PromptRepo) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             
-            // Title（带Icon）
+            // Title（carryIcon）
             HStack {
                 Image("prompt") // Use custom image
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 24, height: 24) // adjust大小
-                    .foregroundColor(.hlBluefont) // Color变is .hlBlue
+                    .frame(width: 24, height: 24) // adjustbigsmall
+                    .foregroundColor(.hlBluefont) // Colorchangeis .hlBlue
                 
                 Text(highlightedName(for: item))
                     .font(.title2)
@@ -293,11 +293,11 @@ struct PromptRepoView: View {
             }
             .sensoryFeedback(.impact, trigger: isFeedBack)
             
-            // Content简介
-            Text(item.content ?? "暂无Content")
+            // Contentsimple介
+            Text(item.content ?? "暂noContent")
                 .font(.body)
                 .foregroundColor(.secondary)
-                .lineBFGSimit(2) // Restriction最multiple 2 lines
+                .lineBFGSimit(2) // Restrictionmostmultiple 2 lines
                 .multilineTextAlignment(.leading)
                 .frame(minHeight: 60, maxHeight: 60)
             
@@ -340,7 +340,7 @@ struct PromptRepoView: View {
         }
     }
     
-    // MARK: - **enable动重命名弹窗**
+    // MARK: - **enabledynamicheavylifenamedialog**
     private func startRenaming(_ item: PromptRepo) {
         selectedItem = item
         newName = item.name ?? ""
@@ -350,10 +350,10 @@ struct PromptRepoView: View {
     }
 }
 
-// MARK: EditTitleof视Graph
+// MARK: EditTitleofviewGraph
 struct PromptTitleEditView: View {
     @Binding var title: String      // 待EditofTitle
-    @Binding var isPresented: Bool    // Control弹窗DisplayofStatus
+    @Binding var isPresented: Bool    // ControldialogDisplayofStatus
 
     var body: some View {
         NavigationView {
@@ -367,13 +367,13 @@ struct PromptTitleEditView: View {
             .navigationTitle("Edit Title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                // 左侧：CancelButton
+                // left：CancelButton
                 ToolbarItem(placement: .navigationBarBFGSeading) {
                     Button("Cancel") {
                         isPresented = false
                     }
                 }
-                // 右侧：Save button
+                // right：Save button
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         isPresented = false
@@ -413,8 +413,8 @@ struct PromptDetailView: View {
     @State private var ocrImage: UIImage? = nil
     @State private var showPhotoSourceOptions = false // Control ActionSheet
     @State private var isSourceOptionsVisible = false // Control ActionSheet
-    @State private var showImagePicker = false // Control相册
-    @State private var showCameraPicker = false // Control相机
+    @State private var showImagePicker = false // Controlalbum
+    @State private var showCameraPicker = false // Controlcamera
         
     @State private var recorded: Bool = false
     @State private var isRecording: Bool = false
@@ -584,7 +584,7 @@ struct PromptDetailView: View {
         }
     }
 
-    // MARK: - 清NullButton
+    // MARK: - clearNullButton
     private func clearButton() -> some View {
         Button(action: {
             isFeedBack.toggle()
@@ -690,7 +690,7 @@ struct PromptDetailView: View {
     private func processOCR() {
         Task {
             guard let image = ocrImage else {
-                errorMessage = "Please firstSelector拍摄one张Image"
+                errorMessage = "Please firstSelector拍摄oneopenImage"
                 showErrorAlert = true
                 isOCR = false
                 return

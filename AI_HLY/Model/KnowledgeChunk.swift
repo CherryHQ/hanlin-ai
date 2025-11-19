@@ -10,10 +10,10 @@ import SwiftData
 @Model
 class KnowledgeChunk {
     var id: UUID = UUID()
-    var text: String?   // 这个切片of具体TextContent
-    var vectorData: Data?  // Vector表示
+    var text: String?   // thiscutpieceofconcreteTextContent
+    var vectorData: Data?  // Vectorindicate
     @Relationship(inverse: \KnowledgeRecords.chunks)
-    var knowledgeRecord: KnowledgeRecords?  // useat标识所属of KnowledgeRecords
+    var knowledgeRecord: KnowledgeRecords?  // useatmark识place属of KnowledgeRecords
 
     init(text: String, vector: [Float], knowledgeRecord: KnowledgeRecords) {
         self.text = text

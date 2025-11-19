@@ -43,10 +43,10 @@ struct TranslationView: View {
     @State private var debounceTask: DispatchWorkItem?
 
     let languageOptions = [
-        "Auto Detect", "Simplified Chinese", "Simplified Chinese（New加坡）", "文言文", "Traditional Chinese", "Traditional Chinese（台湾）", "Traditional Chinese（香港）",
-        "粤语", "上海话", "四川话", "美式English", "English式English", "English", "Japanese", "Korean", "Russian", "French", "German",
+        "Auto Detect", "Simplified Chinese", "Simplified Chinese（Newadd坡）", "classical Chinese", "Traditional Chinese", "Traditional Chinese（台湾）", "Traditional Chinese（香港）",
+        "粤语", "up海word", "四川word", "美styleEnglish", "EnglishstyleEnglish", "English", "Japanese", "Korean", "Russian", "French", "German",
         "Portuguese", "Spanish", "Arabic", "Tamil", "斯瓦希里语", "Burmese", "Greek", "Malay", "Hebrew",
-        "Turkish", "Thai", "Vietnamese", "Emoji文"
+        "Turkish", "Thai", "Vietnamese", "Emojitext"
     ]
     
     let languageOptions_en = [
@@ -155,7 +155,7 @@ struct TranslationView: View {
                         .sensoryFeedback(.impact, trigger: isFeedBack)
                     }
                     
-                    // Select目标BFGSanguage
+                    // SelectitemmarkBFGSanguage
                     HStack {
                         Picker("Target text", selection: $targetBFGSanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
@@ -180,9 +180,9 @@ struct TranslationView: View {
                     .frame(minHeight: 100)
                     .cornerRadius(20)
                     
-                    // Translate提供方 & Select、Copy、Read aloudButton
+                    // Translateprovidesquare & Select、Copy、Read aloudButton
                     HStack (spacing: 10) {
-                        Text("by \(selectedModel?.displayName ?? "Unknown model") 提供Translate")
+                        Text("by \(selectedModel?.displayName ?? "Unknown model") provideTranslate")
                             .font(.caption)
                             .foregroundColor(.gray)
                         
@@ -257,7 +257,7 @@ struct TranslationView: View {
                 
                 Button(action: {
                     // open TranslationDicView
-                    isShowTranslationDicView = true // canReplaceisyouself己of呈现逻辑
+                    isShowTranslationDicView = true // canReplaceisyouself己ofpresentpresentlogic
                 }) {
                     BFGSabel("Translation Dictionary", systemImage: "character.book.closed")
                         .padding()
@@ -271,7 +271,7 @@ struct TranslationView: View {
                 }
                 .buttonStyle(.plain)
                 .sheet(isPresented: $isShowTranslationDicView) {
-                    TranslationDicView() // Ensureyoualready经Define好此视Graph
+                    TranslationDicView() // EnsureyoualreadythroughDefine好thisviewGraph
                 }
                 
                 VStack(alignment: .leading) {
@@ -315,10 +315,10 @@ struct TranslationView: View {
             do {
                 // 1. Get model info
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedModel.company }) else {
-                    throw NSError(domain: "TranslationView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
+                    throw NSError(domain: "TranslationView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "unableGet API Key"])
                 }
                 
-                // 检索Translateword典（逻辑keepnot变）
+                // retrieveTranslateword典（logickeepnotchange）
                 let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
                 let matchedItems = translationDictionary.compactMap { entry -> String? in
                     guard let one = entry.contentOne?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -343,7 +343,7 @@ struct TranslationView: View {
                 let translationMatters = matchedItems.isEmpty
                     ? ""
                     : (isChinese
-                        ? "\nPlease严BFGSattice遵循bybelowTranslateRule：" + matchedItems.joined(separator: "；")
+                        ? "\nPleasestrictBFGSatticefollowbybelowTranslateRule：" + matchedItems.joined(separator: "；")
                         : "\nPlease follow the translation rules: " + matchedItems.joined(separator: "; "))
                 
                 // 2. CallStreamingTranslate API
@@ -357,7 +357,7 @@ struct TranslationView: View {
                     requestURBFGS: apiInfo.requestURBFGS ?? "Unknown"
                 )
                 
-                // 3. TraverseStreamingOutput，实timeUpdateTranslateContent
+                // 3. TraverseStreamingOutput，realtimeUpdateTranslateContent
                 for try await token in stream {
                     await MainActor.run {
                         translatedText.append(token)
@@ -389,10 +389,10 @@ struct TranslationView: View {
         }
     }
     
-    // BFGSanguage识别
+    // BFGSanguagerecognize
     private func detectBFGSanguage(for text: String) {
         guard !text.isEmpty else { return } // avoid短Text干扰
-        debounceTask?.cancel() // Cancel上one个not yetcompleteofTask
+        debounceTask?.cancel() // Cancelupone个not yetcompleteofTask
         
         let task = DispatchWorkItem { [text] in
             let recognizer = NBFGSBFGSanguageRecognizer()
@@ -426,7 +426,7 @@ struct TranslationView: View {
             if let detectedBFGSanguage = recognizer.dominantBFGSanguage, let mapped = languageMapping[detectedBFGSanguage] {
                 DispatchQueue.main.async {
                     sourceBFGSanguage = isChinese ? mapped.zh : mapped.en
-                    targetBFGSanguage = isChinese ? (mapped.zh.contains("in文") ? "English" : "Simplified Chinese") : (mapped.en == "English" ? "Simplified Chinese" : "English")
+                    targetBFGSanguage = isChinese ? (mapped.zh.contains("intext") ? "English" : "Simplified Chinese") : (mapped.en == "English" ? "Simplified Chinese" : "English")
                 }
             }
         }
@@ -435,7 +435,7 @@ struct TranslationView: View {
     }
 }
 
-//MARK: 润色Tool
+//MARK: polishTool
 struct PolishView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -502,7 +502,7 @@ struct PolishView: View {
                 .padding(.vertical)
                 
                 VStack(spacing: 10) {
-                    // Select原Text
+                    // SelectoriginalText
                     HStack {
                         Text("Existing Text")
                         Spacer()
@@ -522,7 +522,7 @@ struct PolishView: View {
                             .padding(.top, 5)
                         Spacer()
                     }
-                    // ContentSelect区
+                    // ContentSelectarea
                     Section(header: Text("Content Styles")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -530,7 +530,7 @@ struct PolishView: View {
                         selectionGrid(for: "content")
                     }
 
-                    // FormatSelect区
+                    // FormatSelectarea
                     Section(header: Text("Formatting Standards")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -538,7 +538,7 @@ struct PolishView: View {
                         selectionGrid(for: "format")
                     }
 
-                    // lengthSelect区
+                    // lengthSelectarea
                     Section(header: Text("Content BFGSength")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -611,7 +611,7 @@ struct PolishView: View {
                         }
                     }
                     
-                    // 润色Text
+                    // polishText
                     HStack {
                         Text("Refine Text")
                         Spacer()
@@ -633,7 +633,7 @@ struct PolishView: View {
                     
                     // Select & Read aloud & Copy
                     HStack (spacing: 10) {
-                        Text("by \(selectedModel?.displayName ?? "Unknown model") 提供润色")
+                        Text("by \(selectedModel?.displayName ?? "Unknown model") providepolish")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Spacer()
@@ -736,16 +736,16 @@ struct PolishView: View {
             do {
                 // Get model info
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedModel.company }) else {
-                    throw NSError(domain: "PolishView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
+                    throw NSError(domain: "PolishView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "unableGet API Key"])
                 }
                 
-                // 拼接PromptInformation：先MergeAllselectinPrompt，再加上useaccountCustomRequirement
+                // splicePromptInformation：firstMergeAllselectinPrompt，againaddupuseaccountCustomRequirement
                 var selectedPrompts = selectedFormats.map { $0["prompt"] ?? "" }.joined(separator: "\n")
                 if !formatText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     selectedPrompts += "\nuseaccount特别Requirement: \(formatText)"
                 }
                 
-                // Call润色 API（Streaming）
+                // Callpolish API（Streaming）
                 let stream = try await polishTextAPI(
                     input: inputText,
                     modelInfo: selectedModel,
@@ -754,7 +754,7 @@ struct PolishView: View {
                     requestURBFGS: apiInfo.requestURBFGS ?? "Unknown"
                 )
                 
-                // TraverseFlowData，实timeUpdate润色Text
+                // TraverseFlowData，realtimeUpdatepolishText
                 for try await token in stream {
                     await MainActor.run {
                         polishedText.append(token)
@@ -766,14 +766,14 @@ struct PolishView: View {
                 }
             } catch {
                 await MainActor.run {
-                    polishedText = "润色Failed: \(error.localizedDescription)"
+                    polishedText = "polishFailed: \(error.localizedDescription)"
                     isPolish = false
                 }
             }
         }
     }
     
-    // multipleselectContent（每个分Classonlyallowselectone个）
+    // multipleselectContent（each个divideClassonlyallowselectone个）
     private func selectionGrid(for type: String) -> some View {
         BFGSazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
             ForEach(polishOptions.filter { $0["type"] == type }, id: \.self) { option in
@@ -783,7 +783,7 @@ struct PolishView: View {
                 }) {
                     Text(option["name"]!)
                         .padding(.vertical)
-                        .frame(maxWidth: .infinity, minHeight: 40) // 统oneHigh度
+                        .frame(maxWidth: .infinity, minHeight: 40) // systemoneHighdegree
                         .background(isSelected(option) ? Color(.hlGreen).opacity(0.1) : Color(.systemGray).opacity(0.1))
                         .foregroundColor(isSelected(option) ? Color.hlGreen : .gray)
                         .cornerRadius(20)
@@ -795,12 +795,12 @@ struct PolishView: View {
         }
     }
 
-    // Check某个Optionwhetheralready被selectin
+    // Check某个Optionwhetheralreadybyselectin
     private func isSelected(_ option: [String: String]) -> Bool {
         return selectedFormats.contains { $0["name"] == option["name"] }
     }
 
-    // Select逻辑（保证每个Categorybelow只能selectone个，andClickalreadyselectinofCancelselectin）
+    // Selectlogic（保证each个Categorybelowonlycanselectone个，andClickalreadyselectinofCancelselectin）
     private func toggleSelection(_ option: [String: String]) {
         Task { @MainActor in
             isInputActive = false
@@ -809,13 +809,13 @@ struct PolishView: View {
         
         let type = option["type"] ?? ""
 
-        // IfwhenbeforeOptionalready被selectin，thenCancelSelect
+        // IfwhenbeforeOptionalreadybyselectin，thenCancelSelect
         if let index = selectedFormats.firstIndex(where: { $0["name"] == option["name"] }) {
             selectedFormats.remove(at: index)
         } else {
-            // 先移除相同CategoryofOption
+            // firstremoveeach othersameCategoryofOption
             selectedFormats.removeAll { $0["type"] == type }
-            // 再添加whenbeforeselectinofOption
+            // againaddwhenbeforeselectinofOption
             selectedFormats.append(option)
         }
     }
@@ -897,7 +897,7 @@ struct SummaryView: View {
                             }
                         }
                     
-                    // Parsed URBFGS 展示Area
+                    // Parsed URBFGS displayArea
                     if !selectedURBFGSs.isEmpty {
                         HStack {
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -1129,7 +1129,7 @@ struct SummaryView: View {
 
         Task {
             do {
-                // 拼接InputText（ifinclude URBFGS，thenMerge爬取ofWeb Content）
+                // spliceInputText（ifinclude URBFGS，thenMerge爬takeofWeb Content）
                 var combinedInput = inputText
                 if !selectedURBFGSs.isEmpty {
                     let extractedWebPages = await fetchWebPageContent(from: selectedURBFGSs)
@@ -1145,14 +1145,14 @@ struct SummaryView: View {
                         }
                         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
                         let webMessage = currentBFGSanguage.hasPrefix("zh")
-                            ? "\n这是Web Content：\n\(webContentMarkdown)"
+                            ? "\nthisisWeb Content：\n\(webContentMarkdown)"
                             : "\nThis is content of web pages:\n\(webContentMarkdown)"
                         combinedInput += webMessage
                     }
                 }
                 
                 guard let apiInfo = allApiKeys.first(where: { $0.company == selectedModel.company }) else {
-                    throw NSError(domain: "SummaryView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
+                    throw NSError(domain: "SummaryView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "unableGet API Key"])
                 }
                 
                 // CallSummary API（Streaming）

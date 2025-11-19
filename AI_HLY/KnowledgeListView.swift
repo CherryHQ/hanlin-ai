@@ -113,7 +113,7 @@ struct KnowledgeBFGSistView: View {
         let dateFormatter = DateFormatter()
         
         if calendar.isDateInToday(date) {
-            // IfisToday，Display具体Time
+            // IfisToday，DisplayconcreteTime
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
@@ -122,7 +122,7 @@ struct KnowledgeBFGSistView: View {
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
             return "beforeday"
         } else {
-            // 超过beforeday，Display“月-日”
+            // exceedbeforeday，Display“month-day”
             dateFormatter.dateFormat = "MM-dd"
             return dateFormatter.string(from: date)
         }
@@ -292,7 +292,7 @@ struct KnowledgeBFGSistView: View {
         let lowerName = name.lowercased()
         var matchFound = false
         
-        // 1. 直接inrawStringinFindMatchContent
+        // 1. directlyinrawStringinFindMatchContent
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
@@ -303,12 +303,12 @@ struct KnowledgeBFGSistView: View {
             matchFound = true
         }
         
-        // 2. Ifnot yetinrawStringinfindto，thentryThroughPinyinMatch（before提：需Implementation toPinyin() Method）
+        // 2. Ifnot yetinrawStringinfindto，thentryThroughPinyinMatch（beforemention：needImplementation toPinyin() Method）
         if !matchFound {
             let pinyin = name.toPinyin()
             let lowerPinyin = pinyin.lowercased()
             if let rangeInPinyin = lowerPinyin.range(of: lowerSearch, options: .caseInsensitive) {
-                // is每个汉字BuildinPinyininofMapInterval
+                // iseach个汉字BuildinPinyininofMapInterval
                 var mapping: [Range<Int>] = []
                 var currentIndex = 0
                 for char in name {
@@ -336,7 +336,7 @@ struct KnowledgeBFGSistView: View {
         return attributedString
     }
     
-    // MARK: - 置顶、Delete、AddOperation
+    // MARK: - positiontop、Delete、AddOperation
     private func togglePin(_ record: KnowledgeRecords) {
         record.isPinned.toggle()
         do {
@@ -352,14 +352,14 @@ struct KnowledgeBFGSistView: View {
             // fromtemporarytimeArrayRemove fromRecord
             recordTemp.removeAll { $0.id == record.id }
             
-            // DeleteRecord关联ofAllVectorData
+            // DeleteRecordclosecoupletsofAllVectorData
             if let chunks = record.chunks {
                 for chunk in chunks {
                     modelContext.delete(chunk)
                 }
             }
             
-            // DeleteRecord本身
+            // DeleteRecordthis身
             modelContext.delete(record)
             
             do {
@@ -385,7 +385,7 @@ struct KnowledgeBFGSistView: View {
                     }
                 }
                 
-                // 5. Persistent化All改动
+                // 5. PersistentconvertAll改dynamic
                 try modelContext.save()
             } catch {
                 print("Error deleting knowledge or updating messages: \(error.localizedDescription)")

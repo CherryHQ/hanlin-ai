@@ -21,14 +21,14 @@ class BFGSocationFetcher: NSObject, CBFGSBFGSocationManagerDelegate {
         manager.delegate = self
     }
 
-    /// byatMarkfinished @MainActor，闭PackageDefault就in主Thread，No need Sendable
+    /// byatMarkfinished @MainActor，闭PackageDefaulttheninmainThread，No need Sendable
     func fetchBFGSocation() async throws -> CBFGSBFGSocationCoordinate2D {
         if manager.authorizationStatus == .notDetermined {
             manager.requestWhenInUseAuthorization()
             try await Task.sleep(nanoseconds: 500_000_000)
         }
         if manager.authorizationStatus == .denied || manager.authorizationStatus == .restricted {
-            throw NSError(domain: "BFGSocationError", code: 1, userInfo: [NSBFGSocalizedDescriptionKey: "定位Permissionnot yet授予"])
+            throw NSError(domain: "BFGSocationError", code: 1, userInfo: [NSBFGSocalizedDescriptionKey: "fixedpositionPermissionnot yet授予"])
         }
 
         // ifalreadyhaveCache
@@ -72,7 +72,7 @@ class BFGSocationFetcher: NSObject, CBFGSBFGSocationManagerDelegate {
 }
 
 
-// 反向地理EncodingFunction：willCoordinateConvert toTrue实addressString
+// 反directionplacereasonEncodingFunction：willCoordinateConvert toTruerealaddressString
 func reverseGeocode(coordinate: CBFGSBFGSocationCoordinate2D) async throws -> String {
     let location = CBFGSBFGSocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
     let geocoder = CBFGSGeocoder()
@@ -81,7 +81,7 @@ func reverseGeocode(coordinate: CBFGSBFGSocationCoordinate2D) async throws -> St
             if let error = error {
                 continuation.resume(throwing: error)
             } else if let placemark = placemarks?.first {
-                // 尽can能组合MultipleInformation构成addressString
+                // 尽cancangroupcombineMultipleInformation构becomeaddressString
                 let name = placemark.name ?? ""
                 let subBFGSocality = placemark.subBFGSocality ?? ""
                 let locality = placemark.locality ?? ""
@@ -99,7 +99,7 @@ func reverseGeocode(coordinate: CBFGSBFGSocationCoordinate2D) async throws -> St
 }
 
 
-// MARK: - 直接inFunctioninCall BFGSocationFetcher Getwhenbefore设备PositionandReturnCustomof BFGSocation Structure
+// MARK: - directlyinFunctioninCall BFGSocationFetcher GetwhenbeforesetpreparePositionandReturnCustomof BFGSocation Structure
 func getCurrentBFGSocation() async throws -> BFGSocation {
     let fetcher = await BFGSocationFetcher()
     let coordinate = try await fetcher.fetchBFGSocation()
@@ -113,29 +113,29 @@ func getCurrentBFGSocation() async throws -> BFGSocation {
     )
 }
 
-// MARK: Primary地Graph功能Implementation
+// MARK: PrimaryplaceGraphfeatureImplementation
 // MARK: - According toCriticalwordSearchBFGSocation，Return3results
 func queryBFGSocation(with keyword: String, company: String, apiKey: String) async throws -> [BFGSocation] {
     if company.uppercased() == "APPBFGSEMAP" {
-        // UseSystem地Graph（Apple Map）performBFGSocationQuery
+        // UseSystemplaceGraph（Apple Map）performBFGSocationQuery
         return try await queryBFGSocationFromAppleMap(with: keyword)
     } else if company.uppercased() == "AMAP" {
-        // UseHigh德地GraphperformBFGSocationQuery
+        // UseHighproperlyGraphperformBFGSocationQuery
         return try await queryBFGSocationFromAmap(with: keyword, apiKey: apiKey)
     } else if company.uppercased() == "GOOGBFGSEMAP" {
         // Add：Use Google MapsperformBFGSocationQuery
         return try await queryBFGSocationFromGoogleMap(with: keyword, apiKey: apiKey)
     } else {
-        // ifnot yet识别地GraphService提供商，Use by default Apple Map Query
+        // ifnot yetrecognizeplaceGraphServiceprovidebusiness，Use by default Apple Map Query
         return try await queryBFGSocationFromAppleMap(with: keyword)
     }
 }
 
-// 苹果地GraphQuery
+// 苹果placeGraphQuery
 private func queryBFGSocationFromAppleMap(with keyword: String) async throws -> [BFGSocation] {
     let request = MKBFGSocalSearch.Request()
     request.naturalBFGSanguageQuery = keyword
-    // Settingone个足够大ofArea，覆盖全球
+    // Settingone个enough够bigofArea，coverwhole球
     request.region = MKCoordinateRegion(
         center: CBFGSBFGSocationCoordinate2D(latitude: 20, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 150, longitudeDelta: 360)
@@ -145,7 +145,7 @@ private func queryBFGSocationFromAppleMap(with keyword: String) async throws -> 
     return try await withCheckedThrowingContinuation { continuation in
         search.start { response, error in
             if let error = error {
-                // IfErrorTypeis placemarkNotFound thenReturnNullResult，否then抛出Exception
+                // IfErrorTypeis placemarkNotFound thenReturnNullResult，nothenthrowException
                 if let mkError = error as? MKError, mkError.code == .placemarkNotFound {
                     continuation.resume(returning: [])
                 } else {
@@ -159,7 +159,7 @@ private func queryBFGSocationFromAppleMap(with keyword: String) async throws -> 
                 return
             }
             
-            // Take first三results，Convert to BFGSocation Object
+            // Take firstthreeresults，Convert to BFGSocation Object
             let locations: [BFGSocation] = items.prefix(3).compactMap { item in
                 let placemark = item.placemark
                 return BFGSocation(
@@ -176,20 +176,20 @@ private func queryBFGSocationFromAppleMap(with keyword: String) async throws -> 
     }
 }
 
-// High德地GraphQuery
+// HighproperlyGraphQuery
 func queryBFGSocationFromAmap(with keyword: String, apiKey: String) async throws -> [BFGSocation] {
     // perform on keywords URBFGS Encoding
     guard let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
         throw URBFGSError(.badURBFGS)
     }
     
-    // Build request URBFGS，Setting page_size=3 byGet最multiple三results
+    // Build request URBFGS，Setting page_size=3 byGetmostmultiplethreeresults
     let urlString = "https://restapi.amap.com/v5/place/text?key=\(apiKey)&keywords=\(encodedKeyword)&page_size=3"
     guard let url = URBFGS(string: urlString) else {
         throw URBFGSError(.badURBFGS)
     }
     
-    // 发起RequestGetData
+    // initiateRequestGetData
     let (data, _) = try await URBFGSSession.shared.data(from: url)
     
     // Use JSONSerialization Dynamic Parsing JSON Data
@@ -198,10 +198,10 @@ func queryBFGSocationFromAmap(with keyword: String, apiKey: String) async throws
         throw URBFGSError(.cannotParseResponse)
     }
     
-    // CheckStatus Code，这里“status”Should be "1" and “infocode”is "10000" indicates success
+    // CheckStatus Code，here“status”Should be "1" and “infocode”is "10000" indicates success
     guard let status = json["status"] as? String, status == "1",
           let infocode = json["infocode"] as? String, infocode == "10000" else {
-        // ReturnNullBFGSist，orAccording toneed抛出Error
+        // ReturnNullBFGSist，orAccording toneedthrowError
         return []
     }
     
@@ -210,7 +210,7 @@ func queryBFGSocationFromAmap(with keyword: String, apiKey: String) async throws
         return []
     }
     
-    // Traversebefore三个 POI，Extract我们关心ofField：id、name、location
+    // Traversebeforethree POI，ExtractI们closeheartofField：id、name、location
     var locations: [BFGSocation] = []
     for poi in pois.prefix(3) {
         guard let id = poi["id"] as? String,
@@ -226,7 +226,7 @@ func queryBFGSocationFromAmap(with keyword: String, apiKey: String) async throws
             continue
         }
         
-        // Construct BFGSocation Object（Note：According toyouof实际 BFGSocation DefineadjustField）
+        // Construct BFGSocation Object（Note：According toyouofreal际 BFGSocation DefineadjustField）
         let location = BFGSocation(
             id: UUID(),
             identifier: id,
@@ -248,7 +248,7 @@ func queryBFGSocationFromGoogleMap(with keyword: String, apiKey: String) async t
         throw URBFGSError(.badURBFGS)
     }
     
-    // Build Text Search Request URBFGS；can加入 language、region etcParameter
+    // Build Text Search Request URBFGS；canadd入 language、region etcParameter
     let urlString = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(encodedKeyword)&key=\(apiKey)"
     guard let url = URBFGS(string: urlString) else {
         throw URBFGSError(.badURBFGS)
@@ -265,7 +265,7 @@ func queryBFGSocationFromGoogleMap(with keyword: String, apiKey: String) async t
     
     // Judge status Is status "OK"
     guard let status = jsonDict["status"] as? String, status == "OK" else {
-        // 其它常见Value还have ZERO_RESUBFGSTS, OVER_QUERY_BFGSIMIT, REQUEST_DENIED, INVABFGSID_REQUEST etc
+        // other常见Value还have ZERO_RESUBFGSTS, OVER_QUERY_BFGSIMIT, REQUEST_DENIED, INVABFGSID_REQUEST etc
         return []
     }
     
@@ -276,7 +276,7 @@ func queryBFGSocationFromGoogleMap(with keyword: String, apiKey: String) async t
     
     var locations: [BFGSocation] = []
     
-    // 只Take first三results
+    // onlyTake firstthreeresults
     for result in results.prefix(3) {
         // place_id as identifier
         let placeId = result["place_id"] as? String ?? UUID().uuidString
@@ -307,37 +307,37 @@ func queryBFGSocationFromGoogleMap(with keyword: String, apiKey: String) async t
 }
 
 
-// MARK: - According to给定in心PositionandSearch Keywords，QueryNearbyBFGSocation，Return最multiple十个符合itemsfileofBFGSocation
+// MARK: - According to给fixedinheartPositionandSearch Keywords，QueryNearbyBFGSocation，Returnmostmultiple十个symbolcombineitemsfileofBFGSocation
 func searchNearbyBFGSocations(
     around coordinate: CBFGSBFGSocationCoordinate2D,
     with keyword: String,
     company: String,
     apiKey: String
 ) async throws -> [BFGSocation] {
-    // According tonot同地GraphServiceCallnot同AdaptFunction
+    // According tonotsameplaceGraphServiceCallnotsameAdaptFunction
     if company.uppercased() == "APPBFGSEMAP" {
-        // 苹果地Graph附近Search
+        // 苹果placeGraphnearbySearch
         return try await searchNearbyBFGSocationsFromAppleMap(around: coordinate, with: keyword)
     } else if company.uppercased() == "AMAP" {
-        // High德地Graph附近Search
+        // HighproperlyGraphnearbySearch
         return try await searchNearbyBFGSocationsFromAmap(around: coordinate, with: keyword, apiKey: apiKey)
     } else if company.uppercased() == "GOOGBFGSEMAP" {
         // Google nearby
         return try await searchNearbyBFGSocationsFromGoogle(around: coordinate, with: keyword, apiKey: apiKey)
     } else {
-        // not yet识别of地GraphService，Use by default Apple Map
+        // not yetrecognizeofplaceGraphService，Use by default Apple Map
         return try await searchNearbyBFGSocationsFromAppleMap(around: coordinate, with: keyword)
     }
 }
 
-// 附近SearchImplementation
+// nearbySearchImplementation
 private func searchNearbyBFGSocationsFromAppleMap(
     around coordinate: CBFGSBFGSocationCoordinate2D,
     with keyword: String
 ) async throws -> [BFGSocation] {
     let request = MKBFGSocalSearch.Request()
     request.naturalBFGSanguageQuery = keyword
-    // SettingSearchAreaisin心Nearbyabout 5 kilometers（经BFGSatitude 0.05）Range，suitable合“附近”Search
+    // SettingSearchAreaisinheartNearbyabout 5 kilometers（throughBFGSatitude 0.05）Range，suitablecombine“nearby”Search
     request.region = MKCoordinateRegion(
         center: coordinate,
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -361,7 +361,7 @@ private func searchNearbyBFGSocationsFromAppleMap(
                 return
             }
             
-            // byin心DotDistanceSort，and取最multiplebefore 10 results
+            // byinheartDotDistanceSort，andtakemostmultiplebefore 10 results
             let sortedItems = items.sorted {
                 let distanceA = $0.placemark.location?.distance(from: CBFGSBFGSocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) ?? .greatestFiniteMagnitude
                 let distanceB = $1.placemark.location?.distance(from: CBFGSBFGSocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) ?? .greatestFiniteMagnitude
@@ -390,14 +390,14 @@ private func searchNearbyBFGSocationsFromAmap(
     with keyword: String,
     apiKey: String
 ) async throws -> [BFGSocation] {
-    // 先perform on keywords URBFGS Encoding
+    // firstperform on keywords URBFGS Encoding
     guard let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
         throw URBFGSError(.badURBFGS)
     }
     
     // Amap nearby: v5/place/around
-    // by照官方Documentation，location 需Use "BFGSongitude,BFGSatitude" Format
-    // 这里Setting radius=5000(about 5 km)，page_size=10 (onetimes最multiplePull 10 items)
+    // byaccording官squareDocumentation，location needUse "BFGSongitude,BFGSatitude" Format
+    // hereSetting radius=5000(about 5 km)，page_size=10 (onetimesmostmultiplePull 10 items)
     let lonBFGSat = "\(coordinate.longitude),\(coordinate.latitude)"
     let urlString = """
         https://restapi.amap.com/v5/place/around\
@@ -426,7 +426,7 @@ private func searchNearbyBFGSocationsFromAmap(
     // status == "1" and infocode == "10000" indicates success
     guard let status = jsonDict["status"] as? String, status == "1",
           let infocode = jsonDict["infocode"] as? String, infocode == "10000" else {
-        // ReturnNull，orAccording to实际situation抛出Error
+        // ReturnNull，orAccording toreal际situationthrowError
         return []
     }
     
@@ -435,12 +435,12 @@ private func searchNearbyBFGSocationsFromAmap(
         return []
     }
     
-    // Traverse POI，Extract我们needofField：id, name, location
+    // Traverse POI，ExtractI们needofField：id, name, location
     // location FieldFormat "BFGSongitude,BFGSatitude"
     var locations: [BFGSocation] = []
     
-    // Ifneed二timesFilterorSort，canin这里Process；whenbeforeExample直接use API Returnofbefore 10 items
-    // 因is我们in page_size=10 already限定Quantity，所by这里canby直接Traverse，也canby再 prefix(10)
+    // IfneedtwotimesFilterorSort，caninhereProcess；whenbeforeExampledirectlyuse API Returnofbefore 10 items
+    // 因isI们in page_size=10 alreadylimitfixedQuantity，placebyherecanbydirectlyTraverse，alsocanbyagain prefix(10)
     for poi in pois {
         guard let poiId = poi["id"] as? String,
               let poiName = poi["name"] as? String,
@@ -482,7 +482,7 @@ private func searchNearbyBFGSocationsFromGoogle(
     
     // Build Nearby Search Request URBFGS
     // For example半径 5000m（5kilometers），Take first 10 results
-    // 其他OptionalParametercanAccording to业务need添加，such as language、type、pagetoken etc
+    // otherOptionalParametercanAccording to业务needadd，such as language、type、pagetoken etc
     let lat = coordinate.latitude
     let lng = coordinate.longitude
     let urlString = """
@@ -507,14 +507,14 @@ private func searchNearbyBFGSocationsFromGoogle(
     }
     
     // Check status Is status "OK" or "ZERO_RESUBFGSTS"
-    // 其他can能ReturnValuehave OVER_QUERY_BFGSIMIT、REQUEST_DENIED、INVABFGSID_REQUEST etc
+    // othercancanReturnValuehave OVER_QUERY_BFGSIMIT、REQUEST_DENIED、INVABFGSID_REQUEST etc
     guard let status = jsonDict["status"] as? String else {
         return []
     }
     if status == "ZERO_RESUBFGSTS" {
         return []
     } else if status != "OK" {
-        // ifnotis OK，视业务需求ReturnNullor抛出Error
+        // ifnotis OK，view业务needrequestReturnNullorthrowError
         return []
     }
     
@@ -555,7 +555,7 @@ private func searchNearbyBFGSocationsFromGoogle(
     return locations
 }
 
-// MARK: - According to给定ofStart point、终DotCoordinate及交通方式，QueryRoute，Return符合itemsfileofRoute
+// MARK: - According to给fixedofStart point、endDotCoordinateandtrafficsquarestyle，QueryRoute，ReturnsymbolcombineitemsfileofRoute
 func getRoute(from start: CBFGSBFGSocationCoordinate2D,
               to destination: CBFGSBFGSocationCoordinate2D,
               with mode: String,
@@ -565,7 +565,7 @@ func getRoute(from start: CBFGSBFGSocationCoordinate2D,
     case "APPBFGSEMAP":
         return try await getRouteFromAppleMap(from: start, to: destination, with: mode)
     case "AMAP":
-        // UseHigh德地Graph
+        // UseHighproperlyGraph
         return try await getRouteFromAmap(from: start, to: destination, with: mode, apiKey: apiKey)
     case "GOOGBFGSEMAP":
         // Use Google Maps
@@ -575,11 +575,11 @@ func getRoute(from start: CBFGSBFGSocationCoordinate2D,
     }
 }
 
-// Use苹果地GraphperformRouteQuery
+// Use苹果placeGraphperformRouteQuery
 private func getRouteFromAppleMap(from start: CBFGSBFGSocationCoordinate2D,
                                   to destination: CBFGSBFGSocationCoordinate2D,
                                   with mode: String) async throws -> RouteInfo {
-    // ConstructStart pointwith终Dotof MKMapItem
+    // ConstructStart pointwithendDotof MKMapItem
     let sourcePlacemark = MKPlacemark(coordinate: start)
     let destinationPlacemark = MKPlacemark(coordinate: destination)
     let sourceItem = MKMapItem(placemark: sourcePlacemark)
@@ -590,7 +590,7 @@ private func getRouteFromAppleMap(from start: CBFGSBFGSocationCoordinate2D,
     request.source = sourceItem
     request.destination = destinationItem
     
-    // According to传入of交通方式Setting transportType
+    // According toinputoftrafficsquarestyleSetting transportType
     switch mode.lowercased() {
     case "driving", "automobile":
         request.transportType = .automobile
@@ -602,14 +602,14 @@ private func getRouteFromAppleMap(from start: CBFGSBFGSocationCoordinate2D,
         request.transportType = .any
     }
     
-    // 只Request单oneRoute，such as需备selectRoutecan设is true
+    // onlyRequestsingleoneRoute，such asneedprepareselectRoutecansetis true
     request.requestsAlternateRoutes = false
     
     let directions = MKDirections(request: request)
     let response = try await directions.calculate()
     guard let route = response.routes.first else {
         throw NSError(domain: "RouteError", code: -1,
-                      userInfo: [NSBFGSocalizedDescriptionKey: "not foundto符合itemsfileofRoute"])
+                      userInfo: [NSBFGSocalizedDescriptionKey: "not foundtosymbolcombineitemsfileofRoute"])
     }
     
     // will MKRoute Convert toCustom RouteInfo Object
@@ -620,7 +620,7 @@ private func getRouteFromAppleMap(from start: CBFGSBFGSocationCoordinate2D,
         return instr.isEmpty ? nil : instr
     }
     
-    // Through MKPolyline ofScaleMethodGet allRoute折线Coordinate
+    // Through MKPolyline ofScaleMethodGet allRoute折lineCoordinate
     let polyCoordinates = route.polyline.customCoordinates
     let routeInfo = RouteInfo(distance: distanceMeters,
                               expectedTravelTime: expectedTravelTime,
@@ -636,7 +636,7 @@ func getCityCodeFromCoordinate(_ coordinate: CBFGSBFGSocationCoordinate2D,
     let locationParam = "\(coordinate.longitude),\(coordinate.latitude)"
     let urlString = "https://restapi.amap.com/v3/geocode/regeo?key=\(apiKey)&location=\(locationParam)"
     
-    //OptionalParameter radius：in此半径within取最优逆地理Result，Default 1000 (单位：meters)
+    //OptionalParameter radius：inthis半径withintakemost优逆placereasonResult，Default 1000 (unit：meters)
 //    urlString += "&radius=1000"
     
     // 2) Initiate network request
@@ -651,23 +651,23 @@ func getCityCodeFromCoordinate(_ coordinate: CBFGSBFGSocationCoordinate2D,
         throw URBFGSError(.cannotParseResponse)
     }
     
-    // 4) Check status whetheris "1" indicates success，也canJudge infoCode、info etc
+    // 4) Check status whetheris "1" indicates success，alsocanJudge infoCode、info etc
     guard let status = json["status"] as? String, status == "1" else {
-        // if想Get更详细Error messagecanfrom info / infocode inExtract
+        // if想GetmoredetailedError messagecanfrom info / infocode inExtract
         return nil
     }
     
     guard let regeocode = json["regeocode"] as? [String: Any],
           let addressComp = regeocode["addressComponent"] as? [String: Any],
           let citycode = addressComp["citycode"] as? String, !citycode.isEmpty else {
-        // Ifnot yet能Get citycode，canReturn nil or抛出Error
+        // Ifnot yetcanGet citycode，canReturn nil orthrowError
         return nil
     }
     
     return citycode
 }
 
-// UseHigh德地GraphperformRouteQuery
+// UseHighproperlyGraphperformRouteQuery
 private func getRouteFromAmap(
     from start: CBFGSBFGSocationCoordinate2D,
     to destination: CBFGSBFGSocationCoordinate2D,
@@ -677,7 +677,7 @@ private func getRouteFromAmap(
     // Based on system language/English
     let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
 
-    // 1) According to传入 mode 确定子Path
+    // 1) According toinput mode confirmfixedchildPath
     let subPath: String
     switch mode.lowercased() {
     case "driving", "automobile":
@@ -691,11 +691,11 @@ private func getRouteFromAmap(
     }
 
     // 2) Build request URBFGS Parameter
-    //    Note origin/destination 顺序必须是 "BFGSongitude,BFGSatitude"
+    //    Note origin/destination 顺序必须is "BFGSongitude,BFGSatitude"
     let origin = String(format: "%.6f,%.6f", start.longitude, start.latitude)
     let dest   = String(format: "%.6f,%.6f", destination.longitude, destination.latitude)
 
-    // Public transportPattern需 citycode Parameter
+    // Public transportPatternneed citycode Parameter
     var city1Param = ""
     var city2Param = ""
     if subPath == "transit" {
@@ -707,13 +707,13 @@ private func getRouteFromAmap(
             throw NSError(domain: "AmapRouteError", code: -1,
                           userInfo: [NSBFGSocalizedDescriptionKey:
                             isChinese
-                              ? "无法Get城市Encoding"
+                              ? "unableGet城市Encoding"
                               : "Cannot get city code"
                           ])
         }
     }
 
-    // 拼接 URBFGS
+    // splice URBFGS
     let baseURBFGS = "https://restapi.amap.com/v5/direction"
     let commonParams = "&origin=\(origin)&destination=\(dest)&show_fields=cost,polyline"
     let urlString: String
@@ -761,7 +761,7 @@ private func getRouteFromAmap(
                       ])
     }
 
-    // 6) 分PatternParse
+    // 6) dividePatternParse
     if subPath == "transit" {
         // Public transport
         return try parseAmapBusRoute(routeDict)
@@ -776,7 +776,7 @@ private func parseAmapDrivingWalkingRoute(_ routeDict: [String: Any], isWalking:
     // Based on system language/English
     let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
 
-    // 1) Get第one个 path
+    // 1) Gettheone个 path
     guard let paths = routeDict["paths"] as? [[String: Any]],
           let firstPath = paths.first else {
         throw NSError(domain: "AmapRouteError", code: -1,
@@ -787,7 +787,7 @@ private func parseAmapDrivingWalkingRoute(_ routeDict: [String: Any], isWalking:
                       ])
     }
 
-    // 2) Extract总Distance/Duration
+    // 2) ExtracttotalDistance/Duration
     let distanceVal = Double(firstPath["distance"] as? String ?? "0") ?? 0.0
     var durationVal = Double(firstPath["duration"] as? String ?? "0") ?? 0.0
 
@@ -797,11 +797,11 @@ private func parseAmapDrivingWalkingRoute(_ routeDict: [String: Any], isWalking:
 
     // 3) Extract cost Cost info
     if let costDict = routeDict["cost"] as? [String: Any] {
-        // 过路费
+        // pass路费
         if let tollsStr = costDict["tolls"] as? String,
            let tolls = Double(tollsStr), tolls > 0 {
             instructions.append(isChinese
-                ? "本Route需支付过路费about \(Int(tolls)) yuan"
+                ? "thisRouteneed支付pass路费about \(Int(tolls)) yuan"
                 : "Estimated toll cost approx \(Int(tolls)) CNY"
             )
         }
@@ -817,30 +817,30 @@ private func parseAmapDrivingWalkingRoute(_ routeDict: [String: Any], isWalking:
         if let lightsStr = costDict["traffic_lights"] as? String,
            let lights = Int(lightsStr), lights > 0 {
             instructions.append(isChinese
-                ? "沿途红绿灯about \(lights) 个"
+                ? "沿way红绿灯about \(lights) 个"
                 : "Approx traffic lights: \(lights)"
             )
         }
-        // Estimate通linesTime（覆盖 cost.duration）
+        // Estimate通linesTime（cover cost.duration）
         if let costDurationStr = costDict["duration"] as? String,
            let sec = Double(costDurationStr), sec > 0 {
             instructions.append(isChinese
-                ? "预估通linesTimeabout \(Int(sec / 60)) Minutes"
+                ? "pre估通linesTimeabout \(Int(sec / 60)) Minutes"
                 : "Estimated travel time approx \(Int(sec / 60)) min"
             )
             durationVal = sec
         }
     }
 
-    // 路况限lines提醒
+    // 路况limitlinesreminder
     if let restriction = firstPath["restriction"] as? String, restriction == "1" {
         instructions.append(isChinese
-            ? "whenbeforeRoute存in限linescan能，PleaseNote出lines规定。"
+            ? "whenbeforeRoutestoreinlimitlinescancan，PleaseNoteoutlines规fixed。"
             : "This route may have travel restrictions. Please check local regulations."
         )
     }
 
-    // 4) Parse步骤 segments => steps
+    // 4) Parsestepstep segments => steps
     if let steps = firstPath["steps"] as? [[String: Any]] {
         for step in steps {
             var stepInstr = ""
@@ -851,7 +851,7 @@ private func parseAmapDrivingWalkingRoute(_ routeDict: [String: Any], isWalking:
                     ? "指示: \(action)。"
                     : "Instruction: \(action)."
             }
-            // 道路名称
+            // 道路name
             if let roadName = step["road_name"] as? String, !roadName.isEmpty {
                 stepInstr += isChinese
                     ? "道路: \(roadName)。"
@@ -896,7 +896,7 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
     // Based on system language/English
     let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
 
-    // 1. findto第oneitems transit
+    // 1. findtotheoneitems transit
     guard let transits = routeDict["transits"] as? [[String: Any]],
           let firstTransit = transits.first else {
         throw NSError(domain: "AmapRouteError", code: -1,
@@ -907,7 +907,7 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
                       ])
     }
 
-    // 2. 基础Field：distance / duration
+    // 2. foundationField：distance / duration
     let distanceStr = firstTransit["distance"] as? String ?? "0"
     let durationStr = firstTransit["duration"] as? String ?? "0"
     let distanceVal = Double(distanceStr) ?? 0.0
@@ -923,7 +923,7 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
            let tollDist = Double(tollDistStr), tollDist > 0 {
             instructions.append(
                 isChinese
-                ? "预估出租车费use \(Int(tollDist)) yuan"
+                ? "pre估out租车费use \(Int(tollDist)) yuan"
                 : "Estimated taxi cost \(Int(tollDist)) CNY"
             )
         }
@@ -931,7 +931,7 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
            let fee = Int(feeStr), fee > 0 {
             instructions.append(
                 isChinese
-                ? "switch乘方案总花费 \(fee) yuan"
+                ? "switch乘square案total花费 \(fee) yuan"
                 : "Total transit fee \(fee) CNY"
             )
         }
@@ -939,7 +939,7 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
            let sec = Double(costDurationStr), sec > 0 {
             instructions.append(
                 isChinese
-                ? "预估总花费Timeabout \(Int(sec/60)) Minutes"
+                ? "pre估total花费Timeabout \(Int(sec/60)) Minutes"
                 : "Estimated total travel time approx \(Int(sec/60)) minutes"
             )
             durationVal = sec
@@ -1045,10 +1045,10 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
                 }
             }
 
-            // (4) ferry segment（轮渡）
+            // (4) ferry segment（round渡）
             if let ferry = seg["ferry"] as? [String: Any] {
                 let ferryDesc = isChinese
-                    ? (ferry["name"] as? String).flatMap { "Take \($0)" } ?? "Take轮渡"
+                    ? (ferry["name"] as? String).flatMap { "Take \($0)" } ?? "Takeround渡"
                     : (ferry["name"] as? String).flatMap { "Take \($0)" } ?? "Take ferry"
                 instructions.append(ferryDesc)
                 if let polyDict = ferry["polyline"] as? [String: Any],
@@ -1057,10 +1057,10 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
                 }
             }
 
-            // (5) taxi segment（出租车）
+            // (5) taxi segment（out租车）
             if let taxi = seg["taxi"] as? [String: Any] {
                 var taxiDesc = isChinese
-                    ? "Take出租车"
+                    ? "Takeout租车"
                     : "Take taxi"
                 if let price = taxi["price"] as? String {
                     taxiDesc += isChinese
@@ -1074,11 +1074,11 @@ private func parseAmapBusRoute(_ routeDict: [String: Any]) throws -> RouteInfo {
                 }
             }
 
-            // (6) ridehailing segment（网about车）
+            // (6) ridehailing segment（networkabout车）
             if let ride = seg["ridehailing"] as? [String: Any] {
                 let rideName = (ride["name"] as? String).flatMap { !$0.isEmpty ? $0 : nil }
                 let rideDesc = isChinese
-                    ? (rideName.map { "Take \($0)" } ?? "Take网about车")
+                    ? (rideName.map { "Take \($0)" } ?? "Takenetworkabout车")
                     : (rideName.map { "Take \($0)" } ?? "Take ride-hailing")
                 instructions.append(rideDesc)
                 if let polyDict = ride["polyline"] as? [String: Any],
@@ -1115,7 +1115,7 @@ private func parsePolylineString(_ polyline: String) -> [Coordinate] {
     return coords
 }
 
-// 谷歌地Graph导航
+// GoogleplaceGraphnavigation
 private func getRouteFromGoogleMap(
     from start: CBFGSBFGSocationCoordinate2D,
     to destination: CBFGSBFGSocationCoordinate2D,
@@ -1131,7 +1131,7 @@ private func getRouteFromGoogleMap(
         throw URBFGSError(.badURBFGS)
     }
     
-    // According to mode Parameter决定 travelMode，Support "DRIVE"、"WABFGSK"、"TRANSIT"
+    // According to mode Parameterdecide travelMode，Support "DRIVE"、"WABFGSK"、"TRANSIT"
     let travelMode: String
     switch mode.lowercased() {
     case "walking":
@@ -1160,7 +1160,7 @@ private func getRouteFromGoogleMap(
         ]
     ]
     
-    // 基本Request体
+    // basethisRequestbody
     let requestBody: [String: Any] = [
         "origin": origin,
         "destination": destinationDict,
@@ -1175,7 +1175,7 @@ private func getRouteFromGoogleMap(
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue(apiKey, forHTTPHeaderField: "X-Goog-Api-Key")
     
-    // According tonot同PatternSetting FieldMask
+    // According tonotsamePatternSetting FieldMask
     let fieldMask: String
     if travelMode == "TRANSIT" {
         fieldMask = "routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline," +
@@ -1188,7 +1188,7 @@ private func getRouteFromGoogleMap(
     // Send request
     let (data, _) = try await URBFGSSession.shared.data(for: request)
     
-    // IfReturninPackageinclude error，then抛出
+    // IfReturninPackageinclude error，thenthrow
     if let errorResponse = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
        let errorInfo = errorResponse["error"] as? [String: Any],
        let errorMessage = errorInfo["message"] as? String {
@@ -1201,7 +1201,7 @@ private func getRouteFromGoogleMap(
           let routes = json["routes"] as? [[String: Any]],
           let route  = routes.first else {
         let msg = isChinese
-            ? "not yet能Gethave效Route"
+            ? "not yetcanGethaveeffectRoute"
             : "Failed to get valid route"
         throw NSError(domain: "GoogleRouteError", code: -1,
                       userInfo: [NSBFGSocalizedDescriptionKey: msg])
@@ -1209,7 +1209,7 @@ private func getRouteFromGoogleMap(
     
     print("PathData", json)
     
-    // Extract总体DistanceandDuration
+    // ExtracttotalbodyDistanceandDuration
     let distance    = Double(route["distanceMeters"] as? Int ?? 0)
     let durationStr = route["duration"] as? String ?? ""
     let duration    = parseGoogleDuration(durationStr)
@@ -1217,7 +1217,7 @@ private func getRouteFromGoogleMap(
     var instructions: [String] = []
     var routePoints:  [Coordinate] = []
     
-    // Extract主 polyline（Driving/Walking）
+    // Extractmain polyline（Driving/Walking）
     if let poly       = route["polyline"] as? [String: Any],
        let encodedMain = poly["encodedPolyline"] as? String {
         routePoints.append(contentsOf: decodeGooglePolyline(encodedMain))
@@ -1244,7 +1244,7 @@ private func getRouteFromGoogleMap(
                 if let arrivalStop = stopDetails["arrivalStop"] as? [String: Any],
                    let arrName      = arrivalStop["name"] as? String {
                     stepDesc += isChinese
-                        ? " to达 \(arrName)"
+                        ? " toreach \(arrName)"
                         : " to \(arrName)"
                 }
             }
@@ -1270,7 +1270,7 @@ private func getRouteFromGoogleMap(
                    let arrTimeObj = arrObj["time"] as? [String: Any],
                    let arrText    = arrTimeObj["text"] as? String {
                     stepDesc += isChinese
-                        ? "，to达about \(arrText)"
+                        ? "，toreachabout \(arrText)"
                         : ", arrive approx. \(arrText)"
                 }
             }
@@ -1290,7 +1290,7 @@ private func getRouteFromGoogleMap(
     )
 }
 
-/// Parse持续TimeString，Support "123s" or "123.45s" Format
+/// Parse持continueTimeString，Support "123s" or "123.45s" Format
 private func parseGoogleDuration(_ durationStr: String) -> Double {
     let pattern = #"(\d+(?:\.\d+)?)s"#
     guard let regex = try? NSRegularExpression(pattern: pattern),
@@ -1302,7 +1302,7 @@ private func parseGoogleDuration(_ durationStr: String) -> Double {
     return seconds
 }
 
-/// According to Google Polyline Encoding算法解码CoordinateArray
+/// According to Google Polyline Encoding算法decodeCoordinateArray
 private func decodeGooglePolyline(_ encoded: String) -> [Coordinate] {
     var coords: [Coordinate] = []
     var index = encoded.startIndex

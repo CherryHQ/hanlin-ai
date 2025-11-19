@@ -34,9 +34,9 @@ class SystemOptimizer {
         let modelFetch = FetchDescriptor<AllModels>(predicate: modelPredicate)
         guard let modelEntry = try context.fetch(modelFetch).first,
               let modelCompany = modelEntry.company else {
-            print("[SystemOptimizer] Error：not yet能findtoModel \(optimizationModelName)")
+            print("[SystemOptimizer] Error：not yetcanfindtoModel \(optimizationModelName)")
             throw NSError(domain: "ModelNotFound", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "not yet能fromDatalibraryinGet model info: \(optimizationModelName)"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "not yetcanfromDatalibraryinGet model info: \(optimizationModelName)"])
         }
         print("[SystemOptimizer] ModelManufacturer：\(modelCompany)")
         
@@ -44,9 +44,9 @@ class SystemOptimizer {
         let apiKeyPredicate = #Predicate<APIKeys> { ($0.company ?? "") == modelCompany }
         let apiKeyFetch = FetchDescriptor<APIKeys>(predicate: apiKeyPredicate)
         guard let apiKeyObj = try context.fetch(apiKeyFetch).first else {
-            print("[SystemOptimizer] Error：not yet能findtoManufacturer \(modelCompany) ofAPIKey config")
+            print("[SystemOptimizer] Error：not yetcanfindtoManufacturer \(modelCompany) ofAPIKey config")
             throw NSError(domain: "APIConfigError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "not yet能fromDatalibraryinGetManufacturer \(modelCompany) ofAPIConfiguration"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "not yetcanfromDatalibraryinGetManufacturer \(modelCompany) ofAPIConfiguration"])
         }
 
         guard let apiKey = apiKeyObj.key, !apiKey.isEmpty else {
@@ -71,8 +71,8 @@ class SystemOptimizer {
     ///   - images: Image array
     ///   - role: MessageRole（For example "user"）
     ///   - company: Model vendor
-    ///   - modelName: Model Name，useatCheck基础Model（such as "glm-4v-flash"）
-    ///   - languageIsChinese: whetherisin文Environment
+    ///   - modelName: Model Name，useatCheckfoundationModel（such as "glm-4v-flash"）
+    ///   - languageIsChinese: whetherisintextEnvironment
     /// - Returns: ImageMessageArray
     private func buildImageMessages(from images: [UIImage],
                                     role: String,
@@ -84,9 +84,9 @@ class SystemOptimizer {
         for image in images {
             guard let imageData = image.jpegData(compressionQuality: 0.9) else {
                 throw NSError(domain: "FileError", code: -1,
-                              userInfo: [NSBFGSocalizedDescriptionKey: "无法ParseImageData"])
+                              userInfo: [NSBFGSocalizedDescriptionKey: "unableParseImageData"])
             }
-            // IfModelis "glm-4v-flash" and超过第one张Image，then直接跳出BFGSoop（只Parse第one张Image）
+            // IfModelis "glm-4v-flash" andexceedtheoneopenImage，thendirectly跳outBFGSoop（onlyParsetheoneopenImage）
             if photoCount > 1 {
                 let baseName = restoreBaseModelName(from: modelName)
                 if baseName == "glm-4v-flash" {
@@ -133,22 +133,22 @@ class SystemOptimizer {
             "zh-Hans": """
                     ## Optimize
                     
-                    PleaseAccording tobybelowRequirementOptimize提供ofPrompt：
-                    1. ​**Core goal**：提升大Model回复Mass
+                    PleaseAccording tobybelowRequirementOptimizeprovideofPrompt：
+                    1. ​**Core goal**：mention升bigModelreplyMass
                     2. ​**Format req**：
-                       - 允许UseMarkdownTypographyandNo needUseCode Block（not include` ``` `）
+                       - allowUseMarkdownTypographyandNo needUseCode Block（not include` ``` `）
                     3. ​**Content rules**：
-                       - 严BFGSatticeKeep原始语义
-                       - Delete冗余Information
-                       - 避免过度Optimize
+                       - strictBFGSatticeKeeporiginalstart语义
+                       - Delete冗remainingInformation
+                       - avoidpassdegreeOptimize
                     4. ​**Direction**：
-                       - 逻辑Struct重组
-                       - Critical指令强化
-                       - 语境明确化
+                       - logicStructheavygroup
+                       - Critical指令强convert
+                       - 语境clearconvert
                     5. **Output req**：
                        - Give optimized text，No extra explanation
                     
-                    ## 现havePrompt：
+                    ## presenthavePrompt：
                 """,
             "en": """
                     ## Optimization Instructions
@@ -197,7 +197,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -229,7 +229,7 @@ class SystemOptimizer {
         return optimizedContent
     }
     
-    // MARK: Optimize文章Content
+    // MARK: OptimizetextchapterContent
     func optimizeContent(inputContent: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
@@ -240,22 +240,22 @@ class SystemOptimizer {
             "zh-Hans": """
                     # Optimize
                     
-                    PleaseAccording tobybelowRequirementOptimize提供of文章Content：
+                    PleaseAccording tobybelowRequirementOptimizeprovideoftextchapterContent：
                     1. ​**Core goal**：
-                       - 使得文章Struct清晰，分segment恰when
+                       - 使得textchapterStructclear，dividesegment恰when
                     2. ​**Format req**：
-                       - UseMarkdownTypography，by#Title、##二级Titleetcof形式合理划分文章Struct
+                       - UseMarkdownTypography，by#Title、##two级Titleetcof形stylecombinereason划dividetextchapterStruct
                        - MarkdownTypographyNo needUseCode Block（not include` ``` `）
                     3. ​**Content rules**：
-                       - 严BFGSatticeKeep原haveTextofAllContent，not要丢失任何Information
-                       - 避免切割同语义ofText
+                       - strictBFGSatticeKeeporiginalhaveTextofAllContent，notneed丢失anyInformation
+                       - avoidcut割same语义ofText
                     4. ​**Direction**：
-                       - 文章StructOptimize，分大Title、小TitleetcTidyContentFormat
-                       - 文章每个segment落ofContent长度基本保持one致
+                       - textchapterStructOptimize，dividebigTitle、smallTitleetcTidyContentFormat
+                       - textchaptereach个segmentfallofContentlengthbasethiskeeponecause
                     5. **Output req**：
                        - Give optimized text，No extra explanation
                     
-                    # 现have文章Content：
+                    # presenthavetextchapterContent：
                 """,
             "en": """
                     # Optimization instructions
@@ -303,7 +303,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -353,8 +353,8 @@ class SystemOptimizer {
                            \(inputPrompt)
                            
                            # Requirement：
-                           1. 涉及time效性ContentthenAccording toTime添加具体of[Year][Month]，not涉及time效thennot添加；
-                           2. use精确术语ReplaceBlur表达；
+                           1. involvetimeeffectcharacterContentthenAccording toTimeaddconcreteof[Year][Month]，notinvolvetimeeffectthennotadd；
+                           2. use精confirmterminologyReplaceBlurexpress；
                            3. Retain semantic core；
                            4. Return single-line text result。
                            5. History records，Ignore if not useful：\(recentMessages)
@@ -384,8 +384,8 @@ class SystemOptimizer {
                            \(inputPrompt)
                            
                            # Requirement：
-                           1. if涉及Image Content，Transcribe elements（such as object/Text/data etc.）；
-                           2. 涉及time效性Contentthen添加[Year][Month]；
+                           1. ifinvolveImage Content，Transcribe elements（such as object/Text/data etc.）；
+                           2. involvetimeeffectcharacterContentthenadd[Year][Month]；
                            3. Retain semantic core；
                            4. Return single-line text result。
                            5. History and images，Ignore if not useful：\n\(recentMessages)
@@ -450,7 +450,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -494,7 +494,7 @@ class SystemOptimizer {
         
         let prompts: [String: String] = [
             "zh-Hans": """
-                       # PleasewillbybelowAskOptimizeis检索EnhancedsuitableuseFormat
+                       # PleasewillbybelowAskOptimizeisretrieveEnhancedsuitableuseFormat
                        
                        # User question：
                        \(inputPrompt)
@@ -529,7 +529,7 @@ class SystemOptimizer {
                        \(inputPrompt)
                        
                        # Requirement：
-                       1. if涉及Image Content，Transcribe elements（such as object/Text/data etc.）；
+                       1. ifinvolveImage Content，Transcribe elements（such as object/Text/data etc.）；
                        2. Use exact terms；
                        3. Retain semantic core；
                        4. Return single-line text result。
@@ -595,7 +595,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -645,12 +645,12 @@ class SystemOptimizer {
                        \(inputPrompt)
 
                        # OptimizeRequirement：
-                       1. ExtractandScaleuseaccountDescriptioninof具体Visionyuan素（such as人物、Scenario、Objects、Background、BFGSighting、构Graph、Styleetc），避免UseBlurAbstractofword汇；
-                       2. Keep原始语义核心，and补充ScenarioDetails（such as季节、Time、Action、Color、Material、镜头角度etc）byEnhanced画面感；
-                       3. OutputonesegmentComplete详细ofImagePrompt，suitable合useatImageGenerateModel，BFGSanguageself然and具备画面引导Force；
-                       4. 参考HistoryChatdayRecord及Image\n\(recentMessages)\n。IfChatdayRecordPackageincludeCorrelation上below文，can据此Enhanced语境one致性，否thenIgnore；
-                       5. OptimizeResultshould呈现出one个具体can视of画面，引导Model准确理解andGenerateImage。
-                       6. 直接给出最后ofOptimizeResult，not需要multiple余of解释。
+                       1. ExtractandScaleuseaccountDescriptioninofconcreteVisionyuanelement（such ascharacter、Scenario、Objects、Background、BFGSighting、构Graph、Styleetc），avoidUseBlurAbstractofword汇；
+                       2. Keeporiginalstart语义core，andsupplementScenarioDetails（such as季节、Time、Action、Color、Material、镜头angleetc）byEnhancedvisual sense；
+                       3. OutputonesegmentCompletedetailedofImagePrompt，suitablecombineuseatImageGenerateModel，BFGSanguageself然andpossess画face引导Force；
+                       4. referenceHistoryChatdayRecordandImage\n\(recentMessages)\n。IfChatdayRecordPackageincludeCorrelationupbelowtext，can据thisEnhanced语境oneconsistency，nothenIgnore；
+                       5. OptimizeResultshouldpresentpresentoutone个concretecanviewof画face，引导Model准confirmunderstandandGenerateImage。
+                       6. directlyprovidemostafterofOptimizeResult，notneedmultipleremainingofexplain。
                        """,
             
             "en": """
@@ -711,7 +711,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -753,40 +753,40 @@ class SystemOptimizer {
         
         let multimodalPrompt: [String: String] = [
             "zh-Hans": """
-                    You areone款先进ofMulti-modal AI，擅长分析and详细DescriptionImage Content。
+                    You areone款first进ofMulti-modal AI，good atanalysisanddetailedDescriptionImage Content。
                     
-                    Pleasefrombybelow几个方面perform分析：
+                    Pleasefrombybelow几个squarefaceperformanalysis：
                     
-                    1. **核心InformationMatch**：
-                       - Imageinof哪些yuan素withuseaccountAskCorrelation？Please优先Description这些Content。
-                       - 这些yuan素ofMorphology、Color、Material、Position关系such as何？
-                       - 这些Contentcan能withUser asked题ofBackgroundor意Graphhave什么关联？
+                    1. **coreInformationMatch**：
+                       - Imageinof哪些yuanelementwithuseaccountAskCorrelation？PleasepriorityDescriptionthis些Content。
+                       - this些yuanelementofMorphology、Color、Material、Positionclose系such as何？
+                       - this些ContentcancanwithUser asked题ofBackgroundormeaningGraphhave什么closecouplets？
                     
-                    2. **详细Image Description**：
-                       - 这是one张什么TypeofImage？（照片、插画、截Graphetc）
-                       - PrimaryofVisionyuan素是什么？（人物、Objects、Scenarioetc）
-                       - 画面in色彩、光影、构GraphetcVision特Dotsuch as何？
+                    2. **detailedImage Description**：
+                       - thisisoneopen什么TypeofImage？（accordingpiece、插画、截Graphetc）
+                       - PrimaryofVisionyuanelementis什么？（character、Objects、Scenarioetc）
+                       - 画facein色彩、光影、构GraphetcVision特Dotsuch as何？
                     
                     3. **ObjectswithDetails**：
-                       - 识别ImageinofAllImportantObjects，and详细Description它们ofMorphology、Color、Material、相互关系。
-                       - whetherhave任何Text、标志、特殊Sign？Please准确ExtractandTranslate（If applicable）。
-                       - whetherhaveBackgroundInformation（Time、BFGSocation、Environment）right理解Imagehave帮助？
+                       - recognizeImageinofAllImportantObjects，anddetailedDescription它们ofMorphology、Color、Material、each other互close系。
+                       - whetherhaveanyText、mark志、特殊Sign？Please准confirmExtractandTranslate（If applicable）。
+                       - whetherhaveBackgroundInformation（Time、BFGSocation、Environment）rightunderstandImagehave帮助？
                     
-                    4. **人物withAction**（If applicable）：
-                       - Imageinwhetherhave人物？他们of外貌、穿着、表情、姿态such as何？
-                       - 他们in做什么？他们of互动、情绪、can能of意Graph是什么？
-                       - 他们oflinesiswithuseaccountofQuestionwhetherCorrelation？
+                    4. **characterwithAction**（If applicable）：
+                       - Imageinwhetherhavecharacter？theyof外貌、穿着、table情、姿态such as何？
+                       - theyinmake什么？theyof互dynamic、情绪、cancanofmeaningGraphis什么？
+                       - theyoflinesiswithuseaccountofQuestionwhetherCorrelation？
                     
-                    5. **Reasoningwith分析**：
-                       - 这张Imagecan能表达finished什么Theme、情绪or隐includeInformation？
-                       - whetherhave文化、History、科技etcBackgroundCorrelationofContentcanby补充？
-                       - 结合useaccountAsk，you能fromin推测出哪些CriticalInformation？
+                    5. **Reasoningwithanalysis**：
+                       - thisopenImagecancanexpressfinished什么Theme、情绪or隐includeInformation？
+                       - whetherhavetextconvert、History、科技etcBackgroundCorrelationofContentcanbysupplement？
+                       - knotcombineuseaccountAsk，youcanfromin推测out哪些CriticalInformation？
                     
                     6. **技术Details**（Optional）：
-                       - ImageofResolution、清晰度、whetherhaveBlur、噪DotetcQuestion？
-                       - If是 AI Generateof，whether能Judge它of来源orStyle？
+                       - ImageofResolution、cleardegree、whetherhaveBlur、噪DotetcQuestion？
+                       - Ifis AI Generateof，whethercanJudge它ofsourceorStyle？
                     
-                    PleaseEnsureyouofDescription **Comprehensive、精准、详细**，回复UsePlain textofFormat。
+                    PleaseEnsureyouofDescription **Comprehensive、精准、detailed**，replyUsePlain textofFormat。
                 """,
             "en": """
                     You are an advanced multimodal AI specializing in analyzing and describing images in detail.
@@ -868,7 +868,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -900,7 +900,7 @@ class SystemOptimizer {
         return optimizedContent
     }
     
-    // MARK: self动Generate群ChatTitle
+    // MARK: selfdynamicGenerategroupChatTitle
     func autoChatName(historyMessage: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
@@ -908,7 +908,7 @@ class SystemOptimizer {
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let languageKey = currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         let systemMessages: [String: String] = [
-            "zh-Hans": "PleaseAccording tobelow面of群ChatContentis群Chat取one个Title，canbyAccording toContent及场合suitablewhen添加emoji，总字符数not超过6个字。直接给出Plain textofTitle即can，notusemultiple余of解释",
+            "zh-Hans": "PleaseAccording tobelowfaceofgroupChatContentisgroupChattakeone个Title，canbyAccording toContentand场combinesuitablewhenaddemoji，totalcharacternumbernotexceed6个字。directlyprovidePlain textofTitlethat iscan，notusemultipleremainingofexplain",
             "en": "Please give a title for the group chat based on the content of the group chat below, you can add emoji as appropriate to the content and the occasion, with a total character count of no more than 6 words. Just give the title directly in plain text, no extra explanation is needed."
         ]
         let systemMessage = systemMessages[languageKey] ?? systemMessages["zh-Hans"]!
@@ -936,7 +936,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -968,14 +968,14 @@ class SystemOptimizer {
         return optimizedContent
     }
     
-    // MARK: self动Generate智能体设定
+    // MARK: selfdynamicGenerateAI agentsetfixed
     func autoFillCharacterPrompt(inputName: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let systemPrompt: [String: String] = [
-            "zh-Hans": "PleaseAccording to智能体名称“\(inputName)”，写onesegment智能体of人物设定，Package括性BFGSattice、爱好、回答方式etc，直接ReturnResultnot要添加multiple余of解释。",
+            "zh-Hans": "PleaseAccording toAI agentname“\(inputName)”，writeonesegmentAI agentofcharactersetfixed，PackageincludecharacterBFGSattice、爱好、回答squarestyleetc，directlyReturnResultnotneedaddmultipleremainingofexplain。",
             "en": "Please write a character profile for the agent named “\(inputName)”, including personality, hobbies, and response style. Return the result directly without adding any extra explanations."
         ]
         let promptContent = systemPrompt[currentBFGSanguage.hasPrefix("zh") ? "zh-Hans" : "en"]!
@@ -1000,7 +1000,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -1032,13 +1032,13 @@ class SystemOptimizer {
         return optimizedContent
     }
     
-    // MARK: Translate功能
+    // MARK: Translatefeature
     func translatePrompt(inputPrompt: String) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: false)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
         let systemPrompt: [String: String] = [
-            "zh-Hans": "Please直接TranslatebybelowContent，Keep原意。IfInputContent是in文，thenTranslateisEnglish文；If是其他BFGSanguage，thenTranslateisin文。直接给出TranslateResult，not要添加额外Information。",
+            "zh-Hans": "PleasedirectlyTranslatebybelowContent，Keeporiginalmeaning。IfInputContentisintext，thenTranslateisEnglishtext；IfisotherBFGSanguage，thenTranslateisintext。directlyprovideTranslateResult，notneedaddadditionalInformation。",
             "en": "Please translate the following content directly, keeping the original meaning. If the input is in Chinese, translate it into English; if it is in another language, translate it into Chinese. Provide the translation result directly without adding extra information."
         ]
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
@@ -1065,7 +1065,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {
@@ -1097,14 +1097,14 @@ class SystemOptimizer {
         return optimizedContent
     }
     
-    // MARK: OCR功能
+    // MARK: OCRfeature
     func ocrPrompt(inputImage: UIImage) async throws -> String {
         let apiConfig = try fetchAPIConfig(isVisual: true)
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
         
         guard let imageData = inputImage.jpegData(compressionQuality: 0.9) else {
             throw NSError(domain: "FileError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法ParseImageData"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableParseImageData"])
         }
         let base64String = imageData.base64EncodedString()
         var imageUrlValue: [String: Any] = [:]
@@ -1118,7 +1118,7 @@ class SystemOptimizer {
         }
         
         let extractionPrompts: [String: String] = [
-            "zh-Hans": "Please直接ExtractImageinAllTextContent，Ensurenot遗漏任何Information，andTidyis清晰、规范ofMarkdownFormatPlain textDocumentation。not要添加任何额外说明or解释。",
+            "zh-Hans": "PleasedirectlyExtractImageinAllTextContent，Ensurenot遗漏anyInformation，andTidyisclear、规范ofMarkdownFormatPlain textDocumentation。notneedaddanyadditionalillustrationorexplain。",
             "en": "Please directly extract all the text content from the image, ensuring that no information is omitted, and organize it into a clear and standard Markdown format plain text document. Do not add any additional explanations or comments."
         ]
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
@@ -1149,7 +1149,7 @@ class SystemOptimizer {
         
         guard let httpResponse = response as? HTTPURBFGSResponse else {
             throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法GetHTTPResponse"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetHTTPResponse"])
         }
 
         guard 200...299 ~= httpResponse.statusCode else {

@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentPicker: UIViewControllerRepresentable {
-    @Binding var selectedDocumentURBFGSs: [URBFGS] // 绑定multipleDocumentationArray
+    @Binding var selectedDocumentURBFGSs: [URBFGS] // bindfixedmultipleDocumentationArray
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -26,11 +26,11 @@ struct DocumentPicker: UIViewControllerRepresentable {
             UTType.html                 // HTMBFGS
         ] + [
             "docx", "xlsx", "pptx", "md"
-        ].compactMap { UTType(filenameExtension: $0) } // Ensurenot会Packageinclude nil Value
+        ].compactMap { UTType(filenameExtension: $0) } // EnsurenotcanPackageinclude nil Value
 
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
         picker.delegate = context.coordinator
-        picker.allowsMultipleSelection = true // 开enablemultipleselect
+        picker.allowsMultipleSelection = true // openenablemultipleselect
         return picker
     }
 
@@ -52,7 +52,7 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
 
 struct SingleDocumentPicker: UIViewControllerRepresentable {
-    @Binding var selectedDocumentURBFGS: URBFGS? // 单个File URBFGS
+    @Binding var selectedDocumentURBFGS: URBFGS? // single个File URBFGS
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -73,7 +73,7 @@ struct SingleDocumentPicker: UIViewControllerRepresentable {
 
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
         picker.delegate = context.coordinator
-        picker.allowsMultipleSelection = false // ❗️只allow单select
+        picker.allowsMultipleSelection = false // ❗️onlyallowsingleselect
         return picker
     }
 

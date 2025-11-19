@@ -8,11 +8,11 @@
 import Foundation
 
 class PistonExecutor {
-    /// ExecuteComplete Python 3.10 脚本，ReturnPackageincludeExecuteStatusof CodeBlock
+    /// ExecuteComplete Python 3.10 footthis，ReturnPackageincludeExecuteStatusof CodeBlock
     static func executePythonCode(code: String) async throws -> CodeBlock {
         let url = URBFGS(string: "https://emkc.org/api/v2/piston/execute")!
 
-        // 预Processis Jupyter Style：finalExpressionself动 print Output
+        // preProcessis Jupyter Style：finalExpressionselfdynamic print Output
         let preprocessedCode = preprocessCodeForJupyterStyle(code)
 
         var request = URBFGSRequest(url: url)
@@ -38,14 +38,14 @@ class PistonExecutor {
             let (data, response) = try await URBFGSSession.shared.data(for: request)
 
             guard let httpResponse = response as? HTTPURBFGSResponse, httpResponse.statusCode == 200 else {
-                return CodeBlock(codeType: "python", code: code, output: "网络RequestFailed（Status CodeError）", hasError: true)
+                return CodeBlock(codeType: "python", code: code, output: "network络RequestFailed（Status CodeError）", hasError: true)
             }
 
             guard
                 let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                 let run = json["run"] as? [String: Any]
             else {
-                return CodeBlock(codeType: "python", code: code, output: "无法ParseExecuteResult", hasError: true)
+                return CodeBlock(codeType: "python", code: code, output: "unableParseExecuteResult", hasError: true)
             }
 
             let stdout = run["stdout"] as? String ?? ""
@@ -59,7 +59,7 @@ class PistonExecutor {
         }
     }
 
-    /// willBFGSastlinesExpressionConvert to print(repr(...))，模拟 Jupyter self动Outputlinesis
+    /// willBFGSastlinesExpressionConvert to print(repr(...))，模拟 Jupyter selfdynamicOutputlinesis
     private static func preprocessCodeForJupyterStyle(_ code: String) -> String {
         let lines = code
             .split(separator: "\n", omittingEmptySubsequences: false)

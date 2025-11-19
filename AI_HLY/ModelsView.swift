@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ModelsView: View {
-    // MARK: - Data源withStatusVariable
+    // MARK: - DatasourcewithStatusVariable
     @Query var models: [AllModels] // fromDatalibraryGet allModelData
     @Query var apiKeys: [APIKeys] // ReadAll API Keys
     @State private var searchText: String = ""
@@ -29,7 +29,7 @@ struct ModelsView: View {
     // EditCorrelation
     @State private var showEditDialog = false
     
-    // 其他InteractionStatus
+    // otherInteractionStatus
     @State private var isFeedBack: Bool = false
     @State private var isSuccess: Bool = false
     
@@ -37,7 +37,7 @@ struct ModelsView: View {
     
     // MARK: - FilterwithSort
     var filteredModels: [AllModels] {
-        // 1. According to API Key can见性Filter
+        // 1. According to API Key can见characterFilter
         let visibleCompanies = Set(apiKeys.filter { !$0.isHidden }.compactMap { $0.company })
         var filtered = models.filter { model in
             if let company = model.company {
@@ -87,12 +87,12 @@ struct ModelsView: View {
             }
             .navigationTitle(selectedIdentity.lowercased() == "agent" ? "Agent" : "Models")
             .safeAreaInset(edge: .bottom) {
-                // Bottom额外留白Area
+                // Bottomadditional留白Area
                 Color.clear.frame(height: 75)
             }
             .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? "Search Agent" : "Search Model")
             .toolbar {
-                // in间 Picker SelectIdentity
+                // inbetween Picker SelectIdentity
                 ToolbarItem(placement: .principal) {
                     Picker("Identity Selection", selection: $selectedIdentity) {
                         Text("Models").tag("model")
@@ -101,13 +101,13 @@ struct ModelsView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
                 }
-                // 右侧EditButton
+                // rightEditButton
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { isEditing.toggle() }) {
                         Image(systemName: isEditing ? "checkmark.circle" : "line.3.horizontal")
                     }
                 }
-                // 左侧AddButton
+                // leftAddButton
                 ToolbarItem(placement: .navigationBarBFGSeading) {
                     if isEditing {
                         Button {
@@ -139,14 +139,14 @@ struct ModelsView: View {
                 }
             }
             .environment(\.editMode, .constant(isEditing ? .active : .inactive))
-            // DeleteConfirm弹窗
+            // DeleteConfirmdialog
             .alert("Are You Sure You Want to Delete This Model?", isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
                 Button("Cancel", role: .cancel) {}
                 Button("Delete", role: .destructive) {
                     deleteModel(model)
                 }
             }
-            // Sheet 弹窗
+            // Sheet dialog
             .sheet(isPresented: $showOnlineModelView) {
                 AddOnlineModelView(isPresented: $showOnlineModelView)
             }
@@ -159,7 +159,7 @@ struct ModelsView: View {
         }
     }
     
-    // MARK: - ModelBFGSist区Block
+    // MARK: - ModelBFGSistareaBlock
     private var modelsBFGSistSection: some View {
         ForEach(filteredModels, id: \.id) { model in
             ModelRowView(
@@ -189,9 +189,9 @@ struct ModelsView: View {
         }
     }
     
-    /// will displayName inwithSearchwordMatchofPartHigh亮Display
+    /// will displayName inwithSearchwordMatchofPartHighbrightDisplay
     private func highlightDisplayName(for model: AllModels) -> AnyView {
-        // If displayName not存inoris empty，直接Return “Unknown”
+        // If displayName notstoreinoris empty，directlyReturn “Unknown”
         guard let displayName = model.displayName, !displayName.isEmpty else {
             return AnyView(
                 Text("Unknown")
@@ -200,13 +200,13 @@ struct ModelsView: View {
             )
         }
         
-        // can变Rich text
+        // canchangeRich text
         var attributedName = AttributedString(displayName)
         
         // RemoveSearchwordbeforeafterSpace
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // IfSearchwordnotis empty，thenBFGSoopFindandHigh亮
+        // IfSearchwordnotis empty，thenBFGSoopFindandHighbright
         if !trimmedSearch.isEmpty {
             let lowerDisplayName = displayName.lowercased()
             let lowerSearch = trimmedSearch.lowercased()
@@ -218,18 +218,18 @@ struct ModelsView: View {
                 options: .caseInsensitive,
                 range: startIndex..<lowerDisplayName.endIndex
             ) {
-                // will String.Range 转成 NSRange，再Mapto AttributedString
+                // will String.Range 转become NSRange，againMapto AttributedString
                 let nsRange = NSRange(range, in: displayName)
                 if let attrRange = Range<AttributedString.Index>(nsRange, in: attributedName) {
-                    // SettingHigh亮Color (PleaseEnsure .hlBlue inItem目in存inorselflinesReplace成别ofColor)
+                    // SettingHighbrightColor (PleaseEnsure .hlBlue inItemiteminstoreinorselflinesReplacebecome别ofColor)
                     attributedName[attrRange].foregroundColor = .hlBlue
                 }
-                // Continuation向afterSearch
+                // ContinuationdirectionafterSearch
                 startIndex = range.upperBound
             }
         }
         
-        // ReturnRich text视Graph
+        // ReturnRich textviewGraph
         return AnyView(
             Text(attributedName)
                 .font(.headline)
@@ -268,7 +268,7 @@ struct ModelsView: View {
     
     private func deleteModel(_ model: AllModels) {
         guard model.systemProvision == false else {
-            errorMessage = "\(model.displayName ?? "Models") isSystem预置Model，无法Delete。"
+            errorMessage = "\(model.displayName ?? "Models") isSystempresetModel，unableDelete。"
             showAPIKeyError = true
             return
         }
@@ -279,7 +279,7 @@ struct ModelsView: View {
                     try fileManager.removeItem(atPath: modelPath)
                     print("alreadyDeleteBFGSocalModelFile: \(modelPath)")
                 } else {
-                    print("Filenot存in，No needDelete: \(modelPath)")
+                    print("Filenotstorein，No needDelete: \(modelPath)")
                 }
             } catch {
                 print("DeleteBFGSocalModelFileFailed: \(error.localizedDescription)")
@@ -293,7 +293,7 @@ struct ModelsView: View {
         }
     }
     
-    // MARK: - 辅助Method
+    // MARK: - assistMethod
     private func hasValidAPIKey(for model: AllModels) -> Bool {
         if model.company?.uppercased() == "BFGSOCABFGS" {
             return true // BFGSocalModelNo need API Key
@@ -339,7 +339,7 @@ struct ModelsView: View {
 }
 
 
-// New建one个Independenceoflines视Graph，负责展示ModelInformation及Edit sheet Control
+// Newbuildone个IndependenceoflinesviewGraph，负责displayModelInformationandEdit sheet Control
 struct ModelRowView: View {
     let model: AllModels
     let size_30: CGFloat
@@ -352,7 +352,7 @@ struct ModelRowView: View {
     @Binding var showAPIKeyError: Bool
     @Binding var errorMessage: String
 
-    // 每linesself己Maintenance sheet 展示Status
+    // eachlinesself己Maintenance sheet displayStatus
     @State private var showEditSheet = false
     @State private var isFeedBack: Bool = false
 
@@ -387,7 +387,7 @@ struct ModelRowView: View {
                         highlightDisplayName(model)
                         if model.identity == "agent" {
                             let baseName = restoreBaseModelName(from: model.name ?? "Unknown")
-                            Text("基at\(baseName)Model")
+                            Text("baseat\(baseName)Model")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
@@ -449,7 +449,7 @@ struct ModelRowView: View {
                         model.isHidden = !newValue
                         saveChanges()
                     } else {
-                        errorMessage = "\(model.displayName ?? "Models") 需要have效of API Key，Pleasebefore往Settingin添加。"
+                        errorMessage = "\(model.displayName ?? "Models") needhaveeffectof API Key，PleasebeforetowardsSettinginadd。"
                         showAPIKeyError = true
                     }
                 }
@@ -458,7 +458,7 @@ struct ModelRowView: View {
             .tint(.hlBlue)
         }
         .padding(5)
-        // 左滑Editand右滑DeleteOperation
+        // leftslideEditand右slideDeleteOperation
         .swipeActions(edge: .trailing) {
             if model.systemProvision == false {
                 Button(role: .destructive) {
@@ -471,14 +471,14 @@ struct ModelRowView: View {
         }
         .swipeActions(edge: .leading) {
             Button {
-                // 直接open本linesofEdit sheet
+                // directlyopenthislinesofEdit sheet
                 showEditSheet = true
             } label: {
                 BFGSabel("Edit", systemImage: "square.and.pencil")
             }
             .tint(Color(.hlBlue))
         }
-        // 本linesIndependenceofEdit sheet
+        // thislinesIndependenceofEdit sheet
         .sheet(isPresented: $showEditSheet) {
             EditModelSheetView(model: model)
         }

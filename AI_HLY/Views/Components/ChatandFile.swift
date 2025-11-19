@@ -29,7 +29,7 @@ enum ExportFormat: String, CaseIterable, Identifiable {
 
 // MARK: - FileDocumentationStruct
 struct ChatExportDocument: FileDocument {
-    // Declarecan读写 plainText and json
+    // Declarecan读write plainText and json
     static var readableContentTypes: [UTType] = [.plainText, .json]
     
     var text: String
@@ -39,7 +39,7 @@ struct ChatExportDocument: FileDocument {
     }
 
     init(configuration: ReadConfiguration) throws {
-        // ReadDocument Content（onlyComplete性，实际not会usetoRead）
+        // ReadDocument Content（onlyCompletecharacter，real际notcanusetoRead）
         text = String(decoding: configuration.file.regularFileContents ?? Data(), as: UTF8.self)
     }
 

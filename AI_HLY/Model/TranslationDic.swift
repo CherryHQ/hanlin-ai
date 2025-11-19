@@ -2,7 +2,7 @@
 //  TranslationDic.swift
 //  AI_Hanlin
 //
-//  Created by 哆啦好多梦 on 8/4/25.
+//  Created by 哆啦好多dream on 8/4/25.
 //
 
 import Foundation

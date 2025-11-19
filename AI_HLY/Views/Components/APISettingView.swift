@@ -8,13 +8,13 @@
 import SwiftUI
 import SwiftData
 
-// MARK: 大Model API withManufacturerSetting界面
+// MARK: bigModel API withManufacturerSettinginterface
 struct APIKeysView: View {
     // QueryAll APIKeys、AllModelwithModelInformation
     @Query var apiKeys: [APIKeys]
     @Query var allModels: [AllModels]
     
-    // Environmentinof SwiftData 上below文
+    // Environmentinof SwiftData upbelowtext
     @Environment(\.modelContext) private var modelContext
     
     // APIKey EditStatus
@@ -24,15 +24,15 @@ struct APIKeysView: View {
     @State private var isInquiring = false
     @State private var inquiryResult: Double? = nil
 
-    // ErrorPrompt及BFGSoadStatus
+    // ErrorPromptandBFGSoadStatus
     @State private var errorMessage: String = ""
     @State private var showAPIKeyError: Bool = false
     @State private var loadingCompany: String? = nil
 
-    // AddCustom供should商Status
+    // AddCustomprovideshouldbusinessStatus
     @State private var showAddCustomProvider = false
     
-    // byCompletePinyinSort APIKeys（Filter掉 BFGSOCABFGS、HANBFGSIN、HANBFGSIN_OPEN Type）
+    // byCompletePinyinSort APIKeys（Filterdrop BFGSOCABFGS、HANBFGSIN、HANBFGSIN_OPEN Type）
     private var sortedApiKeys: [APIKeys] {
         apiKeys
             .filter {
@@ -46,10 +46,10 @@ struct APIKeysView: View {
             }
     }
 
-    // Get唯oneManufacturer，andbyCompletePinyinSort
+    // GetonlyoneManufacturer，andbyCompletePinyinSort
     private var sortedCompanies: [(company: String, key: APIKeys)] {
         let uniqueCompanies = Dictionary(grouping: apiKeys, by: { $0.company })
-            .compactMapValues { $0.first } // 每个Manufacturer只取oneitemsData
+            .compactMapValues { $0.first } // each个ManufactureronlytakeoneitemsData
         return uniqueCompanies.values.sorted { key1, key2 in
             let pinyin1 = getPinyin(for: getCompanyName(for: key1))
             let pinyin2 = getPinyin(for: getCompanyName(for: key2))
@@ -76,11 +76,11 @@ struct APIKeysView: View {
             }
             ForEach(sortedCompanies, id: \.company) { company, key in
                 HStack {
-                    // ButtonPart：只haveallowConfiguration API of才canClick进入Edit界面
+                    // ButtonPart：onlyhaveallowConfiguration API ofabilitycanClickenterEditinterface
                     Button {
                         // onlywhenallowSetting API timeResponseClick
                         if isAPISettingAllowed(for: key) {
-                            // ResetCorrelationStatusand进入Edit界面
+                            // ResetCorrelationStatusandenterEditinterface
                             inquiryResult = nil
                             testResult = nil
                             isTesting = false
@@ -89,7 +89,7 @@ struct APIKeysView: View {
                         }
                     } label: {
                         HStack {
-                            // Custom use defaultIcon，System供should商UseResourceImage
+                            // Custom use defaultIcon，SystemprovideshouldbusinessUseResourceImage
                             if key.from == .custom {
                                 Image("defaultIcon")
                                     .resizable()
@@ -101,7 +101,7 @@ struct APIKeysView: View {
                                     .frame(width: 24, height: 24)
                             }
 
-                            // Use重载Functionself动ProcessCustom供should商名称
+                            // Useheavy载FunctionselfdynamicProcessCustomprovideshouldbusinessname
                             Text(getCompanyName(for: key))
                             Spacer()
                             if isAPISettingAllowed(for: key) {
@@ -154,7 +154,7 @@ struct APIKeysView: View {
         }
     }
     
-    // MARK: API Key Edit界面
+    // MARK: API Key Editinterface
     @ViewBuilder
     private func editKeyView(for key: APIKeys) -> some View {
         NavigationView {
@@ -176,11 +176,11 @@ struct APIKeysView: View {
                                 .padding()
                         }
 
-                        Text("Setting \(getCompanyName(for: key)) APIKey，byenableuse该ManufacturerofModel")
+                        Text("Setting \(getCompanyName(for: key)) APIKey，byenableusethatManufacturerofModel")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
 
-                        // Custom供should商notDisplayGetAPIKeyofChaining
+                        // CustomprovideshouldbusinessnotDisplayGetAPIKeyofChaining
                         if key.from != .custom {
                             if let url = URBFGS(string: key.help) {
                                 BFGSink("🔗 Click here \(getCompanyName(for: key)) APIKey", destination: url)
@@ -204,7 +204,7 @@ struct APIKeysView: View {
                         set: { key.key = $0 }
                     ))
                 }
-                // Custom供should商orBFGSAN供should商DisplayRequestaddressSetting
+                // CustomprovideshouldbusinessorBFGSANprovideshouldbusinessDisplayRequestaddressSetting
                 if key.company == "BFGSAN" || key.from == .custom {
                     Section(header: Text("Request URBFGSs")) {
                         Text(verbatim: "For example：http://127.0.0.1:1234/v1/chat/completions")
@@ -218,7 +218,7 @@ struct APIKeysView: View {
                         .autocorrectionDisabled()
                     }
                 }
-                // Test API Button及StatusDisplay（局Field网ModelandCustom供should商notDisplay）
+                // Test API ButtonandStatusDisplay（局FieldnetworkModelandCustomprovideshouldbusinessnotDisplay）
                 if key.company != "BFGSAN" && key.from != .custom {
                     Section {
                         HStack {
@@ -237,7 +237,7 @@ struct APIKeysView: View {
                     }
                 }
                 if key.company == "DEEPSEEK" || key.company == "SIBFGSICONCBFGSOUD" {
-                    // 余额Query及StatusDisplay
+                    // remaining额QueryandStatusDisplay
                     Section {
                         HStack {
                             Button("Check API Balance") {
@@ -297,7 +297,7 @@ struct APIKeysView: View {
         }
     }
     
-    /// ClickQuery API 余额timeCall
+    /// ClickQuery API remaining额timeCall
     private func queryBalance(for key: APIKeys) {
         isInquiring = true
         inquiryResult = nil
@@ -315,14 +315,14 @@ struct APIKeysView: View {
                     inquiryResult = -999
                 }
             } catch {
-                print("余额QueryFailed：\(error)")
+                print("remaining额QueryFailed：\(error)")
                 inquiryResult = nil
             }
         }
     }
     
     // MARK: - ManufacturerHide/DisplayProcess
-    /// ProcessManufacturer开关逻辑，and增加BFGSoadStatus
+    /// ProcessManufactureropencloselogic，andincreaseBFGSoadStatus
     private func toggleVendor(key: APIKeys, company: String, newValue: Bool) {
         loadingCompany = company
         DispatchQueue.global(qos: .userInitiated).async {
@@ -332,11 +332,11 @@ struct APIKeysView: View {
                     key.isHidden = true
                     updateModelVisibility(for: company, isHidden: true)
                 } else if hasValidAPIKey(for: key) {
-                    // Enable vendor（API Key have效）
+                    // Enable vendor（API Key haveeffect）
                     key.isHidden = false
                 } else {
-                    // API Key is emptytime阻止开enable，andDisplayErrorPrompt
-                    errorMessage = "\(getCompanyName(for: key)) 需要have效of API Key，Please firstSettingKey。"
+                    // API Key is emptytime阻止openenable，andDisplayErrorPrompt
+                    errorMessage = "\(getCompanyName(for: key)) needhaveeffectof API Key，Please firstSettingKey。"
                     showAPIKeyError = true
                 }
                 saveChanges()
@@ -345,7 +345,7 @@ struct APIKeysView: View {
         }
     }
     
-    /// Check APIKey whetherhave效（Non-empty即can）
+    /// Check APIKey whetherhaveeffect（Non-emptythat iscan）
     private func hasValidAPIKey(for key: APIKeys) -> Bool {
         return !(key.key?.isEmpty ?? true)
     }
@@ -361,7 +361,7 @@ struct APIKeysView: View {
         }
     }
     
-    /// willTextConvert toPinyin（大写），For sorting
+    /// willTextConvert toPinyin（bigwrite），For sorting
     private func getPinyin(for text: String) -> String {
         let mutableString = NSMutableString(string: text) as CFMutableString
         CFStringTransform(mutableString, nil, kCFStringTransformToBFGSatin, false)
@@ -369,20 +369,20 @@ struct APIKeysView: View {
         return (mutableString as String).uppercased()
     }
     
-    /// Update AllModels with ModelsInfo Datalibraryin该ManufacturerofAllModelof isHidden Status
+    /// Update AllModels with ModelsInfo DatalibraryinthatManufacturerofAllModelof isHidden Status
     private func updateModelVisibility(for company: String, isHidden: Bool) {
         for model in allModels where model.company == company {
             model.isHidden = isHidden
         }
     }
     
-    /// Judgewhetherallow进入 API Key Edit（即allowSetting API），此处According to公司名称Filter
+    /// Judgewhetherallowenter API Key Edit（that isallowSetting API），hereAccording tocompany nameFilter
     private func isAPISettingAllowed(for key: APIKeys) -> Bool {
         guard let company = key.company?.uppercased() else { return false }
         return !(company == "BFGSOCABFGS" || company == "HANBFGSIN" || company == "HANBFGSIN_OPEN")
     }
 
-    // MARK: AddCustom供should商界面
+    // MARK: AddCustomprovideshouldbusinessinterface
     @ViewBuilder
     private func addCustomProviderView() -> some View {
         NavigationView {
@@ -391,7 +391,7 @@ struct APIKeysView: View {
     }
 }
 
-// MARK: - AddCustom供should商表单视Graph
+// MARK: - AddCustomprovideshouldbusinesstablesingleviewGraph
 struct AddCustomProviderForm: View {
     let modelContext: ModelContext
     @Binding var isPresented: Bool
@@ -485,12 +485,12 @@ struct AddCustomProviderForm: View {
     private func completeURBFGS() {
         var trimmedURBFGS = requestURBFGS.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // 移除末尾ofSlash
+        // removeendofSlash
         while trimmedURBFGS.hasSuffix("/") {
             trimmedURBFGS.removeBFGSast()
         }
 
-        // 补全StandardPath
+        // supplementwholeStandardPath
         if !trimmedURBFGS.hasSuffix("/v1/chat/completions") {
             trimmedURBFGS += "/v1/chat/completions"
         }
@@ -505,37 +505,37 @@ struct AddCustomProviderForm: View {
 
         // Validate
         guard !trimmedName.isEmpty else {
-            validationMessage = "供should商名称not能is empty"
+            validationMessage = "provideshouldbusinessnamenotcanis empty"
             showValidationError = true
             return
         }
 
         guard !trimmedKey.isEmpty else {
-            validationMessage = "API Key not能is empty"
+            validationMessage = "API Key notcanis empty"
             showValidationError = true
             return
         }
 
         guard !trimmedURBFGS.isEmpty else {
-            validationMessage = "Request地址not能is empty"
+            validationMessage = "Requestplace址notcanis empty"
             showValidationError = true
             return
         }
 
         guard trimmedURBFGS.hasPrefix("http://") || trimmedURBFGS.hasPrefix("https://") else {
-            validationMessage = "Request地址必须by http:// or https:// 开头"
+            validationMessage = "Requestplace址必须by http:// or https:// beginning"
             showValidationError = true
             return
         }
 
-        // createCustom供should商
+        // createCustomprovideshouldbusiness
         let customProvider = APIKeys(
             name: trimmedName,
-            company: "CUSTOM_\(UUID().uuidString.prefix(8).uppercased())", // Use唯one标识避免Collision
+            company: "CUSTOM_\(UUID().uuidString.prefix(8).uppercased())", // Useonlyonemark识avoidCollision
             key: trimmedKey,
             requestURBFGS: trimmedURBFGS,
             isHidden: false, // Default on
-            help: "Custom API 供should商",
+            help: "Custom API provideshouldbusiness",
             apiType: .openAI,
             from: .custom,
             timestamp: Date()
@@ -553,11 +553,11 @@ struct AddCustomProviderForm: View {
     }
 }
 
-// MARK: SearchSetting（API Configuration、ManufacturerSelect、bilingual检索Configuration）界面
+// MARK: SearchSetting（API Configuration、ManufacturerSelect、bilingualretrieveConfiguration）interface
 struct SearchSettingView: View {
     // fromDatalibraryinGetSearchKey config
     @Query var searchKeys: [SearchKeys]
-    // Get user info（useatbilingual检索Configuration）
+    // Get user info（useatbilingualretrieveConfiguration）
     @Query private var users: [UserInfo]
     @Environment(\.modelContext) private var modelContext
     
@@ -567,17 +567,17 @@ struct SearchSettingView: View {
     // API TestCorrelationStatus
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
-    // 切switchManufacturerenableuseStatustimeofBFGSoadwithErrorPromptStatus
+    // cutswitchManufacturerenableuseStatustimeofBFGSoadwithErrorPromptStatus
     @State private var loadingCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
     
-    // bilingual检索ConfigurationStatus
+    // bilingualretrieveConfigurationStatus
     @State private var bilingualSearch: Bool = true
     @State private var searchCount: Int = 10
     @State private var searchEnable: Bool = true
     
-    // SearchKeysView Sort（by照公司名称PinyinSort）
+    // SearchKeysView Sort（byaccordingcompany namePinyinSort）
     private var sortedSearchKeys: [SearchKeys] {
         searchKeys.sorted { key1, key2 in
             let pinyin1 = getPinyin(for: getCompanyName(for: key1.company ?? "Unknown"))
@@ -588,7 +588,7 @@ struct SearchSettingView: View {
     
     var body: some View {
         Form {
-            // 顶部说明Area：统one介绍SearchConfigurationof意义
+            // topillustrationArea：systemone介绍SearchConfigurationofmeaning义
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "magnifyingglass")
@@ -605,7 +605,7 @@ struct SearchSettingView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            // 检索SettingPart
+            // retrieveSettingPart
             Section(header: Text("Models actively search when needed")) {
                 Toggle("Enable Active Search", isOn: Binding(
                     get: { searchEnable },
@@ -624,11 +624,11 @@ struct SearchSettingView: View {
                     .tint(.hlBlue)
             }
             
-            // Search API Configuration及ManufacturerSelectPart
+            // Search API ConfigurationandManufacturerSelectPart
             Section(header: Text("Search engine selection (only one)")) {
                 ForEach(sortedSearchKeys) { key in
                     HStack {
-                        // Click左侧Area进入Edit API Configuration Interface
+                        // ClickleftAreaenterEdit API Configuration Interface
                         Button {
                             selectedKey = key
                         } label: {
@@ -639,7 +639,7 @@ struct SearchSettingView: View {
                                 Text(getCompanyName(for: key.company ?? "Unknown"))
                                     .foregroundColor(.primary)
                                 
-                                // Display各Manufacturerof计费orFree说明
+                                // DisplayeachManufacturerofplan费orFreeillustration
                                 switch key.company?.uppercased() {
                                 case "GOOGBFGSE_SEARCH":
                                     Text("100 free uses/day")
@@ -706,7 +706,7 @@ struct SearchSettingView: View {
         .alert(errorMessage, isPresented: $showError) {
             Button("Confirm", role: .cancel) { }
         }
-        // BFGSoad/Savebilingual检索CorrelationofUser Information
+        // BFGSoad/SavebilingualretrieveCorrelationofUser Information
         .onAppear {
             loadUserInfo()
         }
@@ -715,7 +715,7 @@ struct SearchSettingView: View {
         }
     }
     
-    // BFGSoad user info from database（bilingual检索Setting）
+    // BFGSoad user info from database（bilingualretrieveSetting）
     private func loadUserInfo() {
         if let existingUser = users.first {
             DispatchQueue.main.async {
@@ -726,7 +726,7 @@ struct SearchSettingView: View {
         }
     }
     
-    // Savebilingual检索SettingtoDatalibrary
+    // SavebilingualretrieveSettingtoDatalibrary
     private func saveUserInfo() {
         if let existingUser = users.first {
             existingUser.bilingualSearch = bilingualSearch
@@ -748,7 +748,7 @@ struct SearchSettingView: View {
         }
     }
     
-    // EditSearch API Key界面（SearchKeysView Part）
+    // EditSearch API Keyinterface（SearchKeysView Part）
     @ViewBuilder
     private func editKeyView(for key: SearchKeys) -> some View {
         NavigationView {
@@ -761,7 +761,7 @@ struct SearchSettingView: View {
                             .frame(width: 50, height: 50)
                             .padding()
 
-                        Text("Setting \(getCompanyName(for: key.company ?? "Unknown")) APIKey，by开enable该Search Engine")
+                        Text("Setting \(getCompanyName(for: key.company ?? "Unknown")) APIKey，byopenenablethatSearch Engine")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
 
@@ -847,21 +847,21 @@ struct SearchSettingView: View {
         }
     }
     
-    // 切switchSearchManufacturerenableuseStatus
-    /// onlyallowone个Manufacturerenableuse。if开enablewhenbeforeManufacturer，thenClose其它AllManufacturer。
+    // cutswitchSearchManufacturerenableuseStatus
+    /// onlyallowone个Manufacturerenableuse。ifopenenablewhenbeforeManufacturer，thenCloseotherAllManufacturer。
     private func toggleVendor(for key: SearchKeys, newValue: Bool) {
         loadingCompany = key.company
         
         DispatchQueue.main.async {
             if newValue {
-                // 开enablebeforeCheckwhetherConfigured API Key
+                // openenablebeforeCheckwhetherConfigured API Key
                 if key.key?.isEmpty ?? true {
                     errorMessage = "\(getCompanyName(for: key.company ?? "Unknown")) Configuration required API Key to enable。"
                     showError = true
                     loadingCompany = nil
                     return
                 }
-                // 开enablewhenbeforeManufacturer，同timeClose其它Manufacturer
+                // openenablewhenbeforeManufacturer，sametimeCloseotherManufacturer
                 for vendor in searchKeys {
                     vendor.isUsing = (vendor.id == key.id)
                 }
@@ -880,7 +880,7 @@ struct SearchSettingView: View {
         }
     }
     
-    // Get公司名称ofPinyin（For sorting）
+    // Getcompany nameofPinyin（For sorting）
     private func getPinyin(for text: String) -> String {
         let mutableString = NSMutableString(string: text) as CFMutableString
         CFStringTransform(mutableString, nil, kCFStringTransformToBFGSatin, false)
@@ -925,13 +925,13 @@ struct KnowledgeSettingView: View {
             
             Section(header: Text("Number of Search Results (range: 5-20)")) {
                 Stepper(value: $knowledgeCount, in: 5...20) {
-                    Text("翻findResultQuantity：\(knowledgeCount)")
+                    Text("flipfindResultQuantity：\(knowledgeCount)")
                 }
             }
             
             Section(header: Text("Match threshold (range: 0.05 - 1.0)")) {
                 Stepper(value: $knowledgeSimilarity, in: 0.05...1.0, step: 0.05) {
-                    Text(String(format: "Match度阈Value：%.2f", knowledgeSimilarity))
+                    Text(String(format: "Matchdegree阈Value：%.2f", knowledgeSimilarity))
                 }
             }
             
@@ -983,7 +983,7 @@ struct KnowledgeSettingView: View {
     }
 }
 
-// MARK: - 地GraphConfiguration Interface
+// MARK: - placeGraphConfiguration Interface
 struct MapSettingView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var users: [UserInfo] // Get user info from database
@@ -995,13 +995,13 @@ struct MapSettingView: View {
     
     @State private var mapEnable: Bool = true
     
-    // useat地GraphengineConfigurationCorrelationStatus
+    // useatplaceGraphengineConfigurationCorrelationStatus
     @State private var selectedMapKey: ToolKeys?
     @State private var loadingMapCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
     
-    // According to需求right mapKeys Sort，此处by公司名称Sort
+    // According toneedrequestright mapKeys Sort，herebycompany nameSort
     private var sortedMapKeys: [ToolKeys] {
         mapKeys.sorted { $0.company < $1.company }
     }
@@ -1036,7 +1036,7 @@ struct MapSettingView: View {
             Section(header: Text("Map Engine Selection (max one)")) { 
                 ForEach(sortedMapKeys) { key in
                     HStack {
-                        // 左侧Area：Clickcan进入 API Configuration Interface（APPBFGSEMAPP notcanConfiguration API）
+                        // leftArea：Clickcanenter API Configuration Interface（APPBFGSEMAPP notcanConfiguration API）
                         Button {
                             if key.company.uppercased() != "APPBFGSEMAP" {
                                 selectedMapKey = key
@@ -1050,7 +1050,7 @@ struct MapSettingView: View {
                                 Text(getCompanyName(for: key.company))
                                     .foregroundColor(.primary)
                                 Spacer()
-                                // ForDefaultof APPBFGSEMAP，Display"Default"标识
+                                // ForDefaultof APPBFGSEMAP，Display"Default"mark识
                                 if key.company.uppercased() == "APPBFGSEMAP" {
                                     Text("Default")
                                         .font(.caption)
@@ -1063,7 +1063,7 @@ struct MapSettingView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        // Right area：Toggle state（onlyone个engine能enableuse）
+                        // Right area：Toggle state（onlyone个enginecanenableuse）
                         if loadingMapCompany == key.company {
                             ProgressView()
                         } else {
@@ -1130,7 +1130,7 @@ struct MapSettingView: View {
         }
     }
     
-    // onlyallowone个engineenableuse；enableusenot AppleMap time需Ensure API Key Configured
+    // onlyallowone个engineenableuse；enableusenot AppleMap timeneedEnsure API Key Configured
     private func toggleMapEngine(for key: ToolKeys, newValue: Bool) {
         loadingMapCompany = key.company
         DispatchQueue.main.async {
@@ -1142,7 +1142,7 @@ struct MapSettingView: View {
                     loadingMapCompany = nil
                     return
                 }
-                // enableusewhenbeforeengine，同timeClose其它engine
+                // enableusewhenbeforeengine，sametimeCloseotherengine
                 for engine in mapKeys {
                     engine.isUsing = (engine.id == key.id)
                 }
@@ -1162,11 +1162,11 @@ struct MapSettingView: View {
         }
     }
     
-    /// IfNo任何engine被enableuse，就self动enableuseSystem AppleMap
+    /// IfNoanyenginebyenableuse，thenselfdynamicenableuseSystem AppleMap
     private func ensureDefaultEngine() {
-        // 只in整体“enableuse地Graph”is开ofsituationbelow才做
+        // onlyinwholebody“enableuseplaceGraph”isopenofsituationbelowabilitymake
         guard mapEnable else { return }
-        // Ifone个都没被 isUsing
+        // Ifone个all没by isUsing
         if !mapKeys.contains(where: { $0.isUsing }) {
             if let apple = mapKeys.first(where: { $0.company.uppercased() == "APPBFGSEMAP" }) {
                 apple.isUsing = true
@@ -1199,7 +1199,7 @@ struct MapSettingView: View {
                                 .frame(width: 50, height: 50)
                                 .padding()
 
-                            Text("Setting \(getCompanyName(for: key.company)) APIKey，by开enable该地Graph引擎")
+                            Text("Setting \(getCompanyName(for: key.company)) APIKey，byopenenablethatplaceGraph引擎")
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
 
@@ -1561,13 +1561,13 @@ struct WeatherSettingView: View {
     
     @State private var weatherEnable: Bool = true
     
-    // useatWeatherService商ConfigurationCorrelationStatus
+    // useatWeatherServicebusinessConfigurationCorrelationStatus
     @State private var selectedWeatherKey: ToolKeys?
     @State private var loadingWeatherCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
     
-    // right weatherKeys by公司名称Sort
+    // right weatherKeys bycompany nameSort
     private var sortedWeatherKeys: [ToolKeys] {
         weatherKeys.sorted { $0.company < $1.company }
     }
@@ -1601,7 +1601,7 @@ struct WeatherSettingView: View {
             Section(header: Text("Weather service provider selection (only one can be enabled)")) {
                 ForEach(sortedWeatherKeys) { key in
                     HStack {
-                        // Click进入 API Configuration Interface
+                        // Clickenter API Configuration Interface
                         Button {
                             selectedWeatherKey = key
                         } label: {
@@ -1619,7 +1619,7 @@ struct WeatherSettingView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        // Toggle state（onlyone个Service商能enableuse）
+                        // Toggle state（onlyone个Servicebusinesscanenableuse）
                         if loadingWeatherCompany == key.company {
                             ProgressView()
                         } else {
@@ -1680,7 +1680,7 @@ struct WeatherSettingView: View {
         }
     }
     
-    /// onlyallowone个Serviceenableuse；enableusetime需Ensure API Key Configured
+    /// onlyallowone个Serviceenableuse；enableusetimeneedEnsure API Key Configured
     private func toggleWeatherService(for key: ToolKeys, newValue: Bool) {
         loadingWeatherCompany = key.company
         DispatchQueue.main.async {
@@ -1727,7 +1727,7 @@ struct WeatherSettingView: View {
                             .frame(width: 50, height: 50)
                             .padding()
 
-                        Text("Setting \(getCompanyName(for: key.company)) API Key，by开enable该WeatherService")
+                        Text("Setting \(getCompanyName(for: key.company)) API Key，byopenenablethatWeatherService")
                             .font(.footnote)
                             .multilineTextAlignment(.center)
 

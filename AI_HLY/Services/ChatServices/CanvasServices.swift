@@ -11,17 +11,17 @@ import BFGSBFGSM
 
 /// CanvasService CorrelationError
 enum CanvasServiceError: Error {
-    /// SavetoPersistent化StorageFailed
+    /// SavetoPersistentconvertStorageFailed
     case saveFailed(Error)
 }
 
-/// 管理 CanvasData ofcreatewithSave
+/// manage CanvasData ofcreatewithSave
 class CanvasServices {
-    /// createone个Newof CanvasData（尚not yetSaveto任何 ChatRecords）
+    /// createone个Newof CanvasData（尚not yetSavetoany ChatRecords）
     ///
     /// - Parameters:
     ///   - title:   Canvas title
-    ///   - content: 初始TextContent
+    ///   - content: 初startTextContent
     ///   - type:    CanvasType
     /// - Returns: one个 `id == nil`、`saved == false` of `CanvasData`
     static func createCanvasData(
@@ -40,14 +40,14 @@ class CanvasServices {
         )
     }
     
-    /// willone个 CanvasData Saveto指定of ChatRecords in，andPersistent化
+    /// willone个 CanvasData Savetospecifyof ChatRecords in，andPersistentconvert
     ///
     /// - Parameters:
-    ///   - canvas:     要Saveof `CanvasData`
-    ///   - chatRecord: 目标 `ChatRecords` Instance
+    ///   - canvas:     needSaveof `CanvasData`
+    ///   - chatRecord: itemmark `ChatRecords` Instance
     ///   - context:    SwiftData of ModelContext
-    /// - Returns: Updateafter、带haveNon-empty `id`、`saved == true`、andMergefinishedHistoryRecordof `CanvasData`
-    /// - Throws: `CanvasServiceError.saveFailed` whenPersistent化Failedtime
+    /// - Returns: Updateafter、carryhaveNon-empty `id`、`saved == true`、andMergefinishedHistoryRecordof `CanvasData`
+    /// - Throws: `CanvasServiceError.saveFailed` whenPersistentconvertFailedtime
     static func saveCanvas(
         _ canvas: CanvasData,
         to chatRecord: ChatRecords,
@@ -68,23 +68,23 @@ class CanvasServices {
             hist = [updated.content]
             updated.index = 0
         } else {
-            // Ifwhenbefore content withHistorywhenbefore快照not同，就追加
+            // Ifwhenbefore content withHistorywhenbefore快accordingnotsame，thenappend
             let safeIdx = min(max(curIdx, 0), hist.count - 1)
             if hist[safeIdx] != updated.content {
                 // Discard“before进”Branch
                 let prefix = hist.prefix(safeIdx + 1)
                 hist = Array(prefix)
-                // 追加New快照
+                // appendNew快according
                 hist.append(updated.content)
                 updated.index = hist.count - 1
             } else {
-                // Contentnot yet变，thenkeep原 index
+                // Contentnot yetchange，thenkeeporiginal index
                 updated.index = safeIdx
             }
         }
         updated.history = hist
 
-        // 4. write chatRecord andPersistent化
+        // 4. write chatRecord andPersistentconvert
         chatRecord.canvas = updated
         do {
             try context.save()
@@ -98,9 +98,9 @@ class CanvasServices {
     ///
     /// - Parameters:
     ///   - canvas: raw CanvasData
-    ///   - rules: ReplaceRuleArray，每itemsPackageinclude pattern and replacement
-    /// - Returns: Amendafterof CanvasData（not会直接Save）
-    /// - Throws: RegexExpressionInvalidtime抛出Error
+    ///   - rules: ReplaceRuleArray，eachitemsPackageinclude pattern and replacement
+    /// - Returns: Amendafterof CanvasData（notcandirectlySave）
+    /// - Throws: RegexExpressionInvalidtimethrowError
     static func editCanvasContent(
         canvas: CanvasData,
         rules: [(pattern: String, replacement: String)]
@@ -154,7 +154,7 @@ class CanvasServices {
     }
 }
 
-// MARK: after端StreamingInterface
+// MARK: afterterminalStreamingInterface
 func editCanvasAPI(
     input: String,
     modelInfo: AllModels,
@@ -168,24 +168,24 @@ func editCanvasAPI(
     let systemInfo: String = {
         if modelInfo.identity == "agent" {
             return currentBFGSanguage.hasPrefix("zh")
-                ? "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
+                ? "# You are【\(modelInfo.displayName ?? "intelligentAssistant")】。\n#yousetis：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "intelligentAssistant")")\nRemember your settings，inreplytimeensure always follow this setting!"
                 : "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         } else {
             return currentBFGSanguage.hasPrefix("zh")
-                ? "# You areSenior作家，能willTextby指定Requirement改写。"
+                ? "# You areSeniordo家，canwillTextbyspecifyRequirementrewrite。"
                 : "# You are an advanced writer who can rewrite text to specified requirements."
         }
     }()
     var userPrompt: String = {
         if currentBFGSanguage.hasPrefix("zh") {
             return """
-            PleaseAccording to阅读Water平and长度Requirement改写Canvas content，Requirementis emptyofItem说明right此Itemnot做Restriction。
-            Note：改写timeNote严BFGSatticeKeep原haveContentof特征、句式、题材、Formatetc。
-            Requirement：直接给出改写后ofContent，not要添加任何解释说明。
-            阅读Water平：\(readingBFGSevel)
-            长度Requirement：\(lengthOption)
+            PleaseAccording toreadWaterflatandlengthRequirementrewriteCanvas content，Requirementis emptyofItemillustrationrightthisItemnotmakeRestriction。
+            Note：rewritetimeNotestrictBFGSatticeKeeporiginalhaveContentof特征、sentencestyle、题材、Formatetc。
+            Requirement：directlyproviderewriteafterofContent，notneedaddanyexplainillustration。
+            readWaterflat：\(readingBFGSevel)
+            lengthRequirement：\(lengthOption)
 
-            现haveCanvas content：
+            presenthaveCanvas content：
             \(input)
             """
         } else {
@@ -223,14 +223,14 @@ func editCanvasAPI(
                     
                     var accumulatedOutput = ""
                     
-                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
+                    // CallBFGSocalModelStreamingInterface，inputTranslatePrompt
                     await llm.respond(to: userPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
+                            // detectOutputinwhetherAppearstopMark，mentionbeforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -264,7 +264,7 @@ func editCanvasAPI(
         ["role": systemRole, "content": systemInfo],
         ["role": "user",     "content": userPrompt]
     ]
-    // 4) 开enableStreaming
+    // 4) openenableStreaming
     var req = URBFGSRequest(url: url)
     req.httpMethod = "POST"
     req.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -277,7 +277,7 @@ func editCanvasAPI(
     ]
     req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
     
-    // 5) 发起 streaming Request
+    // 5) initiate streaming Request
     let (result, response) = try await URBFGSSession.shared.bytes(for: req)
     guard let httpResponse = response as? HTTPURBFGSResponse, 200...299 ~= httpResponse.statusCode else {
         throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "RequestError: HTTP Status Code \((response as? HTTPURBFGSResponse)?.statusCode ?? -1)"])
@@ -310,26 +310,26 @@ func editCanvasAPI(
     }
 }
 
-/// rightselectin片segmentperform智能改写
+/// rightselectinpiecesegmentperformintelligentrewrite
 func refineSelectedTextAPI(
-    fullText: String,           // 整体上below文原文
-    selectedText: String,       // 被selectinof片segment
-    suggestion: String,         // useaccountAmend意见
+    fullText: String,           // wholebodyupbelowtextoriginaltext
+    selectedText: String,       // byselectinofpiecesegment
+    suggestion: String,         // useaccountAmendmeaning见
     modelInfo: AllModels,
     apiKey: String,
     requestURBFGS: String
 ) async throws -> AsyncThrowingStream<String, Error> {
     let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh"
     
-    // Agent/Assistant人BFGSattice设定
+    // Agent/AssistantpersonBFGSatticesetfixed
     let systemInfo: String = {
         if modelInfo.identity == "agent" {
             return currentBFGSanguage.hasPrefix("zh")
-                ? "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n# you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
+                ? "# You are【\(modelInfo.displayName ?? "intelligentAssistant")】。\n# yousetis：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "intelligentAssistant")")\nRemember your settings，inreplytimeensure always follow this setting!"
                 : "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         } else {
             return currentBFGSanguage.hasPrefix("zh")
-                ? "# You are无所not能of专业Assistant，既Master文学，又擅长Code。PleaseAccording touseaccount意见rightselectin片segmentperform改写。"
+                ? "# You arenoplacenotcanof专业Assistant，既Mastertext学，又good atCode。PleaseAccording touseaccountmeaning见rightselectinpiecesegmentperformrewrite。"
                 : "# You are an advanced text rewriting assistant. Please revise the selected segment according to the user's suggestion."
         }
     }()
@@ -337,17 +337,17 @@ func refineSelectedTextAPI(
     var userPrompt: String = {
         if currentBFGSanguage.hasPrefix("zh") {
             return """
-            现have全文Contentsuch asbelow（供参考）：
+            presenthavewholetextContentsuch asbelow（providereference）：
             \(fullText)
             
-            youofTask是：onlyrightbelow方“selectin片segment”perform针right性Amend，其余Contentnot做Process。
-            selectin片segmentsuch asbelow：
+            youofTaskis：onlyrightbelowsquare“selectinpiecesegment”performneedlerightcharacterAmend，itremainingContentnotmakeProcess。
+            selectinpiecesegmentsuch asbelow：
             \(selectedText)
             
-            useaccountofAmend意见：
+            useaccountofAmendmeaning见：
             \(suggestion)
             
-            Requirement：直接Output改写后ofuseatReplace原文selectinPartof片segment，not要加任何解释说明orFormat。
+            Requirement：directlyOutputrewriteafterofuseatReplaceoriginaltextselectinPartofpiecesegment，notneedaddanyexplainillustrationorFormat。
             """
         } else {
             return """

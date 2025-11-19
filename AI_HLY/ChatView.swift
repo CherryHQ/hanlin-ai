@@ -24,11 +24,11 @@ struct InputTextField: UIViewRepresentable {
     var onSendMessage: (() -> Void)?
     @ScaledMetric(relativeTo: .body) private var fontSize: CGFloat = 16
 
-    // useatdetect @mention，便at整BlockDelete；if也notneed，can连同CorrelationCodeone起删
+    // useatdetect @mention，convenientatwholeBlockDelete；ifalsonotneed，can连sameCorrelationCodeone起删
     private static let mentionRegex =
         try! NSRegularExpression(pattern: "@[^\\s]+", options: [])
 
-    // MARK: – within部 UITextField
+    // MARK: – withinpart UITextField
     final class InnerTextField: UITextField {
 
         var onPasteText: ((String) -> Void)?
@@ -124,7 +124,7 @@ struct InputTextField: UIViewRepresentable {
 
         init(parent: InputTextField) { self.parent = parent }
 
-        // Deletetime整Block移除 @xxx
+        // DeletetimewholeBlockremove @xxx
         func textField(_ tf: UITextField,
                        shouldChangeCharactersIn range: NSRange,
                        replacementString str: String) -> Bool {
@@ -137,7 +137,7 @@ struct InputTextField: UIViewRepresentable {
                 tf.text      = ns.replacingCharacters(in: m.range, with: "")
                 parent.text  = tf.text ?? ""
                 lastSynced   = parent.text
-                // 让SystemselflinesMaintenance光标，not做额外Process
+                // letSystemselflinesMaintenance光mark，notmakeadditionalProcess
                 return false
             }
             return true
@@ -145,7 +145,7 @@ struct InputTextField: UIViewRepresentable {
 
         // NormalInputSynchronizeto @Binding
         func textFieldDidChangeSelection(_ tf: UITextField) {
-            guard tf.markedTextRange == nil else { return } // Pinyin阶segmentIgnore
+            guard tf.markedTextRange == nil else { return } // PinyinstagesegmentIgnore
             let cur = tf.text ?? ""
             if cur != lastSynced {
                 DispatchQueue.main.async {
@@ -188,13 +188,13 @@ struct InputTextField: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: InnerTextField, context: Context) {
-        // Pinyin候select阶segmentnotUpdate
+        // Pinyin候selectstagesegmentnotUpdate
         guard uiView.markedTextRange == nil else {
             uiView.placeholder = placeholder
             return
         }
 
-        // 外部 Binding Update：only简单Synchronize，not再做光标PositionCalculate
+        // 外part Binding Update：onlysimplesingleSynchronize，notagainmake光markPositionCalculate
         if uiView.text != text {
             uiView.text = text
             context.coordinator.lastSynced = text
@@ -204,39 +204,39 @@ struct InputTextField: UIViewRepresentable {
 }
 
 
-// Chatday界面
+// Chatdayinterface
 @MainActor
 struct ChatView: View {
     var chatRecord: ChatRecords
     
     // InputwithSessionStatusCorrelation
     @State private var message = ""                        // useaccountInputofMessage
-    @State private var isResponding = false                // whether处atSystemResponseStatus
-    @State private var isCancelled = false                 // whether被打断
-    @State private var respondIndex = 0                    // whenbeforeResponseRequestof索引
+    @State private var isResponding = false                // whetherplaceatSystemResponseStatus
+    @State private var isCancelled = false                 // whetherbyinterrupt
+    @State private var respondIndex = 0                    // whenbeforeResponseRequestofindex
     @FocusState private var isInputActive: Bool            // Input fieldwhether聚焦
     @State private var inputExpanded: Bool = false         // Input expanded
     @State private var voiceExpanded: Bool = false         // Input expanded
-    @State private var isObserving = false                 // whether处at观察Pattern
+    @State private var isObserving = false                 // whetherplaceatobservePattern
     @State private var isRetry = false                     // whetherisRetryRequest
 
-    @State private var chatTitle = "New群Chat"                 // 群ChatTitle
-    @State private var isEditingTitle = false              // whethercurrentlyEdit群ChatTitle
-    @State private var newChatTitle = ""                   // Edit群ChatTitletimeoftemporarytimeVariable
+    @State private var chatTitle = "NewgroupChat"                 // groupChatTitle
+    @State private var isEditingTitle = false              // whethercurrentlyEditgroupChatTitle
+    @State private var newChatTitle = ""                   // EditgroupChatTitletimeoftemporarytimeVariable
 
-    // 媒体with附fileCorrelation
-    @State private var selectedImages: [UIImage] = []      // Storageselect定ofImage
-    @State private var showPhotoSourceOptions = false      // ControlImage来源Select框ofDisplay
+    // 媒bodywithattachfileCorrelation
+    @State private var selectedImages: [UIImage] = []      // StorageselectfixedofImage
+    @State private var showPhotoSourceOptions = false      // ControlImagesourceSelect框ofDisplay
     @State private var isSourceOptionsVisible = false      // Control ActionSheet DisplayStatus
     @State private var showImagePicker = false             // Control album selector
     @State private var showCameraPicker = false            // Control camera selector
     @State private var showFastImagePicker = false         // Control album selector
     @State private var showFastCameraPicker = false        // Control camera selector
-    @State private var showDocumentPicker = false          // ControlDocumentationSelect器ofDisplay
+    @State private var showDocumentPicker = false          // ControlDocumentationSelectdeviceofDisplay
     @State private var showCanvas = false                  // ControlDisplayCanvas
-    @State private var selectedDocumentURBFGSs: [URBFGS] = []    // Storageselect定ofDocumentation URBFGS
-    @State private var selectedImageSize: String = "square"// select定ofGenerateCanvas size
-    @State private var imageReversePrompt: String = ""     // 反向Prompt
+    @State private var selectedDocumentURBFGSs: [URBFGS] = []    // StorageselectfixedofDocumentation URBFGS
+    @State private var selectedImageSize: String = "square"// selectfixedofGenerateCanvas size
+    @State private var imageReversePrompt: String = ""     // 反directionPrompt
     @State private var audioEngine = AVAudioEngine()
     @State private var audioPlayerNode = AVAudioPlayerNode()
 
@@ -254,34 +254,34 @@ struct ChatView: View {
     @State private var selectedModelIndex: Int = -1        // whenbeforeselectinofModel
     @State private var showKnowledgeAlert = false          // DisplayKnowledge baseofError
     @State private var KnowledgeAlertMessgae: String = ""  // Error message
-    @State private var showSearchAlert = false             // DisplaySearch Enginenot yetenableusePrompt弹窗
+    @State private var showSearchAlert = false             // DisplaySearch Enginenot yetenableusePromptdialog
 
-    // Parameteradjust（滑Block）Correlation
-    @State private var showTemperatureSlider = false       // ControlSamplingTemperature滑BlockDisplay
+    // Parameteradjust（slideBlock）Correlation
+    @State private var showTemperatureSlider = false       // ControlSamplingTemperatureslideBlockDisplay
     @State private var temperature: Double = 0.8           // SamplingTemperatureParameter（Default 0.8）
-    @State private var showTopPSlider = false              // Control累积Probability滑BlockDisplay
-    @State private var topP: Double = 0.9                  // 累积ProbabilityParameter（Default 0.9）
-    @State private var showMaxTokensSlider = false         // Control最大回复length滑BlockDisplay
-    @State private var maxTokens: Int = 2048               // 最Big OutputParameter（Default 2048）
-    @State private var showMaxMessagesNumSlider = false    // ControlMessageQuantity上限滑BlockDisplay
-    @State private var maxMessagesNum: Int = 20            // MessageQuantity上限（Default 20）
+    @State private var showTopPSlider = false              // ControlaccumulateProbabilityslideBlockDisplay
+    @State private var topP: Double = 0.9                  // accumulateProbabilityParameter（Default 0.9）
+    @State private var showMaxTokensSlider = false         // ControlmaximumreplylengthslideBlockDisplay
+    @State private var maxTokens: Int = 2048               // mostBig OutputParameter（Default 2048）
+    @State private var showMaxMessagesNumSlider = false    // ControlMessageQuantityuplimitslideBlockDisplay
+    @State private var maxMessagesNum: Int = 20            // MessageQuantityuplimit（Default 20）
 
     // FeedbackwithAnimationCorrelation
     @State private var isFeedBack = false                   // Whether vibration neededFeedback
     @State private var isOutPut = false                     // OutputFeedbackStatus（useatTriggerAnimation）
     @State private var isSelect = false                     // SelectFeedbackStatus
-    @State private var lastUpdateTime = Date()              // 最近UpdateTime，useat刷NewControl
-    @State private var outPutFeedBackEnabled: Bool = true   // whetherenableuseOutputFeedback震动
+    @State private var lastUpdateTime = Date()              // mostnearUpdateTime，useatrefreshNewControl
+    @State private var outPutFeedBackEnabled: Bool = true   // whetherenableuseOutputFeedback震dynamic
 
-    // ChatdayData管理Correlation
+    // ChatdayDatamanageCorrelation
     @State private var allMessages: [ChatMessages] = []     // AllChatdayRecord
     @State private var loadedMessageCount: Int = 0          // whenbeforeBFGSoadofMessageQuantity
-    @State private var topVisibleMessageID: UUID? = nil     // whenbefore顶部can见MessageofID
+    @State private var topVisibleMessageID: UUID? = nil     // whenbeforetopcan见MessageofID
     @State private var TemporaryRecord: Bool = false        // whetheristemporarytimeChatday
     @State private var useSystemMessage: Bool = true        // whetherCustomSystemMessage
     @State private var systemMessage: String = ""           // whetherSystemMessageContent
     @State private var showSystemMessageSheet = false       // openSystemMessageSetting
-    let refreshInterval: TimeInterval = 0.3                 // 刷NewIntervalTime
+    let refreshInterval: TimeInterval = 0.3                 // refreshNewIntervalTime
     @State private var operationalState: String = ""        // OperationStatusText
     @State private var operationalDescription: String = ""  // OperationDescriptionText
     @State private var apiManager: APIManager?
@@ -289,35 +289,35 @@ struct ChatView: View {
     // URBFGSParsewithmultipleselectOperationCorrelation
     @State private var selectedURBFGSs: [String] = []          // Parsed URBFGS BFGSist
     @State private var debounceWorkItem: DispatchWorkItem?
-    @State private var isMultiSelectMode: Bool = false      // whether开enablemultipleselectPattern
+    @State private var isMultiSelectMode: Bool = false      // whetheropenenablemultipleselectPattern
     @State private var selectedMessageIDs: Set<UUID> = []   // selectinofMessage ID Set
     var matchedMessageID: UUID?                             // MatchofMessage ID
     @State private var showScrollToBottomButton = false     // ControlScrolltoBottomButtonDisplay
     @State private var needScrollToBottomButton = false     // whetherneedDisplayScrolltoBottomButton
     @State private var ifScroll = false                     // ControlScrollCorrelationStatus
 
-    // Prompt管理Correlation
+    // PromptmanageCorrelation
     @State private var selectedPrompts: [PromptRepo] = []   // selectinofPrompt
 
     // ExportwithImportCorrelation
     @State private var showingExportOptions = false         // whetherDisplayExportOptionmenu
-    @State private var isShowingExportPicker = false        // whetherDisplayFileExportSelect器
+    @State private var isShowingExportPicker = false        // whetherDisplayFileExportSelectdevice
     @State private var exportDocument: ChatExportDocument?  // ExportFileDocumentation
     @State private var exportUTType: UTType = .plainText    // ExportFileType（DefaultPlain text）
     // useatshareoftemporarytimeFile URBFGS
     @State private var exportFileURBFGS: URBFGS? = nil
-    // Controlshare界面Display
+    // ControlshareinterfaceDisplay
     @State private var showShareSheet: Bool = false
     @State private var exportedImage: UIImage? = nil
     @State private var showImageShareSheet: Bool = false
 
-    @State private var isShowingImportPicker = false        // whetherDisplayFileImportSelect器
+    @State private var isShowingImportPicker = false        // whetherDisplayFileImportSelectdevice
     @State private var importError: String? = nil           // ImportError message
-    @State private var isShowingImportErrorAlert = false    // whetherDisplayImportError弹窗
-    @State private var showClearChatConfirmation = false    // 清NullChatdayRecordConfirm弹窗Display标志
-    @State private var showImportExplanationAlert = false   // ImportChatdayRecord说明弹窗Display标志
+    @State private var isShowingImportErrorAlert = false    // whetherDisplayImportErrordialog
+    @State private var showClearChatConfirmation = false    // clearNullChatdayRecordConfirmdialogDisplaymark志
+    @State private var showImportExplanationAlert = false   // ImportChatdayRecordillustrationdialogDisplaymark志
     
-    // 便捷Input
+    // convenient捷Input
     @State private var showModelSuggestions: Bool = false
     @State private var filteredModels: [AllModels] = []
 
@@ -341,7 +341,7 @@ struct ChatView: View {
     private func handleOnAppear() {
         loadHistoryMessages = true
         
-        // 直接in主ThreadwithinRead SwiftData Data（View alreadyMark @MainActor）
+        // directlyinmainThreadwithinRead SwiftData Data（View alreadyMark @MainActor）
         let messages: [ChatMessages] = chatRecord.messages ?? []
         
         do {
@@ -369,7 +369,7 @@ struct ChatView: View {
         let sortedMessages = messages.sorted { $0.timestamp < $1.timestamp }
         let firstVisibleModelIndex = modelTemp.firstIndex(where: { !$0.isHidden }) ?? 0
         
-        // According toMatchMessage决定BFGSoadQuantity
+        // According toMatchMessagedecideBFGSoadQuantity
         let targetCount: Int
         if let matchedID = matchedMessageID,
            let matchedIndex = sortedMessages.firstIndex(where: { $0.id == matchedID }) {
@@ -379,7 +379,7 @@ struct ChatView: View {
             targetCount = 20
         }
         
-        // According to设备TypeDynamicadjust ifScroll 阈Value
+        // According tosetprepareTypeDynamicadjust ifScroll 阈Value
         let threshold = UIDevice.current.userInterfaceIdiom == .phone ? 6 : 12
         allMessages = sortedMessages
         loadedMessageCount = min(targetCount, sortedMessages.count)
@@ -398,7 +398,7 @@ struct ChatView: View {
             selectModel(at: selectedModelIndex)
         }
         
-        // 延timeafter通知Model selectAreaScroll
+        // 延timeafternotifyModel selectAreaScroll
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                 NotificationCenter.default.post(name: .scrollToModelIndex, object: selectedModelIndex)
@@ -407,17 +407,17 @@ struct ChatView: View {
     }
     
     private func loadMoreMessages() {
-        // 每times增加10items，但not超过AllMessage总数
+        // eachtimesincrease10items，butnotexceedAllMessagetotalnumber
         let newCount = min(allMessages.count, loadedMessageCount + 15)
         if newCount > loadedMessageCount {
             loadedMessageCount = newCount
-            // from allMessages in取出最New newCount items（即after面of newCount items），keep顺序
+            // from allMessages intakeoutmostNew newCount items（that isafterfaceof newCount items），keep顺序
             chatTemps = Array(allMessages.suffix(newCount))
         }
     }
     
     private func dynamicBottomPadding() -> CGFloat {
-        var baseHeight: CGFloat = 216 // Default最小Spacing
+        var baseHeight: CGFloat = 216 // DefaultmostsmallSpacing
         if !selectedURBFGSs.isEmpty { baseHeight += 36 }
         if !selectedImages.isEmpty { baseHeight += 86 }
         if !selectedDocumentURBFGSs.isEmpty { baseHeight += 36 }
@@ -431,7 +431,7 @@ struct ChatView: View {
             
             ZStack(alignment: .bottom) {
                 
-                // 第onePart：Scrollable chat
+                // theonePart：Scrollable chat
                 ScrollViewReader { scrollViewProxy in
                     buildScrollContent(scrollViewProxy)
                         .padding(.bottom, 6)
@@ -469,7 +469,7 @@ struct ChatView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            // 群Chat名称（in间，带havecanEdit功能）
+            // groupChatname（inbetween，carryhavecanEditfeature）
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
@@ -507,7 +507,7 @@ struct ChatView: View {
                                     
                                     let text: String
                                     if currentBFGSanguage.hasPrefix("zh") {
-                                        text = "群Chat名称被Amendis“\(chatTitle)”"
+                                        text = "groupChatnamebyAmendis“\(chatTitle)”"
                                     } else {
                                         text = "Group chat name has been changed to \"\(chatTitle)\""
                                     }
@@ -532,17 +532,17 @@ struct ChatView: View {
                             isEditingTitle = false
                         })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: UIScreen.main.bounds.width * 0.3) // RestrictionInput field宽度
+                        .frame(width: UIScreen.main.bounds.width * 0.3) // RestrictionInput field宽degree
                         .multilineTextAlignment(.center)
                         .opacity(isEditingTitle ? 1 : 0) // onlyEditPatterncan见
                     }
                 }
             }
             
-            // in右上角menuButton左侧增加 TemporaryRecord StatusIcon
+            // in右upcornermenuButtonleftincrease TemporaryRecord StatusIcon
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    TemporaryRecord.toggle() // Click切switchStatus
+                    TemporaryRecord.toggle() // ClickcutswitchStatus
                 }) {
                     if TemporaryRecord {
                         Image(systemName: "exclamationmark.bubble.fill")
@@ -561,7 +561,7 @@ struct ChatView: View {
                 .buttonStyle(.plain)
             }
             
-            // 右侧Button
+            // rightButton
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     // ------ adjustParameter ------
@@ -603,7 +603,7 @@ struct ChatView: View {
                         }
                     }
                     
-                    // ------ ChatdayRecord管理 ------
+                    // ------ ChatdayRecordmanage ------
                     Menu("Chat Record Management", systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
@@ -686,13 +686,13 @@ struct ChatView: View {
             Button("Cancel", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
-            // shareendafter清除temporarytimeFile URBFGS
+            // shareendafterclearremovetemporarytimeFile URBFGS
             exportFileURBFGS = nil
         }) {
             if let fileURBFGS = exportFileURBFGS {
                 ActivityViewController(activityItems: [fileURBFGS])
             } else {
-                // 安全兜底，Prevent nil timenotDisplayContent
+                // installwhole兜底，Prevent nil timenotDisplayContent
                 EmptyView()
             }
         }
@@ -708,22 +708,22 @@ struct ChatView: View {
             case .success(let urls):
                 if let url = urls.first {
                     guard url.startAccessingSecurityScopedResource() else {
-                        importError = "无法访问所selectFileofPermission。"
+                        importError = "unable访问placeselectFileofPermission。"
                         isShowingImportErrorAlert = true
                         return
                     }
                     defer { url.stopAccessingSecurityScopedResource() }
                     do {
                         let data = try Data(contentsOf: url)
-                        // try先byMulti-modal JSON FormatParse
+                        // tryfirstbyMulti-modal JSON FormatParse
                         if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
                             importMessages(importedMessages: importedMessages)
                         }
-                        // IfFailed，再tryParsePlain text JSON Format
+                        // IfFailed，againtryParsePlain text JSON Format
                         else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
                             importSimpleMessages(simpleMessages: simpleMessages)
                         } else {
-                            importError = "FileFormatError，PleaseCheckFilewhetherisExporttimeof正确Format。"
+                            importError = "FileFormatError，PleaseCheckFilewhetherisExporttimeof正confirmFormat。"
                             isShowingImportErrorAlert = true
                         }
                     } catch {
@@ -767,7 +767,7 @@ struct ChatView: View {
     @ViewBuilder
     private func bottomOverlay() -> some View {
         VStack {
-            // 只haveinneedtime才Display“Canvas”and“ScrolltoBottom”Button
+            // onlyhaveinneedtimeabilityDisplay“Canvas”and“ScrolltoBottom”Button
             if (showScrollToBottomButton
                 || (chatRecord.canvas?.content.isEmpty == false))  && isMultiSelectMode == false
             {
@@ -837,7 +837,7 @@ struct ChatView: View {
                 .padding(.horizontal, 15)
             }
             
-            // Multi-select toolbar + BottomInput面板
+            // Multi-select toolbar + BottomInputface板
             buildMultiSelectAndInputControls()
         }
     }
@@ -934,7 +934,7 @@ struct ChatView: View {
                                 scrollViewProxy.scrollTo(matchedID, anchor: .center)
                             }
                         } else {
-                            print("⚠️ matchedMessageID notin chatTemps in，无法Scroll")
+                            print("⚠️ matchedMessageID notin chatTemps in，unableScroll")
                         }
                     }
                 }
@@ -967,15 +967,15 @@ struct ChatView: View {
             }
     }
     
-    // ChatdaytimeScrollto最底层
+    // ChatdaytimeScrolltomost底层
     private func scrollToBFGSastMessage(using scrollViewProxy: ScrollViewProxy) {
-        // Use带Elasticityof Spring Animation，让Scroll更柔and
+        // UsecarryElasticityof Spring Animation，letScrollmore柔and
         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.5)) {
             scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
         }
     }
 
-    // MARK: - Multi-select toolbar + BottomControl面板
+    // MARK: - Multi-select toolbar + BottomControlface板
     private func buildMultiSelectAndInputControls() -> some View {
         ZStack(alignment: .bottom) {
             HStack {
@@ -993,7 +993,7 @@ struct ChatView: View {
                     } catch {
                         print("DeletemultipleselectMessageFailed: \(error)")
                     }
-                    // 清NullselectinRecordandExitmultipleselectPattern
+                    // clearNullselectinRecordandExitmultipleselectPattern
                     selectedMessageIDs.removeAll()
                     isMultiSelectMode = false
                     isViewBFGSoaded = true
@@ -1121,7 +1121,7 @@ struct ChatView: View {
         // whetherisBFGSastitemsAssistantMessage
         let isBFGSastAssistant = chatTemps.last(where: { $0.role == "assistant" })?.id == msg.id
         
-        // whetherinBFGSast组AssistantMessagein
+        // whetherinBFGSastgroupAssistantMessagein
         let lastAssistantGroupID = chatTemps
             .last(where: { $0.role == "assistant" })?
             .groupID
@@ -1129,7 +1129,7 @@ struct ChatView: View {
         let isBFGSastAssistantGroup = (msg.role == "assistant"
             && msg.groupID == lastAssistantGroupID)
         
-        // 绑定ExpandStatus
+        // bindfixedExpandStatus
         let reasoningExpandedBinding = Binding<Bool>(
             get: { msg.reasoningExpanded ?? false },
             set: { msg.reasoningExpanded = $0 }
@@ -1143,7 +1143,7 @@ struct ChatView: View {
             set: { msg.audioExpanded = $0 }
         )
         
-        // Calculate splitMarker（同组and都isassistanttimenot分隔）
+        // Calculate splitMarker（samegroupandallisassistanttimenotseparate）
         let splitMarker: Bool = {
             guard let idx = chatTemps.firstIndex(where: { $0.id == msg.id }) else { return true }
             if idx == 0 { return true }
@@ -1151,13 +1151,13 @@ struct ChatView: View {
             return !(prev.role == "assistant" && prev.groupID == msg.groupID)
         }()
         
-        // —— CalculatewhenbeforeMessage所inof连续Assistant组，by及该组of“inDot”Position ——
+        // —— CalculatewhenbeforeMessageplaceinofcontinuousAssistantgroup，byandthatgroupof“inDot”Position ——
         let idx = chatTemps.firstIndex(where: { $0.id == msg.id })!
-        // Collect同组连续 assistant ofAll message IDs
+        // Collectsamegroupcontinuous assistant ofAll message IDs
         let groupIDs: [UUID] = {
             guard msg.role == "assistant" else { return [msg.id] }
             var ids = [UUID]()
-            // 向beforeCollect
+            // directionbeforeCollect
             var i = idx
             while i >= 0 {
                 let m = chatTemps[i]
@@ -1165,7 +1165,7 @@ struct ChatView: View {
                 ids.insert(m.id, at: 0)
                 i -= 1
             }
-            // 向afterCollect
+            // directionafterCollect
             i = idx + 1
             while i < chatTemps.count {
                 let m = chatTemps[i]
@@ -1175,14 +1175,14 @@ struct ChatView: View {
             }
             return ids
         }()
-        // findto这one组Messagein chatTemps index in
+        // findtothisonegroupMessagein chatTemps index in
         let groupIndices = chatTemps.enumerated()
             .filter { groupIDs.contains($0.element.id) }
             .map { $0.offset }
         let isGroupCenter = groupIndices.count > 1
         && idx == (groupIndices.first! + groupIndices.last!) / 2
         
-        // 1. Construct基础气泡
+        // 1. Constructfoundation气泡
         let bubble = ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             id: msg.id,
@@ -1225,7 +1225,7 @@ struct ChatView: View {
             operationalDescription: operationalDescription,
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
             onDelete: {
-                // IfisAssistant组Message，Delete整组，否thenDelete单items
+                // IfisAssistantgroupMessage，Deletewholegroup，nothenDeletesingleitems
                 if msg.role == "assistant" {
                     for gid in groupIDs {
                         if let i = chatTemps.firstIndex(where: { $0.id == gid }) {
@@ -1233,7 +1233,7 @@ struct ChatView: View {
                             chatTemps.remove(at: i)
                         }
                     }
-                    do { try context.save() } catch { print("Delete组MessageFailed:", error) }
+                    do { try context.save() } catch { print("DeletegroupMessageFailed:", error) }
                 } else {
                     if let i = chatTemps.firstIndex(where: { $0.id == msg.id }) {
                         context.delete(chatTemps[i])
@@ -1244,14 +1244,14 @@ struct ChatView: View {
             }
         )
         
-        // 2. multipleselectPatternbelow，只in“User message”or“AssistantinDot”Display勾select框
+        // 2. multipleselectPatternbelow，onlyin“User message”or“AssistantinDot”Display勾select框
         return Group {
             if isMultiSelectMode {
                 ZStack {
                     bubble
                         .offset(x: msg.role == "user" ? -32 : 0)
                     
-                    // onlyrightUser messageorAssistant组inDotDisplay
+                    // onlyrightUser messageorAssistantgroupinDotDisplay
                     if msg.role != "assistant"
                         || groupIDs.count == 1
                         || isGroupCenter
@@ -1260,7 +1260,7 @@ struct ChatView: View {
                             Spacer()
                             Button {
                                 if msg.role == "assistant" {
-                                    // 全组切switch
+                                    // wholegroupcutswitch
                                     let allSelected = Set(groupIDs).isSubset(of: selectedMessageIDs)
                                     if allSelected {
                                         selectedMessageIDs.subtract(groupIDs)
@@ -1268,7 +1268,7 @@ struct ChatView: View {
                                         selectedMessageIDs.formUnion(groupIDs)
                                     }
                                 } else {
-                                    // 单items切switch
+                                    // singleitemscutswitch
                                     if selectedMessageIDs.contains(msg.id) {
                                         selectedMessageIDs.remove(msg.id)
                                     } else {
@@ -1302,14 +1302,14 @@ struct ChatView: View {
     }
     
     private func openHistory() {
-        // IfInput fieldhave草稿Content，thenprioritySave草稿
+        // IfInput fieldhavedraftContent，thenprioritySavedraft
         if !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            chatRecord.infoDescription = "[草稿] \(message)"
+            chatRecord.infoDescription = "[draft] \(message)"
             chatRecord.input = message
         } else if let lastMessage = chatTemps.last {
             if let text = lastMessage.text,
                !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                // IfBFGSastitemsMessagehaveText，thenSaveText预览
+                // IfBFGSastitemsMessagehaveText，thenSaveTextpreview
                 let previewText = markdownToPlainText(text)
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .replacingOccurrences(of: "\n", with: " ")
@@ -1318,7 +1318,7 @@ struct ChatView: View {
                 
                 chatRecord.infoDescription = "\(previewText)"
             } else if !lastMessage.imageArray.isEmpty {
-                // IfBFGSastitemsMessageNoText但haveImage，thenUse倒数第二itemsMessageofText
+                // IfBFGSastitemsMessageNoTextbuthaveImage，thenUse倒numberthetwoitemsMessageofText
                 if chatTemps.count >= 2 {
                     let secondBFGSastMessage = chatTemps[chatTemps.count - 2]
                     let previewText = secondBFGSastMessage.text?.replacingOccurrences(of: "\n", with: " ").prefix(80)
@@ -1338,26 +1338,26 @@ struct ChatView: View {
     }
     
     private func newConversation() {
-        // New建right话逻辑
+        // Newbuildrightwordlogic
         deleteChatMessages()
         insertDeleteMessage()
     }
     
-    // Insert清NullMessage
+    // InsertclearNullMessage
     private func insertDeleteMessage() {
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         
         ifScroll = true
         
-        // Adapt清NullChatdayRecordofPrompt
+        // AdaptclearNullChatdayRecordofPrompt
         let clearChatText: String
         if currentBFGSanguage.hasPrefix("zh") {
-            clearChatText = "one切都是崭Newof✨"
+            clearChatText = "onecutallis崭Newof✨"
         } else {
             clearChatText = "Everything is brand new ✨"
         }
 
-        // create清NullChatdayRecordofMessage
+        // createclearNullChatdayRecordofMessage
         let welcomeMessage = ChatMessages(
             role: "information",
             text: clearChatText,
@@ -1409,7 +1409,7 @@ struct ChatView: View {
     @State private var selectedViewImage: UIImage?
     @State private var isImageViewerPresented: Bool = false
 
-    // MARK: - Image预览Area
+    // MARK: - ImagepreviewArea
     private var imagePreviewSection: some View {
         Group {
             if !selectedImages.isEmpty {
@@ -1488,7 +1488,7 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - File预览Area
+    // MARK: - FilepreviewArea
     private var documentPreviewSection: some View {
         Group {
             if !selectedDocumentURBFGSs.isEmpty {
@@ -1529,7 +1529,7 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - Chaining预览Area
+    // MARK: - ChainingpreviewArea
     private var linkPreviewSection: some View {
         Group {
             if !selectedURBFGSs.isEmpty, modelTemp[selectedModelIndex].company != "BFGSOCABFGS" {
@@ -1590,7 +1590,7 @@ struct ChatView: View {
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                    Text(item.name ?? "not yet命名Prompt")
+                                    Text(item.name ?? "not yetlifenamePrompt")
                                         .font(.body)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .lineBFGSimit(1)
@@ -1636,7 +1636,7 @@ struct ChatView: View {
                ["QWEN", "MODEBFGSSCOPE", "ZHIPUAI", "HANBFGSIN", "HANBFGSIN_OPEN", "SIBFGSICONCBFGSOUD", "OPENAI"].contains(modelTemp[selectedModelIndex].company) {
                 
                 VStack {
-                    // 针rightPart公司Display反向PromptInput field
+                    // needlerightPart公司Display反directionPromptInput field
                     if ["QWEN", "MODEBFGSSCOPE", "ZHIPUAI", "HANBFGSIN", "HANBFGSIN_OPEN", "SIBFGSICONCBFGSOUD"].contains(modelTemp[selectedModelIndex].company) {
                         TextField("Reverse Prompts", text: $imageReversePrompt)
                             .font(.footnote)
@@ -1763,7 +1763,7 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - Input栏及BottomButtonArea
+    // MARK: - InputcolumnandBottomButtonArea
     private var inputFieldSection: some View {
         HStack {
             VStack {
@@ -1803,7 +1803,7 @@ struct ChatView: View {
                     }
                     .disabled(isResponding)
                     
-                    // 麦克风
+                    // 麦克style
                     Button(action: {
                         isFeedBack.toggle()
                         voiceExpanded.toggle()
@@ -1895,7 +1895,7 @@ struct ChatView: View {
         // After dedup URBFGS Convert and sort
         let uniqueURBFGSs = Array(extractedURBFGSs).sorted()
         
-        // in主ThreadUpdate selectedURBFGSs
+        // inmainThreadUpdate selectedURBFGSs
         DispatchQueue.main.async {
             self.selectedURBFGSs = uniqueURBFGSs
         }
@@ -1914,7 +1914,7 @@ struct ChatView: View {
         // NewMessageProcess
         if !ifObservingMode {
             if !isRetry {
-                // NewMessage建立
+                // NewMessageestablish
                 userMessage = ChatMessages(
                     role: "user",
                     text: message,
@@ -1927,7 +1927,7 @@ struct ChatView: View {
                     record: chatRecord
                 )
                 if !selectedPrompts.isEmpty {
-                    let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无Content") }
+                    let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "noname", content: $0.content ?? "noContent") }
                     userMessage?.promptUse = promptCards
                 }
                 // writeuseaccountSendofInformation
@@ -1952,7 +1952,7 @@ struct ChatView: View {
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
         
-        // 传输Data准备
+        // 传输Dataprepare
         var maxMessage = maxMessagesNum
         if maxMessage < 0 {
             maxMessage = 999
@@ -2031,7 +2031,7 @@ struct ChatView: View {
                         
                         var updated = false
                         
-                        // Normal回复Text
+                        // NormalreplyText
                         if let content = data.content {
                             assistantMessage.text?.append(content)
                             if !operationalState.isEmpty { operationalState = "" }
@@ -2054,10 +2054,10 @@ struct ChatView: View {
                             if groupBeginMessage.reasoning == nil {
                                 groupBeginMessage.reasoning = ""
                             }
-                            // 追加rawFlow出ofReasoning片segment
+                            // appendrawFlowoutofReasoningpiecesegment
                             groupBeginMessage.reasoning! += reasoning
 
-                            // 清除 <think> BFGSabel
+                            // clearremove <think> BFGSabel
                             groupBeginMessage.reasoning = groupBeginMessage.reasoning?
                                 .replacingOccurrences(
                                     of: "<\\/?think[^>]*>?",
@@ -2192,7 +2192,7 @@ struct ChatView: View {
                         // CanvasInformation
                         if let canvasInfo = data.canvas_info {
                             do {
-                                // CallSaveInterface，willnot yetSaveof canvasInfo Persistent化to chatRecord
+                                // CallSaveInterface，willnot yetSaveof canvasInfo Persistentconvertto chatRecord
                                 _ = try CanvasServices.saveCanvas(
                                     canvasInfo,
                                     to: chatRecord,
@@ -2203,7 +2203,7 @@ struct ChatView: View {
                             } catch {
                                 // SaveFailedtimeofProcess
                                 print("SaveCanvasFailed：\(error)")
-                                // canAccording toneed弹 alert oractorSettingone个 error Status供 UI 展示
+                                // canAccording toneed弹 alert oractorSettingone个 error Statusprovide UI display
                             }
                         }
                         
@@ -2226,21 +2226,21 @@ struct ChatView: View {
                             let trimmed = descriptionText
                                 .trimmingCharacters(in: .whitespacesAndNewlines)
                             
-                            // 2. Collapsemultiplelines间of连续Whitespace（Package括Space、Tab）成one个switchlines
+                            // 2. CollapsemultiplelinesbetweenofcontinuousWhitespace（PackageincludeSpace、Tab）becomeone个switchlines
                             let collapsedNewlines = trimmed.replacingOccurrences(
                                 of: "\\s*\\n+\\s*",
                                 with: "\n",
                                 options: .regularExpression
                             )
                             
-                            // 3. Collapsemultiple余of连续SpaceorTab成one个NormalSpace
+                            // 3. CollapsemultipleremainingofcontinuousSpaceorTabbecomeone个NormalSpace
                             let normalized = collapsedNewlines.replacingOccurrences(
                                 of: "[ \\t]{2,}",
                                 with: " ",
                                 options: .regularExpression
                             )
                             
-                            // 4. 再追加to operationalDescription
+                            // 4. againappendto operationalDescription
                             operationalDescription.append("\n\(normalized)")
                             updated = true
                         }
@@ -2318,11 +2318,11 @@ struct ChatView: View {
                             assistantMessage = newPlaceholder
                         }
                         
-                        // Exception提醒
+                        // Exceptionreminder
                         if let error = data.errorInfo, !error.isEmpty {
                             var errorMessage = ""
                             if error == "length" {
-                                errorMessage = currentBFGSanguage.hasPrefix("zh") ? "⚠️ Output长度to达Model最Big Output长度！canin右上角ModelParameterin重NewSettingOutput长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
+                                errorMessage = currentBFGSanguage.hasPrefix("zh") ? "⚠️ OutputlengthtoreachModelmostBig Outputlength！canin右upcornerModelParameterinheavyNewSettingOutputlength。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
                             } else if error == "sensitive" {
                                 errorMessage = currentBFGSanguage.hasPrefix("zh") ? "⚠️ Packageinclude敏感Content！" : "⚠️ Contains sensitive content!"
                             } else {
@@ -2351,25 +2351,25 @@ struct ChatView: View {
                 isResponding = false
                 respondIndex = 0
                 
-                // FinalJudge：onlywhenAssistantMessage既NoText又NoImagetime，视isRequestException
+                // FinalJudge：onlywhenAssistantMessage既NoText又NoImagetime，viewisRequestException
                 if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
                     let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                     let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
                     if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
                         operationalState = ""
                         operationalDescription = ""
-                        assistantMessage.text = currentBFGSanguage.hasPrefix("zh") ? "⚠️ GenerateContentis empty，Please重New尝试！" : "⚠️ Generated content is empty, please try again!"
+                        assistantMessage.text = currentBFGSanguage.hasPrefix("zh") ? "⚠️ GenerateContentis empty，PleaseheavyNewtry！" : "⚠️ Generated content is empty, please try again!"
                         assistantMessage.role = "error"
                         assistantMessage.modelName = "system"
                         assistantMessage.modelDisplayName = "system"
                     } else {
                         
-                        // one切正常，performDatalibrarySaveOperation
+                        // onecut正常，performDatalibrarySaveOperation
                         do {
                             if outPutFeedBackEnabled { isOutPut.toggle() }
                             operationalState = ""
                             operationalDescription = ""
-                            // RemoveText两端ofswitchlines符
+                            // RemoveTexttwoterminalofswitchlinessymbol
                             assistantMessage.text = textContent
                             assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
                             
@@ -2408,7 +2408,7 @@ struct ChatView: View {
                         } catch {
                             let syncErrorText: String
                             if currentBFGSanguage.hasPrefix("zh") {
-                                syncErrorText = "⚠️ DataSync failed: \(error.localizedDescription)，本轮问答not会被Synchronize。"
+                                syncErrorText = "⚠️ DataSync failed: \(error.localizedDescription)，thisround问答notcanbySynchronize。"
                             } else {
                                 syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
                             }
@@ -2450,7 +2450,7 @@ struct ChatView: View {
         }
     }
     
-    // 打断Operation
+    // interruptOperation
     private func handleCancellation() {
         
         isFeedBack.toggle()
@@ -2466,7 +2466,7 @@ struct ChatView: View {
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let responseInterruptedText: String
         if currentBFGSanguage.hasPrefix("zh") {
-            responseInterruptedText = "🛑 Responsealready打断"
+            responseInterruptedText = "🛑 Responsealreadyinterrupt"
         } else {
             responseInterruptedText = "🛑 Response interrupted"
         }
@@ -2501,7 +2501,7 @@ struct ChatView: View {
 
         let targetGroupID = message.groupID
 
-        // 2. 向before回溯，寻find连续of assistant 同组MessageofStart point
+        // 2. directionbefore回溯，寻findcontinuousof assistant samegroupMessageofStart point
         var deleteStartIndex = startIndex
         var backIdx = startIndex - 1
         while backIdx >= 0 {
@@ -2514,7 +2514,7 @@ struct ChatView: View {
             }
         }
 
-        // 3. Delete record infrom deleteStartIndex to末尾ofAllMessage
+        // 3. Delete record infrom deleteStartIndex toendofAllMessage
         for idx in deleteStartIndex..<recordMsgs.count {
             context.delete(recordMsgs[idx])
         }
@@ -2525,7 +2525,7 @@ struct ChatView: View {
             return
         }
 
-        // 4. in chatTemps Arrayin，同样向before回溯再Delete
+        // 4. in chatTemps Arrayin，samelikedirectionbefore回溯againDelete
         var tempDeleteStart = tempIndex
         var tempBack = tempIndex - 1
         while tempBack >= 0 {
@@ -2537,10 +2537,10 @@ struct ChatView: View {
                 break
             }
         }
-        // from tempDeleteStart to末尾one起移除
+        // from tempDeleteStart toendone起remove
         chatTemps.removeSubrange(tempDeleteStart...)
 
-        // 5. MarkRetryand重NewSend
+        // 5. MarkRetryandheavyNewSend
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
         isRetry = false
@@ -2629,7 +2629,7 @@ struct ChatView: View {
                         .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5), value: isSelected)
                 }
             }
-            // selectintimeExpandDisplay全部Information
+            // selectintimeExpandDisplaywholepartInformation
             if isSelected {
                 Text(model.displayName ?? "Unknown")
                     .font(.caption)
@@ -2753,25 +2753,25 @@ struct ChatView: View {
             }
         }
         
-        // Release通知，附带selectinofModel索引，TriggerScrolltorightshouldPosition
+        // Releasenotify，attachcarryselectinofModelindex，TriggerScrolltorightshouldPosition
         NotificationCenter.default.post(name: .scrollToModelIndex, object: index)
     }
     
-    // Filter掉already经selectinof Prompt
+    // Filterdropalreadythroughselectinof Prompt
     private var filteredPromptTemps: [PromptRepo] {
         promptTemps.filter { prompt in
             !selectedPrompts.contains(where: { $0.id == prompt.id })
         }
     }
     
-    // 添加to selectedPrompts，同time移除 promptTemps
+    // addto selectedPrompts，sametimeremove promptTemps
     private func addPrompt(_ prompt: PromptRepo) {
         if !selectedPrompts.contains(where: { $0.id == prompt.id }) {
             selectedPrompts.append(prompt)
         }
     }
         
-        // from selectedPrompts Remove from，同timeRevertto promptTemps
+        // from selectedPrompts Remove from，sametimeRevertto promptTemps
     private func removePrompt(_ prompt: PromptRepo) {
         selectedPrompts.removeAll(where: { $0.id == prompt.id })
     }
@@ -2794,8 +2794,8 @@ struct ChatView: View {
                                             .renderingMode(.template)
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 20, height: 20) // adjust大小
-                                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // Color变is .hlBlue
+                                            .frame(width: 20, height: 20) // adjustbigsmall
+                                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // Colorchangeis .hlBlue
                                         
                                         Text(item.name ?? "Prompt")
                                             .font(.body)
@@ -2937,14 +2937,14 @@ struct ChatView: View {
     
     /// GenerateExportText，onlyKeep role == "user" and "assistant" ofMessage
     /// - Parameters:
-    ///   - format: ExportFormat，目beforeSupport .txt and .json
-    ///   - includeImages: 针right JSON Format，whetherPackageincludeImage（onlyin .json Formatbelow生效）
+    ///   - format: ExportFormat，itembeforeSupport .txt and .json
+    ///   - includeImages: needleright JSON Format，whetherPackageincludeImage（onlyin .json Formatbelow生effect）
     private func generateExportText(for format: ExportFormat, includeImages: Bool = true) -> String {
         let filteredMessages = chatTemps.filter { $0.role == "user" || $0.role == "assistant" }
         
         switch format {
         case .txt:
-            // Text Format：每itemsMessageOutput "User:" or "Assistant:" 后跟TextContent
+            // Text Format：eachitemsMessageOutput "User:" or "Assistant:" after跟TextContent
             var txtContent = ""
             for msg in filteredMessages {
                 let roleStr = (msg.role == "user") ? "User" : msg.modelDisplayName ?? "Assistant"
@@ -2955,7 +2955,7 @@ struct ChatView: View {
             
         case .json:
             if !includeImages {
-                // Plain text JSON Format：每itemsMessageExportis { "role": "user"/"assistant", "content": "TextContent" }
+                // Plain text JSON Format：eachitemsMessageExportis { "role": "user"/"assistant", "content": "TextContent" }
                 var arrayOfObjects = [[String: String]]()
                 for msg in filteredMessages {
                     let role = (msg.role == "user") ? "user" : "assistant"
@@ -2989,7 +2989,7 @@ struct ChatView: View {
                     let role = (msg.role == "user") ? "user" : "assistant"
                     var contentItems: [ExportContentItem] = []
                     
-                    // 添加ImageItem（If any）
+                    // addImageItem（If any）
                     let images = msg.imageArray
                     if !images.isEmpty {
                         for image in images {
@@ -3005,7 +3005,7 @@ struct ChatView: View {
                         }
                     }
                     
-                    // 添加TextItem（If any）
+                    // addTextItem（If any）
                     if let text = msg.text, !text.isEmpty {
                         let textItem = ExportContentItem(
                             type: "text",
@@ -3030,7 +3030,7 @@ struct ChatView: View {
         }
     }
     
-    /// ParseMulti-modal JSON format data（Package括Image）
+    /// ParseMulti-modal JSON format data（PackageincludeImage）
     private func importMessages(importedMessages: [ExportMessage]) {
         for exportMsg in importedMessages {
             var combinedText = ""
@@ -3049,7 +3049,7 @@ struct ChatView: View {
                 }
             }
             let newMessage = ChatMessages(
-                role: exportMsg.role, // role by JSON Data提供
+                role: exportMsg.role, // role by JSON Dataprovide
                 text: combinedText,
                 images: images,
                 reasoning: "",
@@ -3062,7 +3062,7 @@ struct ChatView: View {
             chatTemps.append(newMessage)
             context.insert(newMessage)
         }
-        // UpdateSession预览Information
+        // UpdateSessionpreviewInformation
         if let lastMessage = chatTemps.last {
             chatRecord.infoDescription = String(lastMessage.text?.prefix(90) ?? "")
             chatRecord.lastEdited = lastMessage.timestamp
@@ -3074,7 +3074,7 @@ struct ChatView: View {
         }
     }
 
-    /// ParsePlain text JSON format data：Arrayin每个Objectis { "role": "user"/"assistant", "content": "TextContent" }
+    /// ParsePlain text JSON format data：Arrayineach个Objectis { "role": "user"/"assistant", "content": "TextContent" }
     private func importSimpleMessages(simpleMessages: [[String: String]]) {
         for dict in simpleMessages {
             guard let role = dict["role"], let content = dict["content"] else { continue }
@@ -3092,7 +3092,7 @@ struct ChatView: View {
             chatTemps.append(newMessage)
             context.insert(newMessage)
         }
-        // Synchronize预览Information
+        // SynchronizepreviewInformation
         if let lastMessage = chatTemps.last {
             chatRecord.infoDescription = String(lastMessage.text?.prefix(90) ?? "")
             chatRecord.lastEdited = lastMessage.timestamp
@@ -3104,16 +3104,16 @@ struct ChatView: View {
         }
     }
     
-    // Helper function，useat检测InputinBFGSast one"@"后面ofContentandperformFilter：
+    // Helper function，useatdetectInputinBFGSast one"@"afterfaceofContentandperformFilter：
     private func updateModelSuggestions() {
-        // UseRegexMatchBFGSast one"@"后面ofNon-empty白字符
+        // UseRegexMatchBFGSast one"@"afterfaceofNon-empty白character
         if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
             let query = String(message[range]).dropFirst() // remove"@"
             if query.isEmpty {
-                // IfNoInput字符，thenDefaultDisplaybefore8个Model
+                // IfNoInputcharacter，thenDefaultDisplaybefore8个Model
                 filteredModels = Array(modelTemp.prefix(8))
             } else {
-                // According to query performnot区分大小写ofFilter
+                // According to query performnotcase sensitiveofFilter
                 filteredModels = modelTemp.filter { model in
                     let modelName = model.displayName ?? model.name ?? ""
                     return modelName.localizedCaseInsensitiveContains(query)
@@ -3127,7 +3127,7 @@ struct ChatView: View {
         }
     }
     
-    // High亮Helper function
+    // HighbrightHelper function
     private func highlightedModelText(for fullText: String) -> Text {
         var query = ""
         if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
@@ -3135,12 +3135,12 @@ struct ChatView: View {
             query = String(message[range].dropFirst())
         }
         
-        // IfQueryis empty，then直接Return全称
+        // IfQueryis empty，thendirectlyReturnwhole称
         if query.isEmpty {
             return Text(fullText)
         }
         
-        // tryin fullText inFind query（not区分大小写）
+        // tryin fullText inFind query（notcase sensitive）
         if let matchRange = fullText.range(of: query, options: .caseInsensitive) {
             let prefix = String(fullText[..<matchRange.lowerBound])
             let match = String(fullText[matchRange])
@@ -3161,7 +3161,7 @@ extension Notification.Name {
 /// BottomOperationButton横items
 struct ActionButtonsView: View {
 
-    // MARK: - 绑定 / ValueParameter（全部来self ChatView）
+    // MARK: - bindfixed / ValueParameter（wholepartcomeself ChatView）
     @Binding var selectedModelIndex: Int
     let modelTemp: [AllModels]
 
@@ -3232,7 +3232,7 @@ struct ActionButtonsView: View {
         }
     }
 
-    // MARK: - 视Graph
+    // MARK: - viewGraph
     var body: some View {
         let valid = modelTemp.indices.contains(selectedModelIndex)
         
@@ -3267,7 +3267,7 @@ struct ActionButtonsView: View {
         : Color.clear
         
         HStack(spacing: 6) {
-            // 附file
+            // attachfile
             if model?.supportsTextGen == true {
                 Button {
                     isFeedBack.toggle()
@@ -3294,7 +3294,7 @@ struct ActionButtonsView: View {
                 }
             }
             
-            // —— 左侧ScrollButton —— //
+            // —— leftScrollButton —— //
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     // ToolCall
@@ -3633,7 +3633,7 @@ struct ActionButtonsView: View {
                         .transition(.opacity.combined(with: .move(edge: .leading)))
                     }
                     
-                    // BFGSocal运lines
+                    // BFGSocalrunlines
                     if model?.company == "BFGSOCABFGS" {
                         Button { isFeedBack.toggle() } label: {
                             HStack {
@@ -3671,7 +3671,7 @@ struct ActionButtonsView: View {
             .cornerRadius(20)
             .frame(height: size32)
             
-            // —— 右侧StatusButton —— //
+            // —— rightStatusButton —— //
             Group {
                 if isResponding {            // Cancel
                     Button(action: onCancel) {
@@ -3694,7 +3694,7 @@ struct ActionButtonsView: View {
                     }
                     .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
                     .disabled(message.isEmpty)
-                } else {                     // 观察
+                } else {                     // observe
                     Button(action: onSendObserve) {
                         Image(systemName: "eye.circle.fill")
                             .resizable()
@@ -3718,7 +3718,7 @@ struct ActionButtonsView: View {
         .padding(.bottom, 6)
     }
 
-    // MARK: - Color逻辑
+    // MARK: - Colorlogic
     private var sendButtonColor: Color {
         TemporaryRecord ? .primary : .hlBluefont
     }
@@ -3734,7 +3734,7 @@ struct ActionButtonsView: View {
             : (TemporaryRecord ? .primary : .hlBluefont)
     }
 
-    // MARK: - within部CheckFunction（直接访问Datalibrary）
+    // MARK: - withinpartCheckFunction（directly访问Datalibrary）
     private func checkSearchAvailability() -> Bool {
         do {
             let keys = try context.fetch(FetchDescriptor<SearchKeys>())
@@ -3747,12 +3747,12 @@ struct ActionButtonsView: View {
             let userF = FetchDescriptor<UserInfo>()
             guard let u = try context.fetch(userF).first,
                   let m = u.chooseEmbeddingModel, !m.isEmpty else {
-                knowledgeAlertMessage = "whenbeforeNoenableuseVectorModel，Pleasebefore往 Setting-Model-VectorModel inenableuseVectorModel。"
+                knowledgeAlertMessage = "whenbeforeNoenableuseVectorModel，Pleasebeforetowards Setting-Model-VectorModel inenableuseVectorModel。"
                 return false
             }
             let kf = FetchDescriptor<KnowledgeChunk>()
             if try context.fetch(kf).isEmpty {
-                knowledgeAlertMessage = "whenbeforeNoKnowledgeContentorKnowledgeContentNoperformVector化，Pleasebefore往Knowledge backpackin添加KnowledgeContentandSelectModelright其Vector化。"
+                knowledgeAlertMessage = "whenbeforeNoKnowledgeContentorKnowledgeContentNoperformVectorconvert，PleasebeforetowardsKnowledge backpackinaddKnowledgeContentandSelectModelrightitVectorconvert。"
                 return false
             }
             return true

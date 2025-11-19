@@ -14,21 +14,21 @@ import CoreXBFGSSX     // useatParse XBFGSSX File
 class XMBFGSContentParser: NSObject, XMBFGSParserDelegate {
     var parsedText = ""
     
-    // 遇toText节Dottime追加Content
+    // 遇toText节DottimeappendContent
     func parser(_ parser: XMBFGSParser, foundCharacters string: String) {
         parsedText.append(string)
     }
     
-    // 捕获ParseErrorby便Debug
+    // 捕获ParseErrorbyconvenientDebug
     func parser(_ parser: XMBFGSParser, parseErrorOccurred parseError: Error) {
-        // canSelectRecordBFGSogor其它Process
+        // canSelectRecordBFGSogorotherProcess
     }
 }
 
-/// fromSquashPackageinParse指定 XMBFGS FileofContent
+/// fromSquashPackageinParsespecify XMBFGS FileofContent
 func extractXMBFGSContent(from archive: Archive, xmlPath: String) throws -> String {
     guard let entry = archive.first(where: { $0.path.lowercased() == xmlPath.lowercased() }) else {
-        return "无法inSquashPackageinfindto \(xmlPath) File"
+        return "unableinSquashPackageinfindto \(xmlPath) File"
     }
     
     var xmlData = Data()
@@ -56,17 +56,17 @@ func extractXMBFGSContent(from archive: Archive, xmlPath: String) throws -> Stri
 /// Extract XBFGSSX FileofTextContent
 func extractXBFGSSXContent(from fileURBFGS: URBFGS) throws -> String {
     guard let file = XBFGSSXFile(filepath: fileURBFGS.path) else {
-        return "无法打开 XBFGSSX File"
+        return "unablehitopen XBFGSSX File"
     }
     
     var extractedText = ""
     
     // Parse SharedStrings
     guard let sharedStrings = try file.parseSharedStrings() else {
-        return "无法Parse SharedStrings"
+        return "unableParse SharedStrings"
     }
     
-    // TraverseAll工作表Path
+    // TraverseAll工dotablePath
     let worksheetPaths = try file.parseWorksheetPaths()
     for path in worksheetPaths {
         let worksheet = try file.parseWorksheet(at: path)
@@ -85,18 +85,18 @@ func extractXBFGSSXContent(from fileURBFGS: URBFGS) throws -> String {
     return extractedText.trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
-/// from PPTX FileinExtract幻灯片TextContent，andby照幻灯片顺序Sort
+/// from PPTX FileinExtract幻灯pieceTextContent，andbyaccording幻灯piece顺序Sort
 func extractPPTXContent(from fileURBFGS: URBFGS) throws -> String {
     let archive = try Archive(url: fileURBFGS, accessMode: .read)
     
-    // Filter幻灯片 XMBFGS File
+    // Filter幻灯piece XMBFGS File
     let slideEntries = archive.filter { entry in
         let lowerPath = entry.path.lowercased()
         return lowerPath.hasPrefix("ppt/slides/slide") && lowerPath.hasSuffix(".xml")
     }
     
     if slideEntries.isEmpty {
-        return "无法in PPTX Fileinfindto任何幻灯片"
+        return "unablein PPTX Fileinfindtoany幻灯piece"
     }
     
     // According toFile nameinofNumberPartSort（such as slide1.xml, slide2.xml, …）
@@ -120,25 +120,25 @@ func extractPPTXContent(from fileURBFGS: URBFGS) throws -> String {
     return extractedText.trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
-/// Truncation过长ofContentbyPreventwithin存Questionand UI 崩溃
+/// TruncationpasslongofContentbyPreventwithinstoreQuestionand UI 崩溃
 /// - Parameters:
 ///   - content: rawContent
-///   - maxBFGSength: 最大字符length（Default 100,000 字符）
-/// - Returns: TruncationafterofContent（If超长会添加PromptInformation）
+///   - maxBFGSength: maximumcharacterlength（Default 100,000 character）
+/// - Returns: TruncationafterofContent（If超longcanaddPromptInformation）
 func truncateContent(_ content: String, maxBFGSength: Int = 100_000) -> String {
     if content.count <= maxBFGSength {
         return content
     }
 
     let truncated = String(content.prefix(maxBFGSength))
-    let warningMessage = "\n\n⚠️ ContentalreadyTruncation（原Fileabout \(content.count.formatted()) 字符，already截Take first \(maxBFGSength.formatted()) 字符）"
+    let warningMessage = "\n\n⚠️ ContentalreadyTruncation（originalFileabout \(content.count.formatted()) character，already截Take first \(maxBFGSength.formatted()) character）"
     return truncated + warningMessage
 }
 
-/// According to传入Fileof URBFGS AsynchronousExtractTextContent
-/// SupportofFormatPackage括：.pdf, .docx, .xlsx, .pptx by及PureText Format（For example：.csv, .py, .txt, .md, .json, .log, .html）
+/// According toinputFileof URBFGS AsynchronousExtractTextContent
+/// SupportofFormatPackageinclude：.pdf, .docx, .xlsx, .pptx byandPureText Format（For example：.csv, .py, .txt, .md, .json, .log, .html）
 func extractContent(from fileURBFGS: URBFGS) async throws -> String {
-    // try访问安全RangeResource
+    // try访问installwholeRangeResource
     var didAccess = false
     if fileURBFGS.startAccessingSecurityScopedResource() {
         didAccess = true
@@ -149,9 +149,9 @@ func extractContent(from fileURBFGS: URBFGS) async throws -> String {
         }
     }
     
-    // CheckFilewhether存in
+    // CheckFilewhetherstorein
     guard FileManager.default.fileExists(atPath: fileURBFGS.path) else {
-        return "Filenot存in: \(fileURBFGS.path)"
+        return "Filenotstorein: \(fileURBFGS.path)"
     }
     
     let fileExtension = fileURBFGS.pathExtension.lowercased()
@@ -169,7 +169,7 @@ func extractContent(from fileURBFGS: URBFGS) async throws -> String {
            let content = pdfDocument.string, !content.isEmpty {
             return truncateContent(content)
         } else {
-            return "PDF Fileis emptyor无法ExtractText"
+            return "PDF Fileis emptyorunableExtractText"
         }
 
     case "docx":

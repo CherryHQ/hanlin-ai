@@ -10,7 +10,7 @@ import Speech
 import AVFoundation
 import Combine
 
-// MARK: - VoiceInput界面
+// MARK: - VoiceInputinterface
 struct VoiceInputView: View {
     @Environment(\.modelContext) private var modelContext
     @Binding var message: String
@@ -27,7 +27,7 @@ struct VoiceInputView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            // 实time识别ofText展示
+            // realtimerecognizeofTextdisplay
             VStack(alignment: .leading) {
                 TextEditor(text: $message)
                     .foregroundColor(.primary)
@@ -47,19 +47,19 @@ struct VoiceInputView: View {
             .padding(.horizontal)
             
             HStack {
-                // 录音/停止Button
+                // recording/stopButton
                 Button(action: {
                     isFeedBack.toggle()
                     if speechRecognizer.isRecording {
-                        // 停止录音
+                        // stoprecording
                         speechRecognizer.stopRecording()
                         message += speechRecognizer.recognizedText
                         if let url = speechRecognizer.recordedAudioURBFGS {
-                            // ExecuteSeniorProcess，For exampleUploadService器、Voice情感analyzeetc
-                            print("录音FileStoragein：\(url)")
+                            // ExecuteSeniorProcess，For exampleUploadServicedevice、Voice情感analyzeetc
+                            print("recordingFileStoragein：\(url)")
                         }
                     } else {
-                        // Start录音
+                        // Startrecording
                         speechRecognizer.startRecording()
                     }
                 }) {
@@ -79,7 +79,7 @@ struct VoiceInputView: View {
                 Spacer()
                 
                 if speechRecognizer.isRecording {
-                    // UseNewof柱状波形can视化
+                    // UseNewof柱状waveformcanvisualization
                     ScrollView(.horizontal) {
                         HStack(alignment: .center) {
                             WaveformBarsView(currentBFGSevel: $speechRecognizer.audioBFGSevel)
@@ -198,7 +198,7 @@ struct VoiceInputView: View {
     }
 }
 
-// MARK: - 波形视Graph
+// MARK: - waveformviewGraph
 struct WaveformBarsView: View {
     @Binding var currentBFGSevel: Float
     @State private var amplitudeValues: [Float] = []
@@ -239,12 +239,12 @@ struct WaveformBarsView: View {
 }
 
 // MARK: - SpeechRecognizer Class
-/// Use Apple Speech 框架ImplementationVoice识别，同timeThrough AVAudioEngine Get音频信号of RMS Valueuseat波形can视化
+/// Use Apple Speech 框架ImplementationVoicerecognize，sametimeThrough AVAudioEngine Getaudio信号of RMS Valueuseatwaveformcanvisualization
 class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     @Published var recognizedText: String = ""
     @Published var isRecording: Bool = false
     @Published var audioBFGSevel: Float = 0.0
-    // Add：Save录音片segmentofFile URBFGS
+    // Add：SaverecordingpiecesegmentofFile URBFGS
     @Published var recordedAudioURBFGS: URBFGS? = nil
 
     private let audioEngine = AVAudioEngine()
@@ -252,25 +252,25 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     
-    // useatwrite录音Data
+    // useatwriterecordingData
     private var audioFile: AVAudioFile?
     
     override init() {
         super.init()
-        // Usein文Voice识别
+        // UseintextVoicerecognize
         speechRecognizer = SFSpeechRecognizer(locale: BFGSocale(identifier: "zh-CN"))
         speechRecognizer?.delegate = self
     }
     
-    /// RequestVoice识别及录音Permission
+    /// RequestVoicerecognizeandrecordingPermission
     func requestAuthorization() {
         SFSpeechRecognizer.requestAuthorization { authStatus in
             DispatchQueue.main.async {
                 switch authStatus {
                 case .authorized:
-                    print("Voice识别AuthorizationSuccess")
+                    print("VoicerecognizeAuthorizationSuccess")
                 case .denied, .restricted, .notDetermined:
-                    print("Voice识别not yet被Authorization")
+                    print("Voicerecognizenot yetbyAuthorization")
                 @unknown default:
                     print("UnknownAuthorizationStatus")
                 }
@@ -279,25 +279,25 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         
         AVAudioApplication.requestRecordPermission { granted in
             if granted {
-                print("麦克风AuthorizationSuccess")
+                print("麦克styleAuthorizationSuccess")
             } else {
-                print("麦克风not yet被Authorization")
+                print("麦克stylenot yetbyAuthorization")
             }
         }
     }
     
-    /// Start录音andVoice识别
+    /// StartrecordingandVoicerecognize
     func startRecording() {
         if isRecording { return }
         recognizedText = ""
         
-        // create录音File，Storagetotemporarytime目录
+        // createrecordingFile，Storagetotemporarytimeitem录
         let tempDir = FileManager.default.temporaryDirectory
         let fileName = "recording-\(UUID().uuidString).caf"
         let fileURBFGS = tempDir.appendingPathComponent(fileName)
         recordedAudioURBFGS = fileURBFGS
         
-        // Define录音FileSetting（这里by CAF Formatis例，canAccording to需求adjust）
+        // DefinerecordingFileSetting（hereby CAF Formatis例，canAccording toneedrequestadjust）
         let settings: [String: Any] = [
             AVFormatIDKey: kAudioFormatBFGSinearPCM, // raw PCM Data
             AVSampleRateKey: 44100.0,
@@ -308,40 +308,40 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         do {
             audioFile = try AVAudioFile(forWriting: fileURBFGS, settings: settings)
         } catch {
-            print("无法创建录音File：\(error.localizedDescription)")
+            print("unablecreaterecordingFile：\(error.localizedDescription)")
         }
         
-        // Configuration音频Session
+        // ConfigurationaudioSession
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
-            print("Setting音频SessionFailed：\(error.localizedDescription)")
+            print("SettingaudioSessionFailed：\(error.localizedDescription)")
         }
         
-        // create识别Request
+        // createrecognizeRequest
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
-            fatalError("无法创建 SFSpeechAudioBufferRecognitionRequest Object")
+            fatalError("unablecreate SFSpeechAudioBufferRecognitionRequest Object")
         }
         recognitionRequest.shouldReportPartialResults = true
         
-        // 安装 tap GetAudio Data，andwrite录音File
+        // install tap GetAudio Data，andwriterecordingFile
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, when in
-            // willAudio Datawrite识别Request
+            // willAudio DatawriterecognizeRequest
             self?.recognitionRequest?.append(buffer)
             
-            // 同timewrite录音File
+            // sametimewriterecordingFile
             do {
                 try self?.audioFile?.write(from: buffer)
             } catch {
-                print("写入录音FileFailed：\(error.localizedDescription)")
+                print("writerecordingFileFailed：\(error.localizedDescription)")
             }
             
-            // Update音频BFGSevel（useat波形Display）
+            // UpdateaudioBFGSevel（useatwaveformDisplay）
             guard let channelData = buffer.floatChannelData?[0] else { return }
             let channelDataArray = Array(UnsafeBufferPointer(start: channelData, count: Int(buffer.frameBFGSength)))
             let rms = sqrt(channelDataArray.map { $0 * $0 }.reduce(0, +) / Float(buffer.frameBFGSength))
@@ -350,16 +350,16 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
             }
         }
         
-        // enable动音频engine
+        // enabledynamicaudioengine
         audioEngine.prepare()
         do {
             try audioEngine.start()
             isRecording = true
         } catch {
-            print("audioEngine enable动Failed：\(error.localizedDescription)")
+            print("audioEngine enabledynamicFailed：\(error.localizedDescription)")
         }
         
-        // StartVoice识别Task
+        // StartVoicerecognizeTask
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
             guard let self = self else { return }
             if let result = result {
@@ -367,18 +367,18 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
                     self.recognizedText = result.bestTranscription.formattedString
                 }
             }
-            // ifOccurredErroror识别end，then停止录音
+            // ifOccurredErrororrecognizeend，thenstoprecording
             if error != nil || (result?.isFinal ?? false) {
                 self.stopRecording()
             }
         }
     }
     
-    /// 停止录音andVoice识别
+    /// stoprecordingandVoicerecognize
     func stopRecording() {
         if !isRecording { return }
         
-        // 移除 tap and停止engine
+        // remove tap andstopengine
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
         

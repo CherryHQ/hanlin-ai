@@ -7,16 +7,16 @@
 
 import Foundation
 
-/// useatTestwhenbefore填写of API Key and URBFGS whethercanuse，ReturnBooleanValue
+/// useatTestwhenbeforefillof API Key and URBFGS whethercanuse，ReturnBooleanValue
 func testAIAPI(apiKey: String, requestURBFGS: String, company: String) async -> Bool {
-    // 1. Check API Key and URBFGS whetherhave效
+    // 1. Check API Key and URBFGS whetherhaveeffect
     guard !apiKey.isEmpty,
           !requestURBFGS.isEmpty,
           let url = URBFGS(string: requestURBFGS) else {
         return false
     }
     
-    // 2. 准备Request体（这里onlySendone个简单ofTestMessage）
+    // 2. prepareRequestbody（hereonlySendone个simplesingleofTestMessage）
     let messages: [[String: Any]] = [
         [
             "role": "user",

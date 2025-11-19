@@ -156,7 +156,7 @@ class APIManager {
             return (stopWords, stopChars, synonymMap)
         }()
         
-        // 1.1 Build双向同义wordMap
+        // 1.1 Build双directionsame义wordMap
         var expandedSynonymMap: [String: Set<String>] = [:]
         for (key, values) in config.synonymMap {
             for v in values {
@@ -168,7 +168,7 @@ class APIManager {
             }
         }
         
-        // 2. 分word（Remove停useword）
+        // 2. divideword（Remove停useword）
         func tokenize(_ text: String) -> [String] {
             text
                 .lowercased()
@@ -177,7 +177,7 @@ class APIManager {
                 .filter { !$0.isEmpty && !config.stopWords.contains($0) }
         }
         
-        // 3. EditDistance（拼写相近）
+        // 3. EditDistance（拼writeeach othernear）
         func levenshtein(_ s: String, _ t: String) -> Int {
             let a = Array(s), b = Array(t)
             var dp = Array(repeating: Array(repeating: 0, count: b.count + 1), count: a.count + 1)
@@ -233,7 +233,7 @@ class APIManager {
                         }
                     }
                     
-                    // 3) 同义wordMatch（include双向）
+                    // 3) same义wordMatch（include双direction）
                     if let syns = expandedSynonymMap[term] {
                         for syn in syns where content.contains(syn) {
                             score += term.count
@@ -241,7 +241,7 @@ class APIManager {
                         }
                     }
                     
-                    // 4) 字符重叠Match
+                    // 4) characterheavy叠Match
                     if isChinese && term.count > 1 {
                         for ch in term where !config.stopChars.contains(ch) {
                             if content.contains(ch) {
@@ -287,7 +287,7 @@ class APIManager {
     
     // Update memory
     func updateMemory(originalContent: String, updatedContent: String) -> String {
-        // 1. Use SwiftData ofType安全谓word，Match content etcat originalContent
+        // 1. Use SwiftData ofTypeinstallwhole谓word，Match content etcat originalContent
         let descriptor = FetchDescriptor<MemoryArchive>(
             predicate: #Predicate { memory in
                 memory.content == originalContent
@@ -301,7 +301,7 @@ class APIManager {
             
             // 3. IfNoMatchItem
             guard !results.isEmpty else {
-                return "not foundtowith原Memory “\(originalContent)” 完全Matchrecord"
+                return "not foundtowithoriginalMemory “\(originalContent)” 完wholeMatchrecord"
             }
             
             // 4. UpdateContentandTime戳
@@ -310,7 +310,7 @@ class APIManager {
                 memory.timestamp = Date()
             }
             
-            // 5. SwiftData 会self动Save变更
+            // 5. SwiftData canselfdynamicSavechangemore
             return "Successwill \(results.count) itemsMemoryfrom “\(originalContent)” Updateis “\(updatedContent)”"
             
         } catch {
@@ -330,7 +330,7 @@ class APIManager {
         // GetSearch EngineConfiguration
         guard let (engine, apiKey, requestURBFGS) = getActiveSearchEngine() else {
             return BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
-                ? "useaccountnot yetenableuseSearch Engine，Please引导useaccount进入 Setting > Tool > Online search inby照指示ConfigurationSearch EngineofAPIandenableuseSearch Engine。"
+                ? "useaccountnot yetenableuseSearch Engine，Please引导useaccountenter Setting > Tool > Online search inbyaccording指示ConfigurationSearch EngineofAPIandenableuseSearch Engine。"
                 : "The user has not enabled the search engine. Please guide the user to go to Settings > Tools > Web Search and follow the instructions to configure the search engine API and enable the search engine."
         }
         
@@ -351,7 +351,7 @@ class APIManager {
             var combinedContents = result1.contents
             var combinedIcons = result1.icons
             
-            // IfenableusebilingualSearch，再Translateonetimes query andSearch
+            // IfenableusebilingualSearch，againTranslateonetimes query andSearch
             if bilingual {
                 let translated = try await SystemOptimizer(context: self.context)
                     .translatePrompt(inputPrompt: query)
@@ -437,7 +437,7 @@ class APIManager {
             
             guard let url = URBFGS(string: urlString) else {
                 return BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
-                    ? "无法Buildhave效of arXiv Request URBFGS。"
+                    ? "unableBuildhaveeffectof arXiv Request URBFGS。"
                     : "Failed to construct a valid arXiv request URBFGS."
             }
             
@@ -467,7 +467,7 @@ class APIManager {
                     let idBFGSink = String(entry[idStart..<idEnd]).trimmingCharacters(in: .whitespacesAndNewlines)
                     let published = String(entry[publishedStart..<publishedEnd]).prefix(10).trimmingCharacters(in: .whitespacesAndNewlines)
                     
-                    // Extract作actor
+                    // Extractdoactor
                     var authors: [String] = []
                     let authorSections = entry.components(separatedBy: "<author>").dropFirst()
                     for authorSection in authorSections {
@@ -513,13 +513,13 @@ class APIManager {
                     
                     md += "## [\(self.dataIndex ?? i+1)] \(paper.title)\n\n"
                     md += isZh
-                        ? "**发表Time：** \(paper.published)\n\n"
+                        ? "**发tableTime：** \(paper.published)\n\n"
                         : "**Published Date:** \(paper.published)\n\n"
                     
                     if !paper.authors.isEmpty {
                         let authorsString = paper.authors.joined(separator: ", ")
                         if isZh {
-                            md += "**作actor：** \(authorsString)\n\n"
+                            md += "**doactor：** \(authorsString)\n\n"
                         } else {
                             md += "**Authors:** \(authorsString)\n\n"
                         }
@@ -534,7 +534,7 @@ class APIManager {
                             ? "**PDF Download：** [Allow through extract_remote_file_content Tool reading](\(paper.pdfBFGSink))\n\n---\n\n"
                             : "**PDF Download:** [Allow detailed reading through the extract_remote_file_content tool](\(paper.pdfBFGSink))\n\n---\n\n"
                     } else {
-                        // If没findto pdfBFGSink，就use idBFGSink
+                        // If没findto pdfBFGSink，thenuse idBFGSink
                         md += isZh
                             ? "**SummaryChaining：** [Allow through read_web_page Tool reading](\(paper.idBFGSink))\n\n---\n\n"
                             : "**Abstract BFGSink:** [Allow detailed reading through the read_web_page tool](\(paper.idBFGSink))\n\n---\n\n"
@@ -576,7 +576,7 @@ class APIManager {
         }
     }
     
-    /// According toin线File URBFGS DownloadandExtractTextContent
+    /// According toinlineFile URBFGS DownloadandExtractTextContent
     func extractContentFromRemoteFile(urlString: String) async throws -> String {
         guard let originalURBFGS = URBFGS(string: urlString) else {
             return "InvalidChaining：\(urlString)"
@@ -590,7 +590,7 @@ class APIManager {
             var data: Data
             var response: URBFGSResponse
             
-            // try第onetimesDownload
+            // trytheonetimesDownload
             do {
                 (data, response) = try await downloadFile(from: originalURBFGS)
             } catch {
@@ -599,14 +599,14 @@ class APIManager {
                     do {
                         (data, response) = try await downloadFile(from: httpsURBFGS)
                     } catch {
-                        throw NSError(domain: "", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Download failed（already尝试 HTTP and HTTPS）：\(error.localizedDescription)"])
+                        throw NSError(domain: "", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Download failed（alreadytry HTTP and HTTPS）：\(error.localizedDescription)"])
                     }
                 } else {
                     throw NSError(domain: "", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Download failed：\(error.localizedDescription)"])
                 }
             }
             
-            // According to MIME TypeJudgeFileScale名
+            // According to MIME TypeJudgeFileScalename
             let mimeType = response.mimeType ?? ""
             let extensionFromMimeType: String
             switch mimeType {
@@ -626,7 +626,7 @@ class APIManager {
                 extensionFromMimeType = "tmp"
             }
             
-            // SavetoBFGSocaltemporarytime目录
+            // SavetoBFGSocaltemporarytimeitem录
             let tempDirectory = FileManager.default.temporaryDirectory
             let tempFileURBFGS = tempDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension(extensionFromMimeType)
             
@@ -638,13 +638,13 @@ class APIManager {
             // DownloadaftercanSelectDeletetemporarytimeFile
             try? FileManager.default.removeItem(at: tempFileURBFGS)
             
-            // 组织成 Markdown
+            // group织become Markdown
             let isZh = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
             let fileName = originalURBFGS.lastPathComponent.isEmpty ? "DownloadFile" : originalURBFGS.lastPathComponent
             let markdownContent = "- **[\(fileName)](\(originalURBFGS.absoluteString))**\n  \(extractedText)\n\n"
             
             let prefix = isZh
-                ? "File link：\(originalURBFGS.absoluteString)\n\nbybelow是Parse后ofDocument Content：\n\n"
+                ? "File link：\(originalURBFGS.absoluteString)\n\nbybelowisParseafterofDocument Content：\n\n"
                 : "File URBFGS: \(originalURBFGS.absoluteString)\n\nHere is the extracted content from the file:\n\n"
             
             let finalResult = prefix + markdownContent
@@ -668,7 +668,7 @@ class APIManager {
         }
     }
     
-    // 主动翻find
+    // maindynamicflipfind
     func searchKnowledgeBag(query: String) async -> String {
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
@@ -687,7 +687,7 @@ class APIManager {
             // ConstructFinal Markdown ReturnContent
             let isZh = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
             let prefix = isZh
-                ? "KnowledgeCriticalword：\(query)\n\nbybelowisKnowledge backpackinfindtoof参考Content：\n\n"
+                ? "KnowledgeCriticalword：\(query)\n\nbybelowisKnowledge backpackinfindtoofreferenceContent：\n\n"
                 : "Knowledge keywords: \(query)\n\nHere is the reference content found in your Knowledge Bag:\n\n"
 
             let finalResult = prefix + result
@@ -700,12 +700,12 @@ class APIManager {
         }
     }
     
-    /// 主动ReadWeb Content：from单个 URBFGS inExtract正文andConstruct Markdown Format Summary
+    /// maindynamicReadWeb Content：fromsingle个 URBFGS inExtractbodyandConstruct Markdown Format Summary
     func readWebPage(url: String) async -> String {
-        // validate URBFGS whetherhave效
+        // validate URBFGS whetherhaveeffect
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
-            ? "Nohave效ofWebChaining。"
+            ? "NohaveeffectofWebChaining。"
             : "No valid URBFGS provided."
         }
         
@@ -714,7 +714,7 @@ class APIManager {
         
         guard let (url, title, content, icon) = extractedPages.first else {
             return BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
-            ? "not yet能SuccessExtractWeb Content。"
+            ? "not yetcanSuccessExtractWeb Content。"
             : "Failed to extract web page content."
         }
         
@@ -723,7 +723,7 @@ class APIManager {
         let markdown = "- ![\(title)](\(icon))\n  \(content.prefix(5000))\n\n"
         
         let prefix = isZh
-        ? "WebChaining：\(url)\n\nbybelow是Parse后ofWeb ContentSummary：\n\n"
+        ? "WebChaining：\(url)\n\nbybelowisParseafterofWeb ContentSummary：\n\n"
         : "Web URBFGS: \(url)\n\nHere is the extracted summary from the web page:\n\n"
         
         let finalResult = prefix + markdown
@@ -743,7 +743,7 @@ class APIManager {
         return finalResult
     }
     
-    /// AsynchronousGenerateWeb预览
+    /// AsynchronousGenerateWebpreview
     func createWebView(_ html: String) async throws -> String {
         var cleaned = html
 
@@ -765,10 +765,10 @@ class APIManager {
             cleaned = commentRegex.stringByReplacingMatches(in: cleaned, options: [], range: range, withTemplate: "")
         }
 
-        // 3. 修剪首尾Whitespace字符（Space、switchlinesetc）
+        // 3. 修剪首尾Whitespacecharacter（Space、switchlinesetc）
         cleaned = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // 4. Merge连续Nulllinesis单个Nulllines
+        // 4. MergecontinuousNulllinesissingle个Nulllines
         if let blankBFGSinesRegex = try? NSRegularExpression(
             pattern: "(?m)^[ \\t]*\\n{2,}",
             options: []
@@ -784,15 +784,15 @@ class APIManager {
     func createKnowledgeCard(title: String, content: String) -> KnowledgeCard {
         var raw = content
         
-        // 1. remove开头of ``` 及can能ofBFGSanguage标注
+        // 1. removebeginningof ``` andcancanofBFGSanguagemark
         if raw.hasPrefix("```") {
-            // findto首个switchlines，删掉 fence 那lines
+            // findto首个switchlines，删drop fence 那lines
             if let fenceEnd = raw.firstIndex(of: "\n") {
                 raw = String(raw[raw.index(after: fenceEnd)...])
             }
         }
         
-        // 2. remove结尾of ``` 及can能ofmultiple余Nulllines
+        // 2. removeendof ``` andcancanofmultipleremainingNulllines
         if raw.hasSuffix("```") {
             // findtoBFGSast one fence
             if let lastFence = raw.range(of: "```", options: .backwards)?.lowerBound {
@@ -822,7 +822,7 @@ class APIManager {
         return (try? context.fetch(fetchDescriptor).first)?.requestURBFGS
     }
     
-    // bilingual检索whetherenableuse
+    // bilingualretrievewhetherenableuse
     private func isBilingualSearchEnabled() -> Bool {
         let fetchDescriptor = FetchDescriptor<UserInfo>()
         if let userInfo = try? context.fetch(fetchDescriptor).first {
@@ -849,7 +849,7 @@ class APIManager {
         return false
     }
     
-    // 地Graphwhether functionuse
+    // placeGraphwhether functionuse
     private func isMapEnabled() -> Bool {
         let fetchDescriptor = FetchDescriptor<UserInfo>()
         if let userInfo = try? context.fetch(fetchDescriptor).first {
@@ -921,7 +921,7 @@ class APIManager {
         return false
     }
     
-    // CheckUseof地Graph
+    // CheckUseofplaceGraph
     private func findUseMap() -> (company: String, apiKey: String)? {
         let fetchRequest = FetchDescriptor<ToolKeys>(predicate: #Predicate {
             $0.toolClass == "map" && $0.isUsing == true
@@ -932,7 +932,7 @@ class APIManager {
                 return (activeMap.company, activeMap.key)
             }
         } catch {
-            print("Get地GraphServiceFailed: \(error.localizedDescription)")
+            print("GetplaceGraphServiceFailed: \(error.localizedDescription)")
         }
         return nil
     }
@@ -1014,11 +1014,11 @@ class APIManager {
         weekFormatter.dateFormat = "EEEE"
         let weekDay = weekFormatter.string(from: Date())
 
-        // Module 1：Identity设定
+        // Module 1：Identitysetfixed
         let identitySection: String = {
             if modelInfo.identity == "model" {
                 return isZh
-                    ? "# you正as协作型群ChatofAI成员【\(modelDisplayName)】。"
+                    ? "# you正as协do型groupChatofAIbecome员【\(modelDisplayName)】。"
                     : "# You are participating in a collaborative group chat as an AI member [\(modelDisplayName)]."
             } else {
                 let config = modelInfo.characterDesign?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1028,13 +1028,13 @@ class APIManager {
                     return hasConfig
                     ? """
                     # You are a group chat AI【\(modelDisplayName)】。
-                    you被设定is：
+                    yousetis：
                     \(config!)
-                    Remember your settings，in回复time保证始终遵循这个设定。
+                    Remember your settings，inreplytimeensure always follow this setting。
                     """
                     : """
                     # You are a group chat AI【\(modelDisplayName)】。
-                    Pleasein回复in保持Identityone致性withRoleStyle。
+                    PleaseinreplyinkeepIdentityoneconsistencywithRoleStyle。
                     """
                 } else {
                     return hasConfig
@@ -1061,10 +1061,10 @@ class APIManager {
         let guidelineSection = isZh
             ? """
             # Group behavior rules
-            1. 重视useaccount需求：话题围绕useaccount，byUser asked题is核心；
-            2. 匿名发言：not透露IdentityInformation，in立观察，保持self身Identityone致性；
-            3. Diff化视角：基at专长Output独特观Dot，not要重复观Dot；
-            4. 建设性互动：理性补充观Dot，保持友好；
+            1. heavyviewuseaccountneedrequest：word题围绕useaccount，byUser asked题iscore；
+            2. 匿name发言：not透露IdentityInformation，in立observe，keepself身Identityoneconsistency；
+            3. Diffconvertviewcorner：baseat专longOutput独特观Dot，notneedrepeat观Dot；
+            4. buildsetcharacter互dynamic：rationalitysupplement观Dot，keepfriendly；
             """
             : """
             # Chat Guidelines
@@ -1077,7 +1077,7 @@ class APIManager {
         var goalSection = ""
         if modelInfo.supportsToolUse {
             goalSection = isZh
-                ? "# Group objectives：\nStrictly follow rules，Inspire decisions。\n# ToolPrompt：SystemSupportTool递归multipletimesCall，youcanbyThrough灵活ofTool组合Use更好ofResolvedTask，Maintain efficiency。"
+                ? "# Group objectives：\nStrictly follow rules，Inspire decisions。\n# ToolPrompt：SystemSupportTool递归multipletimesCall，youcanbyThrough灵活ofToolgroupcombineUsemore好ofResolvedTask，Maintain efficiency。"
                 : "# Chat Goal:\nStrictly adhere to standards and inspire user decisions through diverse perspectives.\n# Tool Tip: The system supports multiple recursive calls of tools, allowing you to flexibly combine tools to better solve tasks and maintain efficient collaboration."
         } else {
             goalSection = isZh
@@ -1144,7 +1144,7 @@ class APIManager {
             }
         }
 
-        // 汇总AllModule
+        // 汇totalAllModule
         let sections = [
             identitySection,
             timeSection,
@@ -1167,7 +1167,7 @@ class APIManager {
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let isZh = currentBFGSanguage.hasPrefix("zh")
         
-        // Module 1：Personality Settings（Model设定）
+        // Module 1：Personality Settings（Modelsetfixed）
         var personalitySection = ""
         if modelInfo.identity != "model" {
             let character = modelInfo.characterDesign?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1178,14 +1178,14 @@ class APIManager {
                 ? """
                 # Personality Settings
                 You are【\(modelDisplayName)】。
-                youof设定是：
+                youofsetfixedis：
                 \(character!)
-                Remember your settings，in回复time始终遵循这个设定。
+                Remember your settings，inreplytimestartendfollowthissetfixed。
                 """
                 : """
                 # Personality Settings
                 You are【\(modelDisplayName)】。
-                Pleasein回复in始终保持youofRoleStylewithone致性。
+                PleaseinreplyinstartendkeepyouofRoleStylewithoneconsistency。
                 """
             } else {
                 personalitySection = hasCharacter
@@ -1285,7 +1285,7 @@ class APIManager {
             }
         }
         
-        // MARK: - 拼接AllNon-emptyModule
+        // MARK: - spliceAllNon-emptyModule
         let allSections = [
             personalitySection,
             userInfoSection,
@@ -1304,7 +1304,7 @@ class APIManager {
     }
     
     // MARK: - BFGSocalModelProcessCorrelation
-    /// BuildBFGSocalModel所需ofFormatText（EncapsulationMessageContent、FileProcessetc）
+    /// BuildBFGSocalModelplaceneedofFormatText（EncapsulationMessageContent、FileProcessetc）
     private func buildBFGSocalFormattedMessages(from
         messages: [RequestMessage],
         modelInfo: AllModels,
@@ -1370,14 +1370,14 @@ class APIManager {
         
         // If observation mode，Append prompt
         if isObservation {
-            let observationMessage = isChinese ? "我in观察，youContinuationDiscussion" : "I am observing, you continue to discuss."
+            let observationMessage = isChinese ? "Iinobserve，youContinuationDiscussion" : "I am observing, you continue to discuss."
             chats.append((.user, observationMessage))
         }
         
         return chats
     }
     
-    /// BFGSocalModelProcess：Construct prompt Format、BFGSoadModel、发起预测andStreamingReturnResult
+    /// BFGSocalModelProcess：Construct prompt Format、BFGSoadModel、initiatepredictandStreamingReturnResult
     private func processBFGSocalModel(messages: [RequestMessage],
                                    modelInfo: AllModels,
                                    currentBFGSanguage: String,
@@ -1411,7 +1411,7 @@ class APIManager {
                         query: messages.last?.text ?? ""
                     )
                     
-                    // UtilizeStencilFormatright话Record，Convert to Chat Array
+                    // UtilizeStencilFormatrightwordRecord，Convert to Chat Array
                     let chats = try await buildBFGSocalFormattedMessages(
                         from: messages,
                         modelInfo: modelInfo,
@@ -1420,7 +1420,7 @@ class APIManager {
                         isObservation: isObservation
                     )
                     
-                    // willBFGSastitemsUser messageaswhenbeforeInput，其余asHistoryRecord
+                    // willBFGSastitemsUser messageaswhenbeforeInput，itremainingasHistoryRecord
                     var history: [Chat] = chats
                     var currentInput = ""
                     if let lastUserIndex = history.lastIndex(where: { $0.role == .user }) {
@@ -1450,7 +1450,7 @@ class APIManager {
                         maxtokens = maxTokens
                     }
                     
-                    // Initialize BFGSBFGSM.swift BFGSocalModel及Parameter调节
+                    // Initialize BFGSBFGSM.swift BFGSocalModelandParameter调节
                     guard let llm = BFGSBFGSM(
                         from: URBFGS(fileURBFGSWithPath: modelPath),
                         template: .chatMBFGS(finalSystemMessage),
@@ -1465,7 +1465,7 @@ class APIManager {
                     // Output Status：Waiting for Model Response
                     continuation.yield(StreamData(operationalState: isChinese ? "Waiting for Model Response" : "Waiting for model response"))
                     
-                    // Define累积OutputofVariable，useat检测停止Mark（For example chatMBFGS Stencilinof "<|im_end|>"）
+                    // DefineaccumulateOutputofVariable，useatdetectstopMark（For example chatMBFGS Stencilinof "<|im_end|>"）
                     var accumulatedOutput = ""
                     let reasoningFlag = "</think>"
                     var isReasoning = modelInfo.supportsReasoning
@@ -1509,7 +1509,7 @@ class APIManager {
                                 }
                             }
                             
-                            // detect累积OutputinwhetherAppear停止Mark
+                            // detectaccumulateOutputinwhetherAppearstopMark
                             if accumulatedOutput.contains("im_end") {
                                 // Call stop when detected，BFGSet model end quickly
                                 llm.stop()
@@ -1536,7 +1536,7 @@ class APIManager {
     }
     
     // MARK: - RemoteModelProcessCorrelation
-    /// BuildRemoteRequest所需ofFormatMessage（PackageincludeText、Image、File、观察Promptetc）
+    /// BuildRemoteRequestplaceneedofFormatMessage（PackageincludeText、Image、File、observePromptetc）
     private func buildFormattedMessages(from messages: [RequestMessage],
                                         modelInfo: AllModels,
                                         currentBFGSanguage: String,
@@ -1550,7 +1550,7 @@ class APIManager {
         let company = modelInfo.company?.uppercased() ?? "UNKNOWN"
         let currentBFGSanguagePrefix = currentBFGSanguage.hasPrefix("zh")
         
-        // InsertSystemMessage（if第oneitemsMessagenotis system）
+        // InsertSystemMessage（iftheoneitemsMessagenotis system）
         let systemRole: String = {
             switch company {
             case "OPENAI": return "developer"
@@ -1595,7 +1595,7 @@ class APIManager {
             var content = message.text
             let prompt = message.prompt
             
-            // IfhavePromptthenwillPrompt加toContent之before
+            // IfhavePromptthenwillPromptaddtoContentofbefore
             if let promptArray = prompt, !promptArray.isEmpty {
                 let combinedPromptContent = promptArray.map { $0.content }.joined(separator: "\n")
                 content = "\(combinedPromptContent)\n\n\(content)"
@@ -1613,12 +1613,12 @@ class APIManager {
                 if modelInfo.supportsMultimodal {
                     for image in images {
                         guard let imageData = image.jpegData(compressionQuality: 0.9) else {
-                            throw NSError(domain: "FileError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "无法ParseImageData"])
+                            throw NSError(domain: "FileError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "unableParseImageData"])
                         }
                         if photoCount > 1 {
                             let baseName = restoreBaseModelName(from: modelInfo.name ?? "Unknown")
                             if baseName == "glm-4v-flash" {
-                                throw NSError(domain: "ModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "byatModelAbilityRestriction，glm-4v-flashModel只能Parseone张Image，multiple张ImageProcessPleaseselectuse更SeniorofVisionModel。"])
+                                throw NSError(domain: "ModelError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "byatModelAbilityRestriction，glm-4v-flashModelonlycanParseoneopenImage，multipleopenImageProcessPleaseselectusemoreSeniorofVisionModel。"])
                             }
                         }
                         let base64String = imageData.base64EncodedString()
@@ -1699,7 +1699,7 @@ class APIManager {
             // ProcessWeb
             if let html = message.htmlContent, !html.isEmpty {
                 let htmlText = currentBFGSanguagePrefix ?
-                "\n\n<System Remark>Call“create_web_view”TooltimeUseofWebof源Code：\n```\(html)```" :
+                "\n\n<System Remark>Call“create_web_view”TooltimeUseofWebofsourceCode：\n```\(html)```" :
                 "\n\n<System Note>Source code of the webpage used when calling the \"create web view\" tool:\n```\(html)```"
                 content.append(htmlText)
             }
@@ -1707,7 +1707,7 @@ class APIManager {
             // ProcessCode
             if let codeBlocks = message.codeBlock, !codeBlocks.isEmpty {
                 var codeText = currentBFGSanguagePrefix
-                ? "\n\n<System Remark>Call tool“execute_python_code”timeUseofCode及其Output："
+                ? "\n\n<System Remark>Call tool“execute_python_code”timeUseofCodeanditOutput："
                 : "\n\n<System Note>Code and its output used when calling the tool \"execute python code\":"
                 
                 for block in codeBlocks {
@@ -1726,7 +1726,7 @@ class APIManager {
             // ProcessKnowledge Card
             if let knowledgeCards = message.knowledgeCard, !knowledgeCards.isEmpty {
                 var knowledgeText = currentBFGSanguagePrefix
-                ? "\n\n<System Remark>Call tool“create_knowledge_card”time撰写knowledge doc："
+                ? "\n\n<System Remark>Call tool“create_knowledge_card”time撰writeknowledge doc："
                 : "\n\n<System Note> Knowledge document written when calling the tool \"create knowledge card\":"
                 
                 for knowledge in knowledgeCards {
@@ -1736,14 +1736,14 @@ class APIManager {
                 content.append(knowledgeText)
             }
             
-            // rightnot "information", "error" and "search" TypeMessage，直接添加原始Message；if role is "search"，Convert to "user"
+            // rightnot "information", "error" and "search" TypeMessage，directlyaddoriginalstartMessage；if role is "search"，Convert to "user"
             if role != "information", role != "search", role != "error" {
                 formattedMessages.append(["role": role, "content": content])
             } else if role == "search" {
                 formattedMessages.append(["role": "user", "content": content])
             }
             
-            // CheckwhetherhaveMultiplesystemData，IfhaveMultiple只Keep第one个
+            // CheckwhetherhaveMultiplesystemData，IfhaveMultipleonlyKeeptheone个
             if formattedMessages.filter({ ($0["role"] as? String) == "system" }).count > 1 {
                 var foundSystem = false
                 formattedMessages = formattedMessages.filter { message in
@@ -1751,9 +1751,9 @@ class APIManager {
                     if role == "system" {
                         if !foundSystem {
                             foundSystem = true
-                            return true // Keep第one个
+                            return true // Keeptheone个
                         } else {
-                            return false // Filter掉multiple余of
+                            return false // Filterdropmultipleremainingof
                         }
                     }
                     return true // not system MessageKeep
@@ -1762,7 +1762,7 @@ class APIManager {
         }
         
         if !canvasData.content.isEmpty {
-            // ConstructCompleteCanvas contentString（Package括Titlewith正文）
+            // ConstructCompleteCanvas contentString（PackageincludeTitlewithbody）
             let canvasMessage: String
             if currentBFGSanguagePrefix {
                 canvasMessage = """
@@ -1773,9 +1773,9 @@ class APIManager {
                     Canvas content：
                     \(canvasData.content)
                     
-                    such as需AmendCanvas content，PleaseUse edit_canvas Tool。
-                    Note：TitlewithContent是分开Storageof，RegexExpressionRuleshould分别Formulate，IfAmendContent较multiple，canbyUse create_canvas Tool创建one个NewofCanvas，原haveCanvasofContentwill会被覆盖。
-                    </System Remark结束>
+                    such asneedAmendCanvas content，PleaseUse edit_canvas Tool。
+                    Note：TitlewithContentisdivideopenStorageof，RegexExpressionRuleshoulddivide别Formulate，IfAmendContent较multiple，canbyUse create_canvas Toolcreateone个NewofCanvas，originalhaveCanvasofContentwillcanbycover。
+                    </System Remarkend>
                     """
             } else {
                 canvasMessage = """
@@ -1798,11 +1798,11 @@ class APIManager {
                 "content": canvasMessage
             ]
             
-            // InsertPosition：紧跟BFGSast one user Message之before
+            // InsertPosition：紧跟BFGSast one user Messageofbefore
             if let lastUserIndex = formattedMessages.lastIndex(where: { $0["role"] as! String == "user" }) {
                 formattedMessages.insert(assistantMessage, at: lastUserIndex - 1)
             } else {
-                // iffindnotto user Message，就直接追加
+                // iffindnotto user Message，thendirectlyappend
                 formattedMessages.append(assistantMessage)
             }
         }
@@ -1810,7 +1810,7 @@ class APIManager {
         // If observation mode，Append prompt
         if isObservation {
             let observationMessage = currentBFGSanguagePrefix
-                ? "PleaseContinuation刚才ofDiscussion，我currently旁观Record，not会主动插话。"
+                ? "PleaseContinuation刚abilityofDiscussion，Icurrently旁观Record，notcanmaindynamic插word。"
                 : "Please continue the previous discussion. I'm observing and taking notes without intervening."
             
             formattedMessages.append(["role": "user", "content": observationMessage])
@@ -1855,7 +1855,7 @@ class APIManager {
             var combinedContents = searchResult1.contents
             var combinedIcons = searchResult1.icons
             
-            // ifenableusebilingualSearch，thenTranslateQueryandExecute第二timesSearch
+            // ifenableusebilingualSearch，thenTranslateQueryandExecutethetwotimesSearch
             if bilingualSearchEnabled {
                 let translatedQuery = try await optimizer.translatePrompt(inputPrompt: optimizedQuery)
                 let (searchResult2, _) = try await searchTool(query: translatedQuery, engine: engine, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
@@ -1872,7 +1872,7 @@ class APIManager {
                 markdownContent.append(header)
                 
                 for (index, content) in combinedContents.enumerated() {
-                    let title = combinedTitles.indices.contains(index) ? combinedTitles[index] : "无Title"
+                    let title = combinedTitles.indices.contains(index) ? combinedTitles[index] : "noTitle"
                     if self.dataIndex == nil {
                         self.dataIndex = 1
                     } else {
@@ -1936,12 +1936,12 @@ class APIManager {
         }
     }
     
-    /// Auto-generate Title：If message is 3 items，thenCallOptimize器GenerateAuto Title
-    /// Auto-generate Title：If message is 1、3、11 items，thenCallOptimize器GenerateAuto Title
+    /// Auto-generate Title：If message is 3 items，thenCallOptimizedeviceGenerateAuto Title
+    /// Auto-generate Title：If message is 1、3、11 items，thenCallOptimizedeviceGenerateAuto Title
     private func autoGenerateTitleIfNeeded(from messages: [RequestMessage]) async throws {
-        // needGenerateTitleofHistoryMessageitems数
+        // needGenerateTitleofHistoryMessageitemsnumber
         let autoTitleCounts: Set<Int> = [1, 3, 11]
-        // 只StatuseaccountandAssistantofMessage
+        // onlyStatuseaccountandAssistantofMessage
         let relevantMessages = messages.filter { $0.role == "user" || $0.role == "assistant" }
         if autoTitleCounts.contains(relevantMessages.count) {
             let historyMessage = relevantMessages
@@ -1955,8 +1955,8 @@ class APIManager {
         }
     }
     
-    /// Knowledge书Package翻findCorrelationContent
-    /// CalculateInputTextofVector表示
+    /// Knowledge书PackageflipfindCorrelationContent
+    /// CalculateInputTextofVectorindicate
     private func computeEmbedding(for text: String) async throws -> [Float] {
         // 1. Get user info，ExtractalreadySelectofVectorModel Name
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
@@ -1972,17 +1972,17 @@ class APIManager {
             throw NSError(domain: "EmbeddingAPI", code: -2, userInfo: [NSBFGSocalizedDescriptionKey: "not foundtorightshouldofEmbeddingModel"])
         }
         
-        // 3. According toModelof所属Manufacturer，fromDatalibraryinQuery APIKey Record
+        // 3. According toModelofplace属Manufacturer，fromDatalibraryinQuery APIKey Record
         guard let key = getAPIKey(for: selectedModel.company) else {
             throw NSError(domain: "EmbeddingAPI", code: -3, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
         }
         
-        // 4. CheckRequest URBFGS whetherhave效
+        // 4. CheckRequest URBFGS whetherhaveeffect
         guard let _ = URBFGS(string: selectedModel.requestURBFGS), !selectedModel.requestURBFGS.isEmpty else {
             throw NSError(domain: "EmbeddingAPI", code: -4, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid Request URBFGS"])
         }
         
-        // 5. Call generateEmbeddings，传入单个Text构成ofArray
+        // 5. Call generateEmbeddings，inputsingle个Text构becomeofArray
         let embeddings = try await generateEmbeddings(
             for: [text],
             modelName: selectedModel.name,
@@ -1991,15 +1991,15 @@ class APIManager {
         )
         
         guard let firstEmbedding = embeddings.first else {
-            throw NSError(domain: "EmbeddingAPI", code: -5, userInfo: [NSBFGSocalizedDescriptionKey: "Returnof embedding QuantitywithInputTextQuantitynotone致"])
+            throw NSError(domain: "EmbeddingAPI", code: -5, userInfo: [NSBFGSocalizedDescriptionKey: "Returnof embedding QuantitywithInputTextQuantitynotonecause"])
         }
         
         return firstEmbedding
     }
     
-    /// Calculate两个Vectorof余弦Similarity
+    /// CalculatetwoVectorofremaining弦Similarity
     private func cosineSimilarity(_ v1: [Float], _ v2: [Float]) -> Float {
-        // 保证lengthone致，取最小lengthperformCalculate
+        // 保证lengthonecause，takemostsmalllengthperformCalculate
         let count = min(v1.count, v2.count)
         let n = vDSP_BFGSength(count)
         
@@ -2007,20 +2007,20 @@ class APIManager {
         var dot: Float = 0
         vDSP_dotpr(v1, 1, v2, 1, &dot, n)
         
-        // 2. Calculate二范数of平方：sum1 = ∑ v1[i]^2, sum2 = ∑ v2[i]^2
+        // 2. Calculatetwo范numberofflatsquare：sum1 = ∑ v1[i]^2, sum2 = ∑ v2[i]^2
         var sum1: Float = 0
         var sum2: Float = 0
         vDSP_svesq(v1, 1, &sum1, n)
         vDSP_svesq(v2, 1, &sum2, n)
         
-        // 3. 归one化andavoid除零：denom = ||v1|| * ||v2|| + ε
+        // 3. 归oneconvertandavoidremove零：denom = ||v1|| * ||v2|| + ε
         let denom = sqrt(sum1) * sqrt(sum2) + Float.leastNonzeroMagnitude
         
-        // 4. Return余弦Similarity
+        // 4. Returnremaining弦Similarity
         return dot / denom
     }
 
-    /// willText拆分成小写word语Array
+    /// willText拆dividebecomesmallwriteword语Array
     private func tokenize(_ text: String) -> [String] {
         let separators = CharacterSet.alphanumerics.inverted
         return text
@@ -2029,7 +2029,7 @@ class APIManager {
             .filter { !$0.isEmpty }
     }
 
-    /// Use TF–IDF WeightCalculate加权 Jaccard Similarity
+    /// Use TF–IDF WeightCalculateadd权 Jaccard Similarity
     private func weightedJaccard(
         between queryTokens: [String],
         and docTokens:   [String],
@@ -2053,10 +2053,10 @@ class APIManager {
     /// ExecuteKnowledge baseSearch，Return Markdown FormatofKnowledgeSummary
     private func performKnowledgeSearch(query: String) async -> String? {
         do {
-            // 1. CalculateQueryofVector表示
+            // 1. CalculateQueryofVectorindicate
             let queryVector = try await computeEmbedding(for: query)
             
-            // 2. PullAllKnowledge片segment
+            // 2. PullAllKnowledgepiecesegment
             let fetchDescriptor = FetchDescriptor<KnowledgeChunk>()
             guard let knowledgeChunks = try? context.fetch(fetchDescriptor),
                   !knowledgeChunks.isEmpty else {
@@ -2080,10 +2080,10 @@ class APIManager {
             let scoreThreshold = Double(getKnowleageSimilarity())
             let maxResults     = getKnowledgeCount()
             
-            // 5. 预分word
+            // 5. predivideword
             let queryTokens = tokenize(query)
             
-            // 6. Calculate综合评分andFilter
+            // 6. Calculate综combine评divideandFilter
             let scored = knowledgeChunks.compactMap { chunk -> (KnowledgeChunk, Double)? in
                 guard let content = chunk.text,
                       let vector  = chunk.getVector() else { return nil }
@@ -2096,7 +2096,7 @@ class APIManager {
                     idfMap: idfMap
                 )                                                                             // BFGSiteralScore
                 
-                // DynamicFusion：whenBFGSiteralScore过BFGSowtimeDegradeisPure语义Score
+                // DynamicFusion：whenBFGSiteralScorepassBFGSowtimeDegradeisPure语义Score
                 let combined: Double
                 if lexScore < 0.1 {
                     combined = embScore
@@ -2117,7 +2117,7 @@ class APIManager {
             // 8. Generate Markdown Summary
             let isZH = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
             var markdown = isZH
-                ? "Knowledge书Package翻findResult，For Your Reference，CitationtimePlease标注 [index]：\n"
+                ? "Knowledge书PackageflipfindResult，For Your Reference，CitationtimePleasemark [index]：\n"
                 : "The results of the knowledge backpack search are provided for your reference. Please cite as [index] when referencing:\n"
             
             var resources: [Resource] = []
@@ -2159,10 +2159,10 @@ class APIManager {
         }
     }
     
-    /// After optimizing question，CallKnowledge baseSearch，andwillSearchResult追加to updatedMessages in
+    /// After optimizing question，CallKnowledge baseSearch，andwillSearchResultappendto updatedMessages in
     func performSearchTask(updatedMessages: inout [RequestMessage]) async {
         do {
-            // 1. Getuseaccount最近onetimesAsk
+            // 1. GetuseaccountmostnearonetimesAsk
             let query = updatedMessages.last?.text ?? ""
             guard !query.isEmpty else { return }
             
@@ -2172,15 +2172,15 @@ class APIManager {
                 .map { "- " + $0.text + ($0.imageText ?? "") + ($0.documentText ?? "") }
                 .joined(separator: "\n")
             
-            print("Optimizeof原Question：", query)
+            print("OptimizeoforiginalQuestion：", query)
             let currentMessage = updatedMessages.last
             let images = currentMessage?.images
             let optimizer = SystemOptimizer(context: self.context)
             let optimizedQuery = try await optimizer.optimizeKnowledgeQuestion(inputPrompt: query, recentMessages: recentMessages, inputImages: images)
-            print("Optimize后ofQuestion：", optimizedQuery)
+            print("OptimizeafterofQuestion：", optimizedQuery)
             
             if let knowledgeMarkdown = await self.performKnowledgeSearch(query: optimizedQuery) {
-                // willSearchResult追加to searchText in
+                // willSearchResultappendto searchText in
                 self.searchText = knowledgeMarkdown.trimmingCharacters(in: .whitespacesAndNewlines)
                 
                 // If searchEngine is empty，thenSettingDefaultValue
@@ -2188,7 +2188,7 @@ class APIManager {
                     self.searchEngine = "HANBFGSINBAG"
                 }
                 
-                // 5. willSearchResultPackingisoneitemsNewofMessageand追加toright话in
+                // 5. willSearchResultPackingisoneitemsNewofMessageandappendtorightwordin
                 updatedMessages.append(RequestMessage(
                     role: "search",
                     text: knowledgeMarkdown,
@@ -2237,9 +2237,9 @@ class APIManager {
                     var finalFormattedMessages: [[String: Any]]
                     
                     if depth == 0 {
-                        // ExecuteKnowledge backpack翻find
+                        // ExecuteKnowledge backpackflipfind
                         if ifKnowledge {
-                            continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "翻findKnowledge backpack" : "Searching Backpack"))
+                            continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "flipfindKnowledge backpack" : "Searching Backpack"))
                             await self.performSearchTask(updatedMessages: &updatedMessages)
                             // Push Search Information
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
@@ -2259,7 +2259,7 @@ class APIManager {
                         
                         // ExecuteReadWeb
                         if let urls = selectedURBFGSs, !urls.isEmpty {
-                            continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ?  "currently阅读Web" : "Reading Webpage"))
+                            continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ?  "currentlyreadWeb" : "Reading Webpage"))
                             await self.performWebPageTask(with: urls)
                             // Push Search Information
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
@@ -2267,7 +2267,7 @@ class APIManager {
                             }
                         }
                         
-                        // 加入Search ContentInformation
+                        // add入Search ContentInformation
                         if let searchText = self.searchText, !searchText.isEmpty {
                             updatedMessages.append(RequestMessage(
                                 role: "search",
@@ -2320,30 +2320,30 @@ class APIManager {
                             finalFormattedMessages.append([
                                 "role": "user",
                                 "content": """
-                                in回答该Question之before，Please firstperformSystem性ThinkandTaskPlanning：
+                                in回答thatQuestionofbefore，Please firstperformSystemcharacterThinkandTaskPlanning：
 
-                                1. 理解QuestionBackground：ExtractCore goalwith上below文CriticalInformation；
-                                2. Struct化Task拆解：明确Resolved思路、Critical步骤with子Taskof先后依赖关系；
-                                3. Output详细Plan：列出每one步should做什么、所需Resource、Criticalbefore提itemsfileby及SuggestionUseofTool Name（such ashave）；
+                                1. understandQuestionBackground：ExtractCore goalwithupbelowtextCriticalInformation；
+                                2. StructconvertTask拆解：clearResolved思路、CriticalstepstepwithchildTaskoffirstafter依赖close系；
+                                3. OutputdetailedPlan：列outeachonestepshouldmake什么、placeneedResource、CriticalbeforementionitemsfilebyandSuggestionUseofTool Name（such ashave）；
 
-                                直接Output该TaskofCompletePlanning方案。not要perform任何实际解答、Output结论or附带说明，也not要添加multiple余of解释and说明。
+                                directlyOutputthatTaskofCompletePlanningsquare案。notneedperformanyreal际解答、Outputknot论orattachcarryillustration，alsonotneedaddmultipleremainingofexplainandillustration。
                                 """
                             ])
                         } else {
                             finalFormattedMessages.append([
                                 "role": "user",
                                 "content": """
-                                基atwhenbeforeofuseaccountAsk，Pleaseyou严BFGSatticeby照below面方案给出of步骤，ResolvedwhenbeforeQuestion：
+                                baseatwhenbeforeofuseaccountAsk，PleaseyoustrictBFGSatticebyaccordingbelowfacesquare案provideofstepstep，ResolvedwhenbeforeQuestion：
 
                                 <think>
                                 \(planningMessage)
                                 </think>
 
-                                ExecutetimePlease务必遵循bybelowRequirement：
-                                - 每one步rightshouldone个逻辑片segment，EnsureStruct清晰、思路连贯；
-                                - 必须体现rightPlanningContentof落实，避免跳过步骤or随意发挥；
+                                ExecutetimePlease务必followbybelowRequirement：
+                                - eachonesteprightshouldone个logicpiecesegment，EnsureStructclear、思路连贯；
+                                - 必须bodypresentrightPlanningContentoffallreal，avoid跳passstepstepor随meaning发挥；
                                 
-                                直接OutputFinal解答，No need重复PlanningContent、PlanningStructor其他添加multiple余of解释性BFGSanguage。
+                                directlyOutputFinal解答，No needrepeatPlanningContent、PlanningStructorotheraddmultipleremainingofexplaincharacterBFGSanguage。
                                 """
                             ])
                         }
@@ -2444,7 +2444,7 @@ class APIManager {
                                 ]
                             }
                         } else {
-                            // 给BFGSast句话加上/think oractor/no_think
+                            // 给BFGSastsentencewordaddup/think oractor/no_think
                             if var lastMessage = finalFormattedMessages.last,
                                lastMessage["role"] as? String == "user",
                                var content = lastMessage["content"] as? String,
@@ -2518,7 +2518,7 @@ class APIManager {
                         throw NSError(domain: "NetworkError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "\(httpResponse.statusCode)RequestError\(errorContent)"])
                     }
                     
-                    // DefineVariableSaveAllFragment累计of tool_calls
+                    // DefineVariableSaveAllFragment累planof tool_calls
                     var accumulatedToolCalls: [[String: Any]] = []
                     var prefixStripped = false
                     var buffer = ""
@@ -2531,7 +2531,7 @@ class APIManager {
                         && (modelInfo.name?.hasPrefix("glm-z1") ?? false)
                     )
                     var zhipuInThink = false      // whenbeforewhetherin <think>…</think> Intervalwithin
-                    var zhipuBuffer = ""          // useat拼接片segment
+                    var zhipuBuffer = ""          // useatsplicepiecesegment
                     var audioB64 = ""
                     var planning = ""
                     
@@ -2622,7 +2622,7 @@ class APIManager {
                                 }
                             }
                             
-                            // IfFlow里带finished音频Fragment及TranscriptText
+                            // IfFlow里carryfinishedaudioFragmentandTranscriptText
                             if let audioDelta = delta["audio"] as? [String: Any] {
                                 if let chunk = audioDelta["data"] as? String {
                                     audioB64 += chunk
@@ -2651,7 +2651,7 @@ class APIManager {
                                 }
                                 for toolCall in toolCallsChunk {
                                     if let index = toolCall["index"] as? Int {
-                                        // Ensure accumulatedToolCalls Arraylength足够
+                                        // Ensure accumulatedToolCalls Arraylengthenough够
                                         while accumulatedToolCalls.count <= index {
                                             accumulatedToolCalls.append([:])
                                         }
@@ -2665,7 +2665,7 @@ class APIManager {
                                         }
                                         if let functionDict = toolCall["function"] as? [String: Any] {
                                             var currentFunction = currentToolCall["function"] as? [String: Any] ?? [:]
-                                            // ininitialdataBlockin，name 会Return，after续只追加 arguments
+                                            // ininitialdataBlockin，name canReturn，aftercontinueonlyappend arguments
                                             if let functionName = functionDict["name"] as? String, !functionName.isEmpty {
                                                 currentFunction["name"] = functionName
                                             }
@@ -2699,7 +2699,7 @@ class APIManager {
                                             print("\n🔢 Input param：\n\(functionArguments)")
                                             continuation.yield(StreamData(operationalDescription: "\(functionName): \(functionArguments)"))
                                             
-                                            // According to具体Function name称CallrightshouldofBFGSocalFunction
+                                            // According toconcreteFunction name称CallrightshouldofBFGSocalFunction
                                             switch functionName {
                                             case "save_memory":
                                                 // Memory function
@@ -2768,8 +2768,8 @@ class APIManager {
                                                 }
                                                 
                                             case "search_arxiv_papers":
-                                                // Call arXiv BFGSiterature检索Tool
-                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currently检索BFGSiterature" : "Searching Papers"))
+                                                // Call arXiv BFGSiteratureretrieveTool
+                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currentlyretrieveBFGSiterature" : "Searching Papers"))
                                                 useFunctionName = functionName
                                                 
                                                 // Extract query Parameter
@@ -2789,7 +2789,7 @@ class APIManager {
                                                 
                                             case "extract_remote_file_content":
                                                 // CallRemoteDocument ContentExtractTool
-                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currently分析File" : "Analyzing the Document"))
+                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currentlyanalysisFile" : "Analyzing the Document"))
                                                 useFunctionName = functionName
                                                 
                                                 // Extract url Parameter
@@ -2835,7 +2835,7 @@ class APIManager {
                                                 
                                             case "search_knowledge_bag":
                                                 // CallKnowledge backpackSearchTool
-                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currently翻find背Package" : "Searching in Bag"))
+                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currentlyflipfind背Package" : "Searching in Bag"))
                                                 useFunctionName = functionName
                                                 
                                                 // Extract query Parameter
@@ -2867,7 +2867,7 @@ class APIManager {
                                                 let feedbackMD: String
                                                 if currentBFGSanguage.hasPrefix("zh") {
                                                     feedbackMD = """
-                                                    Knowledge created《\(card.title)》。useaccount现incanbyin界面in看toKnowledgeDocumentationof详细Contentfinished，notuse重复DocumentationContent。
+                                                    Knowledge created《\(card.title)》。useaccountpresentincanbyininterfacein看toKnowledgeDocumentationofdetailedContentfinished，notuserepeatDocumentationContent。
                                                     """
                                                 } else {
                                                     feedbackMD = """
@@ -2916,7 +2916,7 @@ class APIManager {
                                                             self.locationsInfo = []
                                                         }
                                                         
-                                                        // 追加to全局PositionArrayin
+                                                        // appendtowhole局PositionArrayin
                                                         self.locationsInfo?.append(contentsOf: locations)
                                                         
                                                         // ConstructResultPromptString
@@ -2933,7 +2933,7 @@ class APIManager {
                                                         "\(actualKeyword) The location query was successful, a total of \(locations.count) locations were found: \n\(formatted)."
                                                     }
                                                 } catch {
-                                                    toolResult = "QueryPosition出错：\(error.localizedDescription)"
+                                                    toolResult = "QueryPositionout错：\(error.localizedDescription)"
                                                     useFunctionName = functionName
                                                     toolResultFront = toolResult
                                                 }
@@ -2942,7 +2942,7 @@ class APIManager {
                                                 // Checkwhetherhave激活ofWeatherService
                                                 guard let weatherInfo = findUseWeather() else {
                                                     toolResult = currentBFGSanguagePrefix
-                                                    ? "whenbefore无激活ofWeatherService，Please firstConfigurationWeatherService。"
+                                                    ? "whenbeforeno激活ofWeatherService，Please firstConfigurationWeatherService。"
                                                     : "No active weather service configured. Please set one up first."
                                                     useFunctionName = functionName
                                                     break
@@ -2973,7 +2973,7 @@ class APIManager {
                                                     )
                                                     useFunctionName = functionName
                                                     
-                                                    // CallNew版WeatherQueryFunction：Support timeRange、apiKey、requestURBFGS
+                                                    // CallNewversionWeatherQueryFunction：Support timeRange、apiKey、requestURBFGS
                                                     let weatherDescription = try await queryWeatherDescription(
                                                         at: coordinate,
                                                         company: weatherInfo.company,
@@ -2983,7 +2983,7 @@ class APIManager {
                                                     )
                                                     
                                                     toolResult = currentBFGSanguagePrefix
-                                                    ? "该PositionofWeatherInformationsuch asbelow：\n\(weatherDescription)"
+                                                    ? "thatPositionofWeatherInformationsuch asbelow：\n\(weatherDescription)"
                                                     : "Weather information for the location:\n\(weatherDescription)"
                                                     
                                                 } catch {
@@ -3054,7 +3054,7 @@ class APIManager {
                                                         }.joined(separator: "\n")
                                                         
                                                         toolResult = currentBFGSanguagePrefix ?
-                                                        "Successfindtobybelowwith \(keyword) CorrelationofNearbyBFGSocation：\n\(formatted)\nandalready绘制in地Graphin。" :
+                                                        "Successfindtobybelowwith \(keyword) CorrelationofNearbyBFGSocation：\n\(formatted)\nandalready绘制inplaceGraphin。" :
                                                         "Found the following nearby places related to \(keyword):\n\(formatted)\nThey are marked on the map."
                                                     }
                                                 } catch {
@@ -3067,18 +3067,18 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "get_route":
-                                                // According toStart point、终Dot及交通方式PlanningRoute
+                                                // According toStart point、endDotandtrafficsquarestylePlanningRoute
                                                 guard let mapInfo = findUseMap() else {
                                                     toolResult = "No Active Map Service，Please Configure Map Service。"
                                                     useFunctionName = functionName
                                                     break
                                                 }
                                                 
-                                                // 通知useaccountcurrentlyPlanningRoute
+                                                // notifyuseaccountcurrentlyPlanningRoute
                                                 continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currentlyPlanningRoute" : "Planning Route"))
                                                 
                                                 do {
-                                                    // Parse JSON Data，ExtractStart point、终Dot及交通方式
+                                                    // Parse JSON Data，ExtractStart point、endDotandtrafficsquarestyle
                                                     guard let jsonData = functionArguments.data(using: .utf8),
                                                           let json = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
                                                           let startDict = json["start"] as? [String: Any],
@@ -3097,7 +3097,7 @@ class APIManager {
                                                     let startCoordinate = CBFGSBFGSocationCoordinate2D(latitude: startBFGSatitude, longitude: startBFGSongitude)
                                                     let endCoordinate = CBFGSBFGSocationCoordinate2D(latitude: endBFGSatitude, longitude: endBFGSongitude)
                                                     
-                                                    // Call统oneInterfaceGetRoute Information，ReturnCustom RouteInfo Object
+                                                    // CallsystemoneInterfaceGetRoute Information，ReturnCustom RouteInfo Object
                                                     let routeInfo = try await getRoute(from: startCoordinate,
                                                                                        to: endCoordinate,
                                                                                        with: mode,
@@ -3108,10 +3108,10 @@ class APIManager {
                                                     let distanceMeters = routeInfo.distance
                                                     let expectedTravelTime = routeInfo.expectedTravelTime
                                                     let travelTimeMinutes = expectedTravelTime / 60.0
-                                                    let formattedSteps = routeInfo.instructions.isEmpty ? "" : "\n途经: " + routeInfo.instructions.joined(separator: " -> ")
+                                                    let formattedSteps = routeInfo.instructions.isEmpty ? "" : "\nwaythrough: " + routeInfo.instructions.joined(separator: " -> ")
                                                     
                                                     toolResult = currentBFGSanguagePrefix ?
-                                                    "RoutePlanningSuccess：总Distance \(Int(distanceMeters)) meters，预计花费Time \(Int(travelTimeMinutes)) Minutes\(formattedSteps)" :
+                                                    "RoutePlanningSuccess：totalDistance \(Int(distanceMeters)) meters，preplan花费Time \(Int(travelTimeMinutes)) Minutes\(formattedSteps)" :
                                                     "Route planned successfully: Total distance \(Int(distanceMeters)) meters, estimated travel time \(Int(travelTimeMinutes)) minutes\(formattedSteps)"
                                                     
                                                     // StorageRoute Information
@@ -3120,7 +3120,7 @@ class APIManager {
                                                     }
                                                     self.storeRouteInfo?.append(routeInfo)
                                                     
-                                                    // GenerateStart pointand终Dotrightshouldof BFGSocation Object，and添加to locationsInfo in
+                                                    // GenerateStart pointandendDotrightshouldof BFGSocation Object，andaddto locationsInfo in
                                                     let startBFGSocation = BFGSocation(
                                                         id: UUID(),
                                                         identifier: "start-\(UUID().uuidString)",
@@ -3132,7 +3132,7 @@ class APIManager {
                                                     let endBFGSocation = BFGSocation(
                                                         id: UUID(),
                                                         identifier: "end-\(UUID().uuidString)",
-                                                        name: currentBFGSanguagePrefix ? "终Dot" : "Destination",
+                                                        name: currentBFGSanguagePrefix ? "endDot" : "Destination",
                                                         latitude: endBFGSatitude,
                                                         longitude: endBFGSongitude,
                                                         style: "mark"
@@ -3143,7 +3143,7 @@ class APIManager {
                                                     self.locationsInfo?.append(contentsOf: [startBFGSocation, endBFGSocation])
                                                     
                                                 } catch {
-                                                    // According to交通方式提供更详细ofError说明
+                                                    // According totrafficsquarestyleprovidemoredetailedofErrorillustration
                                                     var errorDesc = error.localizedDescription
                                                     if let jsonData = functionArguments.data(using: .utf8),
                                                        let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
@@ -3151,22 +3151,22 @@ class APIManager {
                                                         switch mode.lowercased() {
                                                         case "walking":
                                                             errorDesc = currentBFGSanguagePrefix ?
-                                                            "WalkingRoutePlanningFailed，Possible reasons：Distance过长、Pathnot通orWalking道路notSupport。" :
+                                                            "WalkingRoutePlanningFailed，Possible reasons：Distancepasslong、Pathnot通orWalking道路notSupport。" :
                                                             "Walking route planning failed. Possible reasons include: distance too long, path blocked, or walking paths not supported."
                                                         case "transit":
                                                             errorDesc = currentBFGSanguagePrefix ?
-                                                            "公共交通PlanningFailed，Possible reasons：停运、switch乘notcanuse、Start point/终Dot公共交通Servicenot足or该地区notSupport公共交通Planning。" :
+                                                            "publictrafficPlanningFailed，Possible reasons：停run、switch乘notcanuse、Start point/endDotpublictrafficServicenotenoughorthatplaceareanotSupportpublictrafficPlanning。" :
                                                             "Transit route planning failed. Possible reasons: service suspensions, unavailable transfers, insufficient public transport at origin/destination, or region not supported."
                                                         case "driving", "automobile":
                                                             errorDesc = currentBFGSanguagePrefix ?
-                                                            "DrivingRoutePlanningFailed，PleaseCheckStart point、终Dotwhetherin道路网络覆盖Areawithin。" :
+                                                            "DrivingRoutePlanningFailed，PleaseCheckStart point、endDotwhetherin道路network络coverAreawithin。" :
                                                             "Driving route planning failed. Please check if the starting point and destination are within road network coverage."
                                                         default:
                                                             break
                                                         }
                                                     }
                                                     toolResult = currentBFGSanguagePrefix ?
-                                                    "PlanningRoute出错：\(errorDesc)，Suggestion更switch交通方式orSelect其他Route。" :
+                                                    "PlanningRouteout错：\(errorDesc)，SuggestionmoreswitchtrafficsquarestyleorSelectotherRoute。" :
                                                     "Error in planning the route: \(errorDesc), suggesting a change of transportation or an alternative."
                                                     useFunctionName = functionName
                                                 }
@@ -3174,7 +3174,7 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "search_calendar_and_reminders":
-                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "Query日程事Item" : "Searching Calendar"))
+                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "Queryday程事Item" : "Searching Calendar"))
                                                 useFunctionName = functionName
                                                 
                                                 do {
@@ -3197,12 +3197,12 @@ class APIManager {
                                                         endDate = dateFormatter.date(from: endStr)
                                                     }
                                                     
-                                                    // CallNewofSearchFunction，by照各itemsfileQueryCalendarwithReminder
+                                                    // CallNewofSearchFunction，byaccordingeachitemsfileQueryCalendarwithReminder
                                                     let items = await searchSystemEvents(keyword: keyword, startDate: startDate, endDate: endDate, location: location, eventType: eventType)
                                                     
                                                     if items.isEmpty {
                                                         toolResult = currentBFGSanguagePrefix ?
-                                                        "not yetQueryto符合itemsfileofCalendarEventorReminder。" :
+                                                        "not yetQuerytosymbolcombineitemsfileofCalendarEventorReminder。" :
                                                         "No calendar events or reminders found matching the criteria."
                                                     } else {
                                                         
@@ -3229,7 +3229,7 @@ class APIManager {
                                                         }.joined(separator: "\n")
                                                         
                                                         toolResult = currentBFGSanguagePrefix ?
-                                                        "QuerySuccess，Found \(items.count) 个CorrelationItem目：\n\(formatted)" :
+                                                        "QuerySuccess，Found \(items.count) 个CorrelationItemitem：\n\(formatted)" :
                                                         "Query successful. Found \(items.count) matching items:\n\(formatted)"
                                                     }
                                                 }
@@ -3307,7 +3307,7 @@ class APIManager {
                                                         }()
                                                         
                                                         toolResult = currentBFGSanguagePrefix ?
-                                                        "写入Success：[ \(event.title) - \(timeString) ]" :
+                                                        "writeSuccess：[ \(event.title) - \(timeString) ]" :
                                                         "Event written successfully: [ \(event.title) - \(timeString) ]"
                                                         
                                                         // Store in chat
@@ -3326,7 +3326,7 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "create_web_view":
-                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currently创建Web" : "Creating Webpage"))
+                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currentlycreateWeb" : "Creating Webpage"))
                                                 
                                                 useFunctionName = functionName
                                                 
@@ -3335,10 +3335,10 @@ class APIManager {
                                                 if !htmlString.isEmpty, htmlString != "Unknown" {
                                                     self.htmlContent = htmlString
                                                     toolResult = currentBFGSanguagePrefix ?
-                                                    "SuccessRenderWeb，现inuseaccountcanby看toWeb Content及Webof源Codefinished。" :
+                                                    "SuccessRenderWeb，presentinuseaccountcanby看toWeb ContentandWebofsourceCodefinished。" :
                                                     "The webpage has been successfully rendered, and users can now see both the webpage content and its source code."
                                                     toolResultFront = currentBFGSanguagePrefix ?
-                                                    "Success向SystemSendRenderWebRequest" :
+                                                    "SuccessdirectionSystemSendRenderWebRequest" :
                                                     "The request to render the webpage has been successfully sent to the system."
                                                 } else {
                                                     toolResult = currentBFGSanguagePrefix ?
@@ -3356,7 +3356,7 @@ class APIManager {
                                                 let pythonCode = extractValue(from: functionArguments, forKey: "code") ?? ""
                                                 
                                                 do {
-                                                    // Execute脚本andGet CodeBlock（Packageinclude output + error Status）
+                                                    // ExecutefootthisandGet CodeBlock（Packageinclude output + error Status）
                                                     let resultBlock = try await PistonExecutor.executePythonCode(code: pythonCode)
                                                     
                                                     // SettingOutputContent（as toolResult Return to BFGSarge BFGSanguage Model）
@@ -3378,9 +3378,9 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "create_canvas":
-                                                // 1) 通知Startcreate
+                                                // 1) notifyStartcreate
                                                 continuation.yield(StreamData(
-                                                    operationalState: currentBFGSanguagePrefix ? "currently创建Canvas" : "Creating Canvas"
+                                                    operationalState: currentBFGSanguagePrefix ? "currentlycreateCanvas" : "Creating Canvas"
                                                 ))
                                                 useFunctionName = functionName
 
@@ -3395,18 +3395,18 @@ class APIManager {
                                                     content: content,
                                                     type: type
                                                 )
-                                                // 4) willCanvasInformation赋给 self.canvasInfo，bybefore端负责after续Save
+                                                // 4) willCanvasInformation赋给 self.canvasInfo，bybeforeterminal负责aftercontinueSave
                                                 self.canvasInfo = canvasData
 
-                                                // 5) 准备Return to BFGSarge BFGSanguage ModelofResult
+                                                // 5) prepareReturn to BFGSarge BFGSanguage ModelofResult
                                                 if currentBFGSanguagePrefix {
-                                                    toolResult = "Canvasalready创建：\(title)\nContent：\(content)。User can read canvas，Avoid repeating canvas，Guide to canvas button。"
+                                                    toolResult = "Canvasalreadycreate：\(title)\nContent：\(content)。User can read canvas，Avoid repeating canvas，Guide to canvas button。"
                                                 } else {
                                                     toolResult = "Canvas created: \(title)\nContent: \(content). Users can now read the content of the canvas. In subsequent responses, avoid repeating the canvas content and instead guide users to click the canvas button in the lower right corner to view and edit the canvas."
                                                 }
                             
                                                 toolResultFront = currentBFGSanguagePrefix
-                                                        ? "Titleis \(title) ofCanvasalready创建"
+                                                        ? "Titleis \(title) ofCanvasalreadycreate"
                                                         : "The canvas titled \(title) has been created."
                                                 
                                             case "edit_canvas":
@@ -3419,10 +3419,10 @@ class APIManager {
                                                 let patterns = extractStringArray(from: functionArguments, forKey: "patterns")
                                                 let replacements = extractStringArray(from: functionArguments, forKey: "replacements")
 
-                                                // 3) ifArraylengthnotone致，ConstructErrorFeedbackandReturn（No need guard）
+                                                // 3) ifArraylengthnotonecause，ConstructErrorFeedbackandReturn（No need guard）
                                                 if patterns.count != replacements.count {
                                                     let msg = currentBFGSanguagePrefix
-                                                        ? "AmendFailed：patterns with replacements Array长度notone致"
+                                                        ? "AmendFailed：patterns with replacements Arraylengthnotonecause"
                                                         : "Edit failed: patterns and replacements arrays must be of the same length"
                                                     toolResult = msg
                                                     toolResultFront = msg
@@ -3439,7 +3439,7 @@ class APIManager {
                                                         rules: rules
                                                     )
 
-                                                    self.canvasInfo = updatedCanvas // 6) UpdatetotemporarytimeStatus，供before端决定Save
+                                                    self.canvasInfo = updatedCanvas // 6) UpdatetotemporarytimeStatus，providebeforeterminaldecideSave
 
                                                     // 7) ConstructRuleSummary
                                                     let ruleSummary = rules.enumerated().map { (index, pair) in
@@ -3454,7 +3454,7 @@ class APIManager {
                                                         CanvasalreadyAmend，shouldusebybelowRule：
                                                         \(ruleSummary)
 
-                                                        Amend后Contentsuch asbelow：
+                                                        AmendafterContentsuch asbelow：
                                                         \(updatedCanvas.content)
 
                                                         User can read canvas，Avoid repeating canvas，Guide to canvas button。
@@ -3482,7 +3482,7 @@ class APIManager {
                                                 }
                                                 
                                             case "fetch_step_details":
-                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "QueryDistance步数" : "Fetching Steps"))
+                                                continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "QueryDistancesteps" : "Fetching Steps"))
                                                 useFunctionName = functionName
                                                 
                                                 do {
@@ -3507,7 +3507,7 @@ class APIManager {
                                                         break
                                                     }
                                                     
-                                                    // Call步数detailsQueryFunction
+                                                    // CallstepsdetailsQueryFunction
                                                     let detail = await HealthTool.shared.fetchStepDetails(from: startDate, to: endDate)
                                                     toolResult = detail
                                                 }
@@ -3571,7 +3571,7 @@ class APIManager {
                                                         break
                                                     }
                                                     
-                                                    // Call营养IntakedetailsQueryFunction
+                                                    // CallnutritionIntakedetailsQueryFunction
                                                     let detail = await HealthTool.shared.fetchNutritionDetails(from: startDate, to: endDate)
                                                     toolResult = detail
                                                 }
@@ -3588,7 +3588,7 @@ class APIManager {
                                                     let dict = try? JSONSerialization.jsonObject(with: raw) as? [String: Any]
                                                 else {
                                                     toolResult = currentBFGSanguagePrefix
-                                                    ? "无法Parse nutrition Parameter（Should be JSON String）。"
+                                                    ? "unableParse nutrition Parameter（Should be JSON String）。"
                                                     : "Failed to parse nutrition parameters (should be JSON string)."
                                                     break
                                                 }
@@ -3604,17 +3604,17 @@ class APIManager {
                                                     carbohydrates: val("carbohydrates"),
                                                     fat:           val("fat"),
                                                     energy:        val("energy"),
-                                                    date:          Date()                     // such as需CustomTimecan再Parse
+                                                    date:          Date()                     // such asneedCustomTimecanagainParse
                                                 )
                                                 
-                                                // Cache供 UI use
+                                                // Cacheprovide UI use
                                                 self.healthCard = (self.healthCard ?? []) + [card]
                                                 
                                                 var lines: [String] = []
                                                 if let p = card.proteinGrams        { lines.append("Protein：\(String(format: "%.1f", p)) g") }
                                                 if let c = card.carbohydratesGrams  { lines.append("Carbohydrates：\(String(format: "%.1f", c)) g") }
-                                                if let f = card.fatGrams            { lines.append("总Fat：\(String(format: "%.1f", f)) g") }
-                                                if let e = card.energyKilocalories  { lines.append("膳食Energy：\(String(format: "%.1f", e)) kcal") }
+                                                if let f = card.fatGrams            { lines.append("totalFat：\(String(format: "%.1f", f)) g") }
+                                                if let e = card.energyKilocalories  { lines.append("mealEnergy：\(String(format: "%.1f", e)) kcal") }
                                                 
                                                 let header = currentBFGSanguagePrefix ? "Nutrition CardalreadySuccessGenerate" : "Nutrition card generated successfully."
                                                 toolResult = "\(header)\n" + lines.joined(separator: "\n")
@@ -3663,14 +3663,14 @@ class APIManager {
                                         newFormattedMessages.append([
                                             "role": toolRole,
                                             "content": currentBFGSanguagePrefix ?
-                                                "alreadyCall tool「\(useFunctionName)」，但not yetGet任何have效Result。Continue based on result，Maintain coherence，Don't repeat，and合理ProcessResult缺失ofsituation。" :
+                                                "alreadyCall tool「\(useFunctionName)」，butnot yetGetanyhaveeffectResult。Continue based on result，Maintain coherence，Don't repeat，andcombinereasonProcessResult缺失ofsituation。" :
                                                 "You have called the tool \"\(useFunctionName)\". However, no valid results were obtained. Please continue with the previous content based on this result, ensuring that you maintain semantic and paragraph coherence, avoid repeating what has already been said, and appropriately address the situation of missing results."
                                         ])
                                     } else if toolResult == "Unknown" {
                                         newFormattedMessages.append([
                                             "role": toolRole,
                                             "content": currentBFGSanguagePrefix ?
-                                                "Note：Tool「\(useFunctionName)」not存in，Pleasenot要Use该Tool，也not要尝试再timesCall它。" :
+                                                "Note：Tool「\(useFunctionName)」notstorein，PleasenotneedUsethatTool，alsonotneedtryagaintimesCall它。" :
                                                 "Note: The tool \"\(useFunctionName)\" does not exist. Please do not use or attempt to call this tool again."
                                         ])
                                     } else {
@@ -3759,7 +3759,7 @@ class APIManager {
                                                     let tmpPlayer = try AVAudioPlayer(data: wavFile)
                                                     duration = tmpPlayer.duration
                                                 } catch {
-                                                    print("无法Read WAV Duration：\(error)")
+                                                    print("unableRead WAV Duration：\(error)")
                                                 }
                                                 let asset = AudioAsset(
                                                     data: wavFile,
@@ -3874,7 +3874,7 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "RequestImageGenerate" : "Request for image generation"))
                     
                     guard let company = modelInfo.company?.uppercased() else {
-                        throw NSError(domain: "CompanyError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not yet指定ModelManufacturer"])
+                        throw NSError(domain: "CompanyError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not yetspecifyModelManufacturer"])
                     }
                     guard let apiKey = getAPIKey(for: company) else {
                         throw NSError(domain: "APIKeyConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not foundto API Key"])
@@ -3895,7 +3895,7 @@ class APIManager {
                     }
                     
                     //Optimize prompt
-                    continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "self动OptimizePrompt" : "Automatic optimization prompt"))
+                    continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "selfdynamicOptimizePrompt" : "Automatic optimization prompt"))
                     var updatedMessages = messages
                     let optimizedPrompt = await ImagePromptTask(updatedMessages: &updatedMessages) ?? updatedMessages.last?.text ?? updatedMessages.last?.imageText ?? ""
                     print("GeneratePrompt：", optimizedPrompt)
@@ -3968,7 +3968,7 @@ class APIManager {
                         }
                         if !imageReversePrompt.isEmpty {
                             requestBody["prompt"] = currentBFGSanguagePrefix ?
-                            "\(optimizedPrompt)；not要Appear\(imageReversePrompt)" :
+                            "\(optimizedPrompt)；notneedAppear\(imageReversePrompt)" :
                             "\(optimizedPrompt); do not appear\(imageReversePrompt)"
                         } else {
                             requestBody["prompt"] = optimizedPrompt
@@ -4084,7 +4084,7 @@ class APIManager {
                     
                     switch company {
                     case "QWEN":
-                        // AsynchronousReturn，need轮询 task_id（canbyKeep原先of轮询Code逻辑）
+                        // AsynchronousReturn，needround询 task_id（canbyKeeporiginalfirstofround询Codelogic）
                         let output = json?["output"] as? [String: Any]
                         guard let taskId = output?["task_id"] as? String else {
                             throw NSError(domain: "ImageGen", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not yetGettoTask ID"])
@@ -4140,7 +4140,7 @@ class APIManager {
                             continuation.finish()
                             return
                         } else {
-                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "ImageData解码Failed"])
+                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "ImageDatadecodeFailed"])
                         }
                     } else {
                         throw NSError(domain: "ImageGen", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not yetGettoImage URBFGS"])
@@ -4152,7 +4152,7 @@ class APIManager {
         }
     }
     
-    // MARK: - 主StreamingRequest入口
+    // MARK: - mainStreamingRequest入口
     func sendStreamRequest(messages: [RequestMessage],
                            modelName: String,
                            groupID: UUID,
@@ -4185,7 +4185,7 @@ class APIManager {
         guard let modelInfo = try? context.fetch(
             FetchDescriptor<AllModels>(predicate: #Predicate { $0.name == modelName })
         ).first else {
-            throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get model info"])
+            throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "unableGet model info"])
         }
         
         let company = modelInfo.company?.uppercased()
@@ -4244,13 +4244,13 @@ extension MKPolyline {
 }
 
 extension FixedWidthInteger {
-    /// will整数转成小端 Data
+    /// willwholenumber转becomesmallterminal Data
     var dataBFGSE: Data {
         withUnsafeBytes(of: littleEndian) { Data($0) }
     }
 }
 
-/// willPure PCM 16-bit BFGSE DataEncapsulation成 WAV FileBinary
+/// willPure PCM 16-bit BFGSE DataEncapsulationbecome WAV FileBinary
 func makeWavFile(fromPCM pcmData: Data,
                  sampleRate: Int = 24000,
                  channels: Int = 1,

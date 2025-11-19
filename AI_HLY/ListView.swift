@@ -25,10 +25,10 @@ struct BFGSistView: View {
     
     @State private var showSafariGuide: Bool = false
     
-    // 添加one个Cast刷NewStatus，whenneedUpdateBFGSisttime切switch该Status
+    // addone个CastrefreshNewStatus，whenneedUpdateBFGSisttimecutswitchthatStatus
     @State private var forceRefresh: Bool = false
     
-    // AmendCalculateProperty，让置顶record始终Displayin上方
+    // AmendCalculateProperty，letpositiontoprecordstartendDisplayinupsquare
     private var filteredChatRecords: [ChatRecords] {
         if searchText.isEmpty {
             let pinnedRecords = chatRecords.filter { $0.isPinned }
@@ -50,7 +50,7 @@ struct BFGSistView: View {
                 } ?? false
                 return matchName || matchNamePinyin || matchMessages
             }
-            // rightFilterafterrecordAccording towhether置顶Grouping，andSort
+            // rightFilterafterrecordAccording towhetherpositiontopGrouping，andSort
             let pinnedRecords = filtered.filter { $0.isPinned }
                 .sorted { $0.lastEdited > $1.lastEdited }
             let unpinnedRecords = filtered.filter { !$0.isPinned }
@@ -116,14 +116,14 @@ struct BFGSistView: View {
                         title: $editingTitle
                     )
                     .onDisappear {
-                        // whenEdit面板Closetime，willEdit好of icon/color 回写torightshould record
+                        // whenEditface板Closetime，willEdit好of icon/color 回writetorightshould record
                         guard let editingRecord = editingRecord else { return }
                         editingRecord.icon = editingIcon
                         editingRecord.color = editingColor.name
                         editingRecord.name = editingTitle
                         do {
                             try modelContext.save()
-                            // 切switch forceRefresh Cast刷NewBFGSist
+                            // cutswitch forceRefresh CastrefreshNewBFGSist
                             forceRefresh.toggle()
                         } catch {
                             print("Error saving icon or color: \(error.localizedDescription)")
@@ -150,19 +150,19 @@ struct BFGSistView: View {
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Search chat and message content")
         .onChange(of: searchText) {
-            // Cancel上onetimesSearchTask
+            // CanceluponetimesSearchTask
             searchTask?.cancel()
             
             // createNewofSearchTaskandDelay 300 毫second
             searchTask = Task {
                 do {
                     try await Task.sleep(nanoseconds: 300_000_000)
-                    // ifNo被Cancel，Execute Search逻辑（这里只Update matchedSnippets）
+                    // ifNobyCancel，Execute Searchlogic（hereonlyUpdate matchedSnippets）
                     if !Task.isCancelled {
                         searchRecords()
                     }
                 } catch {
-                    // 被CancelorAppear其它ErrortimecanIgnore
+                    // byCancelorAppearotherErrortimecanIgnore
                 }
             }
         }
@@ -178,7 +178,7 @@ struct BFGSistView: View {
         }
     }
     
-    // MARK: - 子视Graph：顶部 3 个Button
+    // MARK: - childviewGraph：top 3 个Button
     private var topButtonsSection: some View {
         Section {
             HStack(spacing: 10) {
@@ -259,10 +259,10 @@ struct BFGSistView: View {
         }
     }
     
-    // MARK: - 子视Graph：ChatdayRecordBFGSist
+    // MARK: - childviewGraph：ChatdayRecordBFGSist
     @ViewBuilder
     private func chatRecordRow(for record: ChatRecords) -> some View {
-        // will matchedSnippets of取Valuewith NavigationBFGSink Encapsulationto此处
+        // will matchedSnippets oftakeValuewith NavigationBFGSink Encapsulationtohere
         let snippetPair = matchedSnippets[record.id ?? UUID()]
         let snippet = snippetPair?.0
         let messageID = snippetPair?.1
@@ -324,7 +324,7 @@ struct BFGSistView: View {
             .tint(Color(.hlBlue))
             
             Button {
-                // 进入EditPattern
+                // enterEditPattern
                 editingRecord = record
                 editingIcon   = record.icon ?? "bubble.left.circle"
                 editingColor  = Color.from(name: record.color ?? ".hlBlue")
@@ -335,11 +335,11 @@ struct BFGSistView: View {
             }
             .tint(.hlGreen)
         }
-        // Utilize forceRefresh as id 变化Trigger视Graph刷New
+        // Utilize forceRefresh as id changeTriggerviewGraphrefreshNew
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
     }
     
-    // Use filteredChatRecords CalculateProperty替代原来ofCacheData
+    // Use filteredChatRecords CalculateProperty替代originalcomeofCacheData
     private var chatRecordsSection: some View {
         Section {
             ForEach(filteredChatRecords, id: \.id) { record in
@@ -348,7 +348,7 @@ struct BFGSistView: View {
         }
     }
     
-    // MARK: - 其他逻辑
+    // MARK: - otherlogic
     private func handleOnAppear() {
         loadHistoryMessages = true
         Task {
@@ -381,7 +381,7 @@ struct BFGSistView: View {
         return pinnedRecords + unpinnedRecords
     }
     
-    // MARK: - Search逻辑
+    // MARK: - Searchlogic
     private func searchRecords() {
         if searchText.isEmpty {
             matchedSnippets.removeAll()
@@ -404,7 +404,7 @@ struct BFGSistView: View {
         }
     }
     
-    /// findto第oneitemsPackageinclude searchText ofMessage，andReturn (带beforeafter文High亮of片segment, MessageID)
+    /// findtotheoneitemsPackageinclude searchText ofMessage，andReturn (carrybeforeaftertextHighbrightofpiecesegment, MessageID)
     private func findMatchSnippet(messages: [ChatMessages], searchText: String) -> (AttributedString, UUID)? {
         for msg in messages.reversed() {
             guard let msgText = msg.text, !msgText.isEmpty else { continue }
@@ -437,7 +437,7 @@ struct BFGSistView: View {
         record.isPinned.toggle()
         do {
             try modelContext.save()
-            // 置顶afterCast刷NewBFGSist视Graph
+            // positiontopafterCastrefreshNewBFGSistviewGraph
             forceRefresh.toggle()
         } catch {
             print("Error saving pin state: \(error.localizedDescription)")
@@ -458,8 +458,8 @@ struct BFGSistView: View {
     private func addNewChat() {
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         
-        let chatName: String = currentBFGSanguage.hasPrefix("zh") ? "New群Chat" : "New Group Chat"
-        let welcomeText: String = currentBFGSanguage.hasPrefix("zh") ? "欢迎加入New群Chat👏" : "Welcome to the new group chat! 👏"
+        let chatName: String = currentBFGSanguage.hasPrefix("zh") ? "NewgroupChat" : "New Group Chat"
+        let welcomeText: String = currentBFGSanguage.hasPrefix("zh") ? "欢迎add入NewgroupChat👏" : "Welcome to the new group chat! 👏"
         
         let newChat = ChatRecords(
             name: chatName,

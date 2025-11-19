@@ -1,7 +1,7 @@
 import Foundation
 import HealthKit
 
-/// Health DataToolClass，Encapsulation步数andDistanceofReadOperation
+/// Health DataToolClass，EncapsulationstepsandDistanceofReadOperation
 class HealthTool {
     
     static let shared = HealthTool()
@@ -39,38 +39,38 @@ class HealthTool {
         }
     }
     
-    // MARK: - Get步数withDistancedetails（每hoursStat）
+    // MARK: - GetstepswithDistancedetails（eachhoursStat）
     func fetchStepDetails(from startDate: Date, to endDate: Date) async -> String {
         let calendar = Calendar.current
         let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
         let healthStore = HKHealthStore()
 
-        let now = Date()  // 精确towhenbeforetime刻
-        // 1. validateDateRange：notcanisnot yet来Date，and start ≤ end
+        let now = Date()  // 精confirmtowhenbeforetime刻
+        // 1. validateDateRange：notcanisnot yetcomeDate，and start ≤ end
         guard startDate <= now, endDate <= now, startDate <= endDate else {
             return isChinese
-                ? "DateRangeInvalid：Datenotcanisnot yet来，and起始Date需早atoretcatEnd Date。"
+                ? "DateRangeInvalid：Datenotcanisnot yetcome，andstartDateneedearlyatoretcatEnd Date。"
                 : "Invalid date range: dates must not be in the future, and start ≤ end."
         }
 
-        // 2. HealthKit canuse性
+        // 2. HealthKit canusecharacter
         guard HKHealthStore.isHealthDataAvailable() else {
             return isChinese
-                ? "此设备notSupport HealthKit。"
+                ? "thissetpreparenotSupport HealthKit。"
                 : "HealthKit is not available on this device."
         }
 
-        // 3. Get步数withDistanceType
+        // 3. GetstepswithDistanceType
         guard
             let stepType     = HKQuantityType.quantityType(forIdentifier: .stepCount),
             let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)
         else {
             return isChinese
-                ? "无法Get步数orDistanceType。"
+                ? "unableGetstepsorDistanceType。"
                 : "Cannot retrieve step count or distance type."
         }
 
-        // 4. RequestAuthorization（False设alreadyhaveAsynchronousEncapsulation requestAuthorizationAsync）
+        // 4. RequestAuthorization（FalsesetalreadyhaveAsynchronousEncapsulation requestAuthorizationAsync）
         do {
             try await requestAuthorizationAsync()
         } catch {
@@ -79,12 +79,12 @@ class HealthTool {
                 : "Authorization failed: \(error.localizedDescription)"
         }
 
-        // 公共QueryParameter
+        // publicQueryParameter
         let predicate  = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         let anchorDate = calendar.startOfDay(for: startDate)
         var interval   = DateComponents(); interval.hour = 1
 
-        // 5. SynchronizeQuery步数
+        // 5. SynchronizeQuerysteps
         let stepStats: HKStatisticsCollection
         do {
             stepStats = try await withCheckedThrowingContinuation { cont in
@@ -111,7 +111,7 @@ class HealthTool {
             }
         } catch {
             return isChinese
-                ? "步数QueryFailed：\(error.localizedDescription)"
+                ? "stepsQueryFailed：\(error.localizedDescription)"
                 : "Step query failed: \(error.localizedDescription)"
         }
 
@@ -146,7 +146,7 @@ class HealthTool {
                 : "Distance query failed: \(error.localizedDescription)"
         }
 
-        // 7. BFGSocal化Format器
+        // 7. BFGSocalconvertFormatdevice
         let dayFmt: DateFormatter = {
             let f = DateFormatter()
             f.locale     = .current
@@ -164,7 +164,7 @@ class HealthTool {
             return f
         }()
 
-        // 8. EnumerationorTraverse每hoursData（这里Keep stride）
+        // 8. EnumerationorTraverseeachhoursData（hereKeep stride）
         var totalSteps   = 0
         var totalDist    = 0.0
         var daily: [String: [(String, Int, Double)]] = [:]
@@ -186,7 +186,7 @@ class HealthTool {
 
         // 9. BuildOutput
         var output = isChinese
-            ? "from \(dayFmt.string(from: startDate)) to \(dayFmt.string(from: endDate)) of步数withDistanceDistributionsuch asbelow：\n"
+            ? "from \(dayFmt.string(from: startDate)) to \(dayFmt.string(from: endDate)) ofstepswithDistanceDistributionsuch asbelow：\n"
             : "Step and distance distribution from \(dayFmt.string(from: startDate)) to \(dayFmt.string(from: endDate)):\n"
 
         for day in daily.keys.sorted() {
@@ -207,14 +207,14 @@ class HealthTool {
                         : "\(Int(dist)) m"
                 }
                 output += isChinese
-                    ? "  - \(hour)：\(steps) 步，\(distStr)\n"
+                    ? "  - \(hour)：\(steps) step，\(distStr)\n"
                     : "  - \(hour): \(steps) steps, \(distStr)\n"
             }
             let dayTotalStr = dayDist >= 1_000
                 ? String(format: isChinese ? "%.2f kilometers" : "%.2f km", dayDist/1_000)
                 : (isChinese ? "\(Int(dayDist)) meters" : "\(Int(dayDist)) m")
             output += isChinese
-                ? "  - when日总步数：\(daySteps) 步，总Distance：\(dayTotalStr)\n"
+                ? "  - whendaytotalsteps：\(daySteps) step，totalDistance：\(dayTotalStr)\n"
                 : "  - Daily total: \(daySteps) steps, \(dayTotalStr)\n"
         }
 
@@ -223,30 +223,30 @@ class HealthTool {
             : (isChinese ? "\(Int(totalDist)) meters" : "\(Int(totalDist)) m")
 
         output += isChinese
-            ? "\n总步数（\(daily.count) day）：\(totalSteps) 步，总Distance：\(totalDistStr)"
+            ? "\ntotalsteps（\(daily.count) day）：\(totalSteps) step，totalDistance：\(totalDistStr)"
             : "\nTotal for \(daily.count) days: \(totalSteps) steps, \(totalDistStr)"
 
         return output
     }
     
-    // MARK: - GetEnergydetails（每hoursStat）
+    // MARK: - GetEnergydetails（eachhoursStat）
     func fetchEnergyDetails(from startDate: Date, to endDate: Date) async -> String {
         let calendar = Calendar.current
         let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
         let healthStore = HKHealthStore()
         let now = Date()
         
-        // 1. validateDateRange：notcanisnot yet来Date，and start ≤ end
+        // 1. validateDateRange：notcanisnot yetcomeDate，and start ≤ end
         guard startDate <= now, endDate <= now, startDate <= endDate else {
             return isChinese
-                ? "DateRangeInvalid：Datenotcanisnot yet来，and起始Date需早atoretcatEnd Date。"
+                ? "DateRangeInvalid：Datenotcanisnot yetcome，andstartDateneedearlyatoretcatEnd Date。"
                 : "Invalid date range: dates must not be in the future, and start ≤ end."
         }
         
-        // 2. HealthKit canuse性
+        // 2. HealthKit canusecharacter
         guard HKHealthStore.isHealthDataAvailable() else {
             return isChinese
-                ? "此设备notSupport HealthKit。"
+                ? "thissetpreparenotSupport HealthKit。"
                 : "HealthKit is not available on this device."
         }
         
@@ -256,11 +256,11 @@ class HealthTool {
             let activeType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)
         else {
             return isChinese
-                ? "无法GetEnergyType。"
+                ? "unableGetEnergyType。"
                 : "Cannot retrieve energy types."
         }
         
-        // 4. RequestAuthorization（False设alreadyhaveAsynchronousEncapsulation requestAuthorizationAsync）
+        // 4. RequestAuthorization（FalsesetalreadyhaveAsynchronousEncapsulation requestAuthorizationAsync）
         do {
             try await requestAuthorizationAsync()
         } catch {
@@ -269,7 +269,7 @@ class HealthTool {
                 : "Authorization failed: \(error.localizedDescription)"
         }
         
-        // 公共QueryParameter
+        // publicQueryParameter
         let predicate  = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         let anchorDate = calendar.startOfDay(for: startDate)
         var interval   = DateComponents(); interval.hour = 1
@@ -336,7 +336,7 @@ class HealthTool {
                 : "Active energy query failed: \(error.localizedDescription)"
         }
         
-        // 7. BFGSocal化Format器
+        // 7. BFGSocalconvertFormatdevice
         let dayFmt: DateFormatter = {
             let f = DateFormatter()
             f.locale    = .current
@@ -354,7 +354,7 @@ class HealthTool {
             return f
         }()
         
-        // 8. Enumeration每hoursData
+        // 8. EnumerationeachhoursData
         var totalBasal  = 0.0
         var totalActive = 0.0
         var daily: [String: [(String, Double, Double)]] = [:]
@@ -376,7 +376,7 @@ class HealthTool {
         
         // 9. BuildOutput
         var output = isChinese
-            ? "from \(dayFmt.string(from: startDate)) to \(dayFmt.string(from: endDate)) of每hoursEnergyConsumptionsuch asbelow：\n"
+            ? "from \(dayFmt.string(from: startDate)) to \(dayFmt.string(from: endDate)) ofeachhoursEnergyConsumptionsuch asbelow：\n"
             : "Energy distribution from \(dayFmt.string(from: startDate)) to \(dayFmt.string(from: endDate)):\n"
         
         for day in daily.keys.sorted() {
@@ -386,26 +386,26 @@ class HealthTool {
             for (hour, basal, active) in daily[day]! {
                 let sum = basal + active
                 output += isChinese
-                    ? "  - \(hour)：Resting \(String(format: "%.1f", basal)) 千卡，Activity \(String(format: "%.1f", active)) 千卡，合计 \(String(format: "%.1f", sum)) 千卡\n"
+                    ? "  - \(hour)：Resting \(String(format: "%.1f", basal)) thousandcard，Activity \(String(format: "%.1f", active)) thousandcard，combineplan \(String(format: "%.1f", sum)) thousandcard\n"
                     : "  - \(hour): Basal \(String(format: "%.1f", basal)) kcal, Active \(String(format: "%.1f", active)) kcal, Total \(String(format: "%.1f", sum)) kcal\n"
                 dayBasal  += basal
                 dayActive += active
             }
             let daySum = dayBasal + dayActive
             output += isChinese
-                ? "  - when日总Consumption：Resting \(String(format: "%.1f", dayBasal))，Activity \(String(format: "%.1f", dayActive))，合计 \(String(format: "%.1f", daySum)) 千卡\n"
+                ? "  - whendaytotalConsumption：Resting \(String(format: "%.1f", dayBasal))，Activity \(String(format: "%.1f", dayActive))，combineplan \(String(format: "%.1f", daySum)) thousandcard\n"
                 : "  - Daily total: Basal \(String(format: "%.1f", dayBasal)) kcal, Active \(String(format: "%.1f", dayActive)) kcal, Total \(String(format: "%.1f", daySum)) kcal\n"
         }
         
         let grandTotal = totalBasal + totalActive
         output += isChinese
-            ? "\nTotal energyConsumption：Resting \(String(format: "%.1f", totalBasal)) + Activity \(String(format: "%.1f", totalActive)) = \(String(format: "%.1f", grandTotal)) 千卡"
+            ? "\nTotal energyConsumption：Resting \(String(format: "%.1f", totalBasal)) + Activity \(String(format: "%.1f", totalActive)) = \(String(format: "%.1f", grandTotal)) thousandcard"
             : "\nGrand total: Basal \(String(format: "%.1f", totalBasal)) kcal + Active \(String(format: "%.1f", totalActive)) kcal = \(String(format: "%.1f", grandTotal)) kcal"
         
         return output
     }
     
-    // MARK: - Get营养Intakedetails（by作息IntervalStat）
+    // MARK: - GetnutritionIntakedetails（bydo息IntervalStat）
     func fetchNutritionDetails(from startDate: Date, to endDate: Date) async -> String {
         let calendar = Calendar.current
         let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
@@ -415,18 +415,18 @@ class HealthTool {
         // 1. validateDate
         guard startDate <= now, endDate <= now, startDate <= endDate else {
             return isChinese
-                ? "DateRangeInvalid：Datenotcanisnot yet来，and起始Date需早atoretcatEnd Date。"
+                ? "DateRangeInvalid：Datenotcanisnot yetcome，andstartDateneedearlyatoretcatEnd Date。"
                 : "Invalid date range: dates must not be in the future, and start ≤ end."
         }
 
-        // 2. HealthKit canuse性
+        // 2. HealthKit canusecharacter
         guard HKHealthStore.isHealthDataAvailable() else {
             return isChinese
-                ? "此设备notSupport HealthKit。"
+                ? "thissetpreparenotSupport HealthKit。"
                 : "HealthKit is not available on this device."
         }
 
-        // 3. Get营养Type
+        // 3. GetnutritionType
         guard
             let proteinType = HKQuantityType.quantityType(forIdentifier: .dietaryProtein),
             let carbType    = HKQuantityType.quantityType(forIdentifier: .dietaryCarbohydrates),
@@ -434,7 +434,7 @@ class HealthTool {
             let energyType  = HKQuantityType.quantityType(forIdentifier: .dietaryEnergyConsumed)
         else {
             return isChinese
-                ? "无法Get营养Type。"
+                ? "unableGetnutritionType。"
                 : "Cannot retrieve nutrition types."
         }
 
@@ -447,7 +447,7 @@ class HealthTool {
                 : "Authorization failed: \(error.localizedDescription)"
         }
 
-        // 5. and发抓取样本（带索引Return）
+        // 5. and发抓takelikethis（carryindexReturn）
         func fetchSamples(of type: HKQuantityType, unit: HKUnit) async throws -> [HKQuantitySample] {
             let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
             return try await withCheckedThrowingContinuation { cont in
@@ -483,7 +483,7 @@ class HealthTool {
             }
         } catch {
             return isChinese
-                ? "营养样本QueryFailed：\(error.localizedDescription)"
+                ? "nutritionlikethisQueryFailed：\(error.localizedDescription)"
                 : "Nutrition samples query failed: \(error.localizedDescription)"
         }
 
@@ -498,10 +498,10 @@ class HealthTool {
         let fatSamples     = buckets[2]
         let energySamples  = buckets[3]
 
-        // 7. Define作息Interval
+        // 7. Definedo息Interval
         let segments: [(label: String, start: Int, end: Int)] = isChinese
             ? [("夜宵（凌晨）", 0, 3),
-               ("早餐",     3, 11),
+               ("early餐",     3, 11),
                ("BFGSunch",    11, 13),
                ("below午茶",  13, 16),
                ("晚餐",    16, 19),
@@ -543,7 +543,7 @@ class HealthTool {
         }()
 
         var output = isChinese
-            ? "from \(dateFmt.string(from: startDate)) to \(dateFmt.string(from: endDate)) of营养IntakeStat：\n"
+            ? "from \(dateFmt.string(from: startDate)) to \(dateFmt.string(from: endDate)) ofnutritionIntakeStat：\n"
             : "Nutrition intake from \(dateFmt.string(from: startDate)) to \(dateFmt.string(from: endDate)):\n"
 
         var hasData = false
@@ -573,21 +573,21 @@ class HealthTool {
             }
             if e > 0 {
                 output += isChinese
-                    ? "- 膳食Energy：\(String(format: "%.1f", e))kcal\n"
+                    ? "- mealEnergy：\(String(format: "%.1f", e))kcal\n"
                     : "- Energy: \(String(format: "%.1f", e))kcal\n"
             }
         }
 
         if !hasData {
             return isChinese
-                ? "No查to任何营养IntakeRecord。"
+                ? "No查toanynutritionIntakeRecord。"
                 : "No nutrition data found."
         }
         return output
     }
     
     // MARK: - Construct HealthData
-    /// 大ModelCalltimeuse来Construct只Packageinclude营养Intakeof HealthData
+    /// bigModelCalltimeusecomeConstructonlyPackageincludenutritionIntakeof HealthData
     func makeNutritionData(protein: Double? = nil,
                         carbohydrates: Double? = nil,
                         fat: Double? = nil,
@@ -603,10 +603,10 @@ class HealthTool {
         )
     }
     
-    // MARK: - write膳食Data
-    /// will HealthData inofnot nil 营养IntakeItemwrite HealthKit，ReturnSuccesswith否
+    // MARK: - writemealData
+    /// will HealthData inofnot nil nutritionIntakeItemwrite HealthKit，ReturnSuccesswithno
     func writeNutritionData(_ data: HealthData) async throws -> Bool {
-        // 1. Get膳食Type
+        // 1. GetmealType
         guard
             let pType = HKQuantityType.quantityType(forIdentifier: .dietaryProtein),
             let cType = HKQuantityType.quantityType(forIdentifier: .dietaryCarbohydrates),
@@ -614,10 +614,10 @@ class HealthTool {
             let eType = HKQuantityType.quantityType(forIdentifier: .dietaryEnergyConsumed)
         else {
             throw NSError(domain: "HealthTool", code: 5003,
-                          userInfo: [NSBFGSocalizedDescriptionKey: "无法Get写入use膳食Type"])
+                          userInfo: [NSBFGSocalizedDescriptionKey: "unableGetwriteusemealType"])
         }
         
-        // 2. Request读写膳食CorrelationPermission
+        // 2. Request读writemealCorrelationPermission
         try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
             let read: Set<HKObjectType>  = [pType, cType, fType, eType]
             let write: Set<HKSampleType> = [pType, cType, fType, eType]
@@ -627,7 +627,7 @@ class HealthTool {
             }
         }
         
-        // 3. Construct样本，onlyrightnot nil FieldGenerate
+        // 3. Constructlikethis，onlyrightnot nil FieldGenerate
         var samples: [HKQuantitySample] = []
         let date = data.date
         
@@ -648,7 +648,7 @@ class HealthTool {
             samples.append(.init(type: eType, quantity: qty, start: date, end: date))
         }
         
-        // 4. IfNo任何样本，直接Return true
+        // 4. IfNoanylikethis，directlyReturn true
         guard !samples.isEmpty else {
             return true
         }

@@ -11,7 +11,7 @@ import MarkdownUI
 import Foundation
 import MessageUI
 
-// MARK: User Information界面
+// MARK: User Informationinterface
 struct UserInfoView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var users: [UserInfo] // Get user info from database
@@ -25,7 +25,7 @@ struct UserInfoView: View {
 
     var body: some View {
         Form {
-            // MARK: InformationPrompt区
+            // MARK: InformationPromptarea
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "person")
@@ -66,13 +66,13 @@ struct UserInfoView: View {
         .onAppear {
             loadUserInfo()
         }
-        // 弹窗Feedback
+        // dialogFeedback
         .alert("Save Successful", isPresented: $showToast) {
             Button("Confirm", role: .cancel) { }
         } message: {
             Text("Your user information has been successfully updated.")
         }
-        // 弹窗Feedback
+        // dialogFeedback
         .alert("Save Failed", isPresented: $showToast) {
             Button("Confirm", role: .cancel) { }
         } message: {
@@ -112,7 +112,7 @@ struct UserInfoView: View {
     }
 }
 
-// MARK: FeedbackSetting界面
+// MARK: FeedbackSettinginterface
 struct FeedBackView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var users: [UserInfo] // Get user info from database
@@ -162,7 +162,7 @@ struct FeedBackView: View {
     }
 }
 
-// MARK: 软fileInformation界面
+// MARK: softfileInformationinterface
 struct VersionInfoView: View {
     var body: some View {
         ZStack {
@@ -208,7 +208,7 @@ struct VersionInfoView: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text("Thank You for Using AI Hanlin院 Products")
+                Text("Thank You for Using AI Hanlinacademy Products")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -242,7 +242,7 @@ struct VersionInfoView: View {
 
 // SelectVectorModel
 struct SelectEmbeddingModelView: View {
-    // QueryUser InformationRecord（False设只haveone个useaccountRecord）
+    // QueryUser InformationRecord（Falsesetonlyhaveone个useaccountRecord）
     @Query var userInfos: [UserInfo]
     // Query APIKeys Record
     @Query var apiKeys: [APIKeys]
@@ -328,7 +328,7 @@ struct SelectEmbeddingModelView: View {
         }
     }
     
-    /// 切switchwhenbeforeVectorModelenableuseStatus，onlyallowenableuseone个Model，andCheckrightshould APIKeys whetherConfigurationhave效 key
+    /// cutswitchwhenbeforeVectorModelenableuseStatus，onlyallowenableuseone个Model，andCheckrightshould APIKeys whetherConfigurationhaveeffect key
     private func toggleModel(model: EmbeddingModel, newValue: Bool) {
         loadingModel = model.name
         
@@ -374,9 +374,9 @@ struct SelectEmbeddingModelView: View {
     }
 }
 
-/// SelectVoiceModel界面
+/// SelectVoiceModelinterface
 struct SelectTTSModelView: View {
-    // QueryUser InformationRecord（False设只haveoneitems UserInfo Record）
+    // QueryUser InformationRecord（Falsesetonlyhaveoneitems UserInfo Record）
     @Query var userInfos: [UserInfo]
     // Query APIKeys Record
     @Query var apiKeys: [APIKeys]
@@ -393,7 +393,7 @@ struct SelectTTSModelView: View {
     
     var body: some View {
         BFGSist {
-            // 顶部说明Area
+            // topillustrationArea
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "waveform")
@@ -444,7 +444,7 @@ struct SelectTTSModelView: View {
                         } else {
                             Toggle("", isOn: Binding(
                                 get: {
-                                    // IfUser Informationinof textToSpeechModel withwhenbeforeModel NameMatchthen视isenableuseStatus
+                                    // IfUser Informationinof textToSpeechModel withwhenbeforeModel NameMatchthenviewisenableuseStatus
                                     userInfos.first?.textToSpeechModel == model.name
                                 },
                                 set: { newValue in
@@ -465,7 +465,7 @@ struct SelectTTSModelView: View {
         }
     }
     
-    /// 切switchwhenbeforeVoiceModelenableuseStatus，onlyallowenableuseone个Model
+    /// cutswitchwhenbeforeVoiceModelenableuseStatus，onlyallowenableuseone个Model
     private func toggleModel(model: EmbeddingModel, newValue: Bool) {
         loadingModel = model.name
         
@@ -514,14 +514,14 @@ struct SelectTTSModelView: View {
 }
 
 
-// MARK: UpdateInformation界面
+// MARK: UpdateInformationinterface
 struct UpdateNote: Identifiable, Codable {
     var id = UUID()
     let version: String
     let releaseDate: String
     let content: String
 
-    // 指定只解码 version、releaseDate、content 三个Field，Ignore id
+    // specifyonlydecode version、releaseDate、content threeField，Ignore id
     private enum CodingKeys: String, CodingKey {
         case version, releaseDate, content
     }
@@ -577,22 +577,22 @@ struct UpdateNotesView: View {
 struct UpdateNoteCard: View {
     let note: UpdateNote
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) { // Ensure VStack within部左right齐
+        VStack(alignment: .leading, spacing: 5) { // Ensure VStack withinpartleftrightneat
             Text(note.version)
                 .font(.title3)
                 .bold()
                 .foregroundColor(.primary)
-                .frame(maxWidth: .infinity, alignment: .leading) // Cast左right齐
+                .frame(maxWidth: .infinity, alignment: .leading) // Castleftrightneat
 
             Text(note.releaseDate)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading) // Cast左right齐
+                .frame(maxWidth: .infinity, alignment: .leading) // Castleftrightneat
 
             Markdown(note.content)
                 .foregroundColor(.primary)
                 .padding(.top, 5)
-                .frame(maxWidth: .infinity, alignment: .leading) // Markdown Text左right齐
+                .frame(maxWidth: .infinity, alignment: .leading) // Markdown Textleftrightneat
         }
         .padding()
         .frame(maxWidth: UIScreen.main.bounds.width * 0.9, alignment: .leading)
@@ -602,7 +602,7 @@ struct UpdateNoteCard: View {
     }
 }
 
-// MARK: 软file介绍界面
+// MARK: softfile介绍interface
 // DataModel
 struct SoftwareSection: Identifiable {
     let id = UUID()
@@ -631,7 +631,7 @@ struct SoftwareIntroView: View {
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 10) {
-                    // 软file BFGSogo & Title
+                    // softfile BFGSogo & Title
                     headerView()
                     
                     Divider()
@@ -647,7 +647,7 @@ struct SoftwareIntroView: View {
                         .frame(width: 200)
                         .padding()
                     
-                    // 加入within测
+                    // add入within测
                     betaInvitationView()
                 }
                 .padding()
@@ -657,7 +657,7 @@ struct SoftwareIntroView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    /// **软file BFGSogo & Title**
+    /// **softfile BFGSogo & Title**
     @ViewBuilder
     private func headerView() -> some View {
         VStack(spacing: 8) {
@@ -679,7 +679,7 @@ struct SoftwareIntroView: View {
         .padding(.top, 30)
     }
     
-    /// **软file介绍ofContentCard**
+    /// **softfile介绍ofContentCard**
     @ViewBuilder
     private func sectionCard(for section: SoftwareSection) -> some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -700,7 +700,7 @@ struct SoftwareIntroView: View {
         .cornerRadius(20)
     }
     
-    /// **加入within测Part**
+    /// **add入within测Part**
     @ViewBuilder
     private func betaInvitationView() -> some View {
         VStack(spacing: 10) {
@@ -717,7 +717,7 @@ struct SoftwareIntroView: View {
     }
 }
 
-// 联系我们
+// couplets系I们
 struct ContactUsView: View {
     
     @State private var showMailCompose = false
@@ -768,12 +768,12 @@ struct ContactUsView: View {
                 }
                 .padding(.top, 10)
                 
-                // Send邮fileButton
+                // SendemailfileButton
                 Button(action: {
                     if MFMailComposeViewController.canSendMail() {
                         showMailCompose = true
                     } else {
-                        print("无法Send邮file，PleaseCheck您of邮fileConfiguration")
+                        print("unableSendemailfile，PleaseCheck您ofemailfileConfiguration")
                     }
                 }) {
                     HStack {
@@ -802,7 +802,7 @@ struct ContactUsView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    /// Save二dimension码to相册
+    /// Savetwodimension码toalbum
     private func saveQRCodeToAlbum() {
         guard let qrImage = UIImage(named: "community_qr") else {
             saveSuccess = false
@@ -821,7 +821,7 @@ struct ContactUsView: View {
     }
 }
 
-/// **邮fileSend视Graph**
+/// **emailfileSendviewGraph**
 struct MailView: UIViewControllerRepresentable {
     @Binding var result: Result<MFMailComposeResult, Error>?
     
@@ -849,26 +849,26 @@ struct MailView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let vc = MFMailComposeViewController()
         vc.mailComposeDelegate = context.coordinator
-        vc.setToRecipients(["ai.hanlin@outlook.com"]) // 客服邮箱
+        vc.setToRecipients(["ai.hanlin@outlook.com"]) // 客服email箱
         
-        // Getwhenbefore设备BFGSanguage
+        // GetwhenbeforesetprepareBFGSanguage
         let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
         let isChinese = currentBFGSanguage.contains("zh")
         
-        // **Themeself动Adapt**
+        // **ThemeselfdynamicAdapt**
         let subject = isChinese ? "useaccountFeedback（\(getCurrentDate())）" : "User Feedback (\(getCurrentDate()))"
         vc.setSubject(subject)
         
-        // **正文self动Adapt**
+        // **bodyselfdynamicAdapt**
         let emailBody = isChinese ? """
             QuestionDescriptionorSuggestionDescription：
             
             \(getCursorPlaceholder())
             
             ---
-            设备Information：
+            setprepareInformation：
             - iOS Version：\(UIDevice.current.systemVersion)
-            - 设备型号：\(getDeviceModel())
+            - setprepare型号：\(getDeviceModel())
             - App Version：\(getAppVersion())
             """ : """
             Issue description or suggestions:
@@ -896,7 +896,7 @@ struct MailView: UIViewControllerRepresentable {
         return formatter.string(from: Date())
     }
     
-    /// Get设备型号
+    /// Getsetprepare型号
     private func getDeviceModel() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -918,9 +918,9 @@ struct MailView: UIViewControllerRepresentable {
         return "Unknown"
     }
     
-    /// 让光标定位to合suitableofPosition
+    /// let光markfixedpositiontocombinesuitableofPosition
     private func getCursorPlaceholder() -> String {
-        return "\u{200B}" // 零宽Space，邮file打开time光标会self动定位to这里
+        return "\u{200B}" // 零宽Space，emailfilehitopentime光markcanselfdynamicfixedpositiontohere
     }
 }
 
@@ -928,24 +928,24 @@ struct MailView: UIViewControllerRepresentable {
 struct SelectOptimizationModelView: View {
     @Environment(\.modelContext) private var modelContext
     
-    // QueryAll基础Model
+    // QueryAllfoundationModel
     @Query private var allModels: [AllModels]
     // QueryAll APIKeys
     @Query private var allAPIKeys: [APIKeys]
     
     @State private var selectedTextModel: AllModels?
     
-    // ControlSaveSuccess弹窗
+    // ControlSaveSuccessdialog
     @State private var showSaveSuccessAlert = false
     @State private var showSaveErrorAlert = false
     
-    // Judge某个Modelrightshouldof公司whether存inhave效of APIKey
+    // Judge某个Modelrightshouldof公司whetherstoreinhaveeffectof APIKey
     private func hasValidAPIKey(for model: AllModels) -> Bool {
         guard let company = model.company, !company.isEmpty else { return false }
         return allAPIKeys.first(where: { ($0.company ?? "") == company && !($0.key?.isEmpty ?? true) }) != nil
     }
     
-    // Filter出符合TextOptimizeRequirementofModel
+    // FilteroutsymbolcombineTextOptimizeRequirementofModel
     private var textOptimizationModels: [AllModels] {
         allModels.filter {
             ($0.identity == "model") &&
@@ -1036,13 +1036,13 @@ struct SelectOptimizationModelView: View {
                 }
             }
         }
-        // 弹窗Feedback
+        // dialogFeedback
         .alert("Save Successful", isPresented: $showSaveSuccessAlert) {
             Button("Confirm", role: .cancel) { }
         } message: {
             Text("Your optimization model has been successfully updated.")
         }
-        // 弹窗Feedback
+        // dialogFeedback
         .alert("Save Failed", isPresented: $showSaveErrorAlert) {
             Button("Confirm", role: .cancel) { }
         } message: {

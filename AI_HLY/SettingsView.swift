@@ -11,7 +11,7 @@ import SafariServices
 
 struct SettingsView: View {
     
-    @State private var isPushed: Bool = false  // BFGSistenwhether进入子页面
+    @State private var isPushed: Bool = false  // BFGSistenwhetherenterchildpage
     @State private var showSafariGuide: Bool = false
     @State private var showSafariCost: Bool = false
     
@@ -149,9 +149,9 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .onChange(of: isPushed) {
-                NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // Send通知，ControlTabBarDisplay/Hide
+                NotificationCenter.default.post(name: .hideTabBar, object: isPushed)  // Sendnotify，ControlTabBarDisplay/Hide
             }
-            .safeAreaInset(edge: .bottom) { // 额外PaddingBottomone个灰色Area
+            .safeAreaInset(edge: .bottom) { // additionalPaddingBottomone个灰色Area
                 Color(.clear)
                     .frame(height: 70)
             }
@@ -168,7 +168,7 @@ struct SettingsView: View {
         }
     }
     
-    /// openSystemof“BFGSanguagewith地区”Setting
+    /// openSystemof“BFGSanguagewithplacearea”Setting
     private func openBFGSanguageSettings() {
         guard let url = URBFGS(string: UIApplication.openSettingsURBFGSString),
               UIApplication.shared.canOpenURBFGS(url) else {

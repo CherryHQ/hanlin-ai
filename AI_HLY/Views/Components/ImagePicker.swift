@@ -10,8 +10,8 @@ import PhotosUI
 
 // Input fieldinofImageGetStructure
 struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var selectedImages: [UIImage] // Storageselect定ofImage
-    var sourceType: UIImagePickerController.SourceType // Selectis相册还is相机
+    @Binding var selectedImages: [UIImage] // StorageselectfixedofImage
+    var sourceType: UIImagePickerController.SourceType // Selectisalbum还iscamera
     var maxImageNumber: Int
 
     func makeCoordinator() -> Coordinator {
@@ -29,7 +29,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             return picker
         } else {
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                print("相机notcanuse")
+                print("cameranotcanuse")
                 return UIViewController()
             }
             
@@ -49,7 +49,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        // Process相册multipleselect
+        // Processalbummultipleselect
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
@@ -66,11 +66,11 @@ struct ImagePicker: UIViewControllerRepresentable {
             }
         }
 
-        // Process拍照
+        // Process拍according
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage {
                 DispatchQueue.main.async {
-                    self.parent.selectedImages.append(image) // 添加拍摄of照片
+                    self.parent.selectedImages.append(image) // add拍摄ofaccordingpiece
                 }
             }
             picker.dismiss(animated: true)
@@ -98,7 +98,7 @@ struct OCRImagePicker: UIViewControllerRepresentable {
             return picker
         } else {
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                print("相机notcanuse")
+                print("cameranotcanuse")
                 return UIViewController()
             }
             
@@ -118,7 +118,7 @@ struct OCRImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
 
-        // Process相册Select
+        // ProcessalbumSelect
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
@@ -133,7 +133,7 @@ struct OCRImagePicker: UIViewControllerRepresentable {
             }
         }
 
-        // Process拍照
+        // Process拍according
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage {
                 DispatchQueue.main.async {

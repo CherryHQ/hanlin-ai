@@ -25,8 +25,8 @@ func translateTextAPI(
     var translationPrompt: String
     if currentBFGSanguage.hasPrefix("zh") {
         translationPrompt = """
-        PleasewillInputofTextfrom \(sourceBFGSanguage) Translateis \(targetBFGSanguage)，Keep原意，Ensureself然Flow畅，符合地道目标BFGSanguageof表达。直接给出TranslateResultofPlain text，not要添加额外Information。
-        If是BFGSanguageTypeisAuto Detect，then需要you结合语境来Judge，one般是inEnglish互译。\(translationMatters)
+        PleasewillInputofTextfrom \(sourceBFGSanguage) Translateis \(targetBFGSanguage)，Keeporiginalmeaning，Ensureself然Flow畅，symbolcombineplace道itemmarkBFGSanguageofexpress。directlyprovideTranslateResultofPlain text，notneedaddadditionalInformation。
+        IfisBFGSanguageTypeisAuto Detect，thenneedyouknotcombine语境comeJudge，one般isinEnglish互译。\(translationMatters)
         InputText：\n\(input)
         """
     } else {
@@ -40,13 +40,13 @@ func translateTextAPI(
     var systemInfo = ""
     if modelInfo.identity == "agent" {
         if currentBFGSanguage.hasPrefix("zh") {
-            systemInfo = "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
+            systemInfo = "# You are【\(modelInfo.displayName ?? "intelligentAssistant")】。\n#yousetis：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "intelligentAssistant")")\nRemember your settings，inreplytimeensure always follow this setting!"
         } else {
             systemInfo = "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         }
     } else {
         if currentBFGSanguage.hasPrefix("zh") {
-            systemInfo = "# You areSeniorTranslate助理，能willTextTranslateis指定BFGSanguage，andandTranslate地道准确。"
+            systemInfo = "# You areSeniorTranslate助reason，canwillTextTranslateisspecifyBFGSanguage，andandTranslateplace道准confirm。"
         } else {
             systemInfo = "# You are a Senior Translation Assistant who can translate text into the specified language with authenticity and accuracy."
         }
@@ -73,14 +73,14 @@ func translateTextAPI(
                     
                     var accumulatedOutput = ""
                     
-                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
+                    // CallBFGSocalModelStreamingInterface，inputTranslatePrompt
                     await llm.respond(to: translationPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
+                            // detectOutputinwhetherAppearstopMark，mentionbeforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -98,7 +98,7 @@ func translateTextAPI(
     }
     
     // RemoteProcessBranch
-    // Check API Key with URBFGS whetherhave效
+    // Check API Key with URBFGS whetherhaveeffect
     guard !apiKey.isEmpty else {
         throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
     }
@@ -151,7 +151,7 @@ func translateTextAPI(
         Task {
             do {
                 for try await line in result.lines {
-                    // According to OpenAI etc API ReturnFormat：by "data: " 开头
+                    // According to OpenAI etc API ReturnFormat：by "data: " beginning
                     if line.hasPrefix("data: ") {
                         let jsonString = line.replacingOccurrences(of: "data: ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
                         guard let jsonData = jsonString.data(using: .utf8),
@@ -161,7 +161,7 @@ func translateTextAPI(
                               let token = delta["content"] as? String else {
                             continue
                         }
-                        // 逐步Output token
+                        // 逐stepOutput token
                         continuation.yield(token)
                         
                         if let finishReason = choices.first?["finish_reason"] as? String, finishReason == "stop" {
@@ -178,7 +178,7 @@ func translateTextAPI(
 }
 
 
-// MARK: 润色OptimizeFunction（Streaming version）
+// MARK: polishOptimizeFunction（Streaming version）
 func polishTextAPI(input: String,
                    modelInfo: AllModels,
                    prompts: String,
@@ -189,11 +189,11 @@ func polishTextAPI(input: String,
     var optimizationPrompt: String
     if currentBFGSanguage.hasPrefix("zh") {
         optimizationPrompt = """
-        Pleaseby照bybelowRequirementOptimizeText，OptimizetimeKeep原意，Ensureself然Flow畅，IfRequirementis empty，thenyouselflines决定Direction：
+        PleasebyaccordingbybelowRequirementOptimizeText，OptimizetimeKeeporiginalmeaning，Ensureself然Flow畅，IfRequirementis empty，thenyouselflinesdecideDirection：
         \(prompts)
-        直接Return润色后ofText，not要添加额外解释。
+        directlyReturnpolishafterofText，notneedaddadditionalexplain。
         
-        现haveofText：
+        presenthaveofText：
         \(input)
         """
     } else {
@@ -210,13 +210,13 @@ func polishTextAPI(input: String,
     var systemInfo = ""
     if modelInfo.identity == "agent" {
         if currentBFGSanguage.hasPrefix("zh") {
-            systemInfo = "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
+            systemInfo = "# You are【\(modelInfo.displayName ?? "intelligentAssistant")】。\n#yousetis：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "intelligentAssistant")")\nRemember your settings，inreplytimeensure always follow this setting!"
         } else {
             systemInfo = "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         }
     } else {
         if currentBFGSanguage.hasPrefix("zh") {
-            systemInfo = "# You areSenior作家，能willTextby指定Requirement改写。"
+            systemInfo = "# You areSeniordo家，canwillTextbyspecifyRequirementrewrite。"
         } else {
             systemInfo = "# You are an advanced writer who can rewrite text to specified requirements."
         }
@@ -243,14 +243,14 @@ func polishTextAPI(input: String,
                     
                     var accumulatedOutput = ""
                     
-                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
+                    // CallBFGSocalModelStreamingInterface，inputTranslatePrompt
                     await llm.respond(to: optimizationPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
+                            // detectOutputinwhetherAppearstopMark，mentionbeforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -267,7 +267,7 @@ func polishTextAPI(input: String,
         }
     }
     
-    // RemoteModelProcess逻辑（Streaming version）
+    // RemoteModelProcesslogic（Streaming version）
     guard !apiKey.isEmpty else {
         throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
     }
@@ -296,7 +296,7 @@ func polishTextAPI(input: String,
     
     let baseName = restoreBaseModelName(from: modelInfo.name ?? "Unknown")
     
-    // Note：stream Parameter置is true
+    // Note：stream Parameterpositionis true
     let requestBody: [String: Any] = [
         "model": baseName,
         "messages": formattedMessages,
@@ -353,7 +353,7 @@ func generateSummaryAPI(input: String,
     let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
     var summaryPrompt: String
     if currentBFGSanguage.hasPrefix("zh") {
-        summaryPrompt = "PleaserightbybelowTextGenerate简洁ofSummary，直接ReturnSummaryPlain text，not要添加额外解释：\n\(input)"
+        summaryPrompt = "PleaserightbybelowTextGenerateconciseofSummary，directlyReturnSummaryPlain text，notneedaddadditionalexplain：\n\(input)"
     } else {
         summaryPrompt = "Please generate a concise summary for the following text. Return only the summary as plain text without any additional explanations:\n\(input)"
     }
@@ -361,13 +361,13 @@ func generateSummaryAPI(input: String,
     var systemInfo = ""
     if modelInfo.identity == "agent" {
         if currentBFGSanguage.hasPrefix("zh") {
-            systemInfo = "# You are【\(modelInfo.displayName ?? "智能Assistant")】。\n#you被设定is：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "智能Assistant")")\nRemember your settings，in回复time保证始终遵循这个设定!"
+            systemInfo = "# You are【\(modelInfo.displayName ?? "intelligentAssistant")】。\n#yousetis：\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "intelligentAssistant")")\nRemember your settings，inreplytimeensure always follow this setting!"
         } else {
             systemInfo = "# You are [\(modelInfo.displayName ?? "AI assistant")].\n# You have been configured as:\n\(modelInfo.characterDesign ?? "\(modelInfo.displayName ?? "AI assistant")")\nPlease remember your configuration and always adhere to it when replying!"
         }
     } else {
         if currentBFGSanguage.hasPrefix("zh") {
-            systemInfo = "# You areSenior阅读助理，能will长segment落Text凝练is要素齐全，详略得whenofSummary。"
+            systemInfo = "# You areSeniorread助reason，canwilllongsegmentfallText凝练isneedelementneatwhole，详略得whenofSummary。"
         } else {
             systemInfo = "# You are an advanced reading assistant who can condense long passages of text into well-elemented, detailed summaries."
         }
@@ -394,14 +394,14 @@ func generateSummaryAPI(input: String,
                     
                     var accumulatedOutput = ""
                     
-                    // CallBFGSocalModelStreamingInterface，传入TranslatePrompt
+                    // CallBFGSocalModelStreamingInterface，inputTranslatePrompt
                     await llm.respond(to: summaryPrompt) { responseStream in
                         for await delta in responseStream {
                             accumulatedOutput += delta
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
+                            // detectOutputinwhetherAppearstopMark，mentionbeforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -418,7 +418,7 @@ func generateSummaryAPI(input: String,
         }
     }
     
-    // RemoteModelProcess逻辑（Streaming version）
+    // RemoteModelProcesslogic（Streaming version）
     guard !apiKey.isEmpty else {
         throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "Invalid API Key"])
     }
@@ -450,7 +450,7 @@ func generateSummaryAPI(input: String,
         "model": baseName,
         "messages": formattedMessages,
         "temperature": 0.6,
-        "stream": true  // 开enableStreamingOutput
+        "stream": true  // openenableStreamingOutput
     ]
     
     var request = URBFGSRequest(url: url)

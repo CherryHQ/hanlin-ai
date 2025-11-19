@@ -48,7 +48,7 @@ struct ChatRowView: View {
                         .foregroundColor(.gray)
                 }
                 
-                // If existsMatch片segment，thenDisplay出来
+                // If existsMatchpiecesegment，thenDisplayoutcome
                 if let snippet = matchedSnippet {
                     Text(snippet)
                         .font(.caption)
@@ -81,7 +81,7 @@ struct ChatRowView: View {
         let dateFormatter = DateFormatter()
         
         if calendar.isDateInToday(date) {
-            // IfisToday，Display具体Time
+            // IfisToday，DisplayconcreteTime
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
@@ -90,7 +90,7 @@ struct ChatRowView: View {
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
             return "beforeday"
         } else {
-            // 超过beforeday，Display“月-日”
+            // exceedbeforeday，Display“month-day”
             dateFormatter.dateFormat = "MM-dd"
             return dateFormatter.string(from: date)
         }
@@ -100,9 +100,9 @@ struct ChatRowView: View {
         var attributedString = AttributedString(text)
         attributedString.font = .caption
         
-        // Check开头whetheris "[草稿]" or "[Image]" and做ColorProcess
-        if text.hasPrefix("[草稿]") {
-            if let draftRange = attributedString.range(of: "[草稿]") {
+        // Checkbeginningwhetheris "[draft]" or "[Image]" andmakeColorProcess
+        if text.hasPrefix("[draft]") {
+            if let draftRange = attributedString.range(of: "[draft]") {
                 attributedString[draftRange].foregroundColor = .hlRed
             }
         } else if text.hasPrefix("[Image]") {
@@ -111,7 +111,7 @@ struct ChatRowView: View {
             }
         }
         
-        // If searchText Non-empty，thenright其inMatchofPartperformHigh亮
+        // If searchText Non-empty，thenrightitinMatchofPartperformHighbright
         if !searchText.isEmpty,
            let range = attributedString.range(of: searchText, options: .caseInsensitive) {
             attributedString[range].foregroundColor = Color(.hlBlue)
@@ -122,14 +122,14 @@ struct ChatRowView: View {
     }
     
     private func highlightedChatName() -> Text {
-        // If名称is empty，thenReturnDefault“Unknown”
+        // Ifnameis empty，thenReturnDefault“Unknown”
         guard let name = record.name, !name.isEmpty else {
             return Text("Unknown")
                 .font(.headline)
                 .foregroundColor(.primary)
         }
         
-        // RemoveSearchwordbeforeafterSpace，and提beforeProcessNullSearch
+        // RemoveSearchwordbeforeafterSpace，andmentionbeforeProcessNullSearch
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearch.isEmpty {
             return Text(name).font(.headline)
@@ -140,7 +140,7 @@ struct ChatRowView: View {
         let lowerName = name.lowercased()
         let lowerSearch = trimmedSearch.lowercased()
         
-        // TraverseFindAllMatchItem，andSettingHigh亮Color
+        // TraverseFindAllMatchItem，andSettingHighbrightColor
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let foundRange = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(foundRange, in: name)
@@ -174,13 +174,13 @@ struct IconAndColorPicker: View {
     let availableIcons = getIconBFGSist()
     let availableColors = getColorBFGSist()
     
-    let iconColumns = [GridItem(.adaptive(minimum: 60), spacing: 12)]  // Icon：每linesselfsuitableshould
-    let colorColumns = [GridItem(.adaptive(minimum: 40), spacing: 12)] // Color：每linesselfsuitableshould，最小宽度更小
+    let iconColumns = [GridItem(.adaptive(minimum: 60), spacing: 12)]  // Icon：eachlinesselfsuitableshould
+    let colorColumns = [GridItem(.adaptive(minimum: 40), spacing: 12)] // Color：eachlinesselfsuitableshould，mostsmall宽degreemoresmall
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                // 预览Message栏
+                // previewMessagecolumn
                 HStack(spacing: 12) {
                     Image(systemName: selectedIcon)
                         .resizable()

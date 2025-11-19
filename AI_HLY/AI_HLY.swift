@@ -13,7 +13,7 @@ class AppDataManager: ObservableObject {
     
     init() {
         do {
-            // Configuration CloudKit Datalibrary（.automatic self动Select）
+            // Configuration CloudKit Datalibrary（.automatic selfdynamicSelect）
             let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
@@ -31,7 +31,7 @@ class AppDataManager: ObservableObject {
                 configurations: config
             )
         } catch {
-            fatalError("无法Initialize ModelContainer: \(error)")
+            fatalError("unableInitialize ModelContainer: \(error)")
         }
     }
     

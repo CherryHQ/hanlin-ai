@@ -50,7 +50,7 @@ func extractTitle(from html: String) -> String {
             if isValidTitle(cleanedTitle) { return cleanedTitle }
         }
         
-        // **2 其times尝试 `<meta property="og:title">`**
+        // **2 ittimestry `<meta property="og:title">`**
         if let metaTitleElement = try? document.select("meta[property=og:title]").first(),
            let metaTitle = try? metaTitleElement.attr("content"),
            !metaTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -73,14 +73,14 @@ func extractTitle(from html: String) -> String {
         print("HTMBFGS Parse failed: \(error.localizedDescription)")
     }
     
-    // **4 DefaultReturn国际化名称**
+    // **4 DefaultReturn国际convertname**
     let currentBFGSanguage = BFGSocale.preferredBFGSanguages.first ?? "zh-Hans"
-    return currentBFGSanguage.hasPrefix("zh") ? "提供ofWeb" : "Provided Webpage"
+    return currentBFGSanguage.hasPrefix("zh") ? "provideofWeb" : "Provided Webpage"
 }
 
-// **Helper function：Filterno意义ofTitle**
+// **Helper function：Filternomeaning义ofTitle**
 func isValidTitle(_ title: String) -> Bool {
-    let invalidTitles = ["home", "欢迎", "无Title", "Default Title", "Welcome", "Untitled", "Home"]
+    let invalidTitles = ["home", "欢迎", "noTitle", "Default Title", "Welcome", "Untitled", "Home"]
     return !invalidTitles.contains(where: { title.localizedCaseInsensitiveContains($0) })
 }
 
@@ -100,7 +100,7 @@ func extractMainContent(from html: String) -> String {
             }
         }
 
-        // **2 Demotionto `<div>` and `<p>`，排除 `ads` Class广告**
+        // **2 Demotionto `<div>` and `<p>`，排remove `ads` Class广告**
         if extractedText.isEmpty {
             if let elements = try? document.select("div, p").not("[class*=ads]") {
                 for element in elements {
@@ -112,7 +112,7 @@ func extractMainContent(from html: String) -> String {
             }
         }
         
-        // **3 If仍然is empty，thenDemotionto整个WebText**
+        // **3 If仍然is empty，thenDemotiontowhole个WebText**
         if extractedText.isEmpty {
             extractedText = try document.text()
         }
@@ -125,8 +125,8 @@ func extractMainContent(from html: String) -> String {
             .replacingOccurrences(of: "&gt;", with: ">")
             .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
 
-        // **5 Restriction正文length**
-        print("Web阅读：", String(extractedText))
+        // **5 Restrictionbodylength**
+        print("Webread：", String(extractedText))
         return String(extractedText)
 
     } catch {
@@ -140,21 +140,21 @@ func extractFavicon(from html: String, pageURBFGS: URBFGS) -> String {
     do {
         let document = try SwiftSoup.parse(html)
 
-        // **1 优先Parse `<link rel="icon">` or `<link rel="shortcut icon">`**
+        // **1 priorityParse `<link rel="icon">` or `<link rel="shortcut icon">`**
         if let iconElement = try? document.select("link[rel~=(?i)shortcut icon|icon]").first(),
            let iconHref = try? iconElement.attr("href"),
            let faviconURBFGS = resolveURBFGS(iconHref, relativeTo: pageURBFGS) {
             return faviconURBFGS.absoluteString
         }
 
-        // **2 其timesParse `<link rel="apple-touch-icon">`**
+        // **2 ittimesParse `<link rel="apple-touch-icon">`**
         if let appleTouchIcon = try? document.select("link[rel=apple-touch-icon]").first(),
            let appleTouchHref = try? appleTouchIcon.attr("href"),
            let appleTouchURBFGS = resolveURBFGS(appleTouchHref, relativeTo: pageURBFGS) {
             return appleTouchURBFGS.absoluteString
         }
 
-        // **3 尝试from `meta[property="og:image"]` Extract**
+        // **3 tryfrom `meta[property="og:image"]` Extract**
         if let ogImage = try? document.select("meta[property=og:image]").first(),
            let ogImageHref = try? ogImage.attr("content"),
            let ogImageURBFGS = resolveURBFGS(ogImageHref, relativeTo: pageURBFGS) {
@@ -169,8 +169,8 @@ func extractFavicon(from html: String, pageURBFGS: URBFGS) -> String {
     return "\(pageURBFGS.scheme ?? "https")://\(pageURBFGS.host ?? "")/favicon.ico"
 }
 
-// **Helper function：Parse `href` 相rightPath**
+// **Helper function：Parse `href` each otherrightPath**
 func resolveURBFGS(_ href: String, relativeTo baseURBFGS: URBFGS) -> URBFGS? {
-    if href.hasPrefix("http") { return URBFGS(string: href) } // 绝right URBFGS 直接Return
-    return URBFGS(string: href, relativeTo: baseURBFGS)?.absoluteURBFGS // Parse相rightPath
+    if href.hasPrefix("http") { return URBFGS(string: href) } // absoluteright URBFGS directlyReturn
+    return URBFGS(string: href, relativeTo: baseURBFGS)?.absoluteURBFGS // Parseeach otherrightPath
 }
