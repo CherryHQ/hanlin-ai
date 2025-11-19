@@ -39,14 +39,14 @@ class HealthTool {
         }
     }
     
-    // MARK: - Get步数withDistance详情（每hoursStat）
+    // MARK: - Get步数withDistancedetails（每hoursStat）
     func fetchStepDetails(from startDate: Date, to endDate: Date) async -> String {
         let calendar = Calendar.current
         let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
         let healthStore = HKHealthStore()
 
         let now = Date()  // 精确towhenbeforetime刻
-        // 1. 校验DateRange：notcanisnot yet来Date，and start ≤ end
+        // 1. validateDateRange：notcanisnot yet来Date，and start ≤ end
         guard startDate <= now, endDate <= now, startDate <= endDate else {
             return isChinese
                 ? "DateRangeInvalid：Datenotcanisnot yet来，and起始Date需早atoretcatEnd Date。"
@@ -229,14 +229,14 @@ class HealthTool {
         return output
     }
     
-    // MARK: - GetEnergy详情（每hoursStat）
+    // MARK: - GetEnergydetails（每hoursStat）
     func fetchEnergyDetails(from startDate: Date, to endDate: Date) async -> String {
         let calendar = Calendar.current
         let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
         let healthStore = HKHealthStore()
         let now = Date()
         
-        // 1. 校验DateRange：notcanisnot yet来Date，and start ≤ end
+        // 1. validateDateRange：notcanisnot yet来Date，and start ≤ end
         guard startDate <= now, endDate <= now, startDate <= endDate else {
             return isChinese
                 ? "DateRangeInvalid：Datenotcanisnot yet来，and起始Date需早atoretcatEnd Date。"
@@ -405,14 +405,14 @@ class HealthTool {
         return output
     }
     
-    // MARK: - Get营养Intake详情（by作息IntervalStat）
+    // MARK: - Get营养Intakedetails（by作息IntervalStat）
     func fetchNutritionDetails(from startDate: Date, to endDate: Date) async -> String {
         let calendar = Calendar.current
         let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? false
         let healthStore = HKHealthStore()
         let now = Date()
 
-        // 1. 校验Date
+        // 1. validateDate
         guard startDate <= now, endDate <= now, startDate <= endDate else {
             return isChinese
                 ? "DateRangeInvalid：Datenotcanisnot yet来，and起始Date需早atoretcatEnd Date。"
@@ -603,8 +603,8 @@ class HealthTool {
         )
     }
     
-    // MARK: - 写入膳食Data
-    /// will HealthData inofnot nil 营养IntakeItem写入 HealthKit，ReturnSuccesswith否
+    // MARK: - write膳食Data
+    /// will HealthData inofnot nil 营养IntakeItemwrite HealthKit，ReturnSuccesswith否
     func writeNutritionData(_ data: HealthData) async throws -> Bool {
         // 1. Get膳食Type
         guard
@@ -653,7 +653,7 @@ class HealthTool {
             return true
         }
         
-        // 5. 批量写入andReturnResult
+        // 5. 批量writeandReturnResult
         return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Bool, Error>) in
             healthStore.save(samples) { success, error in
                 if let e = error { cont.resume(throwing: e) }

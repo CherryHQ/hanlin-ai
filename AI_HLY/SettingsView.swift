@@ -168,7 +168,7 @@ struct SettingsView: View {
         }
     }
     
-    /// 打开Systemof“BFGSanguagewith地区”Setting
+    /// openSystemof“BFGSanguagewith地区”Setting
     private func openBFGSanguageSettings() {
         guard let url = URBFGS(string: UIApplication.openSettingsURBFGSString),
               UIApplication.shared.canOpenURBFGS(url) else {

@@ -23,7 +23,7 @@ class UserInfo {
     var useSearch: Bool = true                                     // UseSearch功能
     var useKnowledge: Bool = true                                  // UseKnowledge功能
     var useCode: Bool = true                                       // UseCode功能
-    var useHealth: Bool = true                                     // Use健康Information
+    var useHealth: Bool = true                                     // UsehealthInformation
     var useWeather: Bool = true                                    // UseWeatherQuery
     var useCanvas: Bool = true                                     // UseCanvas功能
     var optimizationTextModel: String = "glm-4.5-flash_hanlin"     // TextOptimizeModel

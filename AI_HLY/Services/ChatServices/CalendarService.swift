@@ -18,7 +18,7 @@ import EventKit
 ///   - eventType: Optional，指定要QueryofEventType。have效Valueis "calendar" or "reminder"，ifnot指定oris emptythenQuery全部。
 /// - Returns: MatchSuccessof [EventItem] Array。IfAllSearchitemsfile均is emptythenReturnNullArray。
 func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, location: String?, eventType: String? = nil) async -> [EventItem] {
-    // 至少需要提供one个Searchitemsfile
+    // 至少need提供one个Searchitemsfile
     let trimmedKeyword = keyword?.trimmingCharacters(in: .whitespacesAndNewlines)
     let trimmedBFGSocation = location?.trimmingCharacters(in: .whitespacesAndNewlines)
     if (trimmedKeyword == nil || trimmedKeyword!.isEmpty)
@@ -52,7 +52,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
         return []
     }
     
-    // QuerySystemCalendarEvent（限定Query窗口iswhenbeforeDatebefore后1年）
+    // QuerySystemCalendarEvent（限定Query窗口iswhenbeforeDatebeforeafter1年）
     if grantedCalendar && searchCalendar {
         let defaultWindow: TimeInterval = 5 * 365 * 24 * 3600  // 五年
         
@@ -66,7 +66,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
             }
         }()
         
-        // Ifuseaccount指定finished endDate，就往后推oneday；否then推to五年后
+        // Ifuseaccount指定finished endDate，就往after推oneday；否then推to五年after
         let queryEnd: Date = {
             if let ed = endDate,
                let adjusted = Calendar.current.date(byAdding: .day, value: 1, to: ed) {
@@ -84,7 +84,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
         
         let events = store.events(matching: predicate)
         
-        // Scale ±1 dayofTimeInterval：haveValue就 +/– 1 day，无Value就无限远
+        // Scale ±1 dayofTimeInterval：haveValue就 +/– 1 day，noValue就no限远
         let lowerBound: Date = {
             if let sd = startDate,
                let shifted = Calendar.current.date(byAdding: .day, value: -1, to: sd) {
@@ -116,7 +116,7 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
             
             let dateMatch: Bool = {
                 guard let eventDate = e.startDate else {
-                    // Event无Start Date，只havewhenuseaccount既没传 startDate 也没传 endDate time才视isThrough
+                    // EventnoStart Date，只havewhenuseaccount既没传 startDate 也没传 endDate time才视isThrough
                     return startDate == nil && endDate == nil
                 }
                 return searchInterval.contains(eventDate)
@@ -212,13 +212,13 @@ func searchSystemEvents(keyword: String?, startDate: Date?, endDate: Date?, loca
 ///   - type: EventType，取Value "calendar" or "reminder"（区分大小写not敏感）
 ///   - title: EventTitle
 ///   - startDate: CalendarEventUseofStartTime（RemindercanIgnore）
-///   - endDate: CalendarEventUseof结束Time（RemindercanIgnore）
+///   - endDate: CalendarEventUseofendTime（RemindercanIgnore）
 ///   - dueDate: ReminderUseofDeadline（CalendarEventcanIgnore）
 ///   - location: CalendarEventUseofBFGSocation；ReminderNo专门BFGSocationField，canIgnoreor放inRemarkin
 ///   - notes: EventRemark
 ///   - priority: ReminderofPriority（1～9），0 or nil 表示not yetSetting；CalendarEventcanIgnore
-///   - reminderMinutes: 提醒Time（Minutes）。ForhaveDeadlineofReminder，表示提beforemultiple少Minutes提醒；For无DeadlineofReminder，表示multiple少Minutes后提醒（Defaultis5Minutes）
-/// - Returns: (写入Success后of EventItem Object, Bool)，SuccessthenReturnUpdate后of EventItem（PackageincludeSystemGenerateof标识符），否thenReturn nil and false
+///   - reminderMinutes: 提醒Time（Minutes）。ForhaveDeadlineofReminder，表示提beforemultiple少Minutes提醒；FornoDeadlineofReminder，表示multiple少Minutesafter提醒（Defaultis5Minutes）
+/// - Returns: (writeSuccessafterof EventItem Object, Bool)，SuccessthenReturnUpdateafterof EventItem（PackageincludeSystemGenerateof标识符），否thenReturn nil and false
 func writeSystemEvent(type: String,
                       title: String,
                       startDate: Date?,
@@ -290,7 +290,7 @@ func writeSystemEvent(type: String,
         if let priority = priority, priority > 0 {
             ekReminder.priority = priority
         }
-        ekReminder.isCompleted = false  // New创建ofReminder始终isnot yet完成Status
+        ekReminder.isCompleted = false  // NewcreateofReminder始终isnot yetcompleteStatus
         
         // SettingDeadline（If提供）
         if let dueDate = dueDate {
@@ -305,7 +305,7 @@ func writeSystemEvent(type: String,
         
         // inSavebefore添加闹钟
         if dueDate != nil {
-            // 添加提before提醒闹钟（必须inSettingDeadline后添加）
+            // 添加提before提醒闹钟（mustinSettingDeadlineafter添加）
             if let reminderMinutes = reminderMinutes, reminderMinutes > 0 {
                 let alarm = EKAlarm(relativeOffset: -TimeInterval(reminderMinutes * 60))
                 ekReminder.addAlarm(alarm)
@@ -339,7 +339,7 @@ func writeSystemEvent(type: String,
                 location: nil,
                 notes: notes,
                 priority: priority,
-                completed: false,  // New创建ofReminder始终isnot yet完成Status
+                completed: false,  // NewcreateofReminder始终isnot yetcompleteStatus
                 calendarIdentifier: nil
             )
             savedReminder.calendarIdentifier = ekReminder.calendarItemIdentifier

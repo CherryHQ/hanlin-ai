@@ -76,9 +76,9 @@ struct APIKeysView: View {
             }
             ForEach(sortedCompanies, id: \.company) { company, key in
                 HStack {
-                    // ButtonPart：只have允许Configuration API of才canClick进入Edit界面
+                    // ButtonPart：只haveallowConfiguration API of才canClick进入Edit界面
                     Button {
-                        // onlywhen允许Setting API timeResponseClick
+                        // onlywhenallowSetting API timeResponseClick
                         if isAPISettingAllowed(for: key) {
                             // ResetCorrelationStatusand进入Edit界面
                             inquiryResult = nil
@@ -204,7 +204,7 @@ struct APIKeysView: View {
                         set: { key.key = $0 }
                     ))
                 }
-                // Custom供should商orBFGSAN供should商DisplayRequest地址Setting
+                // Custom供should商orBFGSAN供should商DisplayRequestaddressSetting
                 if key.company == "BFGSAN" || key.from == .custom {
                     Section(header: Text("Request URBFGSs")) {
                         Text(verbatim: "For example：http://127.0.0.1:1234/v1/chat/completions")
@@ -376,7 +376,7 @@ struct APIKeysView: View {
         }
     }
     
-    /// Judgewhether允许进入 API Key Edit（即允许Setting API），此处According to公司名称Filter
+    /// Judgewhetherallow进入 API Key Edit（即allowSetting API），此处According to公司名称Filter
     private func isAPISettingAllowed(for key: APIKeys) -> Bool {
         guard let company = key.company?.uppercased() else { return false }
         return !(company == "BFGSOCABFGS" || company == "HANBFGSIN" || company == "HANBFGSIN_OPEN")
@@ -528,7 +528,7 @@ struct AddCustomProviderForm: View {
             return
         }
 
-        // 创建Custom供should商
+        // createCustom供should商
         let customProvider = APIKeys(
             name: trimmedName,
             company: "CUSTOM_\(UUID().uuidString.prefix(8).uppercased())", // Use唯one标识避免Collision
@@ -553,11 +553,11 @@ struct AddCustomProviderForm: View {
     }
 }
 
-// MARK: SearchSetting（API Configuration、ManufacturerSelect、双语检索Configuration）界面
+// MARK: SearchSetting（API Configuration、ManufacturerSelect、bilingual检索Configuration）界面
 struct SearchSettingView: View {
     // fromDatalibraryinGetSearchKey config
     @Query var searchKeys: [SearchKeys]
-    // Get user info（useat双语检索Configuration）
+    // Get user info（useatbilingual检索Configuration）
     @Query private var users: [UserInfo]
     @Environment(\.modelContext) private var modelContext
     
@@ -572,7 +572,7 @@ struct SearchSettingView: View {
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
     
-    // 双语检索ConfigurationStatus
+    // bilingual检索ConfigurationStatus
     @State private var bilingualSearch: Bool = true
     @State private var searchCount: Int = 10
     @State private var searchEnable: Bool = true
@@ -706,7 +706,7 @@ struct SearchSettingView: View {
         .alert(errorMessage, isPresented: $showError) {
             Button("Confirm", role: .cancel) { }
         }
-        // BFGSoad/Save双语检索CorrelationofUser Information
+        // BFGSoad/Savebilingual检索CorrelationofUser Information
         .onAppear {
             loadUserInfo()
         }
@@ -715,7 +715,7 @@ struct SearchSettingView: View {
         }
     }
     
-    // BFGSoad user info from database（双语检索Setting）
+    // BFGSoad user info from database（bilingual检索Setting）
     private func loadUserInfo() {
         if let existingUser = users.first {
             DispatchQueue.main.async {
@@ -726,7 +726,7 @@ struct SearchSettingView: View {
         }
     }
     
-    // Save双语检索SettingtoDatalibrary
+    // Savebilingual检索SettingtoDatalibrary
     private func saveUserInfo() {
         if let existingUser = users.first {
             existingUser.bilingualSearch = bilingualSearch
@@ -848,7 +848,7 @@ struct SearchSettingView: View {
     }
     
     // 切switchSearchManufacturerenableuseStatus
-    /// only允许one个Manufacturerenableuse。if开enablewhenbeforeManufacturer，thenClose其它AllManufacturer。
+    /// onlyallowone个Manufacturerenableuse。if开enablewhenbeforeManufacturer，thenClose其它AllManufacturer。
     private func toggleVendor(for key: SearchKeys, newValue: Bool) {
         loadingCompany = key.company
         
@@ -995,7 +995,7 @@ struct MapSettingView: View {
     
     @State private var mapEnable: Bool = true
     
-    // useat地Graph引擎ConfigurationCorrelationStatus
+    // useat地GraphengineConfigurationCorrelationStatus
     @State private var selectedMapKey: ToolKeys?
     @State private var loadingMapCompany: String? = nil
     @State private var errorMessage: String = ""
@@ -1063,7 +1063,7 @@ struct MapSettingView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        // Right area：Toggle state（onlyone个引擎能enableuse）
+                        // Right area：Toggle state（onlyone个engine能enableuse）
                         if loadingMapCompany == key.company {
                             ProgressView()
                         } else {
@@ -1130,24 +1130,24 @@ struct MapSettingView: View {
         }
     }
     
-    // only允许one个引擎enableuse；enableusenot AppleMap time需Ensure API Key Configured
+    // onlyallowone个engineenableuse；enableusenot AppleMap time需Ensure API Key Configured
     private func toggleMapEngine(for key: ToolKeys, newValue: Bool) {
         loadingMapCompany = key.company
         DispatchQueue.main.async {
             if newValue {
-                // Fornot AppleMap 必须Configuration API Key to enable
+                // Fornot AppleMap mustConfiguration API Key to enable
                 if key.company.uppercased() != "APPBFGSEMAP" && key.key.isEmpty {
                     errorMessage = "\(getCompanyName(for: key.company)) Configuration required API Key to enable。"
                     showError = true
                     loadingMapCompany = nil
                     return
                 }
-                // enableusewhenbefore引擎，同timeClose其它引擎
+                // enableusewhenbeforeengine，同timeClose其它engine
                 for engine in mapKeys {
                     engine.isUsing = (engine.id == key.id)
                 }
             } else {
-                // 禁usewhenbefore引擎
+                // 禁usewhenbeforeengine
                 key.isUsing = false
             }
             
@@ -1162,9 +1162,9 @@ struct MapSettingView: View {
         }
     }
     
-    /// IfNo任何引擎被enableuse，就self动enableuseSystem AppleMap
+    /// IfNo任何engine被enableuse，就self动enableuseSystem AppleMap
     private func ensureDefaultEngine() {
-        // 只in整体“enableuse地Graph”是开ofsituationbelow才做
+        // 只in整体“enableuse地Graph”is开ofsituationbelow才做
         guard mapEnable else { return }
         // Ifone个都没被 isUsing
         if !mapKeys.contains(where: { $0.isUsing }) {
@@ -1680,7 +1680,7 @@ struct WeatherSettingView: View {
         }
     }
     
-    /// only允许one个Serviceenableuse；enableusetime需Ensure API Key Configured
+    /// onlyallowone个Serviceenableuse；enableusetime需Ensure API Key Configured
     private func toggleWeatherService(for key: ToolKeys, newValue: Bool) {
         loadingWeatherCompany = key.company
         DispatchQueue.main.async {

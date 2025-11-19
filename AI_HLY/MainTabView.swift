@@ -50,7 +50,7 @@ struct MainTabView: View {
                 hideTabBar = isHidden
             }
         }
-        // backgroundDecorate符ForTabViewnot是Requiredof，但Keepby防have特定需要
+        // backgroundDecorate符ForTabViewnotisRequiredof，但Keepby防havespecificneed
         .background(Color(.systemBackground))
     }
 }

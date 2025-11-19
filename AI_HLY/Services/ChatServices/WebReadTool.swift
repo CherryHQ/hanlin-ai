@@ -44,7 +44,7 @@ func extractTitle(from html: String) -> String {
     do {
         let document = try SwiftSoup.parse(html)
 
-        // **1 优先尝试 `<title>` BFGSabel**
+        // **1 prioritytry `<title>` BFGSabel**
         if let titleElement = try? document.title(), !titleElement.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             let cleanedTitle = titleElement.trimmingCharacters(in: .whitespacesAndNewlines)
             if isValidTitle(cleanedTitle) { return cleanedTitle }
@@ -58,7 +58,7 @@ func extractTitle(from html: String) -> String {
             if isValidTitle(cleanedMetaTitle) { return cleanedMetaTitle }
         }
 
-        // **3 依times尝试 `<h1>`、`<h2>`**
+        // **3 依timestry `<h1>`、`<h2>`**
         let headingTags = ["h1", "h2"]
         for tag in headingTags {
             if let headingElement = try? document.select(tag).first(),
@@ -78,9 +78,9 @@ func extractTitle(from html: String) -> String {
     return currentBFGSanguage.hasPrefix("zh") ? "提供ofWeb" : "Provided Webpage"
 }
 
-// **Helper function：Filter无意义ofTitle**
+// **Helper function：Filterno意义ofTitle**
 func isValidTitle(_ title: String) -> Bool {
-    let invalidTitles = ["首页", "欢迎", "无Title", "Default Title", "Welcome", "Untitled", "Home"]
+    let invalidTitles = ["home", "欢迎", "无Title", "Default Title", "Welcome", "Untitled", "Home"]
     return !invalidTitles.contains(where: { title.localizedCaseInsensitiveContains($0) })
 }
 
@@ -89,7 +89,7 @@ func extractMainContent(from html: String) -> String {
     do {
         let document = try SwiftSoup.parse(html)
         
-        // **1 尝试Extract `<article>`、`<main>`、`<section>`**
+        // **1 tryExtract `<article>`、`<main>`、`<section>`**
         let highPriorityTags = ["article", "main", "section"]
         var extractedText: String = ""
 
@@ -125,7 +125,7 @@ func extractMainContent(from html: String) -> String {
             .replacingOccurrences(of: "&gt;", with: ">")
             .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
 
-        // **5 Restriction正文长度**
+        // **5 Restriction正文length**
         print("Web阅读：", String(extractedText))
         return String(extractedText)
 

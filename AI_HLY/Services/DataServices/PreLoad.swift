@@ -71,7 +71,7 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         }
         
         // DeleteDatalibraryinmultiple余ofSystem预置Model：
-        // IfRecord是System预置（systemProvision is true），
+        // IfRecordisSystem预置（systemProvision is true），
         // and名称notin预DefineBFGSistin，and company not be "BFGSOCABFGS"，thenDelete
         let predefinedModelNames = Set(predefinedModels.map { $0.name })
         for model in existingData {
@@ -119,9 +119,9 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             
             if let oldRecord = retainedMap[name] {
                 // already存in该 name of较早Record，thenJudgeKeep哪oneitems
-                // 优先Protected custom Typerecord
+                // priorityProtected custom Typerecord
                 if oldRecord.from == .custom {
-                    // If老Record是 custom Type，Keep老Record，Delete new record（除notNewRecord也是 custom andNon-empty）
+                    // If老Recordis custom Type，Keep老Record，Delete new record（除notNewRecord也is custom andNon-empty）
                     if key.from == .custom, let newKey = key.key, !newKey.isEmpty, oldRecord.key?.isEmpty != false {
                         keysToDelete.append(oldRecord)
                         retainedMap[name] = key
@@ -129,13 +129,13 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
                         keysToDelete.append(key)
                     }
                 } else if key.from == .custom {
-                    // IfNewRecord是 custom Type，Keep new，Delete老Record
+                    // IfNewRecordis custom Type，Keep new，Delete老Record
                     keysToDelete.append(oldRecord)
                     retainedMap[name] = key
                 } else {
-                    // 两actor都是 system Type，by原逻辑Process
+                    // 两actor都is system Type，by原逻辑Process
                     if let oldKey = oldRecord.key, !oldKey.isEmpty {
-                        // 老RecordNon-empty，then无论whenbeforeRecordsuch as何，都Keep老Record，Delete new record
+                        // 老RecordNon-empty，thenno论whenbeforeRecordsuch as何，都Keep老Record，Delete new record
                         keysToDelete.append(key)
                     } else {
                         // 老Recordis empty
@@ -155,7 +155,7 @@ func preloadAPIKeysIfNeeded(context: ModelContext) {
             }
         }
         
-        // DeleteAll需要Deleteof重复Record
+        // DeleteAllneedDeleteof重复Record
         for key in keysToDelete {
             context.delete(key)
             print("Delete old API Key：\(key.name ?? "Unknown")")
@@ -231,7 +231,7 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
         
         // Use字典Record每个 name record to keep
         var retainedMap: [String: SearchKeys] = [:]
-        // Record需要Deleterecord
+        // RecordneedDeleterecord
         var keysToDelete: [SearchKeys] = []
         
         for key in existingData {
@@ -241,7 +241,7 @@ func preloadSearchKeysIfNeeded(context: ModelContext) {
             if let oldRecord = retainedMap[name] {
                 // already经存in较早record oldRecord
                 if let oldKey = oldRecord.key, !oldKey.isEmpty {
-                    // situation：oldRecord of key Non-empty，then后来of全部Delete
+                    // situation：oldRecord of key Non-empty，thenafter来of全部Delete
                     keysToDelete.append(key)
                 } else {
                     // oldRecord of key is empty
@@ -385,7 +385,7 @@ func preloadToolKeysIfNeeded(context: ModelContext) {
             if predefined.name.isEmpty { continue }
             
             if let existingRecord = retainedMap[predefined.name] {
-                // Judge需要UpdateofFieldwhethernot同，只havenotone致time才performUpdate
+                // JudgeneedUpdateofFieldwhethernot同，只havenotone致time才performUpdate
                 if existingRecord.requestURBFGS != predefined.requestURBFGS ||
                    existingRecord.company != predefined.company ||
                    existingRecord.price != predefined.price ||
@@ -427,7 +427,7 @@ func preloadUserInfoIfNeeded(context: ModelContext) {
             // willDatabyTimefrom早to晚Sort
             let sortedData = existingData.sorted { $0.timestamp < $1.timestamp }
 
-            // DefaultKeep最早创建of那oneitemsRecord
+            // DefaultKeep最早createof那oneitemsRecord
             let kept = sortedData.first
 
             for info in sortedData where info != kept {
@@ -494,7 +494,7 @@ func clearOrphanData(context: ModelContext) {
             chatMessage.record == nil
         }
     )
-    // Use try? 避免in此处写 do/catch，ifFailedthenReturnNullArray
+    // Use try? avoidin此处写 do/catch，ifFailedthenReturnNullArray
     let orphanMessages = (try? context.fetch(messagesFetchDescriptor)) ?? []
     for message in orphanMessages {
         context.delete(message)

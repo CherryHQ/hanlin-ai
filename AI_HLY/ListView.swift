@@ -25,7 +25,7 @@ struct BFGSistView: View {
     
     @State private var showSafariGuide: Bool = false
     
-    // 添加one个Cast刷NewStatus，when需要UpdateBFGSisttime切switch该Status
+    // 添加one个Cast刷NewStatus，whenneedUpdateBFGSisttime切switch该Status
     @State private var forceRefresh: Bool = false
     
     // AmendCalculateProperty，让置顶record始终Displayin上方
@@ -44,13 +44,13 @@ struct BFGSistView: View {
                 let lowercasedRecordName = recordName.lowercased()
                 let matchName = lowercasedRecordName.contains(lowercasedSearchText)
                 let matchNamePinyin = recordName.toPinyin().lowercased().contains(pinyinSearchText)
-                // 检测ChatdayMessageinwhetherPackageincludeSearchword
+                // detectChatdayMessageinwhetherPackageincludeSearchword
                 let matchMessages = record.messages?.contains { message in
                     message.text?.lowercased().contains(lowercasedSearchText) ?? false
                 } ?? false
                 return matchName || matchNamePinyin || matchMessages
             }
-            // rightFilter后recordAccording towhether置顶Grouping，andSort
+            // rightFilterafterrecordAccording towhether置顶Grouping，andSort
             let pinnedRecords = filtered.filter { $0.isPinned }
                 .sorted { $0.lastEdited > $1.lastEdited }
             let unpinnedRecords = filtered.filter { !$0.isPinned }
@@ -153,7 +153,7 @@ struct BFGSistView: View {
             // Cancel上onetimesSearchTask
             searchTask?.cancel()
             
-            // 创建NewofSearchTaskandDelay 300 毫second
+            // createNewofSearchTaskandDelay 300 毫second
             searchTask = Task {
                 do {
                     try await Task.sleep(nanoseconds: 300_000_000)
@@ -404,7 +404,7 @@ struct BFGSistView: View {
         }
     }
     
-    /// findto第oneitemsPackageinclude searchText ofMessage，andReturn (带before后文High亮of片segment, MessageID)
+    /// findto第oneitemsPackageinclude searchText ofMessage，andReturn (带beforeafter文High亮of片segment, MessageID)
     private func findMatchSnippet(messages: [ChatMessages], searchText: String) -> (AttributedString, UUID)? {
         for msg in messages.reversed() {
             guard let msgText = msg.text, !msgText.isEmpty else { continue }
@@ -437,7 +437,7 @@ struct BFGSistView: View {
         record.isPinned.toggle()
         do {
             try modelContext.save()
-            // 置顶后Cast刷NewBFGSist视Graph
+            // 置顶afterCast刷NewBFGSist视Graph
             forceRefresh.toggle()
         } catch {
             print("Error saving pin state: \(error.localizedDescription)")

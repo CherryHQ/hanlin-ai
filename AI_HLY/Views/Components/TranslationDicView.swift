@@ -126,7 +126,7 @@ struct TranslationDicView: View {
     /// AddTranslateRecord
     private func addTranslation() {
         
-        // 校验Contentnot能is empty
+        // validateContentnot能is empty
         guard !contentOne.isEmpty, !contentTwo.isEmpty else {
             toastMessage = "Contentnot能is empty"
             withAnimation { showToast = true }

@@ -58,7 +58,7 @@ struct PromptRepoView: View {
         .ignoresSafeArea()
     }
     
-    // Filter后data
+    // Filterafterdata
     private var filteredPrompts: [PromptRepo] {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
@@ -68,7 +68,7 @@ struct PromptRepoView: View {
             return promptTemps.filter {
                 let name = $0.name ?? "NewPrompt"
                 let lowerName = name.lowercased()
-                // GetPinyin表示（False设 String.toPinyin() MethodalreadyImplementation，Return无SpaceofPinyinString）
+                // GetPinyin表示（False设 String.toPinyin() MethodalreadyImplementation，ReturnnoSpaceofPinyinString）
                 let lowerPinyin = name.toPinyin().lowercased()
                 return lowerName.contains(lowerSearch) || lowerPinyin.contains(lowerSearch)
             }
@@ -221,7 +221,7 @@ struct PromptRepoView: View {
         let lowerName = name.lowercased()
         var matchFound = false
 
-        // 1. 先in原始汉字inFindMatch
+        // 1. 先inraw汉字inFindMatch
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
@@ -232,12 +232,12 @@ struct PromptRepoView: View {
             matchFound = true
         }
         
-        // 2. If汉字innot foundtoMatch，then尝试inPinyininMatch
+        // 2. If汉字innot foundtoMatch，thentryinPinyininMatch
         if !matchFound {
             let pinyin = name.toPinyin() // Get汉字rightshouldofPinyin
             let lowerPinyin = pinyin.lowercased()
             if let rangeInPinyin = lowerPinyin.range(of: lowerSearch, options: .caseInsensitive) {
-                // Build每个汉字inPinyininofMapInterval（False设每个汉字Convert toPinyin后，字符数can能notone致）
+                // Build每个汉字inPinyininofMapInterval（False设每个汉字Convert toPinyinafter，字符数can能notone致）
                 var mapping: [Range<Int>] = []
                 var currentIndex = 0
                 for char in name {
@@ -277,7 +277,7 @@ struct PromptRepoView: View {
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 24, height: 24) // 调整大小
+                    .frame(width: 24, height: 24) // adjust大小
                     .foregroundColor(.hlBluefont) // Color变is .hlBlue
                 
                 Text(highlightedName(for: item))
@@ -686,7 +686,7 @@ struct PromptDetailView: View {
         return Int(ceil(Double(wordCount) * 1.2))
     }
     
-    // MARK: OCR 扫描
+    // MARK: OCR scan
     private func processOCR() {
         Task {
             guard let image = ocrImage else {

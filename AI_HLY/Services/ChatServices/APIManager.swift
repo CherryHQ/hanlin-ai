@@ -338,7 +338,7 @@ class APIManager {
         let bilingual = isBilingualSearchEnabled()
         
         do {
-            // First search：原始 query
+            // First search：raw query
             let (result1, usedEngine) = try await searchTool(
                 query: query,
                 engine: engine,
@@ -351,7 +351,7 @@ class APIManager {
             var combinedContents = result1.contents
             var combinedIcons = result1.icons
             
-            // Ifenableuse双语Search，再Translateonetimes query andSearch
+            // IfenableusebilingualSearch，再Translateonetimes query andSearch
             if bilingual {
                 let translated = try await SystemOptimizer(context: self.context)
                     .translatePrompt(inputPrompt: query)
@@ -590,7 +590,7 @@ class APIManager {
             var data: Data
             var response: URBFGSResponse
             
-            // 尝试第onetimesDownload
+            // try第onetimesDownload
             do {
                 (data, response) = try await downloadFile(from: originalURBFGS)
             } catch {
@@ -635,7 +635,7 @@ class APIManager {
             // Usealreadyhave extractContent(from:) FunctionExtractText
             let extractedText = try await extractContent(from: tempFileURBFGS)
             
-            // Download后canSelectDeletetemporarytimeFile
+            // DownloadaftercanSelectDeletetemporarytimeFile
             try? FileManager.default.removeItem(at: tempFileURBFGS)
             
             // 组织成 Markdown
@@ -702,7 +702,7 @@ class APIManager {
     
     /// 主动ReadWeb Content：from单个 URBFGS inExtract正文andConstruct Markdown Format Summary
     func readWebPage(url: String) async -> String {
-        // 校验 URBFGS whetherhave效
+        // validate URBFGS whetherhave效
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
             ? "Nohave效ofWebChaining。"
@@ -815,14 +815,14 @@ class APIManager {
         return (try? context.fetch(fetchDescriptor).first)?.key
     }
     
-    // QueryModelRequest地址
+    // QueryModelRequestaddress
     private func getRequestURBFGS(for company: String) -> String? {
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
         return (try? context.fetch(fetchDescriptor).first)?.requestURBFGS
     }
     
-    // 双语检索whetherenableuse
+    // bilingual检索whetherenableuse
     private func isBilingualSearchEnabled() -> Bool {
         let fetchDescriptor = FetchDescriptor<UserInfo>()
         if let userInfo = try? context.fetch(fetchDescriptor).first {
@@ -867,7 +867,7 @@ class APIManager {
         return false
     }
     
-    // 健康whether functionuse
+    // healthwhether functionuse
     private func isHealthEnabled() -> Bool {
         let fetchDescriptor = FetchDescriptor<UserInfo>()
         if let userInfo = try? context.fetch(fetchDescriptor).first {
@@ -1509,7 +1509,7 @@ class APIManager {
                                 }
                             }
                             
-                            // 检测累积OutputinwhetherAppear停止Mark
+                            // detect累积OutputinwhetherAppear停止Mark
                             if accumulatedOutput.contains("im_end") {
                                 // Call stop when detected，BFGSet model end quickly
                                 llm.stop()
@@ -1550,7 +1550,7 @@ class APIManager {
         let company = modelInfo.company?.uppercased() ?? "UNKNOWN"
         let currentBFGSanguagePrefix = currentBFGSanguage.hasPrefix("zh")
         
-        // InsertSystemMessage（if第oneitemsMessagenot是 system）
+        // InsertSystemMessage（if第oneitemsMessagenotis system）
         let systemRole: String = {
             switch company {
             case "OPENAI": return "developer"
@@ -1848,14 +1848,14 @@ class APIManager {
                 return
             }
             
-            // First search：原始BFGSanguage
+            // First search：rawBFGSanguage
             let (searchResult1, searchEngine) = try await searchTool(query: optimizedQuery, engine: engine, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
             var combinedTitles = searchResult1.titles
             var combinedBFGSinks = searchResult1.links
             var combinedContents = searchResult1.contents
             var combinedIcons = searchResult1.icons
             
-            // ifenableuse双语Search，thenTranslateQueryandExecute第二timesSearch
+            // ifenableusebilingualSearch，thenTranslateQueryandExecute第二timesSearch
             if bilingualSearchEnabled {
                 let translatedQuery = try await optimizer.translatePrompt(inputPrompt: optimizedQuery)
                 let (searchResult2, _) = try await searchTool(query: translatedQuery, engine: engine, apiKey: apiKey, requestURBFGS: requestURBFGS, searchCount: searchCount)
@@ -1903,7 +1903,7 @@ class APIManager {
         }
     }
     
-    /// Web阅读Task：fromselectinof URBFGS inExtractWeb Content，andConstruct Markdown Format Summary
+    /// WebreadTask：fromselectinof URBFGS inExtractWeb Content，andConstruct Markdown Format Summary
     private func performWebPageTask(with selectedURBFGSs: [String]) async {
         guard !selectedURBFGSs.isEmpty else { return }
         let extractedWebPages = await fetchWebPageContent(from: selectedURBFGSs)
@@ -1939,7 +1939,7 @@ class APIManager {
     /// Auto-generate Title：If message is 3 items，thenCallOptimize器GenerateAuto Title
     /// Auto-generate Title：If message is 1、3、11 items，thenCallOptimize器GenerateAuto Title
     private func autoGenerateTitleIfNeeded(from messages: [RequestMessage]) async throws {
-        // 需要GenerateTitleofHistoryMessageitems数
+        // needGenerateTitleofHistoryMessageitems数
         let autoTitleCounts: Set<Int> = [1, 3, 11]
         // 只StatuseaccountandAssistantofMessage
         let relevantMessages = messages.filter { $0.role == "user" || $0.role == "assistant" }
@@ -1999,7 +1999,7 @@ class APIManager {
     
     /// Calculate两个Vectorof余弦Similarity
     private func cosineSimilarity(_ v1: [Float], _ v2: [Float]) -> Float {
-        // 保证长度one致，取最小长度performCalculate
+        // 保证lengthone致，取最小lengthperformCalculate
         let count = min(v1.count, v2.count)
         let n = vDSP_BFGSength(count)
         
@@ -2013,7 +2013,7 @@ class APIManager {
         vDSP_svesq(v1, 1, &sum1, n)
         vDSP_svesq(v2, 1, &sum2, n)
         
-        // 3. 归one化and避免除零：denom = ||v1|| * ||v2|| + ε
+        // 3. 归one化andavoid除零：denom = ||v1|| * ||v2|| + ε
         let denom = sqrt(sum1) * sqrt(sum2) + Float.leastNonzeroMagnitude
         
         // 4. Return余弦Similarity
@@ -2201,7 +2201,7 @@ class APIManager {
         }
     }
     
-    // RemoteModelProcess：ConstructFormatMessage、Execute SearchwithWeb阅读Task、Auto-generate Title、Construct RequestandProcessStreamingResponse
+    // RemoteModelProcess：ConstructFormatMessage、Execute SearchwithWebreadTask、Auto-generate Title、Construct RequestandProcessStreamingResponse
     private func processRemoteModel(messages: [RequestMessage],
                                     formattedMessages: [[String: Any]]? = nil,
                                     modelInfo: AllModels,
@@ -2277,7 +2277,7 @@ class APIManager {
                             ))
                         }
                         
-                        // 联网Task完成，StartGenerateRequest
+                        // onlineTaskcomplete，StartGenerateRequest
                         continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "Process Conversation Content" : "Processing"))
                         
                         // FormatMessage
@@ -2651,7 +2651,7 @@ class APIManager {
                                 }
                                 for toolCall in toolCallsChunk {
                                     if let index = toolCall["index"] as? Int {
-                                        // Ensure accumulatedToolCalls Array长度足够
+                                        // Ensure accumulatedToolCalls Arraylength足够
                                         while accumulatedToolCalls.count <= index {
                                             accumulatedToolCalls.append([:])
                                         }
@@ -2665,7 +2665,7 @@ class APIManager {
                                         }
                                         if let functionDict = toolCall["function"] as? [String: Any] {
                                             var currentFunction = currentToolCall["function"] as? [String: Any] ?? [:]
-                                            // in最初dataBlockin，name 会Return，后续只追加 arguments
+                                            // ininitialdataBlockin，name 会Return，after续只追加 arguments
                                             if let functionName = functionDict["name"] as? String, !functionName.isEmpty {
                                                 currentFunction["name"] = functionName
                                             }
@@ -2748,7 +2748,7 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "search_online":
-                                                // Call网络SearchTool
+                                                // CallnetworkSearchTool
                                                 continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "Searching online" : "Searching Online"))
                                                 useFunctionName = functionName
                                                 
@@ -2814,7 +2814,7 @@ class APIManager {
                                                 }
                                                 
                                             case "read_web_page":
-                                                // CallWeb阅读Tool
+                                                // CallWebreadTool
                                                 continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "currentlyReadWeb" : "Reading Web"))
                                                 useFunctionName = functionName
                                                 
@@ -2854,7 +2854,7 @@ class APIManager {
                                                 }
                                                 
                                             case "create_knowledge_document":
-                                                // Call创建Knowledge CardTool
+                                                // CallcreateKnowledge CardTool
                                                 continuation.yield(StreamData(operationalState: currentBFGSanguagePrefix ? "Create knowledge doc" : "Creating Knowledge"))
                                                 useFunctionName = functionName
                                                 
@@ -3369,7 +3369,7 @@ class APIManager {
                                                     self.codeBlock?.append(resultBlock)
                                                     
                                                 } catch {
-                                                    // AppearSevereException（such as网络Failed、StructParseErroretc）
+                                                    // AppearSevereException（such asnetworkFailed、StructParseErroretc）
                                                     toolResult = currentBFGSanguagePrefix
                                                     ? "Execute Python CodetimeOccurredError：\(error.localizedDescription)"
                                                     : "An error occurred while executing the Python code: \(error.localizedDescription)"
@@ -3378,7 +3378,7 @@ class APIManager {
                                                 toolResultFront = toolResult
                                                 
                                             case "create_canvas":
-                                                // 1) 通知Start创建
+                                                // 1) 通知Startcreate
                                                 continuation.yield(StreamData(
                                                     operationalState: currentBFGSanguagePrefix ? "currently创建Canvas" : "Creating Canvas"
                                                 ))
@@ -3395,7 +3395,7 @@ class APIManager {
                                                     content: content,
                                                     type: type
                                                 )
-                                                // 4) willCanvasInformation赋给 self.canvasInfo，bybefore端负责后续Save
+                                                // 4) willCanvasInformation赋给 self.canvasInfo，bybefore端负责after续Save
                                                 self.canvasInfo = canvasData
 
                                                 // 5) 准备Return to BFGSarge BFGSanguage ModelofResult
@@ -3415,11 +3415,11 @@ class APIManager {
                                                 ))
                                                 useFunctionName = functionName
 
-                                                // 2) 尝试Parse patterns and replacements is [String]
+                                                // 2) tryParse patterns and replacements is [String]
                                                 let patterns = extractStringArray(from: functionArguments, forKey: "patterns")
                                                 let replacements = extractStringArray(from: functionArguments, forKey: "replacements")
 
-                                                // 3) ifArray长度notone致，ConstructErrorFeedbackandReturn（No need guard）
+                                                // 3) ifArraylengthnotone致，ConstructErrorFeedbackandReturn（No need guard）
                                                 if patterns.count != replacements.count {
                                                     let msg = currentBFGSanguagePrefix
                                                         ? "AmendFailed：patterns with replacements Array长度notone致"
@@ -3507,7 +3507,7 @@ class APIManager {
                                                         break
                                                     }
                                                     
-                                                    // Call步数详情QueryFunction
+                                                    // Call步数detailsQueryFunction
                                                     let detail = await HealthTool.shared.fetchStepDetails(from: startDate, to: endDate)
                                                     toolResult = detail
                                                 }
@@ -3539,7 +3539,7 @@ class APIManager {
                                                         break
                                                     }
                                                     
-                                                    // CallEnergyConsumption详情QueryFunction
+                                                    // CallEnergyConsumptiondetailsQueryFunction
                                                     let detail = await HealthTool.shared.fetchEnergyDetails(from: startDate, to: endDate)
                                                     toolResult = detail
                                                 }
@@ -3571,7 +3571,7 @@ class APIManager {
                                                         break
                                                     }
                                                     
-                                                    // Call营养Intake详情QueryFunction
+                                                    // Call营养IntakedetailsQueryFunction
                                                     let detail = await HealthTool.shared.fetchNutritionDetails(from: startDate, to: endDate)
                                                     toolResult = detail
                                                 }
@@ -3739,7 +3739,7 @@ class APIManager {
                                         continuation.yield(recursiveData)
                                     }
                                     
-                                    // 结束递归
+                                    // end递归
                                     break
                                     
                                 } else {
@@ -3822,7 +3822,7 @@ class APIManager {
                             }
                         }
                     }
-                    // Flow完成
+                    // Flowcomplete
                     continuation.finish()
                     self.isCancelled = false
                 } catch {
@@ -3836,7 +3836,7 @@ class APIManager {
         }
     }
     
-    /// After optimizing question，ReturnOptimize后ofPrompt
+    /// After optimizing question，ReturnOptimizeafterofPrompt
     private func ImagePromptTask(updatedMessages: inout [RequestMessage]) async -> String? {
         do {
             guard let query = updatedMessages.last?.text ?? updatedMessages.last?.imageText, !query.isEmpty else { return nil }
@@ -4084,7 +4084,7 @@ class APIManager {
                     
                     switch company {
                     case "QWEN":
-                        // AsynchronousReturn，需要轮询 task_id（canbyKeep原先of轮询Code逻辑）
+                        // AsynchronousReturn，need轮询 task_id（canbyKeep原先of轮询Code逻辑）
                         let output = json?["output"] as? [String: Any]
                         guard let taskId = output?["task_id"] as? String else {
                             throw NSError(domain: "ImageGen", code: -1, userInfo: [NSBFGSocalizedDescriptionKey: "not yetGettoTask ID"])

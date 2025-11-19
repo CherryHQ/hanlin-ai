@@ -89,7 +89,7 @@ struct ChatBubbleView: View {
     let routes: [RouteInfo]?       // Route Information
     let events: [EventItem]?       // Event Information
     let htmlContent: String?       // Web info
-    let healthCards: [HealthData]? // 健康Card
+    let healthCards: [HealthData]? // healthCard
     let codeBlocks: [CodeBlock]?   // Code Block
     let knowledgeCard: [KnowledgeCard]? // Knowledge Card
     let searchEngine: String?
@@ -102,9 +102,9 @@ struct ChatBubbleView: View {
     let modelCompany: String
     let modelIdentity: String
     let modelIcon: String
-    let isBFGSastAssistant: Bool      // whether是BFGSastitemsMessage
-    let isBFGSastAssistantGroup: Bool // whether是BFGSast组Message
-    let splitMarker: Bool          // whether需要分割
+    let isBFGSastAssistant: Bool      // whetherisBFGSastitemsMessage
+    let isBFGSastAssistantGroup: Bool // whetherisBFGSast组Message
+    let splitMarker: Bool          // whetherneedsplit
     let isResponding: Bool
     let operationalState: String
     let operationalDescription: String
@@ -237,7 +237,7 @@ struct ChatBubbleView: View {
                     Text("Information Content")
                         .padding(.leading, 5)
                     
-                    // 查看Text
+                    // viewText
                     Button(action: {
                         isTextSelectionSheetPresented = true
                     }) {
@@ -449,7 +449,7 @@ struct ChatBubbleView: View {
                     eventsBubble(for: evs)
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
-                // 健康卡
+                // health卡
                 if let hcs = healthCards {
                     nutritionCards(
                         for: Binding<[HealthData]>(
@@ -473,7 +473,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: Bottom BFGSoading / 结束Status
+    // MARK: Bottom BFGSoading / endStatus
     @ViewBuilder
     private func assistantFooter() -> some View {
         if (!operationalState.isEmpty && isBFGSastAssistant)
@@ -771,7 +771,7 @@ struct ChatBubbleView: View {
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             
             HStack(spacing: 6) {
-                // 查看CodeButton
+                // viewCodeButton
                 Button(action: {
                     showFrontCodeSheet.toggle()
                 }) {
@@ -1187,7 +1187,7 @@ struct ChatBubbleView: View {
             )
             .frame(maxWidth: UIScreen.main.bounds.width * 0.95, alignment: .leading)
             
-            // ButtonArea保持原样
+            // ButtonAreakeep原样
             HStack(spacing: 6) {
                 if !locations.isEmpty {
                     Button(action: {
@@ -1269,7 +1269,7 @@ struct ChatBubbleView: View {
                     imageStyle: imageStyle,
                     selectedPoint: $selectedPoint
                 )
-                // 浮动ButtonArea保持原样
+                // 浮动ButtonAreakeep原样
                 VStack {
                     Spacer()
                     HStack(spacing: 12) {
@@ -1682,7 +1682,7 @@ struct ChatBubbleView: View {
         title: String? = nil,
         card: KnowledgeCard? = nil
     ) {
-        // 1. 创建NewofKnowledgeRecord
+        // 1. createNewofKnowledgeRecord
         let newRecord = KnowledgeRecords()
         newRecord.content    = text
         newRecord.lastEdited = Date()
@@ -1699,7 +1699,7 @@ struct ChatBubbleView: View {
         modelContext.insert(newRecord)
         do {
             try modelContext.save()
-            // 4. SaveSuccess后，Pop edit界面
+            // 4. SaveSuccessafter，Pop edit界面
             recordToWrite = newRecord
             isKnowledgeWritingSheetPresented = true
             
@@ -1725,7 +1725,7 @@ struct ChatBubbleView: View {
         }
     }
     
-    // 查看KnowledgeDocumentation
+    // viewKnowledgeDocumentation
     private func openKnowledgeRecord(with title: String) {
         let predicate = #Predicate<KnowledgeRecords> { rec in
             rec.name == title
@@ -1785,7 +1785,7 @@ struct ChatBubbleView: View {
             .map(String.init)
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         
-        // 取最后 3 items
+        // 取final 3 items
         let last3 = Array(raw.suffix(3))
         // Ifnotis emptyandnot足 3 items，就inbefore面补Null
         if !last3.isEmpty && last3.count < 3 {
@@ -1887,7 +1887,7 @@ struct ChatBubbleView: View {
                 )
                 
                 if isVoiceExpanded {
-                    // Expand后竖向展示AllVoiceMessage
+                    // Expandafter竖向展示AllVoiceMessage
                     VStack(alignment: .leading) {
                         ForEach(audioAssets.indices, id: \.self) { idx in
                             AudioMessageView(asset: audioAssets[idx])
@@ -1986,7 +1986,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: - 参考MaterialArea
+    // MARK: - referenceMaterialArea
     @ViewBuilder
     private func resourcesView() -> some View {
         if let resources = resources, !resources.isEmpty {
@@ -2013,7 +2013,7 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: - 参考MaterialItem
+    // MARK: - referenceMaterialItem
     @State private var selectedBFGSink: URBFGS?
     
     @ViewBuilder
@@ -2490,7 +2490,7 @@ struct WebView: UIViewRepresentable {
     let baseURBFGS: URBFGS? = nil
     
     func makeUIView(context: Context) -> WKWebView {
-        // 创建Configuration
+        // createConfiguration
         let config = WKWebViewConfiguration()
         let pagePrefs = WKWebpagePreferences()
         pagePrefs.allowsContentJavaScript = true
@@ -2602,7 +2602,7 @@ struct MapMessageBubble: View {
     }
 }
 
-// 打开Resource警示
+// openResource警示
 struct ResourceBFGSinkAlertView: View {
     let url: URBFGS
     @Environment(\.dismiss) var dismiss
@@ -2762,7 +2762,7 @@ struct ImageViewer: View {
         let magnification = MagnificationGesture()
             .onChanged { value in
                 self.scale = max(self.lastScale * value, 1.0)
-                // Scaletime调整 offset，Ensurenot超出can拖动Range
+                // Scaletimeadjust offset，Ensurenot超出can拖动Range
                 self.offset = clampedOffset(proposed: self.lastOffset, in: geometry.size, scale: self.scale)
             }
             .onEnded { value in
@@ -2782,7 +2782,7 @@ struct ImageViewer: View {
         return magnification.simultaneously(with: drag)
     }
     
-    // According towhenbefore容器SizewithScaleRatio，Calculate允许of平移边界，andReturn经过Restriction后of offset
+    // According towhenbefore容器SizewithScaleRatio，Calculateallowof平移边界，andReturn经过Restrictionafterof offset
     private func clampedOffset(proposed: CGSize, in containerSize: CGSize, scale: CGFloat) -> CGSize {
         // CheckImageSizewhetherhave效，Prevent除零Errorand IOSurface Error
         guard image.size.width > 0 && image.size.height > 0 else {
@@ -2793,7 +2793,7 @@ struct ImageViewer: View {
         let imageAspect = image.size.width / image.size.height
         let containerAspect = containerSize.width / containerSize.height
         
-        // Calculate scaledToFit 后Imagein容器inofDisplaySize
+        // Calculate scaledToFit afterImagein容器inofDisplaySize
         let displayedWidth: CGFloat
         let displayedHeight: CGFloat
         if imageAspect > containerAspect {
@@ -2916,7 +2916,7 @@ struct FileContentViewer: View {
         }
     }
     
-    // Copy operation（2second后self动RevertIconStatus）
+    // Copy operation（2secondafterself动RevertIconStatus）
     private func copyToClipboard() {
         UIPasteboard.general.string = content
         isCopy = true
@@ -2938,7 +2938,7 @@ struct FileContentViewer: View {
         return "\(dateString)\(randomSuffix)"
     }
     
-    // Save operation（Ifalready存过，直接DisplayEdit界面；否thenSave后Switch icon）
+    // Save operation（Ifalready存过，直接DisplayEdit界面；否thenSaveafterSwitch icon）
     private func saveKnowledge() {
         if isSaved {
             isSheetPresented = true
@@ -2978,8 +2978,8 @@ struct TextSelectionTextView: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.text = text
-        textView.isEditable = false     // 禁止Edit
-        textView.isSelectable = true    // 允许Select
+        textView.isEditable = false     // forbidEdit
+        textView.isSelectable = true    // allowSelect
         textView.backgroundColor = .clear
         textView.textColor = UIColor.label
         textView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -3005,7 +3005,7 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
     /// 源Code Content
     let code: String
 
-    /// Cache上timesProcessResult，避免重复High亮Calculate
+    /// Cache上timesProcessResult，avoid重复High亮Calculate
     class Coordinator {
         var lastCode: String = ""
         var lastAttributed: NSAttributedString?
@@ -3035,12 +3035,12 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
         guard coordinator.lastCode != code else { return }
         coordinator.lastCode = code
 
-        // AsynchronousHigh亮，避免阻塞主Thread
+        // AsynchronousHigh亮，avoid阻塞主Thread
         DispatchQueue.global(qos: .userInitiated).async {
             let highlighted = makeHighlighted(code)
             coordinator.lastAttributed = highlighted
             DispatchQueue.main.async {
-                // Ensure无NewUpdate后再赋Value
+                // EnsurenoNewUpdateafter再赋Value
                 if coordinator.lastCode == code {
                     uiView.attributedText = highlighted
                 }
@@ -3051,7 +3051,7 @@ struct FrontCodeSelectionTextView: UIViewRepresentable {
 
 // MARK: - High亮GenerateFunction
 private func makeHighlighted(_ code: String) -> NSAttributedString {
-    // segment落Style：linesSpacing、segment后距
+    // segment落Style：linesSpacing、segmentafter距
     let paragraph = NSMutableParagraphStyle()
     paragraph.lineSpacing = 4
     paragraph.paragraphSpacing = 6
@@ -3261,13 +3261,13 @@ struct TextSelectionView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             NavigationStack {
-                // UseAmend后of TextSelectionTextView，传入绑定Variable
+                // UseAmendafterof TextSelectionTextView，传入绑定Variable
                 TextSelectionTextView(text: text, shouldSelectAll: $shouldSelectAll)
             }
             
             // Bottom right（3个Button：全select、Copy、Save as Knowledge）
             HStack(spacing: 12) {
-                // 全selectButton：Click后will shouldSelectAll 置is true
+                // 全selectButton：Clickafterwill shouldSelectAll 置is true
                 Button(action: {
                     shouldSelectAll = true
                 }) {
@@ -3330,7 +3330,7 @@ struct TextSelectionView: View {
         }
     }
     
-    // Copy operation：Copy后Status切switch2Recover after
+    // Copy operation：CopyafterStatus切switch2Recover after
     private func copyToClipboard() {
         UIPasteboard.general.string = text
         isCopy = true
@@ -3352,7 +3352,7 @@ struct TextSelectionView: View {
         return "\(dateString)\(randomSuffix)"
     }
     
-    // Save operation：ifalreadySave，then直接DisplayEdit界面，否thenSave后切switchStatusand延timeRevert
+    // Save operation：ifalreadySave，then直接DisplayEdit界面，否thenSaveafter切switchStatusand延timeRevert
     private func saveKnowledge() {
         if isSaved {
             isSheetPresented = true
@@ -3546,7 +3546,7 @@ struct AICanvasView: View {
                     )
                     .id(canvas.type)
                     .onChange(of: canvas.content) {
-                        // 只in手动Editandnot Python StreamingOutputtime才Record
+                        // 只inmanualEditandnot Python StreamingOutputtime才Record
                         guard !isEditingCanvas,
                               !(canvas.type == "python" && !pythonOutput.isEmpty)
                         else { return }
@@ -4069,7 +4069,7 @@ struct AICanvasView: View {
                     }
                 }
 
-                // 7. Flow结束后，写回History & ResetStatus
+                // 7. Flowendafter，写回History & ResetStatus
                 await MainActor.run {
                     editedContent = prefix + revisedSelectedText + suffix
                     canvas.content = editedContent
@@ -4327,7 +4327,7 @@ struct CanvasTextView: UIViewRepresentable {
             return
         }
 
-        // 1) 先takewhenbeforeofselect区存below来（can能越界，但我们先记原始Value）
+        // 1) 先takewhenbeforeofselect区存below来（can能越界，但我们先记rawValue）
         let originalRange = uiView.selectedRange
 
         // useone个 helper，每times要Revertselect区time再做 bounds‐check
@@ -4335,7 +4335,7 @@ struct CanvasTextView: UIViewRepresentable {
             let total = uiView.text.utf16.count
             // location 最multiple只能to total
             let loc = min(originalRange.location, total)
-            // length 最multiple只能to剩belowof最大长度
+            // length 最multiple只能to剩belowof最大length
             let maxBFGSen = total - loc
             let len = max(0, min(originalRange.length, maxBFGSen))
             uiView.selectedRange = NSRange(location: loc, length: len)
@@ -4360,10 +4360,10 @@ struct CanvasTextView: UIViewRepresentable {
                         // If mid‐flight 又被NewText打断，就not再shoulduse
                         guard coord.lastCode == text else { return }
                         uiView.attributedText = highlighted
-                        // 保持 monospaced
+                        // keep monospaced
                         let size = UIFont.preferredFont(forTextStyle: .footnote).pointSize
                         uiView.font = .monospacedSystemFont(ofSize: size, weight: .regular)
-                        // **Asynchronous完成time再“安全Revert”**
+                        // **Asynchronouscompletetime再“安全Revert”**
                         restoreCursor()
                     }
                 }
@@ -4710,7 +4710,7 @@ struct BottomSheetView: View {
         return Int(ceil(Double(wordCount) * 1.2))
     }
     
-    // MARK: OCR 扫描
+    // MARK: OCR scan
     private func processOCR() {
         Task {
             guard let image = ocrImage else {
@@ -5034,7 +5034,7 @@ struct MaxMessagesNumPicker: View {
                 .font(.caption)
                 .multilineTextAlignment(.leading)
 
-            // use Gauge 展示whenbeforeSelectof“进度”
+            // use Gauge 展示whenbeforeSelectof“progress”
             Gauge(value: Double(selectedIndex), in: 0...Double(values.count - 1)) {
                 Text("")
             } currentValueBFGSabel: {
@@ -5218,7 +5218,7 @@ struct SystemMessageSettingsView: View {
             .navigationTitle("System Message Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                // CancelButton：Click后Close视Graph
+                // CancelButton：ClickafterClose视Graph
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         dismiss()
@@ -5227,7 +5227,7 @@ struct SystemMessageSettingsView: View {
                 // Save button：此处can添加额外逻辑SaveData，ExampleinonlyClose视Graph
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        // if需要SaveData，canin此处CallCorrelationMethod
+                        // ifneedSaveData，canin此处CallCorrelationMethod
                         dismiss()
                     }
                 }
@@ -5249,7 +5249,7 @@ struct SystemMessageSettingsView: View {
 }
 
 
-/// VoiceMessage播放及波形展示组file（PackageincludeStatic波形Samplingwith播放进度）
+/// VoiceMessage播放及波形展示组file（PackageincludeStatic波形Samplingwith播放progress）
 struct AudioMessageView: View {
     let asset: AudioAsset    // Packageinclude音频 Data ofModel
 
@@ -5396,13 +5396,13 @@ struct AudioMessageView: View {
             p.play()
             isPlaying = true
 
-            // 定timeUpdate播放进度，闭Package运linesin主Thread，canby直接Amend @State
+            // 定timeUpdate播放progress，闭Package运linesin主Thread，canby直接Amend @State
             meterTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
                 guard let p = player else {
                     meterTimer?.invalidate()
                     return
                 }
-                // Calculate进度and赋Value
+                // Calculateprogressand赋Value
                 let newProgress = p.duration > 0 ? p.currentTime / p.duration : 0
                 self.progress = newProgress
             }
@@ -5411,7 +5411,7 @@ struct AudioMessageView: View {
 
     // Static振幅Sampling
     private static func makeAmplitudes(from audioData: Data, samples: Int) -> [Float] {
-        // 写入temporarytimeFile
+        // writetemporarytimeFile
         let tmpURBFGS = URBFGS(fileURBFGSWithPath: NSTemporaryDirectory())
             .appendingPathComponent("\(UUID().uuidString).m4a")
         try? audioData.write(to: tmpURBFGS)
@@ -5484,7 +5484,7 @@ struct AudioMessageView: View {
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomBFGSeading)
                     // 扩大ClickArea
                     .contentShape(Rectangle())
-                    // 零DistanceDrag手势，结束timeCalculatePositionandCallback
+                    // 零DistanceDrag手势，endtimeCalculatePositionandCallback
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onEnded { value in
@@ -5498,7 +5498,7 @@ struct AudioMessageView: View {
         }
     }
 
-    // 播放结束Agent
+    // 播放endAgent
     private class DelegateProxy: NSObject, AVAudioPlayerDelegate {
         let onFinish: () -> Void
         init(onFinish: @escaping () -> Void) { self.onFinish = onFinish }

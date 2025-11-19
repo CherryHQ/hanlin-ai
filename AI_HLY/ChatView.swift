@@ -24,7 +24,7 @@ struct InputTextField: UIViewRepresentable {
     var onSendMessage: (() -> Void)?
     @ScaledMetric(relativeTo: .body) private var fontSize: CGFloat = 16
 
-    // useat检测 @mention，便at整BlockDelete；if也not需要，can连同CorrelationCodeone起删
+    // useatdetect @mention，便at整BlockDelete；if也notneed，can连同CorrelationCodeone起删
     private static let mentionRegex =
         try! NSRegularExpression(pattern: "@[^\\s]+", options: [])
 
@@ -38,7 +38,7 @@ struct InputTextField: UIViewRepresentable {
         override func paste(_ sender: Any?) {
             let pasteboard = UIPasteboard.general
             
-            // Image优先
+            // Imagepriority
             if let img = pasteboard.image {
                 onPasteImage?(img)
                 return
@@ -247,7 +247,7 @@ struct ChatView: View {
     @State private var ifThink = false                     // ControlwhetherperformDeep thinking
     @State private var ifAudio = false                     // ControlwhetherperformVoiceGenerate
     @State private var ifPlanning = false                  // ControlwhetherperformPlanningGenerate
-    @State private var thinkingBFGSength: Int = 0             // Control思dimension长度
+    @State private var thinkingBFGSength: Int = 0             // Control思dimensionlength
     @State private var ImageSize: String = "Square"        // ControlImageGenerateofCanvas size
     @State private var showModelSheet = false              // ControlModelBFGSistofDisplay
     @State private var loadHistoryMessages = false         // ControlHistoryDataBFGSoadStatus
@@ -256,12 +256,12 @@ struct ChatView: View {
     @State private var KnowledgeAlertMessgae: String = ""  // Error message
     @State private var showSearchAlert = false             // DisplaySearch Enginenot yetenableusePrompt弹窗
 
-    // Parameter调整（滑Block）Correlation
+    // Parameteradjust（滑Block）Correlation
     @State private var showTemperatureSlider = false       // ControlSamplingTemperature滑BlockDisplay
     @State private var temperature: Double = 0.8           // SamplingTemperatureParameter（Default 0.8）
     @State private var showTopPSlider = false              // Control累积Probability滑BlockDisplay
     @State private var topP: Double = 0.9                  // 累积ProbabilityParameter（Default 0.9）
-    @State private var showMaxTokensSlider = false         // Control最大回复长度滑BlockDisplay
+    @State private var showMaxTokensSlider = false         // Control最大回复length滑BlockDisplay
     @State private var maxTokens: Int = 2048               // 最Big OutputParameter（Default 2048）
     @State private var showMaxMessagesNumSlider = false    // ControlMessageQuantity上限滑BlockDisplay
     @State private var maxMessagesNum: Int = 20            // MessageQuantity上限（Default 20）
@@ -280,7 +280,7 @@ struct ChatView: View {
     @State private var TemporaryRecord: Bool = false        // whetheristemporarytimeChatday
     @State private var useSystemMessage: Bool = true        // whetherCustomSystemMessage
     @State private var systemMessage: String = ""           // whetherSystemMessageContent
-    @State private var showSystemMessageSheet = false       // 打开SystemMessageSetting
+    @State private var showSystemMessageSheet = false       // openSystemMessageSetting
     let refreshInterval: TimeInterval = 0.3                 // 刷NewIntervalTime
     @State private var operationalState: String = ""        // OperationStatusText
     @State private var operationalDescription: String = ""  // OperationDescriptionText
@@ -293,20 +293,20 @@ struct ChatView: View {
     @State private var selectedMessageIDs: Set<UUID> = []   // selectinofMessage ID Set
     var matchedMessageID: UUID?                             // MatchofMessage ID
     @State private var showScrollToBottomButton = false     // ControlScrolltoBottomButtonDisplay
-    @State private var needScrollToBottomButton = false     // whether需要DisplayScrolltoBottomButton
+    @State private var needScrollToBottomButton = false     // whetherneedDisplayScrolltoBottomButton
     @State private var ifScroll = false                     // ControlScrollCorrelationStatus
 
     // Prompt管理Correlation
     @State private var selectedPrompts: [PromptRepo] = []   // selectinofPrompt
 
     // ExportwithImportCorrelation
-    @State private var showingExportOptions = false         // whetherDisplayExportOption菜单
+    @State private var showingExportOptions = false         // whetherDisplayExportOptionmenu
     @State private var isShowingExportPicker = false        // whetherDisplayFileExportSelect器
     @State private var exportDocument: ChatExportDocument?  // ExportFileDocumentation
     @State private var exportUTType: UTType = .plainText    // ExportFileType（DefaultPlain text）
-    // useat分享oftemporarytimeFile URBFGS
+    // useatshareoftemporarytimeFile URBFGS
     @State private var exportFileURBFGS: URBFGS? = nil
-    // Control分享界面Display
+    // Controlshare界面Display
     @State private var showShareSheet: Bool = false
     @State private var exportedImage: UIImage? = nil
     @State private var showImageShareSheet: Bool = false
@@ -379,7 +379,7 @@ struct ChatView: View {
             targetCount = 20
         }
         
-        // According to设备TypeDynamic调整 ifScroll 阈Value
+        // According to设备TypeDynamicadjust ifScroll 阈Value
         let threshold = UIDevice.current.userInterfaceIdiom == .phone ? 6 : 12
         allMessages = sortedMessages
         loadedMessageCount = min(targetCount, sortedMessages.count)
@@ -398,7 +398,7 @@ struct ChatView: View {
             selectModel(at: selectedModelIndex)
         }
         
-        // 延time后通知Model selectAreaScroll
+        // 延timeafter通知Model selectAreaScroll
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                 NotificationCenter.default.post(name: .scrollToModelIndex, object: selectedModelIndex)
@@ -411,7 +411,7 @@ struct ChatView: View {
         let newCount = min(allMessages.count, loadedMessageCount + 15)
         if newCount > loadedMessageCount {
             loadedMessageCount = newCount
-            // from allMessages in取出最New newCount items（即后面of newCount items），保持顺序
+            // from allMessages in取出最New newCount items（即after面of newCount items），keep顺序
             chatTemps = Array(allMessages.suffix(newCount))
         }
     }
@@ -539,7 +539,7 @@ struct ChatView: View {
                 }
             }
             
-            // in右上角菜单Button左侧增加 TemporaryRecord StatusIcon
+            // in右上角menuButton左侧增加 TemporaryRecord StatusIcon
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     TemporaryRecord.toggle() // Click切switchStatus
@@ -564,7 +564,7 @@ struct ChatView: View {
             // 右侧Button
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    // ------ 调整Parameter ------
+                    // ------ adjustParameter ------
                     Menu("Adjust Model Parameters", systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
@@ -686,7 +686,7 @@ struct ChatView: View {
             Button("Cancel", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
-            // 分享结束后清除temporarytimeFile URBFGS
+            // shareendafter清除temporarytimeFile URBFGS
             exportFileURBFGS = nil
         }) {
             if let fileURBFGS = exportFileURBFGS {
@@ -715,11 +715,11 @@ struct ChatView: View {
                     defer { url.stopAccessingSecurityScopedResource() }
                     do {
                         let data = try Data(contentsOf: url)
-                        // 尝试先byMulti-modal JSON FormatParse
+                        // try先byMulti-modal JSON FormatParse
                         if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
                             importMessages(importedMessages: importedMessages)
                         }
-                        // IfFailed，再尝试ParsePlain text JSON Format
+                        // IfFailed，再tryParsePlain text JSON Format
                         else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
                             importSimpleMessages(simpleMessages: simpleMessages)
                         } else {
@@ -767,7 +767,7 @@ struct ChatView: View {
     @ViewBuilder
     private func bottomOverlay() -> some View {
         VStack {
-            // 只havein需要time才Display“Canvas”and“ScrolltoBottom”Button
+            // 只haveinneedtime才Display“Canvas”and“ScrolltoBottom”Button
             if (showScrollToBottomButton
                 || (chatRecord.canvas?.content.isEmpty == false))  && isMultiSelectMode == false
             {
@@ -1116,9 +1116,9 @@ struct ChatView: View {
         }
     }
     
-    // 创建ChatdayInformation
+    // createChatdayInformation
     private func createChatBubble(for msg: ChatMessages) -> some View {
-        // whether是BFGSastitemsAssistantMessage
+        // whetherisBFGSastitemsAssistantMessage
         let isBFGSastAssistant = chatTemps.last(where: { $0.role == "assistant" })?.id == msg.id
         
         // whetherinBFGSast组AssistantMessagein
@@ -1143,7 +1143,7 @@ struct ChatView: View {
             set: { msg.audioExpanded = $0 }
         )
         
-        // Calculate splitMarker（同组and都是assistanttimenot分隔）
+        // Calculate splitMarker（同组and都isassistanttimenot分隔）
         let splitMarker: Bool = {
             guard let idx = chatTemps.firstIndex(where: { $0.id == msg.id }) else { return true }
             if idx == 0 { return true }
@@ -1165,7 +1165,7 @@ struct ChatView: View {
                 ids.insert(m.id, at: 0)
                 i -= 1
             }
-            // 向后Collect
+            // 向afterCollect
             i = idx + 1
             while i < chatTemps.count {
                 let m = chatTemps[i]
@@ -1225,7 +1225,7 @@ struct ChatView: View {
             operationalDescription: operationalDescription,
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
             onDelete: {
-                // If是Assistant组Message，Delete整组，否thenDelete单items
+                // IfisAssistant组Message，Delete整组，否thenDelete单items
                 if msg.role == "assistant" {
                     for gid in groupIDs {
                         if let i = chatTemps.firstIndex(where: { $0.id == gid }) {
@@ -1302,7 +1302,7 @@ struct ChatView: View {
     }
     
     private func openHistory() {
-        // IfInput fieldhave草稿Content，then优先Save草稿
+        // IfInput fieldhave草稿Content，thenprioritySave草稿
         if !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             chatRecord.infoDescription = "[草稿] \(message)"
             chatRecord.input = message
@@ -1357,7 +1357,7 @@ struct ChatView: View {
             clearChatText = "Everything is brand new ✨"
         }
 
-        // 创建清NullChatdayRecordofMessage
+        // create清NullChatdayRecordofMessage
         let welcomeMessage = ChatMessages(
             role: "information",
             text: clearChatText,
@@ -1930,7 +1930,7 @@ struct ChatView: View {
                     let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无Content") }
                     userMessage?.promptUse = promptCards
                 }
-                // 写入useaccountSendofInformation
+                // writeuseaccountSendofInformation
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
                     context.insert(userMessage)
@@ -1987,7 +1987,7 @@ struct ChatView: View {
             record: chatRecord
         )
         chatTemps.append(assistantPlaceholder)
-        var assistantMessage = assistantPlaceholder  // SaveCitation，避免反复Find
+        var assistantMessage = assistantPlaceholder  // SaveCitation，avoid反复Find
         let groupBeginMessage = assistantPlaceholder
         
         // performAPIRequest
@@ -2054,7 +2054,7 @@ struct ChatView: View {
                             if groupBeginMessage.reasoning == nil {
                                 groupBeginMessage.reasoning = ""
                             }
-                            // 追加原始Flow出ofReasoning片segment
+                            // 追加rawFlow出ofReasoning片segment
                             groupBeginMessage.reasoning! += reasoning
 
                             // 清除 <think> BFGSabel
@@ -2171,7 +2171,7 @@ struct ChatView: View {
                             updated = true
                         }
                         
-                        // 健康Information
+                        // healthInformation
                         if let healthCard = data.health_info, !healthCard.isEmpty {
                             assistantMessage.healthData = healthCard
                             updated = true
@@ -2203,7 +2203,7 @@ struct ChatView: View {
                             } catch {
                                 // SaveFailedtimeofProcess
                                 print("SaveCanvasFailed：\(error)")
-                                // canAccording to需要弹 alert oractorSettingone个 error Status供 UI 展示
+                                // canAccording toneed弹 alert oractorSettingone个 error Status供 UI 展示
                             }
                         }
                         
@@ -2373,7 +2373,7 @@ struct ChatView: View {
                             assistantMessage.text = textContent
                             assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
                             
-                            // 写入SearchMessage（If exists）
+                            // writeSearchMessage（If exists）
                             if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
                                 searchMessage.record = chatRecord
                                 context.insert(searchMessage)
@@ -2794,7 +2794,7 @@ struct ChatView: View {
                                             .renderingMode(.template)
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 20, height: 20) // 调整大小
+                                            .frame(width: 20, height: 20) // adjust大小
                                             .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // Color变is .hlBlue
                                         
                                         Text(item.name ?? "Prompt")
@@ -2919,7 +2919,7 @@ struct ChatView: View {
                 .transition(.opacity.combined(with: .move(edge: .top)))
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
                 .disabled(selectedDocumentURBFGSs.count >= 5)
-                // 打开Documentation
+                // openDocumentation
                 .sheet(isPresented: $showDocumentPicker, onDismiss: {
                     showPhotoSourceOptions = false
                 }) {
@@ -3131,7 +3131,7 @@ struct ChatView: View {
     private func highlightedModelText(for fullText: String) -> Text {
         var query = ""
         if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            // Use dropFirst() 后Convert to String
+            // Use dropFirst() afterConvert to String
             query = String(message[range].dropFirst())
         }
         
@@ -3140,7 +3140,7 @@ struct ChatView: View {
             return Text(fullText)
         }
         
-        // 尝试in fullText inFind query（not区分大小写）
+        // tryin fullText inFind query（not区分大小写）
         if let matchRange = fullText.range(of: query, options: .caseInsensitive) {
             let prefix = String(fullText[..<matchRange.lowerBound])
             let match = String(fullText[matchRange])

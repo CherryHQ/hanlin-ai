@@ -15,9 +15,9 @@ enum CanvasServiceError: Error {
     case saveFailed(Error)
 }
 
-/// 管理 CanvasData of创建withSave
+/// 管理 CanvasData ofcreatewithSave
 class CanvasServices {
-    /// 创建one个Newof CanvasData（尚not yetSaveto任何 ChatRecords）
+    /// createone个Newof CanvasData（尚not yetSaveto任何 ChatRecords）
     ///
     /// - Parameters:
     ///   - title:   Canvas title
@@ -46,7 +46,7 @@ class CanvasServices {
     ///   - canvas:     要Saveof `CanvasData`
     ///   - chatRecord: 目标 `ChatRecords` Instance
     ///   - context:    SwiftData of ModelContext
-    /// - Returns: Update后、带haveNon-empty `id`、`saved == true`、andMergefinishedHistoryRecordof `CanvasData`
+    /// - Returns: Updateafter、带haveNon-empty `id`、`saved == true`、andMergefinishedHistoryRecordof `CanvasData`
     /// - Throws: `CanvasServiceError.saveFailed` whenPersistent化Failedtime
     static func saveCanvas(
         _ canvas: CanvasData,
@@ -78,13 +78,13 @@ class CanvasServices {
                 hist.append(updated.content)
                 updated.index = hist.count - 1
             } else {
-                // Contentnot yet变，then保持原 index
+                // Contentnot yet变，thenkeep原 index
                 updated.index = safeIdx
             }
         }
         updated.history = hist
 
-        // 4. 写入 chatRecord andPersistent化
+        // 4. write chatRecord andPersistent化
         chatRecord.canvas = updated
         do {
             try context.save()
@@ -97,9 +97,9 @@ class CanvasServices {
     /// AmendalreadyhaveCanvasofContent，canuseatModelToolCallImplementationReplace、Insert、DeleteetcOperation（SupportmultipleitemsReplaceRule）
     ///
     /// - Parameters:
-    ///   - canvas: 原始 CanvasData
+    ///   - canvas: raw CanvasData
     ///   - rules: ReplaceRuleArray，每itemsPackageinclude pattern and replacement
-    /// - Returns: Amend后of CanvasData（not会直接Save）
+    /// - Returns: Amendafterof CanvasData（not会直接Save）
     /// - Throws: RegexExpressionInvalidtime抛出Error
     static func editCanvasContent(
         canvas: CanvasData,
@@ -154,7 +154,7 @@ class CanvasServices {
     }
 }
 
-// MARK: 后端StreamingInterface
+// MARK: after端StreamingInterface
 func editCanvasAPI(
     input: String,
     modelInfo: AllModels,
@@ -230,7 +230,7 @@ func editCanvasAPI(
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
+                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break

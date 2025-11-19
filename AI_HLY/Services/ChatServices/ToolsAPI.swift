@@ -80,7 +80,7 @@ func translateTextAPI(
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
+                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -250,7 +250,7 @@ func polishTextAPI(input: String,
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
+                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break
@@ -401,7 +401,7 @@ func generateSummaryAPI(input: String,
                             // OutputBFGSocalModelReturnof token
                             continuation.yield(delta)
                             
-                            // 检测OutputinwhetherAppear停止Mark，提before结束Generate
+                            // detectOutputinwhetherAppear停止Mark，提beforeendGenerate
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
                                 break

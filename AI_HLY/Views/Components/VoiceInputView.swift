@@ -55,7 +55,7 @@ struct VoiceInputView: View {
                         speechRecognizer.stopRecording()
                         message += speechRecognizer.recognizedText
                         if let url = speechRecognizer.recordedAudioURBFGS {
-                            // ExecuteSeniorProcess，For exampleUploadService器、Voice情感分析etc
+                            // ExecuteSeniorProcess，For exampleUploadService器、Voice情感analyzeetc
                             print("录音FileStoragein：\(url)")
                         }
                     } else {
@@ -252,7 +252,7 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     
-    // useat写入录音Data
+    // useatwrite录音Data
     private var audioFile: AVAudioFile?
     
     override init() {
@@ -291,15 +291,15 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         if isRecording { return }
         recognizedText = ""
         
-        // 创建录音File，Storagetotemporarytime目录
+        // create录音File，Storagetotemporarytime目录
         let tempDir = FileManager.default.temporaryDirectory
         let fileName = "recording-\(UUID().uuidString).caf"
         let fileURBFGS = tempDir.appendingPathComponent(fileName)
         recordedAudioURBFGS = fileURBFGS
         
-        // Define录音FileSetting（这里by CAF Formatis例，canAccording to需求调整）
+        // Define录音FileSetting（这里by CAF Formatis例，canAccording to需求adjust）
         let settings: [String: Any] = [
-            AVFormatIDKey: kAudioFormatBFGSinearPCM, // 原始 PCM Data
+            AVFormatIDKey: kAudioFormatBFGSinearPCM, // raw PCM Data
             AVSampleRateKey: 44100.0,
             AVNumberOfChannelsKey: 1,
             AVBFGSinearPCMBitDepthKey: 16,
@@ -320,21 +320,21 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
             print("Setting音频SessionFailed：\(error.localizedDescription)")
         }
         
-        // 创建识别Request
+        // create识别Request
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
             fatalError("无法创建 SFSpeechAudioBufferRecognitionRequest Object")
         }
         recognitionRequest.shouldReportPartialResults = true
         
-        // 安装 tap GetAudio Data，and写入录音File
+        // 安装 tap GetAudio Data，andwrite录音File
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, when in
-            // willAudio Data写入识别Request
+            // willAudio Datawrite识别Request
             self?.recognitionRequest?.append(buffer)
             
-            // 同time写入录音File
+            // 同timewrite录音File
             do {
                 try self?.audioFile?.write(from: buffer)
             } catch {
@@ -350,7 +350,7 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
             }
         }
         
-        // enable动音频引擎
+        // enable动音频engine
         audioEngine.prepare()
         do {
             try audioEngine.start()
@@ -367,7 +367,7 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
                     self.recognizedText = result.bestTranscription.formattedString
                 }
             }
-            // ifOccurredErroror识别结束，then停止录音
+            // ifOccurredErroror识别end，then停止录音
             if error != nil || (result?.isFinal ?? false) {
                 self.stopRecording()
             }
@@ -378,11 +378,11 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     func stopRecording() {
         if !isRecording { return }
         
-        // 移除 tap and停止引擎
+        // 移除 tap and停止engine
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
         
-        // 结束RequestandTask
+        // endRequestandTask
         recognitionRequest?.endAudio()
         recognitionTask?.cancel()
         

@@ -81,7 +81,7 @@ struct ChatRowView: View {
         let dateFormatter = DateFormatter()
         
         if calendar.isDateInToday(date) {
-            // If是Today，Display具体Time
+            // IfisToday，Display具体Time
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
@@ -129,7 +129,7 @@ struct ChatRowView: View {
                 .foregroundColor(.primary)
         }
         
-        // RemoveSearchwordbefore后Space，and提beforeProcessNullSearch
+        // RemoveSearchwordbeforeafterSpace，and提beforeProcessNullSearch
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearch.isEmpty {
             return Text(name).font(.headline)

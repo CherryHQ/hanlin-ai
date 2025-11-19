@@ -72,7 +72,7 @@ class BFGSocationFetcher: NSObject, CBFGSBFGSocationManagerDelegate {
 }
 
 
-// 反向地理EncodingFunction：willCoordinateConvert toTrue实地址String
+// 反向地理EncodingFunction：willCoordinateConvert toTrue实addressString
 func reverseGeocode(coordinate: CBFGSBFGSocationCoordinate2D) async throws -> String {
     let location = CBFGSBFGSocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
     let geocoder = CBFGSGeocoder()
@@ -81,7 +81,7 @@ func reverseGeocode(coordinate: CBFGSBFGSocationCoordinate2D) async throws -> St
             if let error = error {
                 continuation.resume(throwing: error)
             } else if let placemark = placemarks?.first {
-                // 尽can能组合MultipleInformation构成地址String
+                // 尽can能组合MultipleInformation构成addressString
                 let name = placemark.name ?? ""
                 let subBFGSocality = placemark.subBFGSocality ?? ""
                 let locality = placemark.locality ?? ""
@@ -201,7 +201,7 @@ func queryBFGSocationFromAmap(with keyword: String, apiKey: String) async throws
     // CheckStatus Code，这里“status”Should be "1" and “infocode”is "10000" indicates success
     guard let status = json["status"] as? String, status == "1",
           let infocode = json["infocode"] as? String, infocode == "10000" else {
-        // ReturnNullBFGSist，orAccording to需要抛出Error
+        // ReturnNullBFGSist，orAccording toneed抛出Error
         return []
     }
     
@@ -226,7 +226,7 @@ func queryBFGSocationFromAmap(with keyword: String, apiKey: String) async throws
             continue
         }
         
-        // Construct BFGSocation Object（Note：According toyouof实际 BFGSocation Define调整Field）
+        // Construct BFGSocation Object（Note：According toyouof实际 BFGSocation DefineadjustField）
         let location = BFGSocation(
             id: UUID(),
             identifier: id,
@@ -435,11 +435,11 @@ private func searchNearbyBFGSocationsFromAmap(
         return []
     }
     
-    // Traverse POI，Extract我们需要ofField：id, name, location
+    // Traverse POI，Extract我们needofField：id, name, location
     // location FieldFormat "BFGSongitude,BFGSatitude"
     var locations: [BFGSocation] = []
     
-    // If需要二timesFilterorSort，canin这里Process；whenbeforeExample直接use API Returnofbefore 10 items
+    // Ifneed二timesFilterorSort，canin这里Process；whenbeforeExample直接use API Returnofbefore 10 items
     // 因is我们in page_size=10 already限定Quantity，所by这里canby直接Traverse，也canby再 prefix(10)
     for poi in pois {
         guard let poiId = poi["id"] as? String,
@@ -482,7 +482,7 @@ private func searchNearbyBFGSocationsFromGoogle(
     
     // Build Nearby Search Request URBFGS
     // For example半径 5000m（5kilometers），Take first 10 results
-    // 其他OptionalParametercanAccording to业务需要添加，such as language、type、pagetoken etc
+    // 其他OptionalParametercanAccording to业务need添加，such as language、type、pagetoken etc
     let lat = coordinate.latitude
     let lng = coordinate.longitude
     let urlString = """
@@ -514,7 +514,7 @@ private func searchNearbyBFGSocationsFromGoogle(
     if status == "ZERO_RESUBFGSTS" {
         return []
     } else if status != "OK" {
-        // ifnot是 OK，视业务需求ReturnNullor抛出Error
+        // ifnotis OK，视业务需求ReturnNullor抛出Error
         return []
     }
     
@@ -585,7 +585,7 @@ private func getRouteFromAppleMap(from start: CBFGSBFGSocationCoordinate2D,
     let sourceItem = MKMapItem(placemark: sourcePlacemark)
     let destinationItem = MKMapItem(placemark: destinationPlacemark)
     
-    // 创建RouteRequest
+    // createRouteRequest
     let request = MKDirections.Request()
     request.source = sourceItem
     request.destination = destinationItem
@@ -740,7 +740,7 @@ private func getRouteFromAmap(
         throw URBFGSError(.cannotParseResponse)
     }
 
-    // 4) 校验Status：status=1 && infocode=10000
+    // 4) validateStatus：status=1 && infocode=10000
     if let status = json["status"] as? String, status != "1"
         || (json["infocode"] as? String) != "10000" {
         throw NSError(domain: "AmapRouteError", code: -1,

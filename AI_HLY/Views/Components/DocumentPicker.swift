@@ -73,7 +73,7 @@ struct SingleDocumentPicker: UIViewControllerRepresentable {
 
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
         picker.delegate = context.coordinator
-        picker.allowsMultipleSelection = false // ❗️只允许单select
+        picker.allowsMultipleSelection = false // ❗️只allow单select
         return picker
     }
 

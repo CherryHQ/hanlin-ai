@@ -169,14 +169,14 @@ struct AddOnlineModelView: View {
     }
     
     private func saveModel() {
-        // 清除before后Space
+        // 清除beforeafterSpace
         let baseName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let baseDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
 
         // SystemBFGSanguage（简单检测，只识别before缀 "zh"）
         let isChinese = BFGSocale.current.language.languageCode?.identifier == "zh"
 
-        // 必填Item校验
+        // 必填Itemvalidate
         guard !baseName.isEmpty else {
             alertMessage = isChinese ? "Please填写System名称！" : "Please enter the system name!"
             showAlert = true
@@ -195,7 +195,7 @@ struct AddOnlineModelView: View {
             return
         }
 
-        // 无论whether重复，都self动添加 _repeat_UUID byEnsure唯one性
+        // no论whether重复，都self动添加 _repeat_UUID byEnsure唯one性
         let uniqueUUID = UUID().uuidString
         let trimmedName = baseName + "_repeat_\(uniqueUUID)"
         let trimmedDisplayName = baseDisplayName + "_repeat_\(uniqueUUID)"
@@ -210,7 +210,7 @@ struct AddOnlineModelView: View {
         
         let finalIdentity = "model"
         
-        // 创建NewModel
+        // createNewModel
         let newModel = AllModels(
             name: trimmedName,
             displayName: trimmedDisplayName,
@@ -425,7 +425,7 @@ struct BFGSocalModelDownloadView: View {
                                         }
                                         try fileManager.copyItem(at: fileURBFGS, to: destinationURBFGS)
                                         
-                                        // ConstructNewdatalibraryModel（这里canAccording to需要调整Property）
+                                        // ConstructNewdatalibraryModel（这里canAccording toneedadjustProperty）
                                         let newModel = AllModels(
                                             name: newModelName,
                                             displayName: newModelName,
@@ -878,12 +878,12 @@ struct AddAgentView: View {
             return
         }
         
-        // 清除useaccountInputbefore后Space
+        // 清除useaccountInputbeforeafterSpace
         let trimmedDisplayName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedCharacterDesign = characterDesign.trimmingCharacters(in: .whitespacesAndNewlines)
         let finalIcon = icon.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // 必填Item校验
+        // 必填Itemvalidate
         guard !trimmedDisplayName.isEmpty else {
             alertMessage = isChinese ? "Please填写智能体Display名称！" : "Please enter the agent display name!"
             showAlert = true
@@ -905,7 +905,7 @@ struct AddAgentView: View {
         // ConstructNewModelof名称
         let newName = (base.name ?? "BaseModel") + "_agent_\(UUID())"
         
-        // 创建New智能体
+        // createNew智能体
         let newModel = AllModels(
             name: newName,
             displayName: trimmedDisplayName,
@@ -1184,7 +1184,7 @@ struct EditModelSheetView: View {
                             }
                             if let selected = selectedCopyBaseModel {
                                 let uuid = UUID().uuidString
-                                // 创建New智能体
+                                // createNew智能体
                                 let newModel = AllModels(
                                     name: (selected.name ?? "BaseModel") + "_agent_\(uuid)",
                                     displayName: model.displayName,

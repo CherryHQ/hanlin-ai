@@ -11,7 +11,7 @@ import PhotosUI
 // Input fieldinofImageGetStructure
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImages: [UIImage] // Storageselect定ofImage
-    var sourceType: UIImagePickerController.SourceType // Select是相册还是相机
+    var sourceType: UIImagePickerController.SourceType // Selectis相册还is相机
     var maxImageNumber: Int
 
     func makeCoordinator() -> Coordinator {

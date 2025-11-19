@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    /// will汉字Convert toPinyin（无音调），andRemoveSpace
+    /// will汉字Convert toPinyin（no音调），andRemoveSpace
     func toPinyin() -> String {
         let mutableString = NSMutableString(string: self) as CFMutableString
         // Convert toPinyin

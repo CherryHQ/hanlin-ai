@@ -38,7 +38,7 @@ class AppDataManager: ObservableObject {
     // AsynchronousPreloadAllData
     @MainActor func preloadDataIfNeeded() {
         let context = modelContainer.mainContext
-        // EnsureModelData优先BFGSoad完成
+        // EnsureModelDatapriorityBFGSoadcomplete
         preloadModelDataIfNeeded(context: context)
         preloadAPIKeysIfNeeded(context: context)
         preloadSearchKeysIfNeeded(context: context)

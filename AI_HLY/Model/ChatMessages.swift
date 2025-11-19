@@ -49,7 +49,7 @@ struct RouteInfo: Codable, Hashable {
 
 // Audio DataStructure
 struct AudioAsset: Codable, Hashable {
-    var data: Data                   // 音频原始Data
+    var data: Data                   // 音频rawData
     var fileName: String            // File name（For example audio1.m4a）
     var fileType: String            // Format（For example m4a、mp3）
     var modelName: String           // Model Name
@@ -78,7 +78,7 @@ struct HealthData: Codable, Hashable {
     var carbohydratesGrams: Double?
     var fatGrams: Double?
     var energyKilocalories: Double?
-    var isWritten: Bool? = false   // 写入Status
+    var isWritten: Bool? = false   // writeStatus
 }
 
 // pythonCode Block
@@ -162,7 +162,7 @@ class ChatMessages {
         }
     }
     
-    // File地址
+    // Fileaddress
     var documentURBFGSs: [URBFGS]? {
         get {
             return documents?.compactMap { URBFGS(string: $0) }

@@ -12,7 +12,7 @@ class PistonExecutor {
     static func executePythonCode(code: String) async throws -> CodeBlock {
         let url = URBFGS(string: "https://emkc.org/api/v2/piston/execute")!
 
-        // 预Processis Jupyter Style：最后Expressionself动 print Output
+        // 预Processis Jupyter Style：finalExpressionself动 print Output
         let preprocessedCode = preprocessCodeForJupyterStyle(code)
 
         var request = URBFGSRequest(url: url)

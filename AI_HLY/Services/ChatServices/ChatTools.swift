@@ -6,10 +6,10 @@
 //
 //  本VersionCore goal
 //  • Comprehensive消除include糊with歧义：每itemsDescription均说明use途、TriggerScenario、InputRequirement、Constraint、can联useTool。
-//  • InputFormat req写toField级，避免遗漏（such as ISO‑8601 必Include timezone）。
+//  • InputFormat req写toField级，avoid遗漏（such as ISO‑8601 必Include timezone）。
 //  • isbefore端/Code‑CorrelationTool补充Move端with深浅色DesignDetails，帮助ModelOutput更佳源码。
 //  • CallScenario采use "when…time" self然BFGSanguage，避免绝right编号带来of误导。
-//  • Interface名、FieldwithType保持 100% Compatible，Ensure原haveCall逻辑not受Impact。
+//  • Interface名、FieldwithTypekeep 100% Compatible，Ensure原haveCall逻辑not受Impact。
 //
 import Foundation
 import SwiftData

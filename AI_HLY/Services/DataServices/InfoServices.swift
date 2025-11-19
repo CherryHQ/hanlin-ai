@@ -1255,7 +1255,7 @@ func getCompanyName(for companyName: String) -> String {
 
 // 重载Function：Process APIKeys Object，Custom供should商Display其名称
 func getCompanyName(for apiKey: APIKeys) -> String {
-    // If是Custom供should商，直接Return其名称
+    // IfisCustom供should商，直接Return其名称
     if apiKey.from == .custom {
         return apiKey.name ?? "Custom供should商"
     }
@@ -1500,7 +1500,7 @@ func formattedDate(_ date: Date) -> String {
 /// take Markdown StringConversion成易PasteofPlain text
 func markdownToPlainText(_ markdown: String) -> String {
 
-    // MARK: - RegexCache（首timesCalltime才创建）
+    // MARK: - RegexCache（首timesCalltime才create）
     struct RX {
         static let codeFence  = try! NSRegularExpression(pattern: #"^\s*(```|~~~)"#)
         static let hr         = try! NSRegularExpression(pattern: #"^(\s*[-*_]\s*){3,}$"#)
@@ -1622,7 +1622,7 @@ func resetModelPositionToDefault(context: ModelContext) {
             }
         }
 
-        // Step 3: notSystem预置Model统one放inSystemModel之后，by名称Sort
+        // Step 3: notSystem预置Model统one放inSystemModel之after，by名称Sort
         var nonSystemModels = allModels.filter { !$0.systemProvision }
         nonSystemModels.sort { ($0.displayName ?? "") < ($1.displayName ?? "") }
 
@@ -1640,8 +1640,8 @@ func resetModelPositionToDefault(context: ModelContext) {
 }
 
 /// ParseTimeRange：SupportinEnglish丰富表达
-/// - Parameter raw: 原始Criticalword（can能PackageincludeClass似“Just now”、“last week”、“3days ago”etcTimeword）
-/// - ReturnValue：removefinishedTimewordof“PureSearchword” + 具体ofStartTimeand结束Time
+/// - Parameter raw: rawCriticalword（can能PackageincludeClass似“Just now”、“last week”、“3days ago”etcTimeword）
+/// - ReturnValue：removefinishedTimewordof“PureSearchword” + 具体ofStartTimeandendTime
 func extractTimeRange(from raw: String) -> (clean: String, start: Date, end: Date) {
     let now = Date()
     let cal = Calendar.current

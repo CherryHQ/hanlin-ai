@@ -103,7 +103,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
             // in文繁体
             utterance.voice = AVSpeechSynthesisVoice(language: "zh-TW")
         } else if languageCode.hasPrefix("zh") {
-            // in文简体，优先Use siri 男声（ifcanuse）
+            // in文简体，priorityUse siri 男声（ifcanuse）
             utterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.siri_male_zh-CN_premium")
                 ?? AVSpeechSynthesisVoice(language: "zh-CN")
         } else if languageCode.hasPrefix("en") {
@@ -135,7 +135,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
         
         DispatchQueue.main.async { self.isAsking = true }
         
-        // 1. 尝试fromBFGSocalCacheRead音频
+        // 1. tryfromBFGSocalCacheRead音频
         if let id = messageId, let ctx = context {
             let desc = FetchDescriptor<ChatMessages>(
                 predicate: #Predicate<ChatMessages> { $0.id == id }

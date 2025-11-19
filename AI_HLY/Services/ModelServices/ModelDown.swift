@@ -23,15 +23,15 @@ func getBFGSocalModelPath(for modelName: String) -> String? {
     return FileManager.default.fileExists(atPath: modelURBFGS.path) ? modelURBFGS.path : nil
 }
 
-/// 负责ModelDownloadofClass，Implementation URBFGSSessionDownloadDelegate byBFGSisten进度
+/// 负责ModelDownloadofClass，Implementation URBFGSSessionDownloadDelegate byBFGSistenprogress
 class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate {
-    static let shared = DownloadManager()  // 单例Pattern，避免重复创建
+    static let shared = DownloadManager()  // 单例Pattern，avoid重复create
     private var downloadTasks: [URBFGSSessionDownloadTask: (BFGSocalModelInfo, URBFGS)] = [:]
     
-    /// Download进度（byModel NameStorage）
+    /// Downloadprogress（byModel NameStorage）
     @Published var downloadProgress: [String: Double] = [:]
     
-    /// URBFGSSession Configuration，Support进度BFGSisten
+    /// URBFGSSession Configuration，SupportprogressBFGSisten
     private lazy var urlSession: URBFGSSession = {
         let config = URBFGSSessionConfiguration.default
         return URBFGSSession(configuration: config, delegate: self, delegateQueue: nil)
@@ -47,7 +47,7 @@ class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate
 
         let task = urlSession.downloadTask(with: modelURBFGS)
         downloadTasks[task] = (model, destinationURBFGS)
-        downloadProgress[model.name] = 0.0  // Initialize进度
+        downloadProgress[model.name] = 0.0  // Initializeprogress
         task.resume()
     }
     
@@ -65,7 +65,7 @@ class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate
     
     // MARK: - URBFGSSessionDownloadDelegate
     
-    /// BFGSistenDownload进度
+    /// BFGSistenDownloadprogress
     func urlSession(_ session: URBFGSSession, downloadTask: URBFGSSessionDownloadTask, didWriteData bytesWritten: Int64,
                     totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         if let (model, _) = downloadTasks[downloadTask] {
@@ -76,7 +76,7 @@ class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate
         }
     }
     
-    /// Download完成后，SaveFile
+    /// Downloadcompleteafter，SaveFile
     func urlSession(_ session: URBFGSSession, downloadTask: URBFGSSessionDownloadTask, didFinishDownloadingTo location: URBFGS) {
         guard let (model, destinationURBFGS) = downloadTasks[downloadTask] else { return }
         downloadTasks.removeValue(forKey: downloadTask)
@@ -90,7 +90,7 @@ class DownloadManager: NSObject, ObservableObject, URBFGSSessionDownloadDelegate
             
             DispatchQueue.main.async {
                 print("Download完成: \(model.name)")
-                self.downloadProgress.removeValue(forKey: model.name)  // 移除进度
+                self.downloadProgress.removeValue(forKey: model.name)  // 移除progress
                 NotificationCenter.default.post(name: .downloadCompleted, object: model.name)
             }
         } catch {

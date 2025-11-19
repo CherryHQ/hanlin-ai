@@ -113,7 +113,7 @@ struct KnowledgeBFGSistView: View {
         let dateFormatter = DateFormatter()
         
         if calendar.isDateInToday(date) {
-            // If是Today，Display具体Time
+            // IfisToday，Display具体Time
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
@@ -292,7 +292,7 @@ struct KnowledgeBFGSistView: View {
         let lowerName = name.lowercased()
         var matchFound = false
         
-        // 1. 直接in原始StringinFindMatchContent
+        // 1. 直接inrawStringinFindMatchContent
         var searchRange = lowerName.startIndex..<lowerName.endIndex
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
@@ -303,7 +303,7 @@ struct KnowledgeBFGSistView: View {
             matchFound = true
         }
         
-        // 2. Ifnot yetin原始Stringinfindto，then尝试ThroughPinyinMatch（before提：需Implementation toPinyin() Method）
+        // 2. Ifnot yetinrawStringinfindto，thentryThroughPinyinMatch（before提：需Implementation toPinyin() Method）
         if !matchFound {
             let pinyin = name.toPinyin()
             let lowerPinyin = pinyin.lowercased()

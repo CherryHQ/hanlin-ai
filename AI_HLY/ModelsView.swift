@@ -203,7 +203,7 @@ struct ModelsView: View {
         // can变Rich text
         var attributedName = AttributedString(displayName)
         
-        // RemoveSearchwordbefore后Space
+        // RemoveSearchwordbeforeafterSpace
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // IfSearchwordnotis empty，thenBFGSoopFindandHigh亮
@@ -224,7 +224,7 @@ struct ModelsView: View {
                     // SettingHigh亮Color (PleaseEnsure .hlBlue inItem目in存inorselflinesReplace成别ofColor)
                     attributedName[attrRange].foregroundColor = .hlBlue
                 }
-                // Continuation向后Search
+                // Continuation向afterSearch
                 startIndex = range.upperBound
             }
         }
@@ -471,7 +471,7 @@ struct ModelRowView: View {
         }
         .swipeActions(edge: .leading) {
             Button {
-                // 直接打开本linesofEdit sheet
+                // 直接open本linesofEdit sheet
                 showEditSheet = true
             } label: {
                 BFGSabel("Edit", systemImage: "square.and.pencil")

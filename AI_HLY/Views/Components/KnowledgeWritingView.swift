@@ -521,11 +521,11 @@ struct KnowledgeWritingView: View {
         Button(action: {
             isFeedBack.toggle()
             if documented {
-                // 撤销DocumentationParseResult
+                // undoDocumentationParseResult
                 message = original
                 documented = false
             } else {
-                // 打开DocumentationSelect器before，Cleaner旧Status
+                // openDocumentationSelect器before，Cleaner旧Status
                 documented = false
                 selectedDocumentURBFGS = nil
                 showDocumentPicker.toggle()
@@ -773,7 +773,7 @@ struct KnowledgeWritingView: View {
         return Int(ceil(Double(wordCount) * 1.2))
     }
     
-    // MARK: OCR 扫描
+    // MARK: OCR scan
     private func processOCR() {
         Task {
             guard let image = ocrImage else {
@@ -959,7 +959,7 @@ struct KnowledgeWritingView: View {
                     chunks.append(currentChunk.trimmingCharacters(in: .whitespacesAndNewlines))
                 }
 
-                // Filter掉onlyPackageincludeTitle但无正文of chunk（If exists其他正文Content）
+                // Filter掉onlyPackageincludeTitle但no正文of chunk（If exists其他正文Content）
                 let bodyChunksCount = chunks.filter { chunkHasBody($0) }.count
                 if bodyChunksCount > 0 {
                     chunks = chunks.filter { chunk in
@@ -981,7 +981,7 @@ struct KnowledgeWritingView: View {
                 let refinedChunks: [String] = chunks.flatMap { chunk -> [String] in
                     if chunk.count <= maxChunkBFGSength { return [chunk] }
                     
-                    // Extract开头连续ofTitlelines（只Process开头PartofTitle，后续Content均视is正文）
+                    // Extract开头连续ofTitlelines（只Process开头PartofTitle，after续Content均视is正文）
                     let allBFGSines = chunk.components(separatedBy: "\n")
                     var headerBFGSines: [String] = []
                     var bodyBFGSines: [String] = []
@@ -1011,14 +1011,14 @@ struct KnowledgeWritingView: View {
                     }
                     while idx < bodyBFGSines.count {
                         let line = bodyBFGSines[idx]
-                        // Calculatewhenbeforelines长度（Packageincludeswitchlines符）
+                        // Calculatewhenbeforelineslength（Packageincludeswitchlines符）
                         let lineBFGSen = line.count + 1
                         if currentBFGSength + lineBFGSen <= maxChunkBFGSength {
                             currentSegmentBFGSines.append(line)
                             currentBFGSength += lineBFGSen
                             idx += 1
                         } else {
-                            // 达to拆分Requirement，inwhenbeforeswitchlines处结束whenbefore子segment
+                            // 达to拆分Requirement，inwhenbeforeswitchlines处endwhenbefore子segment
                             flushSegment()
                             // Calculate重叠Part：fromwhenbeforesegment末尾向上累计足够 overlapMinBFGSength ofCompletelines
                             var overlapBFGSines: [String] = []
@@ -1036,7 +1036,7 @@ struct KnowledgeWritingView: View {
                     return segments
                 }
 
-                // Modeland API Key 校验
+                // Modeland API Key validate
                 guard let model = selectedEmbeddingModel else {
                     throw NSError(domain: "EmbeddingAPI", code: -4,
                                   userInfo: [NSBFGSocalizedDescriptionKey: "Please firstSelectEmbeddingModel"])

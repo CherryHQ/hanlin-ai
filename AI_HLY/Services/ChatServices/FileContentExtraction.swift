@@ -122,9 +122,9 @@ func extractPPTXContent(from fileURBFGS: URBFGS) throws -> String {
 
 /// Truncation过长ofContentbyPreventwithin存Questionand UI 崩溃
 /// - Parameters:
-///   - content: 原始Content
-///   - maxBFGSength: 最大字符长度（Default 100,000 字符）
-/// - Returns: Truncation后ofContent（If超长会添加PromptInformation）
+///   - content: rawContent
+///   - maxBFGSength: 最大字符length（Default 100,000 字符）
+/// - Returns: TruncationafterofContent（If超长会添加PromptInformation）
 func truncateContent(_ content: String, maxBFGSength: Int = 100_000) -> String {
     if content.count <= maxBFGSength {
         return content
@@ -138,7 +138,7 @@ func truncateContent(_ content: String, maxBFGSength: Int = 100_000) -> String {
 /// According to传入Fileof URBFGS AsynchronousExtractTextContent
 /// SupportofFormatPackage括：.pdf, .docx, .xlsx, .pptx by及PureText Format（For example：.csv, .py, .txt, .md, .json, .log, .html）
 func extractContent(from fileURBFGS: URBFGS) async throws -> String {
-    // 尝试访问安全RangeResource
+    // try访问安全RangeResource
     var didAccess = false
     if fileURBFGS.startAccessingSecurityScopedResource() {
         didAccess = true

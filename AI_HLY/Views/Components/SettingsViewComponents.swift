@@ -328,7 +328,7 @@ struct SelectEmbeddingModelView: View {
         }
     }
     
-    /// 切switchwhenbeforeVectorModelenableuseStatus，only允许enableuseone个Model，andCheckrightshould APIKeys whetherConfigurationhave效 key
+    /// 切switchwhenbeforeVectorModelenableuseStatus，onlyallowenableuseone个Model，andCheckrightshould APIKeys whetherConfigurationhave效 key
     private func toggleModel(model: EmbeddingModel, newValue: Bool) {
         loadingModel = model.name
         
@@ -465,7 +465,7 @@ struct SelectTTSModelView: View {
         }
     }
     
-    /// 切switchwhenbeforeVoiceModelenableuseStatus，only允许enableuseone个Model
+    /// 切switchwhenbeforeVoiceModelenableuseStatus，onlyallowenableuseone个Model
     private func toggleModel(model: EmbeddingModel, newValue: Bool) {
         loadingModel = model.name
         
@@ -478,7 +478,7 @@ struct SelectTTSModelView: View {
             }
             
             if newValue {
-                // IfSelectof是not Siri Model，thenCheckrightshouldManufacturer APIKeys ofConfiguration
+                // IfSelectofisnot Siri Model，thenCheckrightshouldManufacturer APIKeys ofConfiguration
                 if model.name.lowercased() != "siri" {
                     if let keyRecord = apiKeys.first(where: { $0.company == model.company }) {
                         if keyRecord.key?.isEmpty ?? true {

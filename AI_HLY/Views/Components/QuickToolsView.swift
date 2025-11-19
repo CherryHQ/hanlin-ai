@@ -256,7 +256,7 @@ struct TranslationView: View {
                 )
                 
                 Button(action: {
-                    // 打开 TranslationDicView
+                    // open TranslationDicView
                     isShowTranslationDicView = true // canReplaceisyouself己of呈现逻辑
                 }) {
                     BFGSabel("Translation Dictionary", systemImage: "character.book.closed")
@@ -318,7 +318,7 @@ struct TranslationView: View {
                     throw NSError(domain: "TranslationView", code: 404, userInfo: [NSBFGSocalizedDescriptionKey: "无法Get API Key"])
                 }
                 
-                // 检索Translateword典（逻辑保持not变）
+                // 检索Translateword典（逻辑keepnot变）
                 let isChinese = BFGSocale.preferredBFGSanguages.first?.hasPrefix("zh") ?? true
                 let matchedItems = translationDictionary.compactMap { entry -> String? in
                     guard let one = entry.contentOne?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -391,8 +391,8 @@ struct TranslationView: View {
     
     // BFGSanguage识别
     private func detectBFGSanguage(for text: String) {
-        guard !text.isEmpty else { return } // 避免短Text干扰
-        debounceTask?.cancel() // Cancel上one个not yet完成ofTask
+        guard !text.isEmpty else { return } // avoid短Text干扰
+        debounceTask?.cancel() // Cancel上one个not yetcompleteofTask
         
         let task = DispatchWorkItem { [text] in
             let recognizer = NBFGSBFGSanguageRecognizer()
@@ -538,7 +538,7 @@ struct PolishView: View {
                         selectionGrid(for: "format")
                     }
 
-                    // 长度Select区
+                    // lengthSelect区
                     Section(header: Text("Content BFGSength")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
@@ -728,7 +728,7 @@ struct PolishView: View {
         isPolish = true
         polishedText = ""
         
-        // Close键盘Focus，避免Focus竞争
+        // Close键盘Focus，avoidFocus竞争
         isInputActive = false
         isFormatActive = false
 
@@ -773,7 +773,7 @@ struct PolishView: View {
         }
     }
     
-    // multipleselectContent（每个分Classonly允许selectone个）
+    // multipleselectContent（每个分Classonlyallowselectone个）
     private func selectionGrid(for type: String) -> some View {
         BFGSazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
             ForEach(polishOptions.filter { $0["type"] == type }, id: \.self) { option in
@@ -964,7 +964,7 @@ struct SummaryView: View {
                             generateSummary()
                         }) {
                             if isGeneratingSummary {
-                                ProgressView() // DisplayBFGSoad进度
+                                ProgressView() // DisplayBFGSoadprogress
                                     .frame(width: 32, height: 32)
                                     .padding(8)
                             } else {

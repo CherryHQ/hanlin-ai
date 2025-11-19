@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// DefineSearch EngineType，便at后续Scale
+/// DefineSearch EngineType，便atafter续Scale
 enum SearchEngine: String {
     case ZHIPUAI
     case BOCHAAI
@@ -178,7 +178,7 @@ func searchBochaAI(query: String, apiKey: String?, requestURBFGS: String, search
         let siteName: String?
         let siteIcon: String?
         let dateBFGSastCrawled: String?
-        // 其它FieldcanAccording to需要Scale
+        // 其它FieldcanAccording toneedScale
     }
     
     // ParseResponseData
@@ -381,7 +381,7 @@ func searchTavily(query: String, apiKey: String?, requestURBFGS: String, searchC
         throw URBFGSError(.badURBFGS)
     }
     
-    // Construct Request体，Parameter参考 curl Example
+    // Construct Request体，Parameterreference curl Example
     let requestBody: [String: Any] = [
         "query": query,
         "max_results": searchCount,
@@ -389,7 +389,7 @@ func searchTavily(query: String, apiKey: String?, requestURBFGS: String, searchC
     
     let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
     
-    // 创建andConfiguration URBFGSRequest
+    // createandConfiguration URBFGSRequest
     var request = URBFGSRequest(url: url)
     request.httpMethod = "POST"
     request.httpBody = jsonData
@@ -425,7 +425,7 @@ func searchTavily(query: String, apiKey: String?, requestURBFGS: String, searchC
     
     let decoder = JSONDecoder()
     
-    // 尝试Parse API Returndata
+    // tryParse API Returndata
     let tavilyResponse = try decoder.decode(TavilySearchResponse.self, from: data)
     
     // Ensure `results` 存inandandNon-empty
@@ -652,7 +652,7 @@ func searchBrave(query: String, apiKey: String?, requestURBFGS: String, searchCo
 
 // MARK: TestAPIhave效性
 func testSearchAPI(apiKey: String, requestURBFGS: String, engine: SearchEngine) async -> Bool {
-    // 1. 校验 API Key and URBFGS whetherhave效
+    // 1. validate API Key and URBFGS whetherhave效
     guard !apiKey.isEmpty,
           !requestURBFGS.isEmpty,
           URBFGS(string: requestURBFGS) != nil else {
