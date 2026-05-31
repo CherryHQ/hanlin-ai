@@ -116,8 +116,6 @@ struct ChatBubbleView: View {
     
     @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
     @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
-    @State private var mathMode: Bool = false             // 科学模式
-    @State private var showMathModeReminder: Bool = false // 科学模式提醒
     @State private var selectedImage: UIImage? // 选中的图片
     @State private var isImageViewerPresented: Bool = false // 是否显示大图
     @State private var showDocumentContent: Bool = false  // 显示解析文本内容
@@ -1480,28 +1478,6 @@ struct ChatBubbleView: View {
                     .transition(.opacity.combined(with: .move(edge: .leading)))
             }
             
-            // 科学模式
-            Button(action: {
-                mathMode.toggle()
-                showMathModeReminder = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    showMathModeReminder = false
-                }
-            }) {
-                Image(systemName: mathMode ? "note.text" : "x.squareroot")
-                    .font(.system(size: size_16, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundColor(showMathModeReminder ? .hlBluefont : .secondary)
-                    .clipShape(Circle())
-            }
-            
-            if showMathModeReminder {
-                Text(mathMode ? "科学模式" : "文本模式")
-                    .font(.system(size: size_12, weight: .medium))
-                    .foregroundColor(.hlBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
             // 背包按钮
             Button(action: {
                 createAndSaveKnowledgeRecord(with: text)
@@ -1536,7 +1512,7 @@ struct ChatBubbleView: View {
         .padding(.leading, 5)
         .animation(
             .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
-            value: [showMathModeReminder, isTranslating, isCopy, tts.isAsking]
+            value: [isTranslating, isCopy, tts.isAsking]
         )
     }
 
@@ -1547,13 +1523,7 @@ struct ChatBubbleView: View {
             reasoningView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
             
-            Group {
-                if mathMode {
-                    LaTeX(text)
-                } else {
-                    Markdown(text)
-                }
-            }
+            MarkdownLaTeXView(text, fontSize: size_16, isStreaming: isResponding && isLastAssistant)
             .contextMenu {
                 // 复制
                 Button(action: {
@@ -1602,21 +1572,6 @@ struct ChatBubbleView: View {
                     }
                 }
                 
-                // 科学模式
-                Button(action: {
-                    mathMode.toggle()
-                    showMathModeReminder = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        showMathModeReminder = false
-                    }
-                }) {
-                    if mathMode {
-                        Label("文本模式", systemImage: "note.text")
-                    } else {
-                        Label("科学模式", systemImage: "x.squareroot")
-                    }
-                }
-                
                 // 存为知识
                 Button(action: {
                     createAndSaveKnowledgeRecord(with: text)
@@ -1658,7 +1613,6 @@ struct ChatBubbleView: View {
         .animation(
             .spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
             value: [
-                mathMode,
                 images == nil,
                 isResponding,
             ]
@@ -1914,13 +1868,7 @@ struct ChatBubbleView: View {
                 )
                 
                 if isTranslateExpanded {
-                    Group {
-                        if mathMode {
-                            LaTeX(translatedText)
-                        } else {
-                            Markdown(translatedText)
-                        }
-                    }
+                    MarkdownLaTeXView(translatedText, fontSize: size_16)
                     .contextMenu {
                         // 复制内容
                         Button(action: {
@@ -1958,20 +1906,6 @@ struct ChatBubbleView: View {
                                         .clipShape(Circle())
                                 }
                                 Text(translated ? "删除译文" : (isTranslating ? "翻译中..." : "翻译内容"))
-                            }
-                        }
-                        // 科学模式
-                        Button(action: {
-                            mathMode.toggle()
-                            showMathModeReminder = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                showMathModeReminder = false
-                            }
-                        }) {
-                            if mathMode {
-                                Label("文本模式", systemImage: "note.text")
-                            } else {
-                                Label("科学模式", systemImage: "x.squareroot")
                             }
                         }
                         // 存为知识

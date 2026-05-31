@@ -3137,6 +3137,7 @@
       }
     },
     "文本模式" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4380,6 +4381,7 @@
       }
     },
     "科学模式" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
